@@ -54,7 +54,7 @@
   U.restPanel = () => {
     const c = G.character(),
       remaining = Math.max(0, (c.restReadyAt || 0) - Date.now());
-    return '<section class="panel rest-panel"><div class="panel-head"><h3>Wayside campfire</h3>' + U.icon('fountain') + '</div><p class="notes">Rest to fully recover your health. Available once every 30 minutes.</p><div class="meta-row"><span>Rest cooldown</span><strong id="rest-time">' + (remaining ? formatTime(remaining) : 'Ready') + '</strong></div>' + U.btn('Rest to full health', 'rest', 'id="rest-button" ' + (remaining || c.combat || c.activity || c.dungeon || c.hp >= S.character.stats(c).health ? 'disabled' : ''), 'wide') + '</section>';
+    return '<section class="panel rest-panel"><div class="panel-head"><h3>Wayside campfire</h3>' + U.icon('fountain') + '</div><p class="notes">Rest to fully recover your health. Available once every 30 minutes.</p><div class="meta-row"><span>Rest cooldown</span><strong id="rest-time">' + (remaining ? formatTime(remaining) : 'Ready') + '</strong></div>' + U.btn('Rest to full health', 'rest', 'id="rest-button" ' + (remaining || !S.recovery.canRest(c) || c.hp >= S.character.stats(c).health ? 'disabled' : ''), 'wide') + '</section>';
   };
   U.innPanel = () => {
     const c = G.character();
@@ -124,7 +124,7 @@
     }
   };
   U.quantityButtons = (action, available) => '<div class="row quantity-presets" aria-label="Quantity shortcuts">' +
-    [1, 10, 25, 50, 'all'].map(n => U.btn(n === 'all' ? 'All' : '×' + n, action,
+    [1, 10, 25, 50, action === 'buyQuantity' ? 100 : 'all'].map(n => U.btn(n === 'all' ? 'All' : '×' + n, action,
       'data-quantity="' + n + '" ' + (available < 1 ? 'disabled' : ''), 'small quiet')).join('') + '</div>';
   U.buyMaterialsForm = id => {
     const item = D.shop.find(i => i.id === id);
@@ -180,7 +180,7 @@
       button = document.getElementById('rest-button'),
       remaining = Math.max(0, (c.restReadyAt || 0) - Date.now());
     if (rest) rest.textContent = remaining ? formatTime(remaining) : 'Ready';
-    if (button) button.disabled = remaining > 0 || !!c.combat || !!c.activity || !!c.dungeon || c.hp >= S.character.stats(c).health;
+    if (button) button.disabled = remaining > 0 || !S.recovery.canRest(c) || c.hp >= S.character.stats(c).health;
   };
   window.addEventListener('rpg:death-loss', ({detail}) => {
     U.modal('The cost of defeat', '<p>You recover at full health after falling in ' + U.e(detail.location) + '.</p><p class="spacer">Coins lost: <strong>' + G.money(detail.coins) + '</strong> (' + detail.percent + '%, rounded up).</p><div class="notes spacer">' + (detail.lost.length ? '<p>Inventory items lost:</p>' + detail.lost.map(U.rewardText).join('<br>') : 'Your inventory was empty; no items were lost.') + '</div><p class="notes spacer">Equipped gear and tools are protected. Stored items can be lost even when locked. Each location adds one item and five percentage points to the penalty.</p>' + U.btn('Return to the world', 'closeModal', '', 'primary spacer'));

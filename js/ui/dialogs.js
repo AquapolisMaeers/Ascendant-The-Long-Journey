@@ -72,12 +72,10 @@
     if (gear || tool) {
       body += '<hr><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / 3</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
       if (gear && item.enhance < 25) {
-        const q = S.upgrades.quote(item);
-        body += '<section class="upgrade-box"><h3>Enhance to +' + (item.enhance + 1) + '</h3><p>' + G.percent(q.chance) + ' success · ' + G.money(q.coins) + '</p>' + U.upgradePreview(item, false) + U.ingredients(q.cost) + U.prefixGuide(item) + '<p>Fail protection: +' + G.percent(item.enhanceFail) + '</p>' + U.btn('Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';
+        body += '<section class="upgrade-box upgrade-compact"><h3>Enhance to +' + (item.enhance + 1) + '</h3>' + U.btn('Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';
       }
       if (item.rarity < 7) {
-        const q = S.upgrades.quote(item, true);
-        body += '<section class="upgrade-box"><h3>Ascend to ' + D.rarity[item.rarity + 1] + '</h3><p>' + G.percent(q.chance) + ' success · ' + G.money(q.coins) + '</p>' + U.upgradePreview(item, true) + U.ingredients(q.cost) + (tool ? U.prefixGuide(item) : '') + '<p>Fail protection: +' + G.percent(item.ascendFail) + (tool ? ' · no skill level requirement' : '') + '</p>' + U.btn('Ascend', 'ascend', 'data-id="' + id + '"', 'gold-btn wide') + '</section>';
+        body += '<section class="upgrade-box upgrade-compact"><h3>Ascend to ' + D.rarity[item.rarity + 1] + '</h3>' + U.btn('Ascend', 'ascend', 'data-id="' + id + '"', 'gold-btn wide') + '</section>';
       }
       body += '</div>';
       if (gear) {

@@ -275,7 +275,17 @@
       confirm('Release your companion?', '<p>This companion and its levels are permanently released. You can adopt another companion afterward.</p>', () => S.companions.release(), true);
     },
     ascend(el) {
-      itemAction(['upgrades', 'ascend'], el.dataset.id);
+      U.ascendConfirmation(el.dataset.id);
+    },
+    ascendCancel() {
+      U.item(G.runtime.ascendPending.id);
+      G.runtime.ascendPending = null;
+    },
+    ascendConfirm() {
+      const pending = G.runtime.ascendPending, item = pending && S.items.find(pending.id);
+      G.assert(item && item.rarity === pending.rarity && item.enhance === pending.enhance, 'This item changed. Review its current ascension quote.');
+      itemAction(['upgrades', 'ascend'], pending.id);
+      G.runtime.ascendPending = null;
     },
     socket(el) {
       const key = value('socket-' + el.dataset.index);
@@ -491,7 +501,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'afkStart', 'afkStop', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');

@@ -4,12 +4,15 @@
   S.afk = {
     run: null,
     status: 'Ready when you are.',
+    minuteRate(c = G.character()) { return 10 * (c.location + 1); },
+    quote(c = G.character()) { return {rate:this.minuteRate(c), maximum:Math.max(0,c.afk.minutes-15)*this.minuteRate(c)}; },
     start() {
       G.ensureProgress();
       const c = G.character();
       G.assert(!c.dungeon && !S.tutorial.active(), 'Finish the tutorial and leave the dungeon before AFK advancing.');
       G.assert(c.hp / S.character.stats(c).health > c.afk.minHp, 'Recover above your AFK health limit first.');
-      this.run = { id: c.id, elapsed: 0, inspect: 0, skipped: 0, fights: 0 };
+      G.assert(!this.run, 'An AFK session is already running.');
+      this.run = { id: c.id, elapsed: 0, inspect: 0, skipped: 0, fights: 0, paidMinutes:0, spent:0, rate:this.minuteRate(c), dungeon:false };
       this.status = 'Following your filters.';
       G.commit();
     },
@@ -27,7 +30,7 @@
       const choices = {
         interval: [8000, 12000, 16000], chance: [.55, .65, .75, .85, .95],
         minHp: [.25, .5, .75], minutes: [15, 30, 60],
-        elites: [true, false], gather: [true, false], chests: [true, false]
+        normals: [true, false], dungeons: [true, false], elites: [true, false], gather: [true, false], chests: [true, false]
       };
       G.assert(choices[key]?.includes(value), 'Invalid AFK setting.');
       this.stop('Filters changed', false);
@@ -38,21 +41,36 @@
       const run = this.run, c = G.character();
       if (!run || document.hidden) return;
       if (!c || c.id !== run.id) { this.stop('Character changed', false); return; }
-      run.elapsed += ms;
+      run.elapsed = Math.min(c.afk.minutes * 60000, run.elapsed + ms);
       let reason = null;
       if (c.pending.length || c.inventory.length >= c.capacity) reason = 'Make inventory space to continue';
-      else if (c.dungeon || S.tutorial.active()) reason = 'Manual adventure requires your attention';
-      else if (run.elapsed >= c.afk.minutes * 60000) reason = 'Session timer finished';
+      else if (c.dungeon && !run.dungeon || S.tutorial.active()) reason = 'Manual adventure requires your attention';
       else if (!c.combat && c.hp / S.character.stats(c).health <= c.afk.minHp) reason = 'Health reached your stop limit';
+      if (!reason) {
+        // Pay for each started extra minute, never for unused future minutes.
+        const due = Math.max(0, Math.ceil((run.elapsed - 15 * 60000) / 60000)) - run.paidMinutes;
+        if (due > 0) {
+          const cost = due * run.rate;
+          if (c.coins < cost) reason = 'Insufficient Bronze for the next paid minute';
+          else { c.coins -= cost; run.paidMinutes += due; run.spent += cost; G.commit(); }
+        }
+      }
+      if (!reason && run.elapsed >= c.afk.minutes * 60000) reason = 'Session timer finished';
       if (reason) { this.stop(reason); G.commit(); return; }
       if (c.combat || c.activity) { run.inspect = 0; return; }
       if (document.querySelector('.modal')) return;
       const e = c.encounter;
-      if (!e) { S.world.advance(true); return; }
+      if (!e && !c.dungeon) { run.dungeon=false; S.world.advance(true); return; }
       run.inspect += ms;
       if (run.inspect < 1000) return;
       run.inspect = 0;
-      if (e.enemy && (e.type === 'regular' || e.type === 'elite' && c.afk.elites)) {
+      if (c.dungeon?.cleared) { S.dungeons.next(); return; }
+      if (c.dungeon && ['fountain','spoils'].includes(e?.type)) { S.dungeons.event(); return; }
+      if (e?.type === 'dungeon' && c.afk.dungeons) {
+        this.status = 'Entering the dungeon. Every room gets a fresh odds check.';
+        run.dungeon=true; S.dungeons.enter(); return;
+      }
+      if (e.enemy && (c.dungeon || e.type === 'regular' && c.afk.normals !== false || e.type === 'elite' && c.afk.elites)) {
         // Recompute using current HP, gear, perks, food stock and shared cooldown.
         const sim = S.kernel.simulate(c, e.enemy);
         if (sim.chance >= c.afk.chance) {
@@ -62,6 +80,7 @@
           return;
         }
         this.status = 'Skipped ' + e.enemy.name + ': ' + G.percent(sim.chance, 1) + ' estimated.';
+        if (c.dungeon) { run.skipped++; S.dungeons.leave(); run.dungeon=false; return; }
       } else if (e.type === 'treasure' && c.afk.chests) {
         this.status = 'Opening a wayside chest.';
         S.world.openChest();

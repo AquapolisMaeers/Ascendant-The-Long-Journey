@@ -83,7 +83,7 @@
       dungeon: null,
       tutorial: 0,
       guide: null,
-      afk: { interval: 12000, chance: .75, minHp: .25, elites: false, gather: false, chests: true, minutes: 30 },
+      afk: { interval: 12000, chance: .75, minHp: .25, normals: true, dungeons: false, elites: false, gather: false, chests: true, minutes: 15 },
       restReadyAt: 0,
       debugUsed: false
     };

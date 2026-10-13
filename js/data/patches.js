@@ -3,6 +3,18 @@
 RPG.data.patches = [
   {
     "date": "2026-10-13",
+    "title": "Choose your journey. Grow your pack.",
+    "changes": [
+      "Compact Enhance and Ascend buttons open full confirmations with costs, chances, stat changes and eligible prefix ranges before spending.",
+      "AFK filters now include normal creatures and dungeons. Gather only, or explore dungeon rooms with fresh odds checks. Eating and campfire healing keep AFK running.",
+      "Each AFK session has 15 free minutes. Longer runs cost 10 Bronze per location number for each extra started minute, stopping if funds run out.",
+      "Four new companions add Critical Chance, Critical Damage, Attack Speed and Lifesteal bonuses, with matching artwork and the same food upkeep.",
+      "Companions and Leaderboards have new icons. The Emporium has seven Coming soon categories, including outfits, auras, special pets, mystery boxes and Ascendant Stone Boxes.",
+      "Buying shortcuts now end at x100. Selling keeps All."
+    ]
+  },
+  {
+    "date": "2026-10-13",
     "title": "New pursuits for the long journey",
     "changes": [
       "Offline Faceting now earns 15% of its previous XP. Active Faceting is unchanged.",

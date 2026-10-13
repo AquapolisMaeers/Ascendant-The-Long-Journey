@@ -166,6 +166,9 @@
     }
   };
   S.recovery = {
+    canRest(c = G.character()) {
+      return !!c && !c.combat && !c.dungeon && (!c.activity || S.afk.run?.id === c.id && ['advance','gather'].includes(c.activity.type));
+    },
     innQuote(fraction, c = G.character()) {
       G.assert([.25, .5, 1].includes(fraction), 'Choose 25%, 50% or full health.');
       const max = S.character.stats(c).health, missing = Math.max(0, max - c.hp);
@@ -186,7 +189,7 @@
       G.commit();
     },
     rest() {
-      G.ensureIdle();
+      G.assert(this.canRest(), 'Finish combat or your manual activity before resting.');
       const c = G.character();
       G.assert(!c.dungeon, 'Rest is available in the outside world.');
       G.assert(Date.now() >= (c.restReadyAt || 0), 'Rest is still on cooldown.');

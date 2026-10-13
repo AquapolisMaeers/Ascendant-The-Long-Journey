@@ -1,5 +1,7 @@
 'use strict';
 (function(G,D,S,U) {
+  U.companionPortrait = entry => entry.art === undefined ? U.portraitArt(entry.portrait) :
+    '<span class="icon portrait-art companion-art" aria-hidden="true" data-pet-art="'+entry.art+'" style="background-position:'+(entry.art%2*100)+'% '+(Math.floor(entry.art/2)*100)+'%"></span>';
   U.enhanceConfirmation = id => {
     G.ensureIdle();const item=S.items.find(id);
     G.assert(item?.kind==='gear'&&item.enhance<25,'Choose equipment that can be enhanced.');
@@ -9,9 +11,24 @@
     U.modal('Confirm enhancement: '+U.e(U.itemName(item)),
       '<p>+'+item.enhance+' → +'+(item.enhance+1)+' · '+G.percent(q.chance,0)+' success · '+G.money(q.coins)+'</p>'+
       U.upgradePreview(item,false)+U.ingredients(q.cost)+guide+
+      '<p>Fail protection: +'+G.percent(item.enhanceFail)+'</p>'+
       '<p>Materials and coins are consumed on an attempt. Failure preserves this item and increases fail protection.</p>'+
       '<div class="modal-actions">'+U.btn('Back to item','enhanceCancel','','quiet')+
       U.btn('Confirm enhancement','enhanceConfirm','','primary')+'</div>');
+  };
+  U.ascendConfirmation = id => {
+    G.ensureIdle();const item=S.items.find(id);
+    G.assert(['gear','tool'].includes(item?.kind)&&item.rarity<7,'Choose an item that can ascend.');
+    const q=S.upgrades.quote(item,true);
+    G.runtime.ascendPending={id,enhance:item.enhance,rarity:item.rarity};
+    U.modal('Confirm ascension: '+U.e(U.itemName(item)),
+      '<p>'+D.rarity[item.rarity]+' → '+D.rarity[item.rarity+1]+' · '+G.percent(q.chance,0)+' success · '+G.money(q.coins)+'</p>'+
+      U.upgradePreview(item,true)+U.ingredients(q.cost)+
+      (item.kind==='tool'?U.prefixGuide(item).replace('<details class="possible-prefixes">','<details class="possible-prefixes" open>'):'')+
+      '<p>Fail protection: +'+G.percent(item.ascendFail)+'</p>'+
+      '<p>Materials and coins are consumed on an attempt. Failure preserves the item and increases fail protection. Success preserves existing upgrades.</p>'+
+      '<div class="modal-actions">'+U.btn('Back to item','ascendCancel','','quiet')+
+      U.btn('Confirm ascension','ascendConfirm','','gold-btn')+'</div>');
   };
   const character=U.screens.Character;
   U.screens.Character=()=>{
@@ -44,11 +61,11 @@
     const foods=c.inventory.filter(i=>i.kind==='stack'&&!i.locked&&D.catalog[i.key].healing);
     const intro=U.heading('A FRIEND FOR THE ROAD','Companions','Raise a companion. Keep it fed. Earn its loyalty.');
     if(!p) return intro+'<p class="notes spacer">One companion per character. Feeding uses cooked food. Hunger falls 10 per hour, including time away; starvation removes bonuses and eventually requires revival.</p>'+
-      '<div class="grid-3 spacer">'+D.companions.map(entry=>'<section class="panel companion-card">'+U.portraitArt(entry.portrait)+
+      '<div class="grid-3 spacer">'+D.companions.map(entry=>'<section class="panel companion-card">'+U.companionPortrait(entry)+
       '<h3 class="spacer">'+entry.name+'</h3><p class="notes spacer">'+entry.description+'</p><p class="notes spacer">Levels 1–20 · 10 XP per gathering/crafting action · 25 × enemy level XP per victory.</p>'+
       U.btn('Adopt · '+entry.price+' Bronze','adoptCompanion','data-type="'+entry.id+'" '+(c.combat||c.activity||c.dungeon||S.tutorial.active()||c.coins<entry.price?'disabled':''),'gold-btn')+'</section>').join('')+'</div>';
     const bonus=S.companions.bonus(c),value=bonus[d.stat]||0,revive=p.level*D.companionRules.revivePerLevel;
-    return intro+'<div class="grid-2"><section class="panel companion-card">'+U.portraitArt(d.portrait)+
+    return intro+'<div class="grid-2"><section class="panel companion-card">'+U.companionPortrait(d)+
       '<div class="row between spacer"><h2>'+d.name+'</h2><span class="badge">'+(p.alive?p.active?'BONUS ACTIVE':'HUNGRY':'STARVED')+'</span></div>'+
       '<div class="bar-label spacer"><span>LEVEL '+p.level+'</span><span>'+G.number(p.xp)+' / '+(p.level===20?'MAX':G.number(S.companions.xpNext(p.level)))+' XP</span></div>'+
       U.bar(p.xp,p.level===20?1:S.companions.xpNext(p.level),'skill')+
@@ -65,10 +82,14 @@
   };
   U.screens.Emporium=()=>{
     const c=G.character(),claimed=Object.keys(c.ascendantRewards||{}).length;
+    const categories=D.emporiumCategories,category=categories.find(entry=>entry.name===G.runtime.tab)||categories[0];
     return U.heading('THE ASCENDANT EMPORIUM','Ascendant Coins','A currency earned through achievements, combat levels and major milestones.',
       '<span class="badge">'+G.number(c.ascendantCoins||0)+' ASCENDANT COINS</span>')+
-      '<div class="grid-2"><section class="panel"><h2>Coming soon</h2><p class="notes spacer">The Ascendant Emporium is being prepared. Its inventory and prices are TBD.</p>'+
-      '<div class="cosmetic-slot spacer">'+U.icon('gem')+'<strong>Ascendant currency shop</strong><span class="badge">Coming soon</span></div>'+
+      U.tabs(categories.map(entry=>entry.name),category.name)+
+      '<div class="grid-2"><section class="panel"><div class="panel-head"><h2>'+category.name+'</h2><span class="badge">Coming soon</span></div><p class="notes spacer">'+category.description+'</p>'+
+      (category.name==='Special Pets'?'<div class="stack spacer">'+D.specialCompanions.map(p=>'<div class="cosmetic-slot">'+U.companionPortrait(p)+'<div><strong>'+p.name+'</strong><small>'+p.description+'</small></div></div>').join(''):
+      '<div class="cosmetic-slot spacer">'+U.icon(category.icon)+'<strong>'+category.preview+'</strong><span class="badge">TBD</span></div>')+
+      '<p class="notes spacer">Inventory, prices and mystery-box contents are still being prepared.</p>'+
       '<p class="notes spacer">Purchasing Ascendant Coins with real money is not available.</p></section><section class="panel"><h3>Earn your coins</h3>'+
       '<div class="meta-row"><span>Each combat level after Level 1</span><strong>2 coins</strong></div>'+
       '<div class="meta-row"><span>Each achievement</span><strong>5 coins</strong></div>'+

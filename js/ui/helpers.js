@@ -9,6 +9,8 @@
     Shop: 'M3 9h18l-2-6H5zM5 10v11h14V10M9 21v-7h6v7',
     Marketplace: 'M3 7h16l-3-3M21 17H5l3 3M19 7l-3 3M5 17l3-3',
     Achievements: 'M8 3h8v8a4 4 0 0 1-8 0zM8 5H4v3a4 4 0 0 0 4 4M16 5h4v3a4 4 0 0 1-4 4M12 15v5M8 21h8',
+    Leaderboards: 'M3 3v18h19M6 20v-7h3v7M12 20V9h3v11M18 20V5h3v15',
+    Companions: 'M7 15c-5 5-1 8 5 5 6 3 10 0 5-5l-3-4h-4zM4 7a2 3 0 1 0 4 0 2 3 0 1 0-4 0M10 5a2 3 0 1 0 4 0 2 3 0 1 0-4 0M16 7a2 3 0 1 0 4 0 2 3 0 1 0-4 0',
     Settings: 'M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M10 3h4l1 3 3 1 3 3v4l-3 1-1 3-3 3h-4l-1-3-3-1-3-3v-4l3-1 1-3z',
     Weapon: 'm5 21 5-6M3 15l6 6M8 16 18 3l3 1-1 4-10 10',
     Helmet: 'M5 19V10a7 7 0 0 1 14 0v9l-5 3v-8h-4v8zM5 11h14',

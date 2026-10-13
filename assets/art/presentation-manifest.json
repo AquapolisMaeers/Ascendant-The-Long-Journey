@@ -24,6 +24,21 @@
         "Mage"
       ],
       "sampleInset": 0.01
+    },
+    {
+      "file": "assets/art/companions-atlas.png",
+      "width": 1254,
+      "height": 1254,
+      "columns": 2,
+      "rows": 2,
+      "sha256": "522a746f5ad4607525038beb59b5697eb8cbd7bf756e050b8583e2cdb6359cd4",
+      "prompt": "Create ONE square game portrait sprite atlas, a precise 2 by 2 equal grid, for the fantasy browser RPG Ascendant. Four separate centered creature portraits, each entirely contained in its own quadrant with generous 8% margin. Top left: Ember Lynx, a beautiful lynx with ear tufts, amber eyes, subtly glowing orange fur accents, head and shoulders, clever watchful expression. Top right: Thunder Bear, a mighty brown bear, broad head and shoulders with tiny cool blue spark accents. Bottom left: Silkstride Spider, a cute but believable furry woodland spider, eight legs, glowing teal eyes, face and upper body. Bottom right: Duskfang Bat, a charming dark purple vampire bat with tiny fangs, red eyes, ears and folded wings, head and shoulders. Consistent polished hand-painted fantasy RPG illustration, realistic textures with a warm storybook style, premium clean painterly detail, dark warm almost black vignette backgrounds. Equal cells, each exactly half width and half height, no gutters, no borders, no text, no UI, no letters, no overlapping cell edges, no humanoids. Match a classic painted RPG creature portrait collection; readable at 100 pixels. 1024x1024 square.",
+      "cellOrder": [
+        "Ember Lynx",
+        "Thunder Bear",
+        "Silkstride Spider",
+        "Duskfang Bat"
+      ]
     }
   ]
 }
