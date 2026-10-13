@@ -3,6 +3,16 @@
 RPG.data.patches = [
   {
     "date": "2026-10-13",
+    "title": "Training, supplies & the Wayside inn",
+    "changes": [
+      "Choose any of seven AFK training skills beside health and coins in the top bar. Offline training awards XP only.",
+      "Buy starter ore, logs, raw Minnows and pelts for 10 Bronze each. Selling has 1, 10, 25, 50 and All shortcuts.",
+      "The inn offers paid 25%, 50% or full healing with no cooldown. Tool rarities have no skill-level requirement.",
+      "Gear crafting uses three times the hides/pelts. Enhancement wood and hide costs increase every five levels."
+    ]
+  },
+  {
+    "date": "2026-10-13",
     "title": "Character selection & crafting",
     "changes": [
       "Choose your saved adventurer each time the game opens. Gameplay waits until you select a character.",

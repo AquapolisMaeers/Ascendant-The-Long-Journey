@@ -81,7 +81,7 @@
       return (c.tools[skill].prefixes[key] || 0) * D.toolPrefixes[key];
     },
     usableTool(c, skill) {
-      return c.skills[skill].level >= D.toolLevels[c.tools[skill].rarity];
+      return c.tools[skill]?.kind === 'tool' && c.tools[skill].skill === skill;
     }
   };
   S.inventory = {
@@ -162,7 +162,6 @@
         item = c.inventory.find(i => i.id === id);
       G.assert(item && ['gear', 'tool'].includes(item.kind), 'Choose equipment or a tool.');
       if (item.kind === 'tool') {
-        G.assert(c.skills[item.skill].level >= D.toolLevels[item.rarity], 'Skill level is too low for this tool.');
         const old = c.tools[item.skill];
         c.inventory.splice(c.inventory.indexOf(item), 1);
         if (old) c.inventory.push(old);

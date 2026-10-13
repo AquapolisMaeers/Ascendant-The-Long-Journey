@@ -1,7 +1,7 @@
 'use strict';
 (function(G, D, S) {
   S.shop = {
-    buy(id) {
+    buy(id, quantity = 1) {
       G.ensureIdle();
       const c = G.character(),
         item = D.shop.find(i => i.id === id);
@@ -9,13 +9,18 @@
       G.assert(c.level >= (item.level || 1), 'Requires character level ' + item.level + '.');
       const threshold = id === 'eat50' ? .5 : id === 'eat75' ? .75 : null;
       G.assert(threshold === null || !c.eatUnlocks.includes(threshold), 'Already unlocked.');
-      G.assert(c.coins >= item.price, 'Insufficient coins.');
-      G.assert(threshold !== null || S.inventory.count(id) > 0 || c.inventory.length < c.capacity, 'Inventory full.');
-      c.coins -= item.price;
+      G.assert(Number.isSafeInteger(quantity) && quantity > 0 && quantity <= 1000000, 'Choose a valid purchase quantity.');
+      G.assert(item.category === 'Materials' || quantity === 1, 'Buy this upgrade one at a time.');
+      const total = item.price * quantity;
+      const stack = c.inventory.find(i => i.kind === 'stack' && i.key === id);
+      G.assert(!stack || Number.isSafeInteger(stack.quantity + quantity), 'This stack cannot hold more units.');
+      G.assert(Number.isSafeInteger(total) && c.coins >= total, 'Insufficient coins.');
+      G.assert(threshold !== null || stack || c.inventory.length < c.capacity, 'Inventory full.');
+      c.coins -= total;
       if (threshold) c.eatUnlocks.push(threshold);
       else S.inventory.reward([{
         key: id,
-        quantity: 1
+        quantity
       }]);
       G.notify(item.name + ' purchased.', 'success');
       G.commit();

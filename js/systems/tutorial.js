@@ -166,6 +166,25 @@
     }
   };
   S.recovery = {
+    innQuote(fraction, c = G.character()) {
+      G.assert([.25, .5, 1].includes(fraction), 'Choose 25%, 50% or full health.');
+      const max = S.character.stats(c).health, missing = Math.max(0, max - c.hp);
+      const healing = Math.min(missing, fraction === 1 ? missing : max * fraction);
+      return {healing, coins: Math.ceil(c.level * healing)};
+    },
+    inn(fraction) {
+      G.ensureIdle();
+      const c = G.character();
+      G.assert(!c.dungeon, 'Visit the inn in the outside world.');
+      const q = this.innQuote(fraction, c);
+      G.assert(q.healing > 0, 'Already at full health.');
+      G.assert(c.coins >= q.coins, 'Insufficient coins.');
+      c.coins -= q.coins;
+      c.hp = Math.min(S.character.stats(c).health, c.hp + q.healing);
+      G.audio?.play('heal');
+      G.notify('The inn restored ' + G.number(q.healing, 2) + ' HP for ' + G.number(q.coins) + ' Bronze.', 'success');
+      G.commit();
+    },
     rest() {
       G.ensureIdle();
       const c = G.character();

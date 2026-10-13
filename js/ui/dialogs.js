@@ -54,7 +54,7 @@
       gear = item.kind === 'gear',
       tool = item.kind === 'tool';
     const rarity = gear || tool ? item.rarity : D.catalog[item.key].rarity;
-    let body = '<div class="item-heading rarity-' + rarity + '">' + U.icon(U.itemIcon(item)) + '<div><div class="eyebrow">' + D.rarity[rarity] + (gear ? ' · LV ' + D.tiers[item.tier] + ' · +' + item.enhance : tool ? ' · ' + (item.bound ? 'BOUND STARTER TOOL' : 'SKILL LV ' + D.toolLevels[item.rarity]) : ' · ×' + item.quantity) + '</div><p>' + (gear ? item.slot + (item.boss !== null ? ' · Boss gear · +15% inherent stats' : '') : tool ? item.skill : D.catalog[item.key].category) + (item.locked ? ' · Locked ◆' : '') + '</p></div></div>';
+    let body = '<div class="item-heading rarity-' + rarity + '">' + U.icon(U.itemIcon(item)) + '<div><div class="eyebrow">' + D.rarity[rarity] + (gear ? ' · LV ' + D.tiers[item.tier] + ' · +' + item.enhance : tool ? ' · ' + (item.bound ? 'BOUND STARTER TOOL' : 'NO SKILL LEVEL REQUIREMENT') : ' · ×' + item.quantity) + '</div><p>' + (gear ? item.slot + (item.boss !== null ? ' · Boss gear · +15% inherent stats' : '') : tool ? item.skill : D.catalog[item.key].category) + (item.locked ? ' · Locked ◆' : '') + '</p></div></div>';
     if (gear) {
       const stats = S.items.stats(item),
         equipped = c.equipment[item.slot],
@@ -77,7 +77,7 @@
       }
       if (item.rarity < 7) {
         const q = S.upgrades.quote(item, true);
-        body += '<section class="upgrade-box"><h3>Ascend to ' + D.rarity[item.rarity + 1] + '</h3><p>' + G.percent(q.chance) + ' success · ' + G.money(q.coins) + '</p>' + U.ingredients(q.cost) + '<p>Fail protection: +' + G.percent(item.ascendFail) + (tool ? ' · requires skill Lv ' + D.toolLevels[item.rarity + 1] : '') + '</p>' + U.btn('Ascend', 'ascend', 'data-id="' + id + '"', 'gold-btn wide') + '</section>';
+        body += '<section class="upgrade-box"><h3>Ascend to ' + D.rarity[item.rarity + 1] + '</h3><p>' + G.percent(q.chance) + ' success · ' + G.money(q.coins) + '</p>' + U.ingredients(q.cost) + '<p>Fail protection: +' + G.percent(item.ascendFail) + (tool ? ' · no skill level requirement' : '') + '</p>' + U.btn('Ascend', 'ascend', 'data-id="' + id + '"', 'gold-btn wide') + '</section>';
       }
       body += '</div>';
       if (gear) {
@@ -101,7 +101,7 @@
       ['A deliberate journey', 'Choose a location in World, then press ADVANCE. Four seconds later, one optional encounter appears.', 'World'],
       ['Your choice matters', 'Fight a creature, gather a resource, enter a dungeon, or Move On. Inspect the victory estimate and combat math before choosing Fight.', 'World'],
       ['Prepare, then prevail', 'Combat and chosen gathering actions resolve automatically. Loot is collected automatically; click the loot notice to dismiss it. Inventory lets you equip, lock, and inspect gear.', 'Inventory'],
-      ['Build for the long road', 'Character holds gear, stats, and milestone perks. Skills shows your seven tools and offline training. Crafting turns resources into equipment, food, and gems. Shop offers utility and storage.', 'Character']
+      ['Build for the long road', 'Character holds gear, stats, and milestone perks. Skills shows your seven tools. Choose offline training in the top bar. Crafting turns resources into equipment, food, and gems. Shop offers utility and storage.', 'Character']
     ];
     G.runtime.tutorialStep = step;
     const [title, text] = pages[step];

@@ -148,6 +148,26 @@
     rest() {
       S.recovery.rest();
     },
+    inn(el) {
+      S.recovery.inn(Number(el.dataset.fraction));
+    },
+    sellQuantity(el) {
+      const item = S.items.find(G.runtime.sellItem), input = document.getElementById('sell-quantity');
+      G.assert(item && input, 'Choose an inventory item to sell.');
+      input.value = el.dataset.quantity === 'all' ? item.quantity || 1 : Math.min(item.quantity || 1, Number(el.dataset.quantity));
+      input.dispatchEvent(new Event('input', {bubbles: true}));
+    },
+    buyQuantity(el) {
+      const item = D.shop.find(i => i.id === G.runtime.buyItem), input = document.getElementById('buy-quantity');
+      G.assert(item && input, 'Choose a material to buy.');
+      const max = Math.min(1000000, Math.floor(G.character().coins / item.price));
+      input.value = el.dataset.quantity === 'all' ? max : Math.min(max, Number(el.dataset.quantity));
+      input.dispatchEvent(new Event('input', {bubbles: true}));
+    },
+    buyConfirm() {
+      S.shop.buy(G.runtime.buyItem, Number(value('buy-quantity')));
+      U.close();
+    },
     openChest() {
       S.world.openChest();
     },
@@ -271,6 +291,7 @@
     },
     buy(el) {
       const item = D.shop.find(i => i.id === el.dataset.id);
+      if (item?.category === 'Materials') { U.buyMaterialsForm(item.id); return; }
       confirm('Purchase ' + item.name + '?', '<p>Cost: ' + G.money(item.price) + '. ' + item.description + '</p>', () => S.shop.buy(item.id));
     },
     expand() {
@@ -471,8 +492,7 @@
         G.commit();
       }
       if (el.id === 'offline-select') {
-        c.offline = el.value || null;
-        G.commit();
+        S.offline.select(el.value || null);
       }
       if (el.id === 'title-select') {
         c.title = el.value;
@@ -513,6 +533,10 @@
   document.addEventListener('input', event => {
     if (!G.account.playable()) return;
     const el = event.target;
+    if (el.id === 'buy-quantity') {
+      const item = D.shop.find(i => i.id === G.runtime.buyItem), label = document.getElementById('buy-total');
+      if (item && label) label.textContent = G.money(item.price * (Number(el.value) || 0));
+    }
     if (el.id === 'sell-quantity') {
       const item = S.items.find(G.runtime.sellItem);
       const label = document.getElementById('sell-total');

@@ -46,23 +46,23 @@
     },
     Helmet: {
       bar: 5,
-      hide: 5
+      hide: 15
     },
     Plate: {
       bar: 10,
-      hide: 15
+      hide: 45
     },
     Greaves: {
       bar: 7,
-      hide: 10
+      hide: 30
     },
     Gloves: {
       bar: 3,
-      hide: 5
+      hide: 15
     },
     Boots: {
       bar: 4,
-      hide: 5
+      hide: 15
     },
     Necklace: {
       bar: 3
@@ -150,6 +150,7 @@
   D.roman = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
   D.skills = ['Mining', 'Woodcutting', 'Fishing', 'Hunting', 'Smithing', 'Cooking', 'Faceting'];
   D.tools = ['Pickaxe', 'Axe', 'Fishing Rod', 'Trap', 'Hammer', 'Frying Pan', 'Chisel'];
+  // Nominal material tiers and sale values only; tools have no use/equip level gate.
   D.toolLevels = [1, 5, 10, 20, 40, 60, 80, 100];
   D.toolPrefixes = {
     Efficiency: .05,
@@ -207,6 +208,12 @@
       rarity: rank
     };
   });
+  D.starterMaterials = D.resourceKinds.map(kind => kind + ':0');
+  D.starterMaterials.forEach(id => D.shop.push({
+    id, name: (D.catalog[id].kind === 'fish' ? 'Raw ' : '') + D.catalog[id].name,
+    price: 10, level: 1, category: 'Materials',
+    description: 'Level 1 raw material. 10 Bronze per unit.'
+  }));
   D.shop.filter(x => !x.level).forEach(x => D.catalog[x.id] = {
     ...x,
     category: 'Utility',

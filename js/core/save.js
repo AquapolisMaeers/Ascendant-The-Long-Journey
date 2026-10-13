@@ -70,7 +70,7 @@
         if (!s || !Number.isInteger(s.level) || !finite(s.level, 1, 100) || !finite(s.xp) || !t || t.kind !== 'tool' || t.skill !== skill || !Number.isInteger(t.rarity) || !D.rarity[t.rarity] || !t.prefixes || Object.entries(t.prefixes).some(([k, v]) => !Object.hasOwn(D.toolPrefixes, k) || !Number.isInteger(v) || !finite(v, 1, 7))) fail('skill or tool');
       }
       if (Object.entries(c.perks).some(([k, v]) => !D.perkLevels.includes(+k) || +k > c.level || ![0, 1, 2].includes(v))) fail('perk choice');
-      if (!(c.offline === null || D.skills.slice(0, 4).includes(c.offline)) || !finite(c.lastSeen) || !Array.isArray(c.eatUnlocks) || c.eatUnlocks.some(v => ![0, .25, .5, .75].includes(v)) || !c.eatUnlocks.includes(c.eat) || c.food !== null && !D.catalog[c.food]?.healing) fail('food or offline selection');
+      if (!(c.offline === null || D.skills.includes(c.offline)) || !finite(c.lastSeen) || !Array.isArray(c.eatUnlocks) || c.eatUnlocks.some(v => ![0, .25, .5, .75].includes(v)) || !c.eatUnlocks.includes(c.eat) || c.food !== null && !D.catalog[c.food]?.healing) fail('food or offline selection');
       if (c.encounter) {
         const e = c.encounter;
         if (['regular', 'elite', 'boss'].includes(e.type)) {

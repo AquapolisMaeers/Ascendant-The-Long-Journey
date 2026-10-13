@@ -83,7 +83,6 @@
       const item = S.items.find(id);
       G.assert(item && item.kind !== 'stack', 'Select equipment or a tool.');
       G.assert(item.rarity < 7, 'Already Ascendant.');
-      if (item.kind === 'tool') G.assert(G.character().skills[item.skill].level >= D.toolLevels[item.rarity + 1], 'Reach skill level ' + D.toolLevels[item.rarity + 1] + ' before this tool Ascension.');
       const q = this.quote(item, true);
       pay(q.coins, q.cost);
       if (G.rng() < q.chance) {
