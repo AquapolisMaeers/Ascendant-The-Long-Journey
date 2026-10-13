@@ -1,0 +1,94 @@
+.location-scene {
+  background-image: linear-gradient(180deg,rgba(20,24,23,.58),transparent 65%,rgba(20,24,23,.85)),url('../assets/art/wayside.png');
+  background-size: cover; background-position: center 57%; min-height: 290px;
+}
+.welcome-art { background-image: linear-gradient(180deg,rgba(14,19,19,.5),rgba(14,19,19,.68)),url('../assets/art/wayside.png'); background-size: cover; background-position: center; }
+.brand strong { letter-spacing: .12em; font-size: 19px; }
+.welcome-art h1 { font-size: clamp(32px,5vw,64px); letter-spacing: .09em; overflow-wrap: anywhere; }
+.item-art { display: inline-block; width: 80px; height: 80px; flex: 0 0 auto; border-radius: 12px; background-image: url('../assets/art/items-atlas.png'); background-size: 653.125% 653.125%; background-repeat: no-repeat; vertical-align: middle; }
+.item-card > .item-art { display: block; width: 88px; height: 88px; margin: 6px auto 12px; }
+.item-art-detail { text-align: center; margin: 12px; }
+.item-art-detail .item-art { width: 144px; height: 144px; }
+.reward-art { display: inline-flex; align-items: center; gap: 8px; vertical-align: middle; }
+.reward-art .item-art { width: 30px; height: 30px; border-radius: 5px; }
+.loot-popup .reward-art { text-align: left; }
+.afk-panel .notes { margin-bottom: 12px; }
+.afk-controls { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.afk-controls label { min-width: 0; font-size: 12px; }
+.afk-controls select { width: 100%; }
+.afk-status { color: var(--gold); font-size: 12px; margin: 12px 0; }
+.perk-reminder { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 14px 18px; margin-bottom: 18px; border: 1px solid #786947; border-radius: 10px; background: #292820; font-size: 13px; }
+@media(max-width:600px) { .afk-controls { grid-template-columns: 1fr; } .item-card > .item-art { width: 72px; height: 72px; } }
+.portrait-art { display:inline-block; width:48px; height:48px; flex-shrink:0; border-radius:10px; background-image:url("../assets/art/portraits-atlas.png"); background-size:400% 400%; vertical-align:middle; } .fighter .portrait-art,.encounter-emblem .portrait-art { width:100px; height:100px; } .class-option .portrait-art { width:90px; height:90px; } .portrait .portrait-art { width:38px; height:38px; }
+
+.account-identity { display: grid; gap: 6px; margin-bottom: 16px; overflow-wrap: anywhere; }
+.account-identity small { color: var(--muted); }
+.account-welcome input { width: 100%; min-width: 0; }
+
+.ingredient-name { display: inline-flex; align-items: center; gap: 6px; min-width: 0; }
+.ingredient-name > span:last-child { overflow-wrap: anywhere; }
+.ingredients .item-art { width: 24px; height: 24px; border-radius: 5px; }
+.ingredients > div { align-items: center; gap: 8px; }
+.ingredients .mono { flex-shrink: 0; }
+.recipe-art { margin-bottom: 10px; }
+.recipe-art .item-art { width: 72px; height: 72px; }
+
+/* Rarity stays visible at rest, in details, and in each reward row. */
+.item-card[class*="rarity-"],.item-heading,.item-art-detail[class*="rarity-"],.loot-popup[class*="rarity-"] {
+  border:2px solid var(--rarity);
+  border-radius:8px;
+  background:radial-gradient(ellipse at 50% 0,rgba(var(--rarity-rgb),.13),transparent 75%),#182126;
+  box-shadow:inset 0 0 var(--rarity-glow) rgba(var(--rarity-rgb),.12),0 0 var(--rarity-glow) rgba(var(--rarity-rgb),.22);
+}
+.item-card[class*="rarity-"] {
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.item-card[class*="rarity-"]:hover,.item-card[class*="rarity-"]:focus-visible {
+  box-shadow:inset 0 0 var(--rarity-glow) rgba(var(--rarity-rgb),.22),0 0 var(--rarity-halo) rgba(var(--rarity-rgb),.4);
+}
+.item-card[class*="rarity-"] small,.item-heading .eyebrow,.loot-rarity {
+  color:var(--rarity);
+}
+.item-card[class*="rarity-"] .slot-label {
+  display:block;
+  margin-bottom:7px;
+  font-size:9px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.item-heading { padding:12px; }
+.item-heading > div { min-width:0; overflow-wrap:anywhere; }
+.item-art-detail[class*="rarity-"] {
+  position:relative;
+  width:fit-content;
+  max-width:100%;
+  margin:12px auto 18px;
+  padding:8px;
+}
+.item-art-detail[class*="rarity-"] .item-art { display:block; }
+:is(.item-card,.item-art-detail):is(.rarity-4,.rarity-5,.rarity-6,.rarity-7)::after {
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:inherit;
+  pointer-events:none;
+  box-shadow:0 0 var(--rarity-halo) rgba(var(--rarity-rgb),.35);
+  opacity:.55;
+}
+.reward-art[class*="rarity-"] {
+  padding:5px 8px;
+  margin:3px 0;
+  max-width:100%;
+  border:1px solid var(--rarity);
+  border-radius:6px;
+  background:rgba(var(--rarity-rgb),.08);
+  box-shadow:inset 0 0 10px rgba(var(--rarity-rgb),.1);
+}
+.reward-art > span:last-child { min-width:0; overflow-wrap:anywhere; }
+.loot-popup[class*="rarity-"] {
+  background:radial-gradient(ellipse at 50% 0,rgba(var(--rarity-rgb),.18),transparent 80%),#1b2529;
+  box-shadow:0 0 var(--rarity-halo) rgba(var(--rarity-rgb),.32),0 15px 60px #0009;
+}
+.loot-popup[class*="rarity-"] strong { color:var(--rarity); }
+.loot-rarity { display:block; margin-bottom:6px; }

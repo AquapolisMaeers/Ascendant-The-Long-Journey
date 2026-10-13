@@ -1,0 +1,162 @@
+'use strict';
+(function(G, D, S) {
+  const pay = (coins, cost) => {
+    const c = G.character();
+    G.assert(c.coins >= coins, 'Insufficient coins.');
+    G.assert(S.inventory.has(cost), 'Missing materials, or an ingredient is locked.');
+    S.inventory.pay(cost);
+    c.coins -= coins;
+  };
+  S.upgrades = {
+    quote(item, ascend = false) {
+      if (item.kind === 'tool') {
+        const r = item.rarity,
+          skillIndex = D.skills.indexOf(item.skill),
+          tier = D.tierFor(D.toolLevels[Math.min(7, r + 1)]),
+          kind = skillIndex < 4 ? D.resourceKinds[skillIndex] : skillIndex === 4 ? 'bar' : skillIndex === 5 ? 'fish' : 'uncut';
+        const cost = {
+          stone: 1
+        };
+        if (kind === 'uncut') cost['uncut:0'] = Math.ceil(D.tuning.toolBaseMaterials * D.ascend.materials[r]);
+        else cost[kind + ':' + tier] = Math.ceil(D.tuning.toolBaseMaterials * D.ascend.materials[r]);
+        return {
+          coins: D.coinUnits[tier] * D.ascend.coins[r],
+          cost,
+          chance: Math.min(1, D.ascend.chance[r] + item.ascendFail)
+        };
+      }
+      if (ascend) {
+        const cost = Object.fromEntries(Object.entries(S.items.recipe(item)).map(([id, n]) => [id, Math.ceil(n * D.ascend.materials[item.rarity])]));
+        cost.stone = 1;
+        return {
+          coins: D.coinUnits[item.tier] * D.ascend.coins[item.rarity],
+          cost,
+          chance: Math.min(1, D.ascend.chance[item.rarity] + item.ascendFail)
+        };
+      }
+      const b = Math.floor(item.enhance / 5),
+        cost = {
+          ['bar:' + item.tier]: D.enhance.bars[b]
+        };
+      if (item.slot === 'Weapon') cost['logs:' + item.tier] = D.enhance.weaponLogs[b];
+      else if (!['Necklace', 'Ring'].includes(item.slot)) cost['hide:' + item.tier] = D.enhance.secondary[b];
+      return {
+        coins: D.coinUnits[item.tier] * D.enhance.coins[b],
+        cost,
+        chance: Math.min(1, D.enhance.chance[b] + item.enhanceFail)
+      };
+    },
+    enhance(id) {
+      G.ensureIdle();
+      const item = S.items.find(id);
+      G.assert(item?.kind === 'gear', 'Only combat gear can be Enhanced.');
+      G.assert(item.enhance < 25, 'Already +25.');
+      S.tutorial?.guard('enhance', id);
+      const q = this.quote(item);
+      pay(q.coins, q.cost);
+      if (G.rng() < q.chance) {
+        item.enhance++;
+        item.enhanceFail = 0;
+        const prefixEvent = S.items.prefix(item);
+        S.items.announcePrefix(item, prefixEvent);
+        S.tutorial?.enhanced(item);
+        const c = G.character();
+        c.stats.enhancements++;
+        c.stats.maxEnhance = Math.max(c.stats.maxEnhance, item.enhance);
+        G.notify('Enhancement succeeded: +' + item.enhance + '. One prefix improved.', 'success');
+        G.audio?.play('enhance');
+        G.emit('effect', {
+          kind: 'enhance',
+          socket: D.sockets[item.boss !== null ? 'boss' : 'regular'].includes(item.enhance)
+        });
+      } else {
+        item.enhanceFail = Math.min(1, item.enhanceFail + D.config.failIncrement);
+        G.emit('effect', {
+          kind: 'failure'
+        });
+        G.notify('Enhancement failed. Item preserved; +1 percentage point fail protection.', 'warning');
+      }
+      G.commit();
+    },
+    ascend(id) {
+      G.ensureIdle();
+      const item = S.items.find(id);
+      G.assert(item && item.kind !== 'stack', 'Select equipment or a tool.');
+      G.assert(item.rarity < 7, 'Already Ascendant.');
+      if (item.kind === 'tool') G.assert(G.character().skills[item.skill].level >= D.toolLevels[item.rarity + 1], 'Reach skill level ' + D.toolLevels[item.rarity + 1] + ' before this tool Ascension.');
+      const q = this.quote(item, true);
+      pay(q.coins, q.cost);
+      if (G.rng() < q.chance) {
+        const c = G.character();
+        c.stats.ascensions = [...new Set([...c.stats.ascensions, item.rarity])];
+        item.rarity++;
+        item.ascendFail = 0;
+        if (item.kind === 'tool') S.items.announcePrefix(item, S.items.prefix(item));
+        G.notify('Ascension succeeded: ' + D.rarity[item.rarity] + '.', 'success');
+        G.audio?.play('ascend');
+        G.emit('effect', {
+          kind: 'ascend',
+          rarity: item.rarity
+        });
+      } else {
+        item.ascendFail = Math.min(1, item.ascendFail + D.config.failIncrement);
+        G.emit('effect', {
+          kind: 'failure'
+        });
+        G.notify('Ascension failed. Item preserved; +1 percentage point fail protection.', 'warning');
+      }
+      G.commit();
+    },
+    socket(id, index, key, destroyOld = false) {
+      G.ensureIdle();
+      const item = S.items.find(id),
+        gem = D.catalog[key],
+        c = G.character();
+      G.assert(item?.kind === 'gear' && Number.isInteger(index) && index >= 0 && index < S.items.sockets(item), 'Socket is locked.');
+      G.assert(gem?.rank > 0 && D.gemAllowed[item.slot].includes(gem.type), 'Invalid gem for this slot.');
+      const style = D.gems[gem.type].style;
+      G.assert(style === undefined || style === (item.style ?? D.classes.indexOf(c.class)), 'Wrong class damage gem.');
+      G.assert(S.inventory.available(key) > 0, 'Gem unavailable or locked.');
+      const old = item.gems[index];
+      G.assert(!old || destroyOld, 'Confirm destruction of the old gem, or safely extract it.');
+      S.inventory.take(key, 1);
+      item.gems[index] = key;
+      c.stats.socketed++;
+      G.audio?.play('socket');
+      G.emit('effect', {
+        kind: 'socket'
+      });
+      G.commit();
+    },
+    extract(id, index, destroy = false) {
+      G.ensureIdle();
+      G.assert(!G.character().pending.length || destroy, 'Resolve existing Pending Loot before extracting another gem.');
+      const item = S.items.find(id);
+      G.assert(item?.gems[index], 'This socket is empty.');
+      if (!destroy) {
+        G.assert(S.inventory.available('extractor') > 0, 'A Gem Extractor is required.');
+        S.inventory.take('extractor', 1);
+        S.inventory.reward([{
+          key: item.gems[index],
+          quantity: 1
+        }]);
+      }
+      item.gems[index] = null;
+      G.commit();
+    },
+    remove(id) {
+      G.ensureIdle();
+      const item = S.items.find(id);
+      G.assert(item?.kind === 'gear', 'Select combat gear.');
+      G.assert(!item.locked, 'Unlock this item before using an Enchantment Remover.');
+      G.assert(!item.gems.some(Boolean), 'Extract or destroy every gem first.');
+      S.inventory.take('remover', 1);
+      item.enhance = 0;
+      item.prefixes = {};
+      item.gems = [];
+      item.enhanceFail = 0;
+      G.character().hp = Math.min(G.character().hp, S.character.stats(G.character()).health);
+      G.commit();
+    }
+  };
+})(RPG, RPG.data, RPG.systems);

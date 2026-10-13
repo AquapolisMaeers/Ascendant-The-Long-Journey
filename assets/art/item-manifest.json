@@ -1,0 +1,1854 @@
+{
+  "version": 1,
+  "logicalItems": 298,
+  "sheets": [
+    {
+      "key": "ore",
+      "file": "assets/art/items/ore.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "ore:0",
+          "name": "Copper Ore",
+          "description": "Copper Ore"
+        },
+        {
+          "key": "ore:1",
+          "name": "Tin Ore",
+          "description": "Tin Ore"
+        },
+        {
+          "key": "ore:2",
+          "name": "Iron Ore",
+          "description": "Iron Ore"
+        },
+        {
+          "key": "ore:3",
+          "name": "Coal",
+          "description": "Coal"
+        },
+        {
+          "key": "ore:4",
+          "name": "Silver Ore",
+          "description": "Silver Ore"
+        },
+        {
+          "key": "ore:5",
+          "name": "Gold Ore",
+          "description": "Gold Ore"
+        },
+        {
+          "key": "ore:6",
+          "name": "Runite Ore",
+          "description": "Runite Ore"
+        },
+        {
+          "key": "ore:7",
+          "name": "Obsidian Shard",
+          "description": "Obsidian Shard"
+        },
+        {
+          "key": "ore:8",
+          "name": "Draconite Ore",
+          "description": "Draconite Ore"
+        },
+        {
+          "key": "ore:9",
+          "name": "Starsteel Ore",
+          "description": "Starsteel Ore"
+        },
+        {
+          "key": "ore:10",
+          "name": "Elderstone",
+          "description": "Elderstone"
+        },
+        {
+          "key": "ore:11",
+          "name": "Ancient Ore",
+          "description": "Ancient Ore"
+        }
+      ],
+      "artDirection": "Distinct mineral formations: orange copper veins, pale silvery cassiterite tin, reddish ironstone, matte black coal, white silver veins, gold-bearing quartz, blue runite, sharp black volcanic glass obsidian, red draconite crystals, blue-gold meteorite starsteel, green mossy elderstone, pale purple/gold ancient ore. All twelve must have different shapes and mineral textures.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Make a square sheet laid out as an EXACT 4 columns by 4 rows regular grid. Each cell square and identical in size. Center each item precisely at its cell center, keep the ENTIRE object inside the central 64% of that cell, leaving at least 18% completely empty dark charcoal padding on ALL four sides. No part, shadow, glow, ornament or detached fleck may approach the cell boundary. Uniform near-black warm charcoal (#211e1b) backdrop, no tile outlines, no labels, no letters, no UI, no watermark. Each specified item MUST have its own distinct silhouette, color and texture; no repeated drawings or recolors of the same shape. Final row (cells 13-16) completely empty charcoal. Exactly twelve painted items, not fifteen or sixteen. Row-major order, left to right:\nRow 1: Copper Ore, rough rust-brown rocks with visible orange copper veins; Tin Ore, pale gray pebbles with silvery crystalline cassiterite; Iron Ore, dark reddish earthy ironstone; Coal, uneven matte black brittle lumps. Row 2: Silver Ore, pale stone split by bright silver veins; Gold Ore, dark quartz rock with buttery gold deposits; Runite Ore, irregular midnight-blue rock with luminous blue runic mineral veins; Obsidian Shard, sharp volcanic black glass slab. Row 3: Draconite Ore, jagged crimson crystal-bearing stone; Starsteel Ore, silver-blue meteorite with speckled gold inclusions; Elderstone, mossy pale stone with green mineral growth; Ancient Ore, pale purple fractured rock with deeply embedded golden seams.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "0525f1334bb7997202c9e7f1f488d1995a4145661d76616c6c0e1deb5fad0c00",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "logs",
+      "file": "assets/art/items/logs.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "logs:0",
+          "name": "Pine Logs",
+          "description": "Pine Logs"
+        },
+        {
+          "key": "logs:1",
+          "name": "Oak Logs",
+          "description": "Oak Logs"
+        },
+        {
+          "key": "logs:2",
+          "name": "Birch Logs",
+          "description": "Birch Logs"
+        },
+        {
+          "key": "logs:3",
+          "name": "Maple Logs",
+          "description": "Maple Logs"
+        },
+        {
+          "key": "logs:4",
+          "name": "Ash Logs",
+          "description": "Ash Logs"
+        },
+        {
+          "key": "logs:5",
+          "name": "Yew Logs",
+          "description": "Yew Logs"
+        },
+        {
+          "key": "logs:6",
+          "name": "Runewood Logs",
+          "description": "Runewood Logs"
+        },
+        {
+          "key": "logs:7",
+          "name": "Charredwood Logs",
+          "description": "Charredwood Logs"
+        },
+        {
+          "key": "logs:8",
+          "name": "Wyrmwood Logs",
+          "description": "Wyrmwood Logs"
+        },
+        {
+          "key": "logs:9",
+          "name": "Starwood Logs",
+          "description": "Starwood Logs"
+        },
+        {
+          "key": "logs:10",
+          "name": "Elderwood Logs",
+          "description": "Elderwood Logs"
+        },
+        {
+          "key": "logs:11",
+          "name": "Ancientwood Logs",
+          "description": "Ancientwood Logs"
+        }
+      ],
+      "artDirection": "Distinct species and cut grain. Pine: resinous brown logs with needles; Oak: thick coarse dark bark with broad leaves; Birch: slender white bark with black markings; Maple: warm red-brown branch sections and maple leaf; Ash: pale straight grain with gray bark; Yew: twisted red heartwood and dark green needles; Runewood: spiraled blue runic wood; Charredwood: cracked black burned timber; Wyrmwood: jagged bronze-red wood with dragon-scale bark; Starwood: dark indigo wood with faint golden specks; Elderwood: pale green mossy gnarled wood; Ancientwood: petrified cream timber with golden concentric grain. Different log counts, lengths, knots and binding styles for all twelve.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Distinct species and cut grain. Pine: resinous brown logs with needles; Oak: thick coarse dark bark with broad leaves; Birch: slender white bark with black markings; Maple: warm red-brown branch sections and maple leaf; Ash: pale straight grain with gray bark; Yew: twisted red heartwood and dark green needles; Runewood: spiraled blue runic wood; Charredwood: cracked black burned timber; Wyrmwood: jagged bronze-red wood with dragon-scale bark; Starwood: dark indigo wood with faint golden specks; Elderwood: pale green mossy gnarled wood; Ancientwood: petrified cream timber with golden concentric grain. Different log counts, lengths, knots and binding styles for all twelve.\nCell assignments in row-major order:\nRow 1, column 1: Pine Logs. Pine Logs.\nRow 1, column 2: Oak Logs. Oak Logs.\nRow 1, column 3: Birch Logs. Birch Logs.\nRow 1, column 4: Maple Logs. Maple Logs.\nRow 2, column 1: Ash Logs. Ash Logs.\nRow 2, column 2: Yew Logs. Yew Logs.\nRow 2, column 3: Runewood Logs. Runewood Logs.\nRow 2, column 4: Charredwood Logs. Charredwood Logs.\nRow 3, column 1: Wyrmwood Logs. Wyrmwood Logs.\nRow 3, column 2: Starwood Logs. Starwood Logs.\nRow 3, column 3: Elderwood Logs. Elderwood Logs.\nRow 3, column 4: Ancientwood Logs. Ancientwood Logs.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "be46d6c04f51c843e247677030bf177b9c42c6b2246308776db6b3583e2c194c",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "fish",
+      "file": "assets/art/items/fish.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "fish:0",
+          "name": "Minnow",
+          "description": "Minnow"
+        },
+        {
+          "key": "fish:1",
+          "name": "Trout",
+          "description": "Trout"
+        },
+        {
+          "key": "fish:2",
+          "name": "Perch",
+          "description": "Perch"
+        },
+        {
+          "key": "fish:3",
+          "name": "Salmon",
+          "description": "Salmon"
+        },
+        {
+          "key": "fish:4",
+          "name": "Pike",
+          "description": "Pike"
+        },
+        {
+          "key": "fish:5",
+          "name": "Swordfish",
+          "description": "Swordfish"
+        },
+        {
+          "key": "fish:6",
+          "name": "Runefin",
+          "description": "Runefin"
+        },
+        {
+          "key": "fish:7",
+          "name": "Obsidian Eel",
+          "description": "Obsidian Eel"
+        },
+        {
+          "key": "fish:8",
+          "name": "Wyrmfin",
+          "description": "Wyrmfin"
+        },
+        {
+          "key": "fish:9",
+          "name": "Starfin",
+          "description": "Starfin"
+        },
+        {
+          "key": "fish:10",
+          "name": "Elder Koi",
+          "description": "Elder Koi"
+        },
+        {
+          "key": "fish:11",
+          "name": "Ancient Sturgeon",
+          "description": "Ancient Sturgeon"
+        }
+      ],
+      "artDirection": "Recognizable whole raw fish: tiny slender silver minnow, spotted pink-striped rainbow trout, yellow barred spiny perch, silver deep-bodied salmon, long olive duckbill pike, long-billed blue swordfish, teal rune-patterned runefin, black S-curled obsidian eel, red bronze dragon-crested wyrmfin, indigo gold-speckled starfin, white/orange whiskered elder koi, long gray armored ancient sturgeon. No plates or cooked food.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Make a square sheet laid out as an EXACT 4 columns by 4 rows regular grid. Each cell square and identical in size. Center each item precisely at its cell center, keep the ENTIRE object inside the central 64% of that cell, leaving at least 18% completely empty dark charcoal padding on ALL four sides. No part, shadow, glow, ornament or detached fleck may approach the cell boundary. Uniform near-black warm charcoal (#211e1b) backdrop, no tile outlines, no labels, no letters, no UI, no watermark. Each specified item MUST have its own distinct silhouette, color and texture; no repeated drawings or recolors of the same shape. Final row (cells 13-16) completely empty charcoal. Exactly twelve painted items, not fifteen or sixteen. Row-major order, left to right:\nWhole recognizable raw fish in natural side/three-quarter profiles, no plates, no cooked food. Row 1: Minnow, a TINY slender silvery freshwater minnow, tiny fins and narrow tail, clearly a minnow rather than salmon; Trout, robust rainbow trout with pink lateral band and spotted olive back; Perch, yellow-green perch with dark vertical bars and spiny dorsal fin; Salmon, deep-bodied silver salmon with pink-gray back and broad tail. Row 2: Pike, LONG slender olive-green northern pike with duckbill snout and pale spots; Swordfish, blue-gray ocean fish with very long pointed bill; Runefin, rounded teal fish with subtle glowing blue patterned fins; Obsidian Eel, sinuous BLACK eel curled into an S, no big fish fins. Row 3: Wyrmfin, red bronze fantasy fish with dragonlike fin crests; Starfin, dark blue round-bodied fish with tiny luminous gold scale flecks; Elder Koi, recognizable white koi with orange markings and whisker barbels; Ancient Sturgeon, gray elongated sturgeon with armored dorsal scutes and long snout.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "7b48156f5d4bcddb3c16c0655a5cd40c4c8f7772e90379618f2aea1724271d43",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "hide",
+      "file": "assets/art/items/hide.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "hide:0",
+          "name": "Rabbit Pelt",
+          "description": "Rabbit Pelt"
+        },
+        {
+          "key": "hide:1",
+          "name": "Fox Pelt",
+          "description": "Fox Pelt"
+        },
+        {
+          "key": "hide:2",
+          "name": "Boar Hide",
+          "description": "Boar Hide"
+        },
+        {
+          "key": "hide:3",
+          "name": "Deer Hide",
+          "description": "Deer Hide"
+        },
+        {
+          "key": "hide:4",
+          "name": "Bear Pelt",
+          "description": "Bear Pelt"
+        },
+        {
+          "key": "hide:5",
+          "name": "Direwolf Pelt",
+          "description": "Direwolf Pelt"
+        },
+        {
+          "key": "hide:6",
+          "name": "Runestag Hide",
+          "description": "Runestag Hide"
+        },
+        {
+          "key": "hide:7",
+          "name": "Obsidian Scale",
+          "description": "Obsidian Scale"
+        },
+        {
+          "key": "hide:8",
+          "name": "Wyrmhide",
+          "description": "Wyrmhide"
+        },
+        {
+          "key": "hide:9",
+          "name": "Starhorn Hide",
+          "description": "Starhorn Hide"
+        },
+        {
+          "key": "hide:10",
+          "name": "Elderbeast Hide",
+          "description": "Elderbeast Hide"
+        },
+        {
+          "key": "hide:11",
+          "name": "Ancient Beast Hide",
+          "description": "Ancient Beast Hide"
+        }
+      ],
+      "artDirection": "Distinct animal materials with recognizable fur, scale or skin. Rabbit: small soft beige pelt with long ear edges; Fox: russet fur with white-tipped bushy tail; Boar: coarse dark bristled leather; Deer: smooth warm tan hide with delicate pale spots; Bear: broad shaggy brown pelt; Direwolf: ragged gray fur with bushy tail; Runestag: greenish ivory hide with blue rune-like markings; Obsidian Scale: one large black faceted reptilian scale; Wyrmhide: crimson leathery dragon skin with horn ridge; Starhorn Hide: midnight-blue hide with gold flecks; Elderbeast: thick mossy golden fur; Ancient Beast: pale violet-gray armored hide. Distinct outlines and folds; no whole living animals.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Distinct animal materials with recognizable fur, scale or skin. Rabbit: small soft beige pelt with long ear edges; Fox: russet fur with white-tipped bushy tail; Boar: coarse dark bristled leather; Deer: smooth warm tan hide with delicate pale spots; Bear: broad shaggy brown pelt; Direwolf: ragged gray fur with bushy tail; Runestag: greenish ivory hide with blue rune-like markings; Obsidian Scale: one large black faceted reptilian scale; Wyrmhide: crimson leathery dragon skin with horn ridge; Starhorn Hide: midnight-blue hide with gold flecks; Elderbeast: thick mossy golden fur; Ancient Beast: pale violet-gray armored hide. Distinct outlines and folds; no whole living animals.\nCell assignments in row-major order:\nRow 1, column 1: Rabbit Pelt. Rabbit Pelt.\nRow 1, column 2: Fox Pelt. Fox Pelt.\nRow 1, column 3: Boar Hide. Boar Hide.\nRow 1, column 4: Deer Hide. Deer Hide.\nRow 2, column 1: Bear Pelt. Bear Pelt.\nRow 2, column 2: Direwolf Pelt. Direwolf Pelt.\nRow 2, column 3: Runestag Hide. Runestag Hide.\nRow 2, column 4: Obsidian Scale. Obsidian Scale.\nRow 3, column 1: Wyrmhide. Wyrmhide.\nRow 3, column 2: Starhorn Hide. Starhorn Hide.\nRow 3, column 3: Elderbeast Hide. Elderbeast Hide.\nRow 3, column 4: Ancient Beast Hide. Ancient Beast Hide.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "a298e09008f32bbafd5665ab36580fd3ac0875bece2f20efa67eb3f6fc582736",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "bar",
+      "file": "assets/art/items/bar.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "bar:0",
+          "name": "Copper Bar",
+          "description": "Copper Bar"
+        },
+        {
+          "key": "bar:1",
+          "name": "Tin Bar",
+          "description": "Tin Bar"
+        },
+        {
+          "key": "bar:2",
+          "name": "Iron Bar",
+          "description": "Iron Bar"
+        },
+        {
+          "key": "bar:3",
+          "name": "Steel Bar",
+          "description": "Steel Bar"
+        },
+        {
+          "key": "bar:4",
+          "name": "Silver Bar",
+          "description": "Silver Bar"
+        },
+        {
+          "key": "bar:5",
+          "name": "Gold Bar",
+          "description": "Gold Bar"
+        },
+        {
+          "key": "bar:6",
+          "name": "Runite Bar",
+          "description": "Runite Bar"
+        },
+        {
+          "key": "bar:7",
+          "name": "Obsidian Bar",
+          "description": "Obsidian Bar"
+        },
+        {
+          "key": "bar:8",
+          "name": "Draconite Bar",
+          "description": "Draconite Bar"
+        },
+        {
+          "key": "bar:9",
+          "name": "Starsteel Bar",
+          "description": "Starsteel Bar"
+        },
+        {
+          "key": "bar:10",
+          "name": "Elder Bar",
+          "description": "Elder Bar"
+        },
+        {
+          "key": "bar:11",
+          "name": "Ancient Bar",
+          "description": "Ancient Bar"
+        }
+      ],
+      "artDirection": "Twelve individually designed ingots or forged metal pieces: warm orange copper rectangular beveled ingot, pale matte silver tin narrow soft block, dark gray iron rough wedge, cool steel long polished trapezoid, gleaming white silver short stamped-free rounded ingot, rich yellow gold domed heavy bar, luminous blue runite angular prism, black volcanic-glass obsidian pointed slab, red-bronze draconite ridged bar, blue silver/gold-flecked starsteel triangular ingot, moss-green bronze elder carved block, pale cream gold-lined ancient curved bar. No written markings; different silhouettes as well as material colors.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Twelve individually designed ingots or forged metal pieces: warm orange copper rectangular beveled ingot, pale matte silver tin narrow soft block, dark gray iron rough wedge, cool steel long polished trapezoid, gleaming white silver short stamped-free rounded ingot, rich yellow gold domed heavy bar, luminous blue runite angular prism, black volcanic-glass obsidian pointed slab, red-bronze draconite ridged bar, blue silver/gold-flecked starsteel triangular ingot, moss-green bronze elder carved block, pale cream gold-lined ancient curved bar. No written markings; different silhouettes as well as material colors.\nCell assignments in row-major order:\nRow 1, column 1: Copper Bar. Copper Bar.\nRow 1, column 2: Tin Bar. Tin Bar.\nRow 1, column 3: Iron Bar. Iron Bar.\nRow 1, column 4: Steel Bar. Steel Bar.\nRow 2, column 1: Silver Bar. Silver Bar.\nRow 2, column 2: Gold Bar. Gold Bar.\nRow 2, column 3: Runite Bar. Runite Bar.\nRow 2, column 4: Obsidian Bar. Obsidian Bar.\nRow 3, column 1: Draconite Bar. Draconite Bar.\nRow 3, column 2: Starsteel Bar. Starsteel Bar.\nRow 3, column 3: Elder Bar. Elder Bar.\nRow 3, column 4: Ancient Bar. Ancient Bar.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "b9c1ec4c1ba68ac01db1a1a61518e0ff99bb455841c34f382116a40c4bd677aa",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "food",
+      "file": "assets/art/items/food.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "food:0",
+          "name": "Cooked Minnow",
+          "description": "Cooked Minnow"
+        },
+        {
+          "key": "food:1",
+          "name": "Cooked Trout",
+          "description": "Cooked Trout"
+        },
+        {
+          "key": "food:2",
+          "name": "Cooked Perch",
+          "description": "Cooked Perch"
+        },
+        {
+          "key": "food:3",
+          "name": "Cooked Salmon",
+          "description": "Cooked Salmon"
+        },
+        {
+          "key": "food:4",
+          "name": "Cooked Pike",
+          "description": "Cooked Pike"
+        },
+        {
+          "key": "food:5",
+          "name": "Cooked Swordfish",
+          "description": "Cooked Swordfish"
+        },
+        {
+          "key": "food:6",
+          "name": "Cooked Runefin",
+          "description": "Cooked Runefin"
+        },
+        {
+          "key": "food:7",
+          "name": "Cooked Obsidian Eel",
+          "description": "Cooked Obsidian Eel"
+        },
+        {
+          "key": "food:8",
+          "name": "Cooked Wyrmfin",
+          "description": "Cooked Wyrmfin"
+        },
+        {
+          "key": "food:9",
+          "name": "Cooked Starfin",
+          "description": "Cooked Starfin"
+        },
+        {
+          "key": "food:10",
+          "name": "Cooked Elder Koi",
+          "description": "Cooked Elder Koi"
+        },
+        {
+          "key": "food:11",
+          "name": "Cooked Ancient Sturgeon",
+          "description": "Cooked Ancient Sturgeon"
+        }
+      ],
+      "artDirection": "Twelve cooked meals, one per species, each plate unique: three tiny crisp minnows on a dark saucer; whole spotted roasted trout on a pale oval platter; golden perch fillet on green pottery; orange salmon steak on a wooden trencher; long pike portion on narrow clay platter; ivory swordfish steak with grill marks on dark round plate; teal-skinned runefin with herb sauce in a bronze dish; curled glazed black eel on charcoal pottery; red roasted wyrmfin on rustic iron platter; blue-skinned starfin with golden garnish on silver saucer; orange-white koi portion in emerald bowl; armored sturgeon steak with root vegetables on square carved wooden plate. Whole plate and all garnishes within the safe cell area.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Make a square sheet laid out as an EXACT 4 columns by 4 rows regular grid. Each cell square and identical in size. Center each item precisely at its cell center, keep the ENTIRE object inside the central 64% of that cell, leaving at least 18% completely empty dark charcoal padding on ALL four sides. No part, shadow, glow, ornament or detached fleck may approach the cell boundary. Uniform near-black warm charcoal (#211e1b) backdrop, no tile outlines, no labels, no letters, no UI, no watermark. Each specified item MUST have its own distinct silhouette, color and texture; no repeated drawings or recolors of the same shape. Final row (cells 13-16) completely empty charcoal. Exactly twelve painted items, not fifteen or sixteen. Row-major order, left to right:\nTwelve DISTINCT cooked fish meals, each with its own plate or serving style; all fish already cooked, no raw fish. Keep each whole plate, garnishes and shadows inside central 64% of cell. Row 1: Cooked Minnow, THREE tiny crisp slender minnows on a small dark earthenware saucer, not a big trout; Cooked Trout, whole spotted roasted trout with pink browned skin on a pale oval platter; Cooked Perch, golden striped perch fillet on dark green pottery with herbs; Cooked Salmon, thick coral-orange salmon steak on a wooden trencher. Row 2: Cooked Pike, elongated roasted pike portion with olive skin on narrow clay platter; Cooked Swordfish, ivory grilled swordfish steak with crossed grill marks on a round dark plate; Cooked Runefin, cooked teal-skinned fantasy fish with herb sauce in a bronze dish; Cooked Obsidian Eel, curled dark glazed eel on a charcoal stoneware dish. Row 3: Cooked Wyrmfin, red-bronze roasted finned fish on a rustic iron plate; Cooked Starfin, blue-skinned grilled fish with tiny golden garnish on a silver saucer; Cooked Elder Koi, white-orange cooked koi portion in an emerald glazed bowl; Cooked Ancient Sturgeon, chunky gray-skinned sturgeon steak with root vegetables on a carved square wooden plate.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "a577a94e518d5717277268a3f981095cf891ede5b7d0af5c30d893b0b777bf60",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gems-1",
+      "file": "assets/art/items/gems-1.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "uncut:0",
+          "name": "Uncut attack gem",
+          "description": "Attack stat gem: scarlet ruby, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:0:1",
+          "name": "Attack Gem I",
+          "description": "Attack stat gem: scarlet ruby, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:0:2",
+          "name": "Attack Gem II",
+          "description": "Attack stat gem: scarlet ruby, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:0:3",
+          "name": "Attack Gem III",
+          "description": "Attack stat gem: scarlet ruby, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:0:4",
+          "name": "Attack Gem IV",
+          "description": "Attack stat gem: scarlet ruby, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:0:5",
+          "name": "Attack Gem V",
+          "description": "Attack stat gem: scarlet ruby, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "uncut:1",
+          "name": "Uncut ranged gem",
+          "description": "Ranged stat gem: leaf-green emerald, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:1:1",
+          "name": "Ranged Gem I",
+          "description": "Ranged stat gem: leaf-green emerald, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:1:2",
+          "name": "Ranged Gem II",
+          "description": "Ranged stat gem: leaf-green emerald, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:1:3",
+          "name": "Ranged Gem III",
+          "description": "Ranged stat gem: leaf-green emerald, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:1:4",
+          "name": "Ranged Gem IV",
+          "description": "Ranged stat gem: leaf-green emerald, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:1:5",
+          "name": "Ranged Gem V",
+          "description": "Ranged stat gem: leaf-green emerald, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "uncut:2",
+          "name": "Uncut magic gem",
+          "description": "Magic stat gem: cobalt blue sapphire, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:2:1",
+          "name": "Magic Gem I",
+          "description": "Magic stat gem: cobalt blue sapphire, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:2:2",
+          "name": "Magic Gem II",
+          "description": "Magic stat gem: cobalt blue sapphire, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:2:3",
+          "name": "Magic Gem III",
+          "description": "Magic stat gem: cobalt blue sapphire, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone"
+        }
+      ],
+      "artDirection": "Gem ranks must visibly progress in cut, size and facet complexity; uncut gems are rough mineral pieces, rank I is a simple cut, rank V an intricate large cut. Seven stat colors are distinct; no gems in jewelry, no accessories or mixed types in a cell. Every stone independently drawn with a distinct cut pattern; no duplicate drawings.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Gem ranks must visibly progress in cut, size and facet complexity; uncut gems are rough mineral pieces, rank I is a simple cut, rank V an intricate large cut. Seven stat colors are distinct; no gems in jewelry, no accessories or mixed types in a cell. Every stone independently drawn with a distinct cut pattern; no duplicate drawings.\nCell assignments in row-major order:\nRow 1, column 1: Uncut attack gem. Attack stat gem: scarlet ruby, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone.\nRow 1, column 2: Attack Gem I. Attack stat gem: scarlet ruby, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone.\nRow 1, column 3: Attack Gem II. Attack stat gem: scarlet ruby, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone.\nRow 1, column 4: Attack Gem III. Attack stat gem: scarlet ruby, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 1: Attack Gem IV. Attack stat gem: scarlet ruby, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 2: Attack Gem V. Attack stat gem: scarlet ruby, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 3: Uncut ranged gem. Ranged stat gem: leaf-green emerald, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 4: Ranged Gem I. Ranged stat gem: leaf-green emerald, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 1: Ranged Gem II. Ranged stat gem: leaf-green emerald, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 2: Ranged Gem III. Ranged stat gem: leaf-green emerald, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 3: Ranged Gem IV. Ranged stat gem: leaf-green emerald, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 4: Ranged Gem V. Ranged stat gem: leaf-green emerald, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone.\nRow 4, column 1: Uncut magic gem. Magic stat gem: cobalt blue sapphire, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone.\nRow 4, column 2: Magic Gem I. Magic stat gem: cobalt blue sapphire, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone.\nRow 4, column 3: Magic Gem II. Magic stat gem: cobalt blue sapphire, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone.\nRow 4, column 4: Magic Gem III. Magic stat gem: cobalt blue sapphire, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "5210d44273e30d5099601ba56884d113a95eb2a3cce22342b6c8b0e17d032dd3",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gems-2",
+      "file": "assets/art/items/gems-2.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gem:2:4",
+          "name": "Magic Gem IV",
+          "description": "Magic stat gem: cobalt blue sapphire, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:2:5",
+          "name": "Magic Gem V",
+          "description": "Magic stat gem: cobalt blue sapphire, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "uncut:3",
+          "name": "Uncut defence gem",
+          "description": "Defence stat gem: honey amber, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:3:1",
+          "name": "Defence Gem I",
+          "description": "Defence stat gem: honey amber, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:3:2",
+          "name": "Defence Gem II",
+          "description": "Defence stat gem: honey amber, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:3:3",
+          "name": "Defence Gem III",
+          "description": "Defence stat gem: honey amber, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:3:4",
+          "name": "Defence Gem IV",
+          "description": "Defence stat gem: honey amber, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:3:5",
+          "name": "Defence Gem V",
+          "description": "Defence stat gem: honey amber, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "uncut:4",
+          "name": "Uncut health gem",
+          "description": "Health stat gem: rose-pink crystal, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:4:1",
+          "name": "Health Gem I",
+          "description": "Health stat gem: rose-pink crystal, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:4:2",
+          "name": "Health Gem II",
+          "description": "Health stat gem: rose-pink crystal, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:4:3",
+          "name": "Health Gem III",
+          "description": "Health stat gem: rose-pink crystal, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:4:4",
+          "name": "Health Gem IV",
+          "description": "Health stat gem: rose-pink crystal, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:4:5",
+          "name": "Health Gem V",
+          "description": "Health stat gem: rose-pink crystal, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "uncut:5",
+          "name": "Uncut critical chance gem",
+          "description": "Critical Chance stat gem: violet amethyst, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:5:1",
+          "name": "Critical Chance Gem I",
+          "description": "Critical Chance stat gem: violet amethyst, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone"
+        }
+      ],
+      "artDirection": "Gem ranks must visibly progress in cut, size and facet complexity; uncut gems are rough mineral pieces, rank I is a simple cut, rank V an intricate large cut. Seven stat colors are distinct; no gems in jewelry, no accessories or mixed types in a cell. Every stone independently drawn with a distinct cut pattern; no duplicate drawings.",
+      "prompt": "Edit this inventory sprite sheet while preserving every item's identity, color and painted medieval storybook finish. Maintain an EXACT evenly divided 4 columns by 4 rows grid. CRITICAL: SHRINK EVERY COMPLETE OBJECT into the CENTRAL 62% OF ITS OWN CELL, leaving at least19% completely empty charcoal margin on all four sides. Every tip, tail, ornament, shadow and glow must stay well inside its own square. Uniform dark warm charcoal background, no lines, labels, text or extra objects. Center every item at its exact cell center; do not enlarge or shift a partial row. Exact positions and identities:\nRow 1 column 1: Magic Gem IV; Magic stat gem: cobalt blue sapphire, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone\nRow 1 column 2: Magic Gem V; Magic stat gem: cobalt blue sapphire, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone\nRow 1 column 3: Uncut defence gem; Defence stat gem: honey amber, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone\nRow 1 column 4: Defence Gem I; Defence stat gem: honey amber, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone\nRow 2 column 1: Defence Gem II; Defence stat gem: honey amber, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone\nRow 2 column 2: Defence Gem III; Defence stat gem: honey amber, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone\nRow 2 column 3: Defence Gem IV; Defence stat gem: honey amber, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone\nRow 2 column 4: Defence Gem V; Defence stat gem: honey amber, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone\nRow 3 column 1: Uncut health gem; Health stat gem: rose-pink crystal, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone\nRow 3 column 2: Health Gem I; Health stat gem: rose-pink crystal, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone\nRow 3 column 3: Health Gem II; Health stat gem: rose-pink crystal, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone\nRow 3 column 4: Health Gem III; Health stat gem: rose-pink crystal, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone\nRow 4 column 1: Health Gem IV; Health stat gem: rose-pink crystal, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone\nRow 4 column 2: Health Gem V; Health stat gem: rose-pink crystal, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone\nRow 4 column 3: Uncut critical chance gem; Critical Chance stat gem: violet amethyst, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone\nRow 4 column 4: Critical Chance Gem I; Critical Chance stat gem: violet amethyst, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone\nAll remaining unlisted cells COMPLETELY EMPTY.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "a9fc474523737c0ccaef2727b332b1cd84831d676f00d6a37173a84e12605f11",
+      "generator": "image_gen built-in",
+      "referenceSha256": "eb67d57c7890a06bfb843d9fea7f9df9542e45a41a0baee5a4d857ddc9a386e7",
+      "originalPrompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Gem ranks must visibly progress in cut, size and facet complexity; uncut gems are rough mineral pieces, rank I is a simple cut, rank V an intricate large cut. Seven stat colors are distinct; no gems in jewelry, no accessories or mixed types in a cell. Every stone independently drawn with a distinct cut pattern; no duplicate drawings.\nCell assignments in row-major order:\nRow 1, column 1: Magic Gem IV. Magic stat gem: cobalt blue sapphire, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 1, column 2: Magic Gem V. Magic stat gem: cobalt blue sapphire, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone.\nRow 1, column 3: Uncut defence gem. Defence stat gem: honey amber, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone.\nRow 1, column 4: Defence Gem I. Defence stat gem: honey amber, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 1: Defence Gem II. Defence stat gem: honey amber, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 2: Defence Gem III. Defence stat gem: honey amber, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 3: Defence Gem IV. Defence stat gem: honey amber, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 4: Defence Gem V. Defence stat gem: honey amber, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 1: Uncut health gem. Health stat gem: rose-pink crystal, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 2: Health Gem I. Health stat gem: rose-pink crystal, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 3: Health Gem II. Health stat gem: rose-pink crystal, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 4: Health Gem III. Health stat gem: rose-pink crystal, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 4, column 1: Health Gem IV. Health stat gem: rose-pink crystal, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 4, column 2: Health Gem V. Health stat gem: rose-pink crystal, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone.\nRow 4, column 3: Uncut critical chance gem. Critical Chance stat gem: violet amethyst, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone.\nRow 4, column 4: Critical Chance Gem I. Critical Chance stat gem: violet amethyst, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone.\nAll remaining cells empty."
+    },
+    {
+      "key": "gems-3",
+      "file": "assets/art/items/gems-3.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gem:5:2",
+          "name": "Critical Chance Gem II",
+          "description": "Critical Chance stat gem: violet amethyst, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:5:3",
+          "name": "Critical Chance Gem III",
+          "description": "Critical Chance stat gem: violet amethyst, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:5:4",
+          "name": "Critical Chance Gem IV",
+          "description": "Critical Chance stat gem: violet amethyst, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:5:5",
+          "name": "Critical Chance Gem V",
+          "description": "Critical Chance stat gem: violet amethyst, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "uncut:6",
+          "name": "Uncut critical damage gem",
+          "description": "Critical Damage stat gem: icy teal-white diamond, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:6:1",
+          "name": "Critical Damage Gem I",
+          "description": "Critical Damage stat gem: icy teal-white diamond, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:6:2",
+          "name": "Critical Damage Gem II",
+          "description": "Critical Damage stat gem: icy teal-white diamond, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:6:3",
+          "name": "Critical Damage Gem III",
+          "description": "Critical Damage stat gem: icy teal-white diamond, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:6:4",
+          "name": "Critical Damage Gem IV",
+          "description": "Critical Damage stat gem: icy teal-white diamond, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone"
+        },
+        {
+          "key": "gem:6:5",
+          "name": "Critical Damage Gem V",
+          "description": "Critical Damage stat gem: icy teal-white diamond, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone"
+        }
+      ],
+      "artDirection": "Gem ranks must visibly progress in cut, size and facet complexity; uncut gems are rough mineral pieces, rank I is a simple cut, rank V an intricate large cut. Seven stat colors are distinct; no gems in jewelry, no accessories or mixed types in a cell. Every stone independently drawn with a distinct cut pattern; no duplicate drawings.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Gem ranks must visibly progress in cut, size and facet complexity; uncut gems are rough mineral pieces, rank I is a simple cut, rank V an intricate large cut. Seven stat colors are distinct; no gems in jewelry, no accessories or mixed types in a cell. Every stone independently drawn with a distinct cut pattern; no duplicate drawings.\nCell assignments in row-major order:\nRow 1, column 1: Critical Chance Gem II. Critical Chance stat gem: violet amethyst, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone.\nRow 1, column 2: Critical Chance Gem III. Critical Chance stat gem: violet amethyst, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 1, column 3: Critical Chance Gem IV. Critical Chance stat gem: violet amethyst, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 1, column 4: Critical Chance Gem V. Critical Chance stat gem: violet amethyst, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 1: Uncut critical damage gem. Critical Damage stat gem: icy teal-white diamond, rough natural uncut mineral cluster; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 2: Critical Damage Gem I. Critical Damage stat gem: icy teal-white diamond, small simple faceted triangular stone; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 3: Critical Damage Gem II. Critical Damage stat gem: icy teal-white diamond, larger oval rose-cut stone; unique asymmetry and cut pattern for this specific stone.\nRow 2, column 4: Critical Damage Gem III. Critical Damage stat gem: icy teal-white diamond, angular kite-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 1: Critical Damage Gem IV. Critical Damage stat gem: icy teal-white diamond, elongated ornate marquise-cut gem; unique asymmetry and cut pattern for this specific stone.\nRow 3, column 2: Critical Damage Gem V. Critical Damage stat gem: icy teal-white diamond, large intricate crown-brilliant gem; unique asymmetry and cut pattern for this specific stone.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "4785fbe526b76f4bae5347f0104b7c1c3ec66e938a45394cee8b5e96e2bc514d",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gear-0",
+      "file": "assets/art/items/gear-0.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:0",
+          "name": "Worn Sword",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:0",
+          "name": "Shortsword",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:0",
+          "name": "Longsword",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:0",
+          "name": "Battleaxe",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:0",
+          "name": "Greataxe",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:0",
+          "name": "Warhammer",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:0",
+          "name": "Greatsword",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:0",
+          "name": "Halberd",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:0",
+          "name": "Maul",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:0",
+          "name": "Glaive",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:0",
+          "name": "Zweihander",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:0",
+          "name": "Greatblade",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Each melee weapon uses its actual form: swords have sword blades, battleaxe/greataxe have axe heads, warhammer/maul have heavy hammer heads, halberd/glaive have long polearm forms. Distinct hilt, guard, blade and length for each. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Edit this production 4 by 4 game sprite sheet. Preserve the soft painted medieval style, charcoal background, exact item identities, and positions. CRITICAL: shrink EACH complete weapon so its entire silhouette, all blade tips, shafts, ornament and shadow fit inside the CENTRAL 62% OF ITS OWN GRID CELL with at least 19% empty charcoal margin on all four sides. Exact cell edges at 25%,50%,75% of the canvas. The twelve weapons occupy only the first three rows; the fourth row stays completely empty. In particular the purple halberd is ONLY row 2 column 4 and the gold Ancient Greatblade is ONLY row 3 column 4: their tips must NEVER cross row boundaries. The mace row 2 column 1 likewise stays strictly in its own cell. No extra objects, no labels, no borders. Show complete weapons with empty charcoal surrounding every one. Twelve distinct illustrations matching reference, centered at the exact center of each cell.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "8cf3045031ad9ccb26730d3a11a6f1f5fcc49586d3924ec1aba4f7212bfcef32",
+      "generator": "image_gen built-in",
+      "referenceSha256": "a97af27eb54f7085a85e08940472e8fd43e1af18a8da3e48b62dd81699f0b7ff",
+      "originalPrompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Each melee weapon uses its actual form: swords have sword blades, battleaxe/greataxe have axe heads, warhammer/maul have heavy hammer heads, halberd/glaive have long polearm forms. Distinct hilt, guard, blade and length for each. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Sword. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Shortsword. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Longsword. simple angular iron with rivets and dark leather.\nRow 1, column 4: Battleaxe. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Greataxe. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Warhammer. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Greatsword. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Halberd. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Maul. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Glaive. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Zweihander. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Greatblade. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty."
+    },
+    {
+      "key": "gear-1",
+      "file": "assets/art/items/gear-1.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:1",
+          "name": "Worn Bow",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:1",
+          "name": "Shortbow",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:1",
+          "name": "Longbow",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:1",
+          "name": "Recurve Bow",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:1",
+          "name": "Composite Bow",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:1",
+          "name": "Warbow",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:1",
+          "name": "Crossbow",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:1",
+          "name": "Heavy Crossbow",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:1",
+          "name": "Greatbow",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:1",
+          "name": "Arbalest",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:1",
+          "name": "Siege Bow",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:1",
+          "name": "Grandbow",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Shortbows are small simple wooden bows, longbow tall, recurve curved tips, composite laminated limbs, warbow heavy reinforced limbs; Crossbow, Heavy Crossbow and Arbalest MUST have stocks and sideways limbs; great/siege/grand bows are distinct larger ornate bows. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Edit this inventory sprite sheet while preserving every item's identity, color and painted medieval storybook finish. Maintain an EXACT evenly divided 4 columns by 4 rows grid. CRITICAL: SHRINK EVERY COMPLETE OBJECT into the CENTRAL 62% OF ITS OWN CELL, leaving at least19% completely empty charcoal margin on all four sides. Every tip, tail, ornament, shadow and glow must stay well inside its own square. Uniform dark warm charcoal background, no lines, labels, text or extra objects. Center every item at its exact cell center; do not enlarge or shift a partial row. Exact positions and identities:\nRow 1 column 1: Worn Bow; very worn humble repaired iron/leather, chipped and asymmetrical\nRow 1 column 2: Shortbow; warm supple leather and simple bronze fittings, practical wrapped construction\nRow 1 column 3: Longbow; simple angular iron with rivets and dark leather\nRow 1 column 4: Recurve Bow; smooth blue-gray steel with clean overlapping plates\nRow 2 column 1: Composite Bow; dark hardened metal and reinforced edges with studded details\nRow 2 column 2: Warbow; heavy reinforced layered gunmetal with red-brown straps\nRow 2 column 3: Crossbow; blue-violet runed metal with sculpted geometric accents, no readable text\nRow 2 column 4: Heavy Crossbow; jagged faceted black obsidian with muted violet seams\nRow 3 column 1: Greatbow; ivory dragonbone and crimson leather with sculpted talon details\nRow 3 column 2: Arbalest; icy blue silver starsteel with fine gold points and star facets\nRow 3 column 3: Siege Bow; weathered green bronze and warm wood with leaf and vine accents\nRow 3 column 4: Grandbow; pale cream ancient metal with violet and gold ceremonial curves\nAll remaining unlisted cells COMPLETELY EMPTY.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "8cf053efec4e19c33bf29bd694d13913c9ca881ad3855c08d13a147b866843c9",
+      "generator": "image_gen built-in",
+      "referenceSha256": "a5008fe7e3e5a64820d1e62001ddc1509b5694c674b230541c3f309a375a3931",
+      "originalPrompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Shortbows are small simple wooden bows, longbow tall, recurve curved tips, composite laminated limbs, warbow heavy reinforced limbs; Crossbow, Heavy Crossbow and Arbalest MUST have stocks and sideways limbs; great/siege/grand bows are distinct larger ornate bows. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Bow. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Shortbow. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Longbow. simple angular iron with rivets and dark leather.\nRow 1, column 4: Recurve Bow. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Composite Bow. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Warbow. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Crossbow. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Heavy Crossbow. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Greatbow. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Arbalest. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Siege Bow. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Grandbow. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty."
+    },
+    {
+      "key": "gear-2",
+      "file": "assets/art/items/gear-2.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:2",
+          "name": "Worn Wand",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:2",
+          "name": "Oak Wand",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:2",
+          "name": "Staff",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:2",
+          "name": "Runed Staff",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:2",
+          "name": "Battlestaff",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:2",
+          "name": "Warstaff",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:2",
+          "name": "Scepter",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:2",
+          "name": "Spellbook",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:2",
+          "name": "Crystal Staff",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:2",
+          "name": "Arcane Scepter",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:2",
+          "name": "Grand Staff",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:2",
+          "name": "Archstaff",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Worn Wand and Oak Wand are short wands; later staffs long with distinct headpieces; Scepters have short ornate shafts; Spellbook MUST be a book with clasp rather than another staff. Different crystal or head silhouette each time. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Worn Wand and Oak Wand are short wands; later staffs long with distinct headpieces; Scepters have short ornate shafts; Spellbook MUST be a book with clasp rather than another staff. Different crystal or head silhouette each time. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Wand. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Oak Wand. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Staff. simple angular iron with rivets and dark leather.\nRow 1, column 4: Runed Staff. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Battlestaff. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Warstaff. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Scepter. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Spellbook. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Crystal Staff. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Arcane Scepter. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Grand Staff. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Archstaff. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "1cf87675aa806c5a1bf9dd8a57910d9fdb2d3d68f39bb1749404ea45a14bf9ab",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gear-3",
+      "file": "assets/art/items/gear-3.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:3",
+          "name": "Worn Helmet",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:3",
+          "name": "Leather Helmet",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:3",
+          "name": "Iron Helmet",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:3",
+          "name": "Steel Helmet",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:3",
+          "name": "Hardened Helmet",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:3",
+          "name": "Reinforced Helmet",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:3",
+          "name": "Runed Helmet",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:3",
+          "name": "Obsidian Helmet",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:3",
+          "name": "Dragonbone Helmet",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:3",
+          "name": "Starsteel Helmet",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:3",
+          "name": "Elder Helmet",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:3",
+          "name": "Ancient Helmet",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Twelve helmet forms: patched cap, leather hood, iron pot helm, steel sallet, reinforced visored helm, layered horned helm, runic crested helm, sharp obsidian crown-helm, dragonbone skull-helm, starsteel winged helm, elder leaf-helm, ancient curved ceremonial helm. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Twelve helmet forms: patched cap, leather hood, iron pot helm, steel sallet, reinforced visored helm, layered horned helm, runic crested helm, sharp obsidian crown-helm, dragonbone skull-helm, starsteel winged helm, elder leaf-helm, ancient curved ceremonial helm. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Helmet. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Leather Helmet. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Iron Helmet. simple angular iron with rivets and dark leather.\nRow 1, column 4: Steel Helmet. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Hardened Helmet. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Reinforced Helmet. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Runed Helmet. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Obsidian Helmet. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Dragonbone Helmet. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Starsteel Helmet. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Elder Helmet. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Ancient Helmet. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "27e80ce418d32327928afc6f855553b681df420f0a882cf547567224c9b7d6d5",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gear-4",
+      "file": "assets/art/items/gear-4.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:4",
+          "name": "Worn Plate",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:4",
+          "name": "Leather Plate",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:4",
+          "name": "Iron Plate",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:4",
+          "name": "Steel Plate",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:4",
+          "name": "Hardened Plate",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:4",
+          "name": "Reinforced Plate",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:4",
+          "name": "Runed Plate",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:4",
+          "name": "Obsidian Plate",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:4",
+          "name": "Dragonbone Plate",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:4",
+          "name": "Starsteel Plate",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:4",
+          "name": "Elder Plate",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:4",
+          "name": "Ancient Plate",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Twelve torso armors: repaired iron cuirass, laced leather vest, iron breastplate, smooth steel full cuirass, studded hardened torso, layered heavy reinforced torso, sculpted runic torso, faceted obsidian cuirass, dragonbone rib armor, starsteel pointed breastplate, elder vine-shaped breastplate, ancient cream-gold ceremonial torso. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Twelve torso armors: repaired iron cuirass, laced leather vest, iron breastplate, smooth steel full cuirass, studded hardened torso, layered heavy reinforced torso, sculpted runic torso, faceted obsidian cuirass, dragonbone rib armor, starsteel pointed breastplate, elder vine-shaped breastplate, ancient cream-gold ceremonial torso. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Plate. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Leather Plate. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Iron Plate. simple angular iron with rivets and dark leather.\nRow 1, column 4: Steel Plate. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Hardened Plate. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Reinforced Plate. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Runed Plate. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Obsidian Plate. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Dragonbone Plate. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Starsteel Plate. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Elder Plate. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Ancient Plate. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "593de7245bbfd7c82b62f1d7cf17419cc2678a844e1160a3b0b1812ffe05967e",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gear-5",
+      "file": "assets/art/items/gear-5.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:5",
+          "name": "Worn Greaves",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:5",
+          "name": "Leather Greaves",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:5",
+          "name": "Iron Greaves",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:5",
+          "name": "Steel Greaves",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:5",
+          "name": "Hardened Greaves",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:5",
+          "name": "Reinforced Greaves",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:5",
+          "name": "Runed Greaves",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:5",
+          "name": "Obsidian Greaves",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:5",
+          "name": "Dragonbone Greaves",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:5",
+          "name": "Starsteel Greaves",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:5",
+          "name": "Elder Greaves",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:5",
+          "name": "Ancient Greaves",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Twelve pairs of leg armor with unique lengths and segmentation, progressing from patched leather/iron guards to leather trousers, iron greaves, steel articulated legs, studded guards, thick layered legs, rune plates, obsidian shards, dragonbone scales, starsteel points, elder leaf plates, ancient curved ceremonial plates. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Twelve pairs of leg armor with unique lengths and segmentation, progressing from patched leather/iron guards to leather trousers, iron greaves, steel articulated legs, studded guards, thick layered legs, rune plates, obsidian shards, dragonbone scales, starsteel points, elder leaf plates, ancient curved ceremonial plates. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Greaves. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Leather Greaves. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Iron Greaves. simple angular iron with rivets and dark leather.\nRow 1, column 4: Steel Greaves. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Hardened Greaves. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Reinforced Greaves. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Runed Greaves. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Obsidian Greaves. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Dragonbone Greaves. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Starsteel Greaves. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Elder Greaves. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Ancient Greaves. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "701126ecfadb3e4e99f5dc06c789534a6941766707a43640260e3c126be60819",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gear-6",
+      "file": "assets/art/items/gear-6.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:6",
+          "name": "Worn Gloves",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:6",
+          "name": "Leather Gloves",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:6",
+          "name": "Iron Gloves",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:6",
+          "name": "Steel Gloves",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:6",
+          "name": "Hardened Gloves",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:6",
+          "name": "Reinforced Gloves",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:6",
+          "name": "Runed Gloves",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:6",
+          "name": "Obsidian Gloves",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:6",
+          "name": "Dragonbone Gloves",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:6",
+          "name": "Starsteel Gloves",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:6",
+          "name": "Elder Gloves",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:6",
+          "name": "Ancient Gloves",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Twelve distinct glove pairs: repaired worn work gloves, soft cuffed leather gloves, iron knuckle gauntlets, steel segmented gauntlets, studded reinforced mitts, heavy layered bracers, rune-etched finger armor, obsidian sharp finger guards, bone-clawed gauntlets, starsteel winged cuffs, elder vine bracers, ancient flared ceremonial gauntlets. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Twelve distinct glove pairs: repaired worn work gloves, soft cuffed leather gloves, iron knuckle gauntlets, steel segmented gauntlets, studded reinforced mitts, heavy layered bracers, rune-etched finger armor, obsidian sharp finger guards, bone-clawed gauntlets, starsteel winged cuffs, elder vine bracers, ancient flared ceremonial gauntlets. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Gloves. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Leather Gloves. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Iron Gloves. simple angular iron with rivets and dark leather.\nRow 1, column 4: Steel Gloves. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Hardened Gloves. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Reinforced Gloves. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Runed Gloves. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Obsidian Gloves. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Dragonbone Gloves. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Starsteel Gloves. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Elder Gloves. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Ancient Gloves. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "c682e7a7c67a3b18a4c10afde6d79ee37280c3b9556f3720a972eb59f71eda57",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gear-7",
+      "file": "assets/art/items/gear-7.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:7",
+          "name": "Worn Boots",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:7",
+          "name": "Leather Boots",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:7",
+          "name": "Iron Boots",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:7",
+          "name": "Steel Boots",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:7",
+          "name": "Hardened Boots",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:7",
+          "name": "Reinforced Boots",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:7",
+          "name": "Runed Boots",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:7",
+          "name": "Obsidian Boots",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:7",
+          "name": "Dragonbone Boots",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:7",
+          "name": "Starsteel Boots",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:7",
+          "name": "Elder Boots",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:7",
+          "name": "Ancient Boots",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Twelve distinct boot pairs: patched short worn boots, cuffed leather boots, iron-toed ankle boots, segmented steel mid-calf boots, studded strapped boots, heavy reinforced knee boots, runed heeled boots, faceted obsidian tall boots, dragonbone talon boots, pointed starsteel boots, elder leaf-trimmed boots, ancient curved ceremonial boots. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Twelve distinct boot pairs: patched short worn boots, cuffed leather boots, iron-toed ankle boots, segmented steel mid-calf boots, studded strapped boots, heavy reinforced knee boots, runed heeled boots, faceted obsidian tall boots, dragonbone talon boots, pointed starsteel boots, elder leaf-trimmed boots, ancient curved ceremonial boots. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Boots. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Leather Boots. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Iron Boots. simple angular iron with rivets and dark leather.\nRow 1, column 4: Steel Boots. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Hardened Boots. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Reinforced Boots. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Runed Boots. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Obsidian Boots. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Dragonbone Boots. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Starsteel Boots. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Elder Boots. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Ancient Boots. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "c2f549d6602f00bc60801d1e99b57d55200997dde640c82dc3e2504e95ad053a",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gear-8",
+      "file": "assets/art/items/gear-8.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:8",
+          "name": "Worn Necklace",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:8",
+          "name": "Leather Necklace",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:8",
+          "name": "Iron Necklace",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:8",
+          "name": "Steel Necklace",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:8",
+          "name": "Hardened Necklace",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:8",
+          "name": "Reinforced Necklace",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:8",
+          "name": "Runed Necklace",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:8",
+          "name": "Obsidian Necklace",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:8",
+          "name": "Dragonbone Necklace",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:8",
+          "name": "Starsteel Necklace",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:8",
+          "name": "Elder Necklace",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:8",
+          "name": "Ancient Necklace",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Twelve completely different necklaces and pendant silhouettes, from worn thread/simple chipped pendant to leather amulet, iron medallion, steel teardrop, hardened shield, reinforced geometric pendant, runic crystal, obsidian shard, dragon tooth, starsteel star, elder leaf, ancient curved violet-and-gold amulet. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Twelve completely different necklaces and pendant silhouettes, from worn thread/simple chipped pendant to leather amulet, iron medallion, steel teardrop, hardened shield, reinforced geometric pendant, runic crystal, obsidian shard, dragon tooth, starsteel star, elder leaf, ancient curved violet-and-gold amulet. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Necklace. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Leather Necklace. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Iron Necklace. simple angular iron with rivets and dark leather.\nRow 1, column 4: Steel Necklace. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Hardened Necklace. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Reinforced Necklace. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Runed Necklace. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Obsidian Necklace. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Dragonbone Necklace. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Starsteel Necklace. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Elder Necklace. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Ancient Necklace. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "f7d09e4ba8714146d4c4ee5250db59b31c4c0f805bdc17d4bc80f9c7d74464ac",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "gear-9",
+      "file": "assets/art/items/gear-9.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "gear:0:9",
+          "name": "Worn Ring",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:9",
+          "name": "Leather Ring",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:9",
+          "name": "Iron Ring",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:9",
+          "name": "Steel Ring",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:9",
+          "name": "Hardened Ring",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:9",
+          "name": "Reinforced Ring",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:9",
+          "name": "Runed Ring",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:9",
+          "name": "Obsidian Ring",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:9",
+          "name": "Dragonbone Ring",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:9",
+          "name": "Starsteel Ring",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:9",
+          "name": "Elder Ring",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:9",
+          "name": "Ancient Ring",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        }
+      ],
+      "artDirection": "Twelve different ring profiles and settings: worn bent iron band, leather-wrapped copper band, square iron signet, polished steel beveled band, studded dark band, layered heavy band, runic blue crystal ring, black obsidian pointed band, dragonbone claw setting, starsteel star setting, elder leaf band, ancient flared violet-and-gold ring. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
+      "prompt": "Edit this inventory sprite sheet while preserving every item's identity, color and painted medieval storybook finish. Maintain an EXACT evenly divided 4 columns by 4 rows grid. CRITICAL: SHRINK EVERY COMPLETE OBJECT into the CENTRAL 62% OF ITS OWN CELL, leaving at least19% completely empty charcoal margin on all four sides. Every tip, tail, ornament, shadow and glow must stay well inside its own square. Uniform dark warm charcoal background, no lines, labels, text or extra objects. Center every item at its exact cell center; do not enlarge or shift a partial row. Exact positions and identities:\nRow 1 column 1: Worn Ring; very worn humble repaired iron/leather, chipped and asymmetrical\nRow 1 column 2: Leather Ring; warm supple leather and simple bronze fittings, practical wrapped construction\nRow 1 column 3: Iron Ring; simple angular iron with rivets and dark leather\nRow 1 column 4: Steel Ring; smooth blue-gray steel with clean overlapping plates\nRow 2 column 1: Hardened Ring; dark hardened metal and reinforced edges with studded details\nRow 2 column 2: Reinforced Ring; heavy reinforced layered gunmetal with red-brown straps\nRow 2 column 3: Runed Ring; blue-violet runed metal with sculpted geometric accents, no readable text\nRow 2 column 4: Obsidian Ring; jagged faceted black obsidian with muted violet seams\nRow 3 column 1: Dragonbone Ring; ivory dragonbone and crimson leather with sculpted talon details\nRow 3 column 2: Starsteel Ring; icy blue silver starsteel with fine gold points and star facets\nRow 3 column 3: Elder Ring; weathered green bronze and warm wood with leaf and vine accents\nRow 3 column 4: Ancient Ring; pale cream ancient metal with violet and gold ceremonial curves\nAll remaining unlisted cells COMPLETELY EMPTY.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "4349d08e39be4317ccb4de9d645364f5241773f524695598800c0cbe69f70377",
+      "generator": "image_gen built-in",
+      "referenceSha256": "7cf68798da5d51f07a963a187484bf17d038c83846c62aaec327a5b7bc14cbe8",
+      "originalPrompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Twelve different ring profiles and settings: worn bent iron band, leather-wrapped copper band, square iron signet, polished steel beveled band, studded dark band, layered heavy band, runic blue crystal ring, black obsidian pointed band, dragonbone claw setting, starsteel star setting, elder leaf band, ancient flared violet-and-gold ring. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Ring. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Leather Ring. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Iron Ring. simple angular iron with rivets and dark leather.\nRow 1, column 4: Steel Ring. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Hardened Ring. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Reinforced Ring. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Runed Ring. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Obsidian Ring. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Dragonbone Ring. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Starsteel Ring. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Elder Ring. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Ancient Ring. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty."
+    },
+    {
+      "key": "boss-0",
+      "file": "assets/art/items/boss-0.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "boss:0:0",
+          "name": "Bloodcleaver",
+          "description": "Bloodcleaver"
+        },
+        {
+          "key": "boss:0:1",
+          "name": "Ironspike Warbow",
+          "description": "Ironspike Warbow"
+        },
+        {
+          "key": "boss:0:2",
+          "name": "Warlord's Bloodstaff",
+          "description": "Warlord's Bloodstaff"
+        },
+        {
+          "key": "boss:0:3",
+          "name": "Ironblood Helm",
+          "description": "Ironblood Helm"
+        },
+        {
+          "key": "boss:0:4",
+          "name": "Ironblood Plate",
+          "description": "Ironblood Plate"
+        },
+        {
+          "key": "boss:0:5",
+          "name": "Ironblood Greaves",
+          "description": "Ironblood Greaves"
+        },
+        {
+          "key": "boss:0:6",
+          "name": "Ironblood Gloves",
+          "description": "Ironblood Gloves"
+        },
+        {
+          "key": "boss:0:7",
+          "name": "Ironblood Boots",
+          "description": "Ironblood Boots"
+        },
+        {
+          "key": "boss:0:8",
+          "name": "Ironblood Necklace",
+          "description": "Ironblood Necklace"
+        },
+        {
+          "key": "boss:0:9",
+          "name": "Ironblood Ring",
+          "description": "Ironblood Ring"
+        }
+      ],
+      "artDirection": "Ironblood: rugged warlord armor in dark iron, burgundy leather, thick red rivets and hooked guards. Melee Bloodcleaver is an axe-like cleaver; Ironspike Warbow has spiked bow limbs; Bloodstaff has a red stone head. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Ironblood: rugged warlord armor in dark iron, burgundy leather, thick red rivets and hooked guards. Melee Bloodcleaver is an axe-like cleaver; Ironspike Warbow has spiked bow limbs; Bloodstaff has a red stone head. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.\nCell assignments in row-major order:\nRow 1, column 1: Bloodcleaver. Bloodcleaver.\nRow 1, column 2: Ironspike Warbow. Ironspike Warbow.\nRow 1, column 3: Warlord's Bloodstaff. Warlord's Bloodstaff.\nRow 1, column 4: Ironblood Helm. Ironblood Helm.\nRow 2, column 1: Ironblood Plate. Ironblood Plate.\nRow 2, column 2: Ironblood Greaves. Ironblood Greaves.\nRow 2, column 3: Ironblood Gloves. Ironblood Gloves.\nRow 2, column 4: Ironblood Boots. Ironblood Boots.\nRow 3, column 1: Ironblood Necklace. Ironblood Necklace.\nRow 3, column 2: Ironblood Ring. Ironblood Ring.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "7a9bf8d7a47c114ea50c141b6b08f58f1fe8b351443175806dc4a46cc39d2c73",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "boss-1",
+      "file": "assets/art/items/boss-1.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "boss:1:0",
+          "name": "Tyrant's Breaker",
+          "description": "Tyrant's Breaker"
+        },
+        {
+          "key": "boss:1:1",
+          "name": "Blackbolt Arbalest",
+          "description": "Blackbolt Arbalest"
+        },
+        {
+          "key": "boss:1:2",
+          "name": "Tyrant's Scepter",
+          "description": "Tyrant's Scepter"
+        },
+        {
+          "key": "boss:1:3",
+          "name": "Black Bastion Helm",
+          "description": "Black Bastion Helm"
+        },
+        {
+          "key": "boss:1:4",
+          "name": "Black Bastion Plate",
+          "description": "Black Bastion Plate"
+        },
+        {
+          "key": "boss:1:5",
+          "name": "Black Bastion Greaves",
+          "description": "Black Bastion Greaves"
+        },
+        {
+          "key": "boss:1:6",
+          "name": "Black Bastion Gloves",
+          "description": "Black Bastion Gloves"
+        },
+        {
+          "key": "boss:1:7",
+          "name": "Black Bastion Boots",
+          "description": "Black Bastion Boots"
+        },
+        {
+          "key": "boss:1:8",
+          "name": "Black Bastion Necklace",
+          "description": "Black Bastion Necklace"
+        },
+        {
+          "key": "boss:1:9",
+          "name": "Black Bastion Ring",
+          "description": "Black Bastion Ring"
+        }
+      ],
+      "artDirection": "Black Bastion: tyrant armor, black angular iron, heavy fortresslike stepped shapes, muted violet crystal. Tyrants Breaker is a heavy blunt breaker; Blackbolt Arbalest is a large stock crossbow; Scepter a short blunt black ceremonial rod. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Black Bastion: tyrant armor, black angular iron, heavy fortresslike stepped shapes, muted violet crystal. Tyrants Breaker is a heavy blunt breaker; Blackbolt Arbalest is a large stock crossbow; Scepter a short blunt black ceremonial rod. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.\nCell assignments in row-major order:\nRow 1, column 1: Tyrant's Breaker. Tyrant's Breaker.\nRow 1, column 2: Blackbolt Arbalest. Blackbolt Arbalest.\nRow 1, column 3: Tyrant's Scepter. Tyrant's Scepter.\nRow 1, column 4: Black Bastion Helm. Black Bastion Helm.\nRow 2, column 1: Black Bastion Plate. Black Bastion Plate.\nRow 2, column 2: Black Bastion Greaves. Black Bastion Greaves.\nRow 2, column 3: Black Bastion Gloves. Black Bastion Gloves.\nRow 2, column 4: Black Bastion Boots. Black Bastion Boots.\nRow 3, column 1: Black Bastion Necklace. Black Bastion Necklace.\nRow 3, column 2: Black Bastion Ring. Black Bastion Ring.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "4af126e01bc33beb3d6def73e9f02bfc48d8296551d6fce08582456dc8f3932f",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "boss-2",
+      "file": "assets/art/items/boss-2.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "boss:2:0",
+          "name": "Molten Cleaver",
+          "description": "Molten Cleaver"
+        },
+        {
+          "key": "boss:2:1",
+          "name": "Emberbolt Crossbow",
+          "description": "Emberbolt Crossbow"
+        },
+        {
+          "key": "boss:2:2",
+          "name": "Flamecore Staff",
+          "description": "Flamecore Staff"
+        },
+        {
+          "key": "boss:2:3",
+          "name": "Crucible Helm",
+          "description": "Crucible Helm"
+        },
+        {
+          "key": "boss:2:4",
+          "name": "Crucible Plate",
+          "description": "Crucible Plate"
+        },
+        {
+          "key": "boss:2:5",
+          "name": "Crucible Greaves",
+          "description": "Crucible Greaves"
+        },
+        {
+          "key": "boss:2:6",
+          "name": "Crucible Gloves",
+          "description": "Crucible Gloves"
+        },
+        {
+          "key": "boss:2:7",
+          "name": "Crucible Boots",
+          "description": "Crucible Boots"
+        },
+        {
+          "key": "boss:2:8",
+          "name": "Crucible Necklace",
+          "description": "Crucible Necklace"
+        },
+        {
+          "key": "boss:2:9",
+          "name": "Crucible Ring",
+          "description": "Crucible Ring"
+        }
+      ],
+      "artDirection": "Crucible: forged volcanic black iron with deep copper-orange molten seams, heat-sculpted hammer-worn forms. Molten Cleaver is a broad cleaver, Emberbolt Crossbow a crossbow with charred wooden stock, Flamecore Staff a glowing ember-headed long staff. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Crucible: forged volcanic black iron with deep copper-orange molten seams, heat-sculpted hammer-worn forms. Molten Cleaver is a broad cleaver, Emberbolt Crossbow a crossbow with charred wooden stock, Flamecore Staff a glowing ember-headed long staff. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.\nCell assignments in row-major order:\nRow 1, column 1: Molten Cleaver. Molten Cleaver.\nRow 1, column 2: Emberbolt Crossbow. Emberbolt Crossbow.\nRow 1, column 3: Flamecore Staff. Flamecore Staff.\nRow 1, column 4: Crucible Helm. Crucible Helm.\nRow 2, column 1: Crucible Plate. Crucible Plate.\nRow 2, column 2: Crucible Greaves. Crucible Greaves.\nRow 2, column 3: Crucible Gloves. Crucible Gloves.\nRow 2, column 4: Crucible Boots. Crucible Boots.\nRow 3, column 1: Crucible Necklace. Crucible Necklace.\nRow 3, column 2: Crucible Ring. Crucible Ring.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "d69ad2e35fd9ee5affbb1ec3ff9fc18863190389c458142fa5006438169dab81",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "boss-3",
+      "file": "assets/art/items/boss-3.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "boss:3:0",
+          "name": "Starbreaker",
+          "description": "Starbreaker"
+        },
+        {
+          "key": "boss:3:1",
+          "name": "Astral Piercer",
+          "description": "Astral Piercer"
+        },
+        {
+          "key": "boss:3:2",
+          "name": "Sovereign's Starstaff",
+          "description": "Sovereign's Starstaff"
+        },
+        {
+          "key": "boss:3:3",
+          "name": "Starfallen Helm",
+          "description": "Starfallen Helm"
+        },
+        {
+          "key": "boss:3:4",
+          "name": "Starfallen Plate",
+          "description": "Starfallen Plate"
+        },
+        {
+          "key": "boss:3:5",
+          "name": "Starfallen Greaves",
+          "description": "Starfallen Greaves"
+        },
+        {
+          "key": "boss:3:6",
+          "name": "Starfallen Gloves",
+          "description": "Starfallen Gloves"
+        },
+        {
+          "key": "boss:3:7",
+          "name": "Starfallen Boots",
+          "description": "Starfallen Boots"
+        },
+        {
+          "key": "boss:3:8",
+          "name": "Starfallen Necklace",
+          "description": "Starfallen Necklace"
+        },
+        {
+          "key": "boss:3:9",
+          "name": "Starfallen Ring",
+          "description": "Starfallen Ring"
+        }
+      ],
+      "artDirection": "Starfallen: celestial blue silver and indigo metal, restrained gold star points, elegant asymmetrical layered armor. Starbreaker is a star-pointed massive hammer; Astral Piercer is a tall astral longbow; Starstaff is a long silver staff with blue star crystal. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Starfallen: celestial blue silver and indigo metal, restrained gold star points, elegant asymmetrical layered armor. Starbreaker is a star-pointed massive hammer; Astral Piercer is a tall astral longbow; Starstaff is a long silver staff with blue star crystal. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.\nCell assignments in row-major order:\nRow 1, column 1: Starbreaker. Starbreaker.\nRow 1, column 2: Astral Piercer. Astral Piercer.\nRow 1, column 3: Sovereign's Starstaff. Sovereign's Starstaff.\nRow 1, column 4: Starfallen Helm. Starfallen Helm.\nRow 2, column 1: Starfallen Plate. Starfallen Plate.\nRow 2, column 2: Starfallen Greaves. Starfallen Greaves.\nRow 2, column 3: Starfallen Gloves. Starfallen Gloves.\nRow 2, column 4: Starfallen Boots. Starfallen Boots.\nRow 3, column 1: Starfallen Necklace. Starfallen Necklace.\nRow 3, column 2: Starfallen Ring. Starfallen Ring.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "38c86664cd935c1b893251831ffcfe9ba028ae469e1513fe006779f687ba304c",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "boss-4",
+      "file": "assets/art/items/boss-4.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "boss:4:0",
+          "name": "Ruinbringer",
+          "description": "Ruinbringer"
+        },
+        {
+          "key": "boss:4:1",
+          "name": "Dominion Greatbow",
+          "description": "Dominion Greatbow"
+        },
+        {
+          "key": "boss:4:2",
+          "name": "Ancient King's Scepter",
+          "description": "Ancient King's Scepter"
+        },
+        {
+          "key": "boss:4:3",
+          "name": "Ancient Dominion Helm",
+          "description": "Ancient Dominion Helm"
+        },
+        {
+          "key": "boss:4:4",
+          "name": "Ancient Dominion Plate",
+          "description": "Ancient Dominion Plate"
+        },
+        {
+          "key": "boss:4:5",
+          "name": "Ancient Dominion Greaves",
+          "description": "Ancient Dominion Greaves"
+        },
+        {
+          "key": "boss:4:6",
+          "name": "Ancient Dominion Gloves",
+          "description": "Ancient Dominion Gloves"
+        },
+        {
+          "key": "boss:4:7",
+          "name": "Ancient Dominion Boots",
+          "description": "Ancient Dominion Boots"
+        },
+        {
+          "key": "boss:4:8",
+          "name": "Ancient Dominion Necklace",
+          "description": "Ancient Dominion Necklace"
+        },
+        {
+          "key": "boss:4:9",
+          "name": "Ancient Dominion Ring",
+          "description": "Ancient Dominion Ring"
+        }
+      ],
+      "artDirection": "Ancient Dominion: ruined royal cream-gold and violet armor, weathered ornate regal curves and broken crowns. Ruinbringer is an enormous ancient greatsword, Dominion Greatbow an ornate tall bow, Kings Scepter a short curved golden royal scepter. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Ancient Dominion: ruined royal cream-gold and violet armor, weathered ornate regal curves and broken crowns. Ruinbringer is an enormous ancient greatsword, Dominion Greatbow an ornate tall bow, Kings Scepter a short curved golden royal scepter. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.\nCell assignments in row-major order:\nRow 1, column 1: Ruinbringer. Ruinbringer.\nRow 1, column 2: Dominion Greatbow. Dominion Greatbow.\nRow 1, column 3: Ancient King's Scepter. Ancient King's Scepter.\nRow 1, column 4: Ancient Dominion Helm. Ancient Dominion Helm.\nRow 2, column 1: Ancient Dominion Plate. Ancient Dominion Plate.\nRow 2, column 2: Ancient Dominion Greaves. Ancient Dominion Greaves.\nRow 2, column 3: Ancient Dominion Gloves. Ancient Dominion Gloves.\nRow 2, column 4: Ancient Dominion Boots. Ancient Dominion Boots.\nRow 3, column 1: Ancient Dominion Necklace. Ancient Dominion Necklace.\nRow 3, column 2: Ancient Dominion Ring. Ancient Dominion Ring.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "2745061e0191eb59d1eaee217857f35f35b5127c02711afdabfc74bdae33e2dd",
+      "generator": "image_gen built-in"
+    },
+    {
+      "key": "utility",
+      "file": "assets/art/items/utility.png",
+      "columns": 4,
+      "rows": 4,
+      "items": [
+        {
+          "key": "tool:Mining",
+          "name": "Pickaxe",
+          "description": "Pickaxe"
+        },
+        {
+          "key": "tool:Woodcutting",
+          "name": "Axe",
+          "description": "Axe"
+        },
+        {
+          "key": "tool:Fishing",
+          "name": "Fishing Rod",
+          "description": "Fishing Rod"
+        },
+        {
+          "key": "tool:Hunting",
+          "name": "Trap",
+          "description": "Trap"
+        },
+        {
+          "key": "tool:Smithing",
+          "name": "Hammer",
+          "description": "Hammer"
+        },
+        {
+          "key": "tool:Cooking",
+          "name": "Frying Pan",
+          "description": "Frying Pan"
+        },
+        {
+          "key": "tool:Faceting",
+          "name": "Chisel",
+          "description": "Chisel"
+        },
+        {
+          "key": "stone",
+          "name": "Ascendant Stone",
+          "description": "Ascendant Stone"
+        },
+        {
+          "key": "extractor",
+          "name": "Gem Extractor",
+          "description": "Gem Extractor"
+        },
+        {
+          "key": "remover",
+          "name": "Enchantment Remover",
+          "description": "Enchantment Remover"
+        },
+        {
+          "key": "appearance",
+          "name": "Appearance Token",
+          "description": "Appearance Token"
+        },
+        {
+          "key": "rename",
+          "name": "Name Change Contract",
+          "description": "Name Change Contract"
+        },
+        {
+          "key": "coins",
+          "name": "Bronze coins",
+          "description": "Bronze coins"
+        },
+        {
+          "key": "treasure",
+          "name": "Closed treasure chest",
+          "description": "Closed treasure chest"
+        }
+      ],
+      "artDirection": "Pickaxe: slender iron pick on warm wooden handle; Axe: single sharp woodcutting axe; Fishing Rod: curved wooden rod with hook and float; Trap: rope snare with small wooden stake; Hammer: compact blacksmith forging hammer; Frying Pan: shallow long-handled iron pan, not cooking pot; Chisel: pointed small lapidary chisel with leather grip. Ascendant Stone: luminous golden raw crystal; Gem Extractor: delicate silver extractor tongs; Enchantment Remover: pale blue swirling potion in corked glass; Appearance Token: bronze cameo token showing a cloak silhouette; Name Change Contract: rolled parchment with red wax seal, NO readable writing; coins: three overlapping bronze coins, NO readable letters; chest: closed wooden iron-bound chest.",
+      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Pickaxe: slender iron pick on warm wooden handle; Axe: single sharp woodcutting axe; Fishing Rod: curved wooden rod with hook and float; Trap: rope snare with small wooden stake; Hammer: compact blacksmith forging hammer; Frying Pan: shallow long-handled iron pan, not cooking pot; Chisel: pointed small lapidary chisel with leather grip. Ascendant Stone: luminous golden raw crystal; Gem Extractor: delicate silver extractor tongs; Enchantment Remover: pale blue swirling potion in corked glass; Appearance Token: bronze cameo token showing a cloak silhouette; Name Change Contract: rolled parchment with red wax seal, NO readable writing; coins: three overlapping bronze coins, NO readable letters; chest: closed wooden iron-bound chest.\nCell assignments in row-major order:\nRow 1, column 1: Pickaxe. Pickaxe.\nRow 1, column 2: Axe. Axe.\nRow 1, column 3: Fishing Rod. Fishing Rod.\nRow 1, column 4: Trap. Trap.\nRow 2, column 1: Hammer. Hammer.\nRow 2, column 2: Frying Pan. Frying Pan.\nRow 2, column 3: Chisel. Chisel.\nRow 2, column 4: Ascendant Stone. Ascendant Stone.\nRow 3, column 1: Gem Extractor. Gem Extractor.\nRow 3, column 2: Enchantment Remover. Enchantment Remover.\nRow 3, column 3: Appearance Token. Appearance Token.\nRow 3, column 4: Name Change Contract. Name Change Contract.\nRow 4, column 1: Bronze coins. Bronze coins.\nRow 4, column 2: Closed treasure chest. Closed treasure chest.\nAll remaining cells empty.",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "437a49eb634e3196f21c3beb50949feb2ab4c6a42002199c1d8ec965c398d606",
+      "generator": "image_gen built-in"
+    }
+  ]
+}
