@@ -105,7 +105,7 @@
     ];
     G.runtime.tutorialStep = step;
     const [title, text] = pages[step];
-    U.modal(title, '<div class="eyebrow">FIELD GUIDE ' + (step + 1) + ' / 4</div><p class="spacer">' + text + '</p><div class="modal-actions">' + U.btn('Skip tutorial', 'tutorialDone', '', 'quiet') + U.btn(step === 3 ? 'Begin exploring' : 'Next', step === 3 ? 'tutorialDone' : 'tutorialNext', '', 'primary') + '</div>');
+    U.modal(title, '<div class="eyebrow">FIELD GUIDE ' + (step + 1) + ' / 4</div><p class="spacer">' + text + '</p><div class="modal-actions">' + U.btn(step === 3 ? 'Return to the world' : 'Next', step === 3 ? 'closeModal' : 'tutorialNext', '', 'primary') + '</div>');
   };
   U.debug = () => {
     const c = G.character();

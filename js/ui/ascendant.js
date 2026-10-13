@@ -15,9 +15,8 @@
     const art = D.itemIllustrations[key];
     G.assert(art, 'Missing artwork for ' + key + '.');
     // Sample inside a single cell, inset by 1% on all four sides.
-    const w = .98 / art.columns, h = .98 / art.rows;
-    const x = (art.index % art.columns + .01) / art.columns;
-    const y = (Math.floor(art.index / art.columns) + .01) / art.rows;
+    const [x, y, w, h] = art.crop || [(art.index % art.columns + .01) / art.columns,
+      (Math.floor(art.index / art.columns) + .01) / art.rows, .98 / art.columns, .98 / art.rows];
     return '<span class="item-art" aria-hidden="true" data-art-key="' + U.e(key) +
       '" style="background-image:url(' + art.file + '?v=' + art.version + ');background-size:' +
       (100 / w) + '% ' + (100 / h) + '%;background-position:' +
@@ -63,6 +62,7 @@
   U.rewardText = r => '<span class="reward-art' + (r.kind === 'gear' || r.kind === 'tool' ? ' rarity-' + r.rarity : '') + '">' + (r.coins ? U.paint('coins') : U.itemArt(r.kind ? r : {kind: 'stack', key: r.key})) + '<span>' + reward(r) + '</span></span>';
   U.afkPanel = (compact = false) => {
     const c = G.character(), a = c.afk, running = S.afk.run?.id === c.id;
+    if (compact) return '<section class="panel afk-panel"><div class="panel-head"><h3>AFK advancing</h3><span class="badge">' + (running ? 'ACTIVE' : 'STOPPED') + '</span></div><div class="afk-summary"><span>' + a.interval / 1000 + 's travel</span><span>' + G.percent(a.chance, 0) + ' minimum odds</span><span>' + a.minutes + ' minutes</span></div><p id="afk-status" class="afk-status" role="status">' + U.e(S.afk.status) + '</p><div class="row">' + (running ? U.btn('Stop AFK', 'afkStop', '', 'danger') : U.btn('Start AFK', 'afkStart', c.combat || c.activity || c.pending.length || c.dungeon || S.tutorial.active() ? 'disabled' : '', 'gold-btn')) + U.btn('Configure', 'navigate', 'data-value="Settings"', 'small quiet') + '</div><small id="afk-timer" class="muted"></small></section>';
     const select = (key, label, values, format) => '<label>' + label + '<select data-afk="' + key + '">' + values.map(v => '<option value="' + v + '" ' + (a[key] === v ? 'selected' : '') + '>' + format(v) + '</option>').join('') + '</select></label>';
     const toggle = (key, label) => '<label class="settings-row">' + label + '<input type="checkbox" data-afk="' + key + '" ' + (a[key] ? 'checked' : '') + '></label>';
     return '<section class="panel afk-panel"><div class="panel-head"><h3>AFK advancing</h3><span class="badge">' + (running ? 'ACTIVE' : 'STOPPED') + '</span></div><p class="notes">A slower journey with your rules. Regular creatures are checked against a fresh 1,000-fight estimate before every battle.</p>' + (compact ? '<details><summary>' + a.interval / 1000 + 's travel · ' + G.percent(a.chance, 0) + ' minimum odds · edit filters</summary>' : '') + '<div class="afk-controls">' +
@@ -87,7 +87,7 @@
     if (!c) return html;
     const unspent = D.perkLevels.filter(level => c.level >= level && c.perks[level] === undefined);
     return html.replace('<main class="content" id="content">', '<main class="content" id="content">' +
-      (unspent.length ? '<div class="perk-reminder"><span><strong>' + unspent.length + ' perk choice' + (unspent.length === 1 ? '' : 's') + ' available</strong> · Shape your build before the next battle.</span>' + U.btn('Choose perks', 'openPerks', '', 'small gold-btn') + '</div>' : ''));
+      (unspent.length && !S.tutorial.active() ? '<div class="perk-reminder"><span><strong>' + unspent.length + ' perk choice' + (unspent.length === 1 ? '' : 's') + ' available</strong> · Shape your build before the next battle.</span>' + U.btn('Choose perks', 'openPerks', '', 'small gold-btn') + '</div>' : ''));
   };
   const live = U.live;
   U.live = () => {

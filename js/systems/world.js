@@ -88,7 +88,7 @@
       G.ensureIdle();
       const c = G.character();
       G.assert(!c.dungeon, 'Use Leave Dungeon between rooms.');
-      G.assert(!S.tutorial?.active(), 'Finish or skip the tutorial before moving on.');
+      G.assert(!S.tutorial?.active(), 'Finish the required tutorial before moving on.');
       c.encounter = null;
       G.commit();
     },
@@ -96,7 +96,7 @@
       G.ensureProgress();
       const c = G.character();
       G.assert(!c.dungeon, 'Leave the dungeon first.');
-      G.assert(!S.tutorial?.active(), 'Finish or skip the tutorial before changing location.');
+      G.assert(!S.tutorial?.active(), 'Finish the required tutorial before changing location.');
       G.assert(D.locations[id] && c.level >= D.locations[id].level, 'Location is locked.');
       c.encounter = null;
       c.location = id;

@@ -3,11 +3,26 @@
   const value = id => document.getElementById(id)?.value;
   const confirm = U.confirm;
   const itemAction = (method, id, ...args) => {
+    const lesson = S.tutorial.current()?.id;
     S[method[0]][method[1]](id, ...args);
+    if (lesson && lesson !== S.tutorial.current()?.id) { U.close(); U.render(); return; }
     if (S.items.find(id)) U.item(id);
     else U.close();
   };
+  const resumeSelection = () => {
+    if (!G.runtime.needsResume) return;
+    S.offline.resume();
+    G.runtime.needsResume = false;
+  };
+  const showOffline = () => {
+    if (!G.runtime.offline?.length) return;
+    U.modal('While you were away', '<div class="eyebrow">OFFLINE TRAINING · XP ONLY</div>' + G.runtime.offline.map(r => '<p>' + U.e(r.name) + ' · ' + r.skill + '<br><strong class="gold">+' + G.number(r.xp) + ' XP</strong> over ' + G.number(r.seconds / 3600, 2) + ' hours.</p>').join('') + '<p>25% base active rate. Maximum eight hours. Knowledge applies; Efficiency does not. No items, coins, or combat progress.</p>');
+    G.runtime.offline = [];
+  };
   const actions = {
+    patchNotes() {
+      U.modal('Patch notes', U.patchNotes(true));
+    },
     navigate(el) {
       const destination = el.dataset.value;
       if (destination === 'Marketplace') S.market.assert();
@@ -27,9 +42,14 @@
     },
     selectSlot(el) {
       const current = G.character();
-      G.assert(!current?.combat && !current?.dungeon && !current?.activity, 'Finish the current activity or dungeon first.');
-      if (current) current.lastSeen = Date.now();
-      G.state.active = Number(el.dataset.slot);
+      const slot = Number(el.dataset.slot);
+      G.assert(G.state.slots[slot], 'Choose an occupied character slot.');
+      G.assert(G.runtime.selecting && slot === G.state.active || !current?.combat && !current?.dungeon && !current?.activity, 'Finish the current activity or dungeon first.');
+      resumeSelection();
+      if (current && !G.runtime.selecting) current.lastSeen = Date.now();
+      G.state.active = slot;
+      G.runtime.selecting = false;
+      S.tutorial.ensure();
       const result = S.offline.apply(G.character());
       G.runtime.page = 'World';
       G.runtime.tab = '';
@@ -38,6 +58,7 @@
       U.close();
       G.commit();
       if (result.xp > 0) G.notify('Offline ' + result.skill + ': +' + G.number(result.xp) + ' XP.');
+      showOffline();
     },
     create(el) {
       G.assert(!G.character()?.combat && !G.character()?.dungeon && !G.character()?.activity, 'Finish the current activity first.');
@@ -74,14 +95,18 @@
       const f = G.runtime.creation;
       G.assert(f.mode !== 'Hardcore' || document.getElementById('hardcore-confirm').checked, 'Acknowledge permanent Hardcore death before creating this character.');
       G.assert(!G.state.slots[f.slot], 'This character slot is occupied.');
-      if (G.character()) G.character().lastSeen = Date.now();
+      resumeSelection();
+      if (G.character() && !G.runtime.selecting) G.character().lastSeen = Date.now();
+      G.runtime.selecting = false;
       G.state.slots[f.slot] = G.newCharacter(f.name, f.class, f.mode, f.appearance);
       G.state.active = f.slot;
       G.runtime.page = 'World';
       G.runtime.loadFailure = false;
       U.close();
+      S.tutorial.ensure();
       G.commit();
       U.tutorial(0);
+      showOffline();
     },
     tutorialAdvance() {
       G.runtime.page = 'World';
@@ -346,11 +371,11 @@
       U.tutorial(G.runtime.tutorialStep + 1);
     },
     tutorialDone() {
-      S.tutorial.finish(true);
+      S.tutorial.finish();
       U.close();
     },
     welcomeSettings() {
-      U.modal('Offline game', '<p>All game files and artwork are local. Create a character to access presentation and audio settings. Saves remain in this browser.</p><div class="row spacer">' + U.btn('Import save', 'import') + U.btn('Reset local save', 'reset', '', 'danger') + '</div>');
+      U.modal('Offline game', '<p>All game files and artwork are local. Choose or create a character to access presentation and audio settings. Saves remain in this browser.</p><div class="row spacer">' + U.btn('Import save', 'import') + U.btn('Reset local save', 'reset', '', 'danger') + '</div>');
     },
     debug(el) {
       const command = el.dataset.command;
@@ -572,15 +597,10 @@
     setTimeout(() => el.remove(), 1100);
   });
   const bootstrap = () => {
-  G.save.load();
-  if (!G.runtime.loadFailure) {
-    S.offline.resume();
-    S.achievements.check();
-  }
-  U.render();
-  if (G.runtime.offline?.length) {
-    U.modal('While you were away', '<div class="eyebrow">OFFLINE TRAINING · XP ONLY</div>' + G.runtime.offline.map(r => '<p>' + U.e(r.name) + ' · ' + r.skill + '<br><strong class="gold">+' + G.number(r.xp) + ' XP</strong> over ' + G.number(r.seconds / 3600, 2) + ' hours.</p>').join('') + '<p>25% base active rate. Maximum eight hours. Knowledge applies; Efficiency does not. No items, coins, or combat progress.</p>');
-  }
+    G.save.load();
+    G.runtime.selecting = G.state.slots.some(Boolean);
+    G.runtime.needsResume = G.runtime.selecting && !G.runtime.loadFailure;
+    U.render();
   };
   if (G.account.enabled) G.account.start(bootstrap);
   else bootstrap();
@@ -590,7 +610,7 @@
     const now = performance.now(),
       ms = Math.min(1000, now - last);
     last = now;
-    if (document.hidden || G.runtime.loadFailure || !G.account.playable()) return;
+    if (document.hidden || G.runtime.selecting || G.runtime.loadFailure || !G.account.playable()) return;
     try {
       const c = G.character();
       if (c) {
@@ -613,7 +633,7 @@
   let animationAt = performance.now();
   const animate = now => {
     const c = G.character();
-    if (!document.hidden && c && !G.runtime.loadFailure && G.account.playable()) {
+    if (!document.hidden && c && !G.runtime.selecting && !G.runtime.loadFailure && G.account.playable()) {
       const elapsed = Math.min(100, now - last);
       if (c.activity && !c.pending.length) {
         const a = c.activity,
@@ -632,9 +652,9 @@
   };
   requestAnimationFrame(animate);
   document.addEventListener('visibilitychange', () => {
-    if (G.runtime.loadFailure || !G.account.playable()) return;
+    if (G.runtime.selecting || G.runtime.loadFailure || !G.account.playable()) return;
     if (document.hidden) {
-      if (G.character()) G.character().lastSeen = Date.now();
+      if (G.character() && !G.runtime.selecting) G.character().lastSeen = Date.now();
       G.save.write();
     } else {
       last = performance.now();
@@ -647,7 +667,7 @@
   });
   window.addEventListener('pagehide', () => {
     if (!G.runtime.loadFailure) {
-      if (G.character()) G.character().lastSeen = Date.now();
+      if (G.character() && !G.runtime.selecting) G.character().lastSeen = Date.now();
       G.save.write();
       if (G.account.enabled) G.account.flush(true);
     }

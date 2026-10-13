@@ -173,7 +173,7 @@
       try {
         const candidate = G.clone(G.state);
         candidate.savedAt = Date.now();
-        if (candidate.slots[candidate.active] && !document.hidden) candidate.slots[candidate.active].lastSeen = candidate.savedAt;
+        if (candidate.slots[candidate.active] && !document.hidden && !G.runtime.selecting) candidate.slots[candidate.active].lastSeen = candidate.savedAt;
         validate(candidate);
         const text = JSON.stringify(candidate),
           old = localStorage.getItem(KEY);
@@ -197,7 +197,7 @@
         if (!prior) localStorage.setItem(BACKUP, text);
         this.lastGoodText = text;
         G.state.savedAt = candidate.savedAt;
-        if (G.character() && !document.hidden) G.character().lastSeen = candidate.savedAt;
+        if (G.character() && !document.hidden && !G.runtime.selecting) G.character().lastSeen = candidate.savedAt;
         this.status = 'Saved';
         this.error = null;
         G.emit('saved');
@@ -260,8 +260,10 @@
       G.systems.afk?.stop('Save imported', false);
       G.state = p;
       G.runtime.loadFailure = false;
+      G.runtime.needsResume = false;
       G.runtime.page = 'World';
       G.systems.offline.applyAll();
+      G.systems.tutorial?.ensure();
       this.write();
       G.emit('change');
     },

@@ -18,6 +18,7 @@
       this.sync();
     },
     scene() {
+      if (G.runtime.selecting) return null;
       const preview = this.previewContext, current = G.character();
       if (this.previewScene && performance.now() < this.previewUntil && preview?.character === current && preview.activity === current?.activity && preview.combat === current?.combat) return this.previewScene;
       this.previewScene = null;

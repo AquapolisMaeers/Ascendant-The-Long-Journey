@@ -16,7 +16,7 @@
       U.modal('Your seven skills', '<p>Mining supplies ore; Woodcutting supplies logs; Fishing supplies raw fish; Hunting supplies hides. Smithing refines ore into bars and makes equipment. Cooking produces healing food. Faceting turns uncut gems into Gem I, then fuses higher ranks.</p><p>Enhance your gear to develop prefixes. Treasure Chests can contain a Mimic. Rest at the campfire once every 30 minutes.</p>' + U.btn('Return to the world', 'closeModal', '', 'primary'));
       return;
     }
-    U.modal('Learn by doing', '<div class="eyebrow">GUIDED FIRST STEPS</div><p>You begin with ' + D.config.startingBronze + ' Bronze. The guide starts with your free Level 1 perk, then covers all seven skills, your first weapon prefix, and a Level 1 fight.</p><p>Four Advances guarantee starter resources. You will cook Minnows, smelt Copper Ore, cut a gem, Enhance your weapon, and earn a Common Worn Plate.</p><div class="modal-actions">' + U.btn('Skip tutorial', 'tutorialDone', '', 'quiet') + U.btn('Start guided tutorial', 'tutorialStart', '', 'primary') + '</div>');
+    U.modal('Learn by doing', '<div class="eyebrow">GUIDED FIRST STEPS</div><p>You begin with ' + D.config.startingBronze + ' Bronze. The guide starts with your free Level 1 perk, then covers all seven skills, your first weapon prefix, and a Level 1 fight.</p><p>Four Advances guarantee starter resources. You will cook Minnows, smelt Copper Ore, cut a gem, Enhance your weapon, and earn a Common Worn Plate.</p><div class="modal-actions">' + U.btn('Start required tutorial', 'tutorialStart', '', 'primary') + '</div>');
   };
   U.guidePanel = () => {
     if (!S.tutorial.active()) return '';
@@ -49,7 +49,7 @@
       label = 'Equip your Common Worn Plate';
       action = 'tutorialTask';
     }
-    return '<section class="panel guide-panel"><div class="row between"><span class="eyebrow">TUTORIAL ' + (c.guide.step + 1) + ' / ' + D.tutorial.steps.length + '</span>' + U.btn('Skip tutorial', 'tutorialDone', c.combat || c.activity ? 'disabled' : '', 'small quiet') + '</div><h3>' + step.title + '</h3><p class="notes">' + step.text + '</p><div class="row spacer">' + U.btn(label, action, (c.activity || c.combat || c.pending.length ? 'disabled' : ''), 'gold-btn') + (step.id === 'fight' ? '<small class="muted">Your food is assigned at 25% Auto-Eat.</small>' : '') + '</div></section>';
+    return '<section class="panel guide-panel"><div class="row between"><span class="eyebrow">REQUIRED TUTORIAL ' + (c.guide.step + 1) + ' / ' + D.tutorial.steps.length + '</span></div><h3>' + step.title + '</h3><p class="notes">' + step.text + '</p><div class="row spacer">' + U.btn(label, action, (c.activity || c.combat || c.pending.length ? 'disabled' : ''), 'gold-btn') + (step.id === 'fight' ? '<small class="muted">Your food is assigned at 25% Auto-Eat.</small>' : '') + '</div></section>';
   };
   U.restPanel = () => {
     const c = G.character(),
@@ -154,4 +154,7 @@
     if (rest) rest.textContent = remaining ? formatTime(remaining) : 'Ready';
     if (button) button.disabled = remaining > 0 || !!c.combat || !!c.activity || !!c.dungeon || c.hp >= S.character.stats(c).health;
   };
+  window.addEventListener('rpg:death-loss', ({detail}) => {
+    U.modal('The cost of defeat', '<p>You recover at full health after falling in ' + U.e(detail.location) + '.</p><p class="spacer">Coins lost: <strong>' + G.money(detail.coins) + '</strong> (' + detail.percent + '%, rounded up).</p><div class="notes spacer">' + (detail.lost.length ? '<p>Inventory items lost:</p>' + detail.lost.map(U.rewardText).join('<br>') : 'Your inventory was empty; no items were lost.') + '</div><p class="notes spacer">Equipped gear and tools are protected. Stored items can be lost even when locked. Each location adds one item and five percentage points to the penalty.</p>' + U.btn('Return to the world', 'closeModal', '', 'primary spacer'));
+  });
 })(RPG, RPG.data, RPG.systems, RPG.ui);

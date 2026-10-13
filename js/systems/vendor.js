@@ -17,7 +17,7 @@
   };
   S.shop.sell = function(id, quantity = 1) {
     G.ensureIdle();
-    G.assert(!S.tutorial?.active(), 'Finish or skip the tutorial before selling its materials.');
+    G.assert(!S.tutorial?.active(), 'Finish the required tutorial before selling its materials.');
     const c = G.character(),
       item = c.inventory.find(i => i.id === id);
     G.assert(item, 'Only unequipped inventory items can be sold.');

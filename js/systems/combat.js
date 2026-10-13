@@ -259,6 +259,33 @@
       G.audio?.play('loot');
       G.commit();
     },
+    deathPenalty(c = G.character()) {
+      const percent = 10 + c.location * 5;
+      return {percent, items: c.location + 1, coins: Math.min(c.coins, Math.ceil(c.coins * percent / 100))};
+    },
+    loseInventory(c) {
+      const penalty = this.deathPenalty(c), lost = [];
+      // Equipped gear/tools never enter the draw. Locks protect against manual
+      // sale/discard, but do not turn stored inventory into death-proof storage.
+      const equipped = new Set([...Object.values(c.equipment), ...Object.values(c.tools)].filter(Boolean).map(i => i.id));
+      for (let n = 0; n < penalty.items; n++) {
+        const eligible = c.inventory.filter(i => !equipped.has(i.id));
+        const total = eligible.reduce((sum, i) => sum + (i.quantity || 1), 0);
+        if (!total) break;
+        let draw = Math.floor(G.rng() * total), item;
+        for (const candidate of eligible) {
+          draw -= candidate.quantity || 1;
+          if (draw < 0) { item = candidate; break; }
+        }
+        const copy = G.clone(item);
+        if (copy.quantity) copy.quantity = 1;
+        lost.push(copy);
+        if (item.quantity > 1) item.quantity--;
+        else c.inventory.splice(c.inventory.indexOf(item), 1);
+      }
+      c.coins -= penalty.coins;
+      return {...penalty, lost, location: D.locations[c.location].name};
+    },
     death() {
       S.afk?.stop('Defeat', false);
       const c = G.character();
@@ -274,13 +301,16 @@
         G.save.write();
         G.notify(name + ' has fallen. The Hardcore character is permanently deleted.', 'error');
       } else {
+        const penalty = this.loseInventory(c);
         if (c.mode === 'Hardcore Ironman') {
           G.save.recordFate(c, 'Ironman');
           c.mode = 'Ironman';
-          G.notify('You have fallen. Hardcore Ironman permanently becomes Ironman. All progression is preserved.', 'warning');
-        } else G.notify('You have fallen. No items, coins, or XP were lost.', 'warning');
+          G.notify('You have fallen. Hardcore Ironman permanently becomes Ironman.', 'warning');
+        }
+        G.notify('Defeat: lost ' + penalty.lost.length + ' inventory item' + (penalty.lost.length === 1 ? '' : 's') + ' and ' + G.money(penalty.coins) + ' (' + penalty.percent + '%).', 'warning');
         c.hp = S.character.stats(c).health;
         G.commit();
+        G.emit('death-loss', penalty);
       }
       G.audio?.play('death');
       G.emit('effect', {

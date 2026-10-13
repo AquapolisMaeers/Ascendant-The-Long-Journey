@@ -92,3 +92,87 @@
 }
 .loot-popup[class*="rarity-"] strong { color:var(--rarity); }
 .loot-rarity { display:block; margin-bottom:6px; }
+
+/* Keep ingredient names and stock counts in aligned, separate columns. */
+.ingredients > div { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:4px 0; }
+.ingredients .ingredient-name { flex:1; min-width:0; line-height:1.4; }
+.ingredients .mono { flex:0 0 auto; max-width:50%; text-align:right; line-height:1.4; }
+.journey-panel { margin-bottom:20px; }
+.journey-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px 24px; }
+.recent-discoveries { margin-top:12px; }
+.world-screen .world-main,.world-screen .world-side { gap:12px; }
+.world-screen .location-scene { min-height:190px; }
+.world-screen .scene-top { padding:18px; }
+.world-screen .scene-title { font-size:25px; }
+.world-screen .scene-caption { left:18px; bottom:16px; font-size:13px; }
+.world-screen .panel { padding:16px; }
+.world-screen .panel-head { margin-bottom:10px; }
+.world-screen .meta-row { padding:5px 0; }
+.world-screen .food-panel label { margin:7px 0; }
+.world-screen .food-panel select { padding:6px 8px; }
+.provision-help { margin-top:8px; color:var(--muted); font-size:11px; }
+.world-screen .afk-summary { display:flex; flex-wrap:wrap; gap:5px 12px; font-size:11px; color:var(--muted); }
+.world-screen .afk-status { margin:8px 0; }
+.world-screen .afk-panel .row { gap:6px; }
+.world-screen .rest-panel .spacer { margin-top:8px; }
+.world-screen .encounter-idle { padding:6px; }
+.world-screen .encounter-idle .icon { margin-bottom:6px; }
+.world-screen .encounter-idle .spacer { margin-top:8px; }
+.world-screen .encounter-idle .footer-note { margin-top:12px; }
+.world-screen .advance-btn { margin-top:14px; }
+.world-screen .death-risk { font-size:11px; padding:0 3px; }
+.world-screen .odds { margin:10px 0; padding:10px; }
+.world-screen .fighter .portrait-art { width:76px; height:76px; }
+.world-screen .combat-log { max-height:95px; margin-top:10px; padding-top:8px; }
+.world-screen .encounter .footer-note { margin-top:12px; }
+.content:has(.world-screen) { padding-top:18px; padding-bottom:18px; }
+.content:has(.world-screen) .page-heading { margin-bottom:14px; }
+.content:has(.world-screen) .guide-panel { padding:14px 16px; margin-bottom:12px; }
+.content:has(.world-screen) .guide-panel h3 { margin-top:5px; }
+.content:has(.world-screen) .guide-panel .spacer { margin-top:10px; }
+.content:has(.world-screen) .perk-reminder { padding:10px 14px; margin-bottom:12px; }
+@media(min-width:1280px) { .world-screen .world-grid { grid-template-columns:minmax(0,1fr) 340px; } }
+@media(max-width:700px) {
+  .journey-stats { grid-template-columns:1fr; }
+  .world-screen .location-scene { min-height:200px; }
+  .ingredients > div { gap:12px; }
+}
+
+/* Desktop World keeps the primary actions visible above the fold. */
+.content:has(.world-screen) .perk-reminder:has(+ .guide-panel) { display:none; }
+.world-screen > .page-heading h1 { font-size:30px; }
+.world-screen > .page-heading .eyebrow,.world-screen > .page-heading p { display:none; }
+.world-screen .world-side .panel { padding:12px; }
+.world-screen .world-side .panel-head { margin-bottom:6px; }
+.world-screen .world-side .panel-head h3 { font-size:17px; }
+.world-screen .meta-row { padding:3px 0; font-size:11px; }
+.world-screen .food-panel label { gap:2px; margin:4px 0; font-size:11px; }
+.world-screen .food-panel select { padding:3px 6px; }
+.world-screen .world-side .btn { padding:7px 12px; }
+.world-screen .encounter-idle > .icon,.world-screen .encounter-idle > .eyebrow { display:none; }
+.world-screen .encounter-idle h2 { font-size:22px; margin-bottom:6px; }
+.world-screen .encounter-idle p { max-width:650px; }
+.world-screen .encounter-idle .advance-btn { margin-top:8px; padding:10px 28px; }
+
+/* The launch menu keeps characters and recent updates together. */
+.welcome-form { padding: 32px clamp(24px,4vw,64px); min-width: 0; }
+.welcome-form .slot-grid { margin: 20px 0; gap: 10px; }
+.welcome-form .slot { padding: 16px 20px; min-width: 0; }
+.slot > div { min-width: 0; }
+.slot strong { overflow-wrap: anywhere; }
+.slot-resume { display: block; margin-top: 4px; color: var(--gold); font-size: 11px; }
+.launch-patches { border-top: 1px solid var(--line); padding-top: 18px; }
+.launch-patches-heading, .patch-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.launch-patches-heading h2 { font-size: 19px; margin: 0; }
+.patch-entry { padding-top: 14px; }
+.patch-heading h3 { font-size: 14px; margin: 0; color: var(--gold); }
+.patch-heading time { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.patch-entry ul { padding-left: 18px; margin: 8px 0 0; }
+.patch-entry li { font-size: 12px; line-height: 1.5; color: var(--muted); margin: 4px 0; }
+.launch-actions { margin-top: 20px; }
+.welcome-form > .footer-note { margin-top: 16px; }
+@media (max-width: 640px) {
+  .welcome-form { padding: 24px 20px; }
+  .patch-heading { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .welcome-form .slot { padding: 14px; }
+}

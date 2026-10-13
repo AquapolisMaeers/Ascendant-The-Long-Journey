@@ -57,7 +57,7 @@
       return !item.locked && (item.kind === 'gear' ? item.enhance === 0 && Object.keys(item.prefixes).length === 0 && !item.gems.some(Boolean) : item.kind === 'stack' && D.catalog[item.key].category !== 'Utility');
     },
     list(id, quantity, price) {
-      G.assert(!S.tutorial?.active(), 'Finish or skip the tutorial before listing its supplies.');
+      G.assert(!S.tutorial?.active(), 'Finish the required tutorial before listing its supplies.');
       this.assert();
       G.ensureIdle();
       const c = G.character();

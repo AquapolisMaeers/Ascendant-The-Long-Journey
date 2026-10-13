@@ -89,7 +89,9 @@
       if (r.skill === 'Faceting') c.stats.facets++;
       S.xp.add(c.skills[r.skill], this.xp(r, c) * (1 + S.items.toolBonus(c, r.skill, 'Knowledge')));
       a.rewards = S.loot.merge(a.rewards || [], rewards);
+      const lesson = S.tutorial?.current()?.id;
       S.tutorial?.crafted(r, success, rewards);
+      if (lesson && lesson !== S.tutorial?.current()?.id) a.remaining = 1;
       a.remaining--;
       if (a.remaining <= 0) {
         c.activity = null;

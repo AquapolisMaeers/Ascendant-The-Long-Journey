@@ -60,7 +60,7 @@
   U.statValue = (key, v) => ['damage', 'defence', 'health'].includes(key) ? G.number(v, 2) : G.percent(v, 2);
   U.shell = function() {
     const c = G.character();
-    if (!c) return U.welcome();
+    if (!c || G.runtime.selecting) return U.welcome();
     const stats = S.character.stats(c),
       nav = ['World', 'Character', 'Inventory', 'Skills', 'Crafting', 'Shop', ...(S.market.allowed() ? ['Marketplace'] : []), 'Achievements', 'Settings'];
     return '<div class="shell ' + (c.hp / stats.health < .25 ? 'low-hp' : '') + '"><aside class="sidebar"><div class="brand"><img src="assets/icons/crest.svg" alt=""><div><strong>ASCENDANT</strong><small>THE LONG JOURNEY</small></div></div><div class="nav-label">YOUR JOURNEY</div><nav class="nav" aria-label="Main navigation">' + nav.map(n => '<button data-action="navigate" data-value="' + n + '" class="' + (G.runtime.page === n ? 'active' : '') + '">' + U.icon(n) + n + '</button>').join('') + '</nav><div class="sidebar-foot">' + U.btn('Character slots', 'slots', '', 'small quiet') + '<div class="offline-badge">● OFFLINE · LOCAL SAVE</div><div class="save-status"><span class="save-led"></span><span id="save-status">' + U.e(G.save.status) + '</span><div id="save-time">' + (G.state.savedAt ? new Date(G.state.savedAt).toLocaleTimeString() : '') + '</div></div></div></aside><div class="main-column"><header class="topbar"><div class="identity"><div class="portrait" style="--cloak:' + U.e(c.appearance.color) + '">' + U.icon(({

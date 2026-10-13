@@ -1075,80 +1075,6 @@
       "generator": "image_gen built-in"
     },
     {
-      "key": "gear-5",
-      "file": "assets/art/items/gear-5.png",
-      "columns": 4,
-      "rows": 4,
-      "items": [
-        {
-          "key": "gear:0:5",
-          "name": "Worn Greaves",
-          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
-        },
-        {
-          "key": "gear:1:5",
-          "name": "Leather Greaves",
-          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
-        },
-        {
-          "key": "gear:2:5",
-          "name": "Iron Greaves",
-          "description": "simple angular iron with rivets and dark leather"
-        },
-        {
-          "key": "gear:3:5",
-          "name": "Steel Greaves",
-          "description": "smooth blue-gray steel with clean overlapping plates"
-        },
-        {
-          "key": "gear:4:5",
-          "name": "Hardened Greaves",
-          "description": "dark hardened metal and reinforced edges with studded details"
-        },
-        {
-          "key": "gear:5:5",
-          "name": "Reinforced Greaves",
-          "description": "heavy reinforced layered gunmetal with red-brown straps"
-        },
-        {
-          "key": "gear:6:5",
-          "name": "Runed Greaves",
-          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
-        },
-        {
-          "key": "gear:7:5",
-          "name": "Obsidian Greaves",
-          "description": "jagged faceted black obsidian with muted violet seams"
-        },
-        {
-          "key": "gear:8:5",
-          "name": "Dragonbone Greaves",
-          "description": "ivory dragonbone and crimson leather with sculpted talon details"
-        },
-        {
-          "key": "gear:9:5",
-          "name": "Starsteel Greaves",
-          "description": "icy blue silver starsteel with fine gold points and star facets"
-        },
-        {
-          "key": "gear:10:5",
-          "name": "Elder Greaves",
-          "description": "weathered green bronze and warm wood with leaf and vine accents"
-        },
-        {
-          "key": "gear:11:5",
-          "name": "Ancient Greaves",
-          "description": "pale cream ancient metal with violet and gold ceremonial curves"
-        }
-      ],
-      "artDirection": "Twelve pairs of leg armor with unique lengths and segmentation, progressing from patched leather/iron guards to leather trousers, iron greaves, steel articulated legs, studded guards, thick layered legs, rune plates, obsidian shards, dragonbone scales, starsteel points, elder leaf plates, ancient curved ceremonial plates. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.",
-      "prompt": "Use case: stylized-concept. Asset type: ONE production inventory sprite-sheet PNG for Ascendant: The Long Journey. Soft hand-painted medieval storybook illustration, rounded believable forms, warm muted lighting, rich material textures, aged steel, jewel highlights; match the existing game's charcoal-backed painted item art. Create ONE SQUARE image, an EXACT regular grid of FOUR columns and FOUR rows, 16 equal square cells. Items placed at exact cell centers. Every item's ENTIRE silhouette, shadow, glow and accessories must fit inside the central 70% of its OWN square; leave at least 15% completely empty dark charcoal margin on ALL FOUR sides, with large clean gaps between items. Near-black warm charcoal #211e1b background. No borders, text, numbers, labels, letters, captions, UI or watermark. Each specified named item must have an independently designed distinct silhouette, construction, color and texture; do not duplicate or just recolor a drawing. Render exactly the specified number of items. Unlisted cells must be completely empty charcoal. Correct spatial positions are essential because code will clip the image into its exact sixteen square cells. Do not rearrange objects, shift rows, center a partial row, or enlarge objects into adjacent cells. \nArt direction: Twelve pairs of leg armor with unique lengths and segmentation, progressing from patched leather/iron guards to leather trousers, iron greaves, steel articulated legs, studded guards, thick layered legs, rune plates, obsidian shards, dragonbone scales, starsteel points, elder leaf plates, ancient curved ceremonial plates. Draw every listed tier as an independent design, with visibly different construction and silhouette; never repeat or merely recolor a drawing.\nCell assignments in row-major order:\nRow 1, column 1: Worn Greaves. very worn humble repaired iron/leather, chipped and asymmetrical.\nRow 1, column 2: Leather Greaves. warm supple leather and simple bronze fittings, practical wrapped construction.\nRow 1, column 3: Iron Greaves. simple angular iron with rivets and dark leather.\nRow 1, column 4: Steel Greaves. smooth blue-gray steel with clean overlapping plates.\nRow 2, column 1: Hardened Greaves. dark hardened metal and reinforced edges with studded details.\nRow 2, column 2: Reinforced Greaves. heavy reinforced layered gunmetal with red-brown straps.\nRow 2, column 3: Runed Greaves. blue-violet runed metal with sculpted geometric accents, no readable text.\nRow 2, column 4: Obsidian Greaves. jagged faceted black obsidian with muted violet seams.\nRow 3, column 1: Dragonbone Greaves. ivory dragonbone and crimson leather with sculpted talon details.\nRow 3, column 2: Starsteel Greaves. icy blue silver starsteel with fine gold points and star facets.\nRow 3, column 3: Elder Greaves. weathered green bronze and warm wood with leaf and vine accents.\nRow 3, column 4: Ancient Greaves. pale cream ancient metal with violet and gold ceremonial curves.\nAll remaining cells empty.",
-      "width": 1254,
-      "height": 1254,
-      "sha256": "701126ecfadb3e4e99f5dc06c789534a6941766707a43640260e3c126be60819",
-      "generator": "image_gen built-in"
-    },
-    {
       "key": "gear-6",
       "file": "assets/art/items/gear-6.png",
       "columns": 4,
@@ -1455,52 +1381,56 @@
         {
           "key": "boss:0:0",
           "name": "Bloodcleaver",
-          "description": "Bloodcleaver"
+          "description": "Bloodcleaver",
+          "index": 0
         },
         {
           "key": "boss:0:1",
           "name": "Ironspike Warbow",
-          "description": "Ironspike Warbow"
+          "description": "Ironspike Warbow",
+          "index": 1
         },
         {
           "key": "boss:0:2",
           "name": "Warlord's Bloodstaff",
-          "description": "Warlord's Bloodstaff"
+          "description": "Warlord's Bloodstaff",
+          "index": 2
         },
         {
           "key": "boss:0:3",
           "name": "Ironblood Helm",
-          "description": "Ironblood Helm"
+          "description": "Ironblood Helm",
+          "index": 3
         },
         {
           "key": "boss:0:4",
           "name": "Ironblood Plate",
-          "description": "Ironblood Plate"
-        },
-        {
-          "key": "boss:0:5",
-          "name": "Ironblood Greaves",
-          "description": "Ironblood Greaves"
+          "description": "Ironblood Plate",
+          "index": 4
         },
         {
           "key": "boss:0:6",
           "name": "Ironblood Gloves",
-          "description": "Ironblood Gloves"
+          "description": "Ironblood Gloves",
+          "index": 6
         },
         {
           "key": "boss:0:7",
           "name": "Ironblood Boots",
-          "description": "Ironblood Boots"
+          "description": "Ironblood Boots",
+          "index": 7
         },
         {
           "key": "boss:0:8",
           "name": "Ironblood Necklace",
-          "description": "Ironblood Necklace"
+          "description": "Ironblood Necklace",
+          "index": 8
         },
         {
           "key": "boss:0:9",
           "name": "Ironblood Ring",
-          "description": "Ironblood Ring"
+          "description": "Ironblood Ring",
+          "index": 9
         }
       ],
       "artDirection": "Ironblood: rugged warlord armor in dark iron, burgundy leather, thick red rivets and hooked guards. Melee Bloodcleaver is an axe-like cleaver; Ironspike Warbow has spiked bow limbs; Bloodstaff has a red stone head. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
@@ -1519,52 +1449,56 @@
         {
           "key": "boss:1:0",
           "name": "Tyrant's Breaker",
-          "description": "Tyrant's Breaker"
+          "description": "Tyrant's Breaker",
+          "index": 0
         },
         {
           "key": "boss:1:1",
           "name": "Blackbolt Arbalest",
-          "description": "Blackbolt Arbalest"
+          "description": "Blackbolt Arbalest",
+          "index": 1
         },
         {
           "key": "boss:1:2",
           "name": "Tyrant's Scepter",
-          "description": "Tyrant's Scepter"
+          "description": "Tyrant's Scepter",
+          "index": 2
         },
         {
           "key": "boss:1:3",
           "name": "Black Bastion Helm",
-          "description": "Black Bastion Helm"
+          "description": "Black Bastion Helm",
+          "index": 3
         },
         {
           "key": "boss:1:4",
           "name": "Black Bastion Plate",
-          "description": "Black Bastion Plate"
-        },
-        {
-          "key": "boss:1:5",
-          "name": "Black Bastion Greaves",
-          "description": "Black Bastion Greaves"
+          "description": "Black Bastion Plate",
+          "index": 4
         },
         {
           "key": "boss:1:6",
           "name": "Black Bastion Gloves",
-          "description": "Black Bastion Gloves"
+          "description": "Black Bastion Gloves",
+          "index": 6
         },
         {
           "key": "boss:1:7",
           "name": "Black Bastion Boots",
-          "description": "Black Bastion Boots"
+          "description": "Black Bastion Boots",
+          "index": 7
         },
         {
           "key": "boss:1:8",
           "name": "Black Bastion Necklace",
-          "description": "Black Bastion Necklace"
+          "description": "Black Bastion Necklace",
+          "index": 8
         },
         {
           "key": "boss:1:9",
           "name": "Black Bastion Ring",
-          "description": "Black Bastion Ring"
+          "description": "Black Bastion Ring",
+          "index": 9
         }
       ],
       "artDirection": "Black Bastion: tyrant armor, black angular iron, heavy fortresslike stepped shapes, muted violet crystal. Tyrants Breaker is a heavy blunt breaker; Blackbolt Arbalest is a large stock crossbow; Scepter a short blunt black ceremonial rod. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
@@ -1583,52 +1517,56 @@
         {
           "key": "boss:2:0",
           "name": "Molten Cleaver",
-          "description": "Molten Cleaver"
+          "description": "Molten Cleaver",
+          "index": 0
         },
         {
           "key": "boss:2:1",
           "name": "Emberbolt Crossbow",
-          "description": "Emberbolt Crossbow"
+          "description": "Emberbolt Crossbow",
+          "index": 1
         },
         {
           "key": "boss:2:2",
           "name": "Flamecore Staff",
-          "description": "Flamecore Staff"
+          "description": "Flamecore Staff",
+          "index": 2
         },
         {
           "key": "boss:2:3",
           "name": "Crucible Helm",
-          "description": "Crucible Helm"
+          "description": "Crucible Helm",
+          "index": 3
         },
         {
           "key": "boss:2:4",
           "name": "Crucible Plate",
-          "description": "Crucible Plate"
-        },
-        {
-          "key": "boss:2:5",
-          "name": "Crucible Greaves",
-          "description": "Crucible Greaves"
+          "description": "Crucible Plate",
+          "index": 4
         },
         {
           "key": "boss:2:6",
           "name": "Crucible Gloves",
-          "description": "Crucible Gloves"
+          "description": "Crucible Gloves",
+          "index": 6
         },
         {
           "key": "boss:2:7",
           "name": "Crucible Boots",
-          "description": "Crucible Boots"
+          "description": "Crucible Boots",
+          "index": 7
         },
         {
           "key": "boss:2:8",
           "name": "Crucible Necklace",
-          "description": "Crucible Necklace"
+          "description": "Crucible Necklace",
+          "index": 8
         },
         {
           "key": "boss:2:9",
           "name": "Crucible Ring",
-          "description": "Crucible Ring"
+          "description": "Crucible Ring",
+          "index": 9
         }
       ],
       "artDirection": "Crucible: forged volcanic black iron with deep copper-orange molten seams, heat-sculpted hammer-worn forms. Molten Cleaver is a broad cleaver, Emberbolt Crossbow a crossbow with charred wooden stock, Flamecore Staff a glowing ember-headed long staff. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
@@ -1647,52 +1585,56 @@
         {
           "key": "boss:3:0",
           "name": "Starbreaker",
-          "description": "Starbreaker"
+          "description": "Starbreaker",
+          "index": 0
         },
         {
           "key": "boss:3:1",
           "name": "Astral Piercer",
-          "description": "Astral Piercer"
+          "description": "Astral Piercer",
+          "index": 1
         },
         {
           "key": "boss:3:2",
           "name": "Sovereign's Starstaff",
-          "description": "Sovereign's Starstaff"
+          "description": "Sovereign's Starstaff",
+          "index": 2
         },
         {
           "key": "boss:3:3",
           "name": "Starfallen Helm",
-          "description": "Starfallen Helm"
+          "description": "Starfallen Helm",
+          "index": 3
         },
         {
           "key": "boss:3:4",
           "name": "Starfallen Plate",
-          "description": "Starfallen Plate"
-        },
-        {
-          "key": "boss:3:5",
-          "name": "Starfallen Greaves",
-          "description": "Starfallen Greaves"
+          "description": "Starfallen Plate",
+          "index": 4
         },
         {
           "key": "boss:3:6",
           "name": "Starfallen Gloves",
-          "description": "Starfallen Gloves"
+          "description": "Starfallen Gloves",
+          "index": 6
         },
         {
           "key": "boss:3:7",
           "name": "Starfallen Boots",
-          "description": "Starfallen Boots"
+          "description": "Starfallen Boots",
+          "index": 7
         },
         {
           "key": "boss:3:8",
           "name": "Starfallen Necklace",
-          "description": "Starfallen Necklace"
+          "description": "Starfallen Necklace",
+          "index": 8
         },
         {
           "key": "boss:3:9",
           "name": "Starfallen Ring",
-          "description": "Starfallen Ring"
+          "description": "Starfallen Ring",
+          "index": 9
         }
       ],
       "artDirection": "Starfallen: celestial blue silver and indigo metal, restrained gold star points, elegant asymmetrical layered armor. Starbreaker is a star-pointed massive hammer; Astral Piercer is a tall astral longbow; Starstaff is a long silver staff with blue star crystal. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
@@ -1711,52 +1653,56 @@
         {
           "key": "boss:4:0",
           "name": "Ruinbringer",
-          "description": "Ruinbringer"
+          "description": "Ruinbringer",
+          "index": 0
         },
         {
           "key": "boss:4:1",
           "name": "Dominion Greatbow",
-          "description": "Dominion Greatbow"
+          "description": "Dominion Greatbow",
+          "index": 1
         },
         {
           "key": "boss:4:2",
           "name": "Ancient King's Scepter",
-          "description": "Ancient King's Scepter"
+          "description": "Ancient King's Scepter",
+          "index": 2
         },
         {
           "key": "boss:4:3",
           "name": "Ancient Dominion Helm",
-          "description": "Ancient Dominion Helm"
+          "description": "Ancient Dominion Helm",
+          "index": 3
         },
         {
           "key": "boss:4:4",
           "name": "Ancient Dominion Plate",
-          "description": "Ancient Dominion Plate"
-        },
-        {
-          "key": "boss:4:5",
-          "name": "Ancient Dominion Greaves",
-          "description": "Ancient Dominion Greaves"
+          "description": "Ancient Dominion Plate",
+          "index": 4
         },
         {
           "key": "boss:4:6",
           "name": "Ancient Dominion Gloves",
-          "description": "Ancient Dominion Gloves"
+          "description": "Ancient Dominion Gloves",
+          "index": 6
         },
         {
           "key": "boss:4:7",
           "name": "Ancient Dominion Boots",
-          "description": "Ancient Dominion Boots"
+          "description": "Ancient Dominion Boots",
+          "index": 7
         },
         {
           "key": "boss:4:8",
           "name": "Ancient Dominion Necklace",
-          "description": "Ancient Dominion Necklace"
+          "description": "Ancient Dominion Necklace",
+          "index": 8
         },
         {
           "key": "boss:4:9",
           "name": "Ancient Dominion Ring",
-          "description": "Ancient Dominion Ring"
+          "description": "Ancient Dominion Ring",
+          "index": 9
         }
       ],
       "artDirection": "Ancient Dominion: ruined royal cream-gold and violet armor, weathered ornate regal curves and broken crowns. Ruinbringer is an enormous ancient greatsword, Dominion Greatbow an ornate tall bow, Kings Scepter a short curved golden royal scepter. Show one complete item per cell in listed order. Helmet/torso/legs/gloves/boots/necklace/ring are distinct matching SET pieces, not repeated weapon pictures.",
@@ -1849,6 +1795,133 @@
       "height": 1254,
       "sha256": "437a49eb634e3196f21c3beb50949feb2ab4c6a42002199c1d8ec965c398d606",
       "generator": "image_gen built-in"
+    },
+    {
+      "key": "greaves",
+      "file": "assets/art/items/greaves.png",
+      "columns": 4,
+      "rows": 5,
+      "items": [
+        {
+          "key": "gear:0:5",
+          "name": "Worn Greaves",
+          "description": "very worn humble repaired iron/leather, chipped and asymmetrical"
+        },
+        {
+          "key": "gear:1:5",
+          "name": "Leather Greaves",
+          "description": "warm supple leather and simple bronze fittings, practical wrapped construction"
+        },
+        {
+          "key": "gear:2:5",
+          "name": "Iron Greaves",
+          "description": "simple angular iron with rivets and dark leather"
+        },
+        {
+          "key": "gear:3:5",
+          "name": "Steel Greaves",
+          "description": "smooth blue-gray steel with clean overlapping plates"
+        },
+        {
+          "key": "gear:4:5",
+          "name": "Hardened Greaves",
+          "description": "dark hardened metal and reinforced edges with studded details"
+        },
+        {
+          "key": "gear:5:5",
+          "name": "Reinforced Greaves",
+          "description": "heavy reinforced layered gunmetal with red-brown straps"
+        },
+        {
+          "key": "gear:6:5",
+          "name": "Runed Greaves",
+          "description": "blue-violet runed metal with sculpted geometric accents, no readable text"
+        },
+        {
+          "key": "gear:7:5",
+          "name": "Obsidian Greaves",
+          "description": "jagged faceted black obsidian with muted violet seams"
+        },
+        {
+          "key": "gear:8:5",
+          "name": "Dragonbone Greaves",
+          "description": "ivory dragonbone and crimson leather with sculpted talon details"
+        },
+        {
+          "key": "gear:9:5",
+          "name": "Starsteel Greaves",
+          "description": "icy blue silver starsteel with fine gold points and star facets"
+        },
+        {
+          "key": "gear:10:5",
+          "name": "Elder Greaves",
+          "description": "weathered green bronze and warm wood with leaf and vine accents"
+        },
+        {
+          "key": "gear:11:5",
+          "name": "Ancient Greaves",
+          "description": "pale cream ancient metal with violet and gold ceremonial curves"
+        },
+        {
+          "key": "boss:0:5",
+          "name": "Ironblood Greaves",
+          "description": "Ironblood Greaves",
+          "crop": [
+            0.0025,
+            0.5848787446504993,
+            0.245,
+            0.1783166904422254
+          ]
+        },
+        {
+          "key": "boss:1:5",
+          "name": "Black Bastion Greaves",
+          "description": "Black Bastion Greaves",
+          "crop": [
+            0.2525,
+            0.5848787446504993,
+            0.245,
+            0.1783166904422254
+          ]
+        },
+        {
+          "key": "boss:2:5",
+          "name": "Crucible Greaves",
+          "description": "Crucible Greaves",
+          "crop": [
+            0.5025,
+            0.5848787446504993,
+            0.245,
+            0.1783166904422254
+          ]
+        },
+        {
+          "key": "boss:3:5",
+          "name": "Starfallen Greaves",
+          "description": "Starfallen Greaves",
+          "crop": [
+            0.7525,
+            0.5848787446504993,
+            0.245,
+            0.1783166904422254
+          ]
+        },
+        {
+          "key": "boss:4:5",
+          "name": "Ancient Dominion Greaves",
+          "description": "Ancient Dominion Greaves",
+          "crop": [
+            0.0025,
+            0.7774607703281027,
+            0.245,
+            0.19971469329529243
+          ]
+        }
+      ],
+      "generator": "image_gen built-in",
+      "prompt": "Seventeen distinct waist-to-ankle cloth/leather trousers and armored platelegs, with waistbands, thighs, knees and open ankle hems; twelve regular tiers followed by five boss sets. No footwear. Four columns, five rows. Final edit: remove grid lines and shrink/center every armor design with safe dark margins.",
+      "artDirection": "Full pants and platelegs; no separate boots or shin guards.",
+      "sha256": "3465a6546578f25b6b25b82483e3f7e47e50c5f8e22f141fb602271b893fbc42"
     }
   ]
 }

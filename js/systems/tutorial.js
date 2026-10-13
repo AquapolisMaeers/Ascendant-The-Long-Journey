@@ -7,11 +7,15 @@
     current(c = G.character()) {
       return this.active(c) ? D.tutorial.steps[c.guide.step] : null;
     },
+    ensure() {
+      const c = G.character();
+      if (c && !c.tutorial && !this.active(c) && !c.combat && !c.activity && !c.dungeon) this.start();
+    },
     start() {
       G.ensureIdle();
       const c = G.character();
       G.assert(!c.dungeon, 'Leave the dungeon first.');
-      G.assert(!c.tutorial, 'This character has already completed or skipped the tutorial.');
+      G.assert(!c.tutorial, 'This character has already completed the tutorial.');
       if (!c.guide?.active) {
         c.guide = {
           active: true,
@@ -43,7 +47,7 @@
         action === 'craft' && (step === id || step === 'facet' && id === 'facet:' + D.classes.indexOf(c.class) + ':0') ||
         action === 'enhance' && step === 'enhance' && id === c.guide.weaponId ||
         action === 'fight' && step === 'fight' && c.encounter?.tutorial;
-      G.assert(allowed, 'Follow the current tutorial lesson, or skip the tutorial to play freely.');
+      G.assert(allowed, 'Complete the current tutorial lesson to continue.');
     },
     discover() {
       if (!this.active()) return false;
@@ -89,6 +93,10 @@
         }]);
         G.notify('Faceting lesson: one typed uncut gem supplied.', 'success');
       }
+      G.runtime.page = 'World';
+      G.runtime.tab = '';
+      G.ui.close();
+      window.scrollTo(0, 0);
       G.notify('Next lesson: ' + this.current().title, 'info');
     },
     gathered(skill, rewards) {
@@ -138,9 +146,9 @@
     },
     finish(skip = false) {
       const c = G.character();
+      G.assert(!skip && this.active() && this.current().id === 'equip' && c.equipment.Plate?.id === c.guide.plateId, 'The tutorial is required. Complete every lesson and equip the tutorial Plate to finish.');
       if (this.active()) {
         G.assert(!c.combat && !c.activity, 'Finish or stop the current tutorial action first.');
-        if (!skip) G.assert(this.current().id === 'equip' && c.equipment.Plate?.id === c.guide.plateId, 'Equip the tutorial Plate to finish.');
         c.guide.active = false;
         if (c.encounter?.tutorial) c.encounter = null;
       }
@@ -148,8 +156,12 @@
       c.tutorial = 1;
       if (first) {
         c.hp = S.character.stats(c).health;
-        G.notify('Tutorial ' + (skip ? 'skipped' : 'complete') + '. Health fully restored.', 'success');
+        G.notify('Tutorial complete. Health fully restored.', 'success');
       }
+      G.runtime.page = 'World';
+      G.runtime.tab = '';
+      G.ui.close();
+      window.scrollTo(0, 0);
       G.commit();
     }
   };

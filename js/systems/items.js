@@ -141,7 +141,7 @@
         item = c.inventory.find(i => i.id === id);
       G.assert(item, 'Item not found.');
       G.assert(!item.locked && !item.bound, 'Unlock this item before discarding it. Bound tools cannot be discarded.');
-      G.assert(!S.tutorial?.active(), 'Finish or skip the tutorial before discarding its supplies.');
+      G.assert(!S.tutorial?.active(), 'Finish the required tutorial before discarding its supplies.');
       if (item.kind === 'stack' && quantity < item.quantity) {
         G.assert(quantity > 0, 'Choose a positive quantity.');
         item.quantity -= quantity;
