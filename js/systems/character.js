@@ -1,6 +1,14 @@
 'use strict';
 (function(G, D, S) {
   S.character = {
+    customize(value) {
+      const c = G.character();
+      G.assert(c, 'Choose a character.');
+      const appearance = {portrait:D.appearanceKind(c.class), look:value.look, color:value.color};
+      G.assert(Number.isInteger(value.look) && D.validAppearance(appearance), 'Choose a valid class portrait and accent colour.');
+      c.appearance = appearance;
+      G.commit();
+    },
     stats(c) {
       const s = {
         level: c.level,
@@ -34,6 +42,7 @@
         const index = D.perkLevels.indexOf(+level);
         Object.entries(D.perkEffects[index][choice]).forEach(([k, v]) => add(k, v));
       }
+      Object.entries(S.companions?.bonus(c) || {}).forEach(([key, value]) => add(key, value));
       for (const stat of ['damage', 'defence', 'health']) s[stat] *= 1 + s[stat + 'Pct'];
       s.raw = {
         ...s

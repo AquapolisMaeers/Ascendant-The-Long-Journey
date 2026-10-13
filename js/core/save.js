@@ -43,7 +43,24 @@
       if (!c) continue;
       if (characterIds.has(c.id)) fail('duplicate character ID');
       characterIds.add(c.id);
-      if (!c.appearance || !['sentinel', 'ranger', 'mystic'].includes(c.appearance.portrait) || !/^#[0-9a-f]{6}$/i.test(c.appearance.color)) fail('appearance');
+      if (!D.validAppearance(c.appearance)) fail('appearance');
+      if (c.ascendantCoins !== undefined && (!Number.isSafeInteger(c.ascendantCoins) || !finite(c.ascendantCoins))) fail('Ascendant Coins');
+      if (c.ascendantRewards !== undefined) {
+        if (!c.ascendantRewards || typeof c.ascendantRewards !== 'object' || Array.isArray(c.ascendantRewards)) fail('Ascendant rewards');
+        for (const [id, claimed] of Object.entries(c.ascendantRewards)) {
+          const [type, ...rest] = id.split(':'), key = rest.join(':');
+          const known = type === 'combat' ? /^[0-9]+$/.test(key) && +key >= 2 && +key <= 100 :
+            type === 'milestone' ? Object.hasOwn(D.ascendantCurrency.milestones, key) :
+            type === 'achievement' && D.achievements.some(a => a.id === key);
+          if (!known || claimed !== true) fail('Ascendant reward claim');
+        }
+      }
+      if (c.companion !== undefined && c.companion !== null) {
+        const p = c.companion;
+        if (!D.companions.some(d => d.id === p.type) || !Number.isInteger(p.level) || !finite(p.level, 1, D.companionRules.levelCap) ||
+          !finite(p.xp) || p.level === D.companionRules.levelCap && p.xp !== 0 || p.level < D.companionRules.levelCap && p.xp >= G.systems.companions.xpNext(p.level) ||
+          !finite(p.hunger, 0, 100) || !finite(p.health, 0, 100) || !finite(p.updatedAt)) fail('companion');
+      }
       if (c.peaceFoodReady !== undefined && !finite(c.peaceFoodReady)) fail('peace food cooldown');
       if (!Number.isInteger(c.seed) || !finite(c.seed, 1, 4294967295) || !finite(c.foodReady) || !c.facetFails || Object.entries(c.facetFails).some(([k, v]) => ![0, 1, 2, 3, 4].includes(+k) || !finite(v, 0, 1))) fail('random state or counters');
       if (typeof c.id !== 'string' || typeof c.name !== 'string' || c.name.length < 2 || c.name.length > 24 || !D.classes.includes(c.class) || !D.modes.includes(c.mode)) fail('character identity');
@@ -166,7 +183,9 @@
     migrate(p) {
       let guard = 0;
       while (p?.saveVersion !== D.config.version && this.migrations[p?.saveVersion] && guard++ < 10) p = this.migrations[p.saveVersion](p);
-      return this.applyFates(validate(p));
+      validate(p);
+      p.slots.filter(Boolean).forEach(c => G.systems.chronicles.normalize(c));
+      return this.applyFates(p);
     },
     write() {
       if (G.runtime.loadFailure || G.account?.enabled && !G.account.ready) return false;

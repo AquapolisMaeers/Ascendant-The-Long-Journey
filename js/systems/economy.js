@@ -43,11 +43,8 @@
       G.commit();
     },
     appearance(value) {
-      G.ensureIdle();
-      G.assert(['sentinel', 'ranger', 'mystic'].includes(value.portrait) && /^#[0-9a-f]{6}$/i.test(value.color), 'Invalid appearance.');
-      S.inventory.take('appearance', 1);
-      G.character().appearance = value;
-      G.commit();
+      G.assert(D.validAppearance(value), 'Invalid appearance.');
+      S.character.customize({look:value.look ?? 0, color:value.color});
     }
   };
   S.market = {

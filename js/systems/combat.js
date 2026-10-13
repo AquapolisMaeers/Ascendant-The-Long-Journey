@@ -25,7 +25,10 @@
     const actual = Math.min(b.hp, damage);
     b.hp = Math.max(0, b.hp - actual);
     a.hits++;
-    const healing = Math.min(a.health - a.hp, actual * a.lifeSteal);
+    const rawSteal = actual * a.lifeSteal, tenths = rawSteal * 10;
+    // Round positive gains up to a tenth, correcting only floating-point noise at exact tenths.
+    const roundedSteal = rawSteal > 0 ? Math.max(1, Math.ceil(tenths - Number.EPSILON * Math.max(1, tenths) * 4)) / 10 : 0;
+    const healing = Math.min(Math.max(0, a.health - a.hp), roundedSteal);
     a.hp += healing;
     if (a.relentless && a.hits % D.perkConditional.relentless.hits === 0) a.hp = Math.min(a.health, a.hp + a.health * D.perkConditional.relentless.heal);
     if (b.hp > 0 && b.secondWind && !b.wind && b.hp / b.health < D.perkConditional.secondWind.threshold) {
@@ -235,6 +238,7 @@
         return;
       }
       c.stats[encounter.type]++;
+      S.companions.gain(c, D.companionRules.victoryXp * encounter.enemy.level);
       const levelUps = S.xp.add(c, D.loot[encounter.type].xp * encounter.enemy.level);
       if (levelUps) {
         c.hp = S.character.stats(c).health;

@@ -3,12 +3,32 @@
 RPG.data.patches = [
   {
     "date": "2026-10-13",
+    "title": "New pursuits for the long journey",
+    "changes": [
+      "Offline Faceting now earns 15% of its previous XP. Active Faceting is unchanged.",
+      "Mobile combat focuses on the fight and Provisions, with level and health visible.",
+      "Local leaderboards cover 16 pursuits. Companions gain levels and bonuses, with food upkeep and paid revival.",
+      "Earn Ascendant Coins from achievements and combat milestones. The Emporium, outfits and auras are Coming soon. Enhance now confirms prefix ranges before spending."
+    ]
+  },
+  {
+    "date": "2026-10-13",
+    "title": "Know your gear. Choose your look.",
+    "changes": [
+      "The Wayside inn has new artwork. Crafting previews show gear stats, food healing, gem effects and equipment requirements.",
+      "Enhancement previews show stat changes and an organized list of possible prefixes. Armour hides now cost 3/6/9/12/15 across five-level bands.",
+      "Lifesteal gains round up to 0.1 HP, based on actual damage and capped at missing health.",
+      "Click your character portrait to freely choose one of five looks for your class. Your choice stays with your local save."
+    ]
+  },
+  {
+    "date": "2026-10-13",
     "title": "Training, supplies & the Wayside inn",
     "changes": [
       "Choose any of seven AFK training skills beside health and coins in the top bar. Offline training awards XP only.",
       "Buy starter ore, logs, raw Minnows and pelts for 10 Bronze each. Selling has 1, 10, 25, 50 and All shortcuts.",
       "The inn offers paid 25%, 50% or full healing with no cooldown. Tool rarities have no skill-level requirement.",
-      "Gear crafting uses three times the hides/pelts. Enhancement wood and hide costs increase every five levels."
+      "Gear crafting uses three times the hides/pelts. Enhancement wood and hide costs increase every five levels, now 3/6/9/12/15 units."
     ]
   },
   {

@@ -85,7 +85,7 @@
     chance: [1, .8, .6, .4, .2],
     coins: [1, 2, 4, 8, 16],
     bars: [1, 2, 3, 4, 5],
-    secondary: [1, 2, 3, 4, 5],
+    secondary: [3, 6, 9, 12, 15],
     weaponLogs: [3, 6, 9, 12, 15]
   };
   D.ascend = {

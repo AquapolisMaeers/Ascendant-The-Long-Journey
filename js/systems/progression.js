@@ -13,6 +13,8 @@
             title: a.title
           });
         }
+      const earned = S.ascendant.sync(c);
+      if (earned) G.notify('+' + earned + ' Ascendant Coins earned.', 'success');
     },
     titles(c) {
       return D.achievements.filter(a => a.title && c.achievements[a.id]).map(a => a.title);
@@ -24,7 +26,7 @@
       let xp = D.config.skillXp * D.tiers[tier];
       if (skill === 'Smithing') xp = D.recipes.find(r => r.id === 'bar:' + tier).xp;
       if (skill === 'Cooking') xp = D.recipes.find(r => r.id === 'cook:' + tier).xp;
-      if (skill === 'Faceting') xp = D.config.skillXp * D.config.facetingXp * c.skills[skill].level;
+      if (skill === 'Faceting') xp = D.config.skillXp * D.config.facetingXp * c.skills[skill].level * D.config.offlineFacetingMultiplier;
       return xp / (D.config.actionMs / 1000);
     },
     select(skill) {
@@ -57,6 +59,7 @@
     },
     resume() {
       for (const c of G.state.slots.filter(Boolean)) {
+        S.companions.sync(c);
         if (c.dungeon) {
           if (c.combat) c.dungeon.interrupted = true;
           else {

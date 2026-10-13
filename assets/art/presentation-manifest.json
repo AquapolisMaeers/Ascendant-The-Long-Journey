@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-13",
+  "generator": "built-in imagegen",
+  "pixelEdits": false,
+  "assets": [
+    {
+      "file": "assets/art/wayside-inn.png",
+      "width": 1916,
+      "height": 821,
+      "sha256": "4765b3e68527d561927e6baea53d93030e3a211d3ae344a20bd80fa814eb1a21",
+      "prompt": "Use case: stylized-concept. Asset type: wide background illustration for the Wayside inn healing panel in a medieval fantasy RPG. Paint an inviting timber-and-stone roadside inn at dusk, glowing amber windows and lanterns, a quiet courtyard and a welcoming door, distant rolling countryside. Sophisticated hand-painted fantasy game environment, rich natural textures, warm gold contrasted with deep teal shadows. Wide landscape composition, the recognizable inn building on the right, calmer darker landscape on the left for UI text. The central horizontal band must read well when cropped to a shallow banner. No people needed, no writing, no logos, no watermark. Create one finished illustration."
+    },
+    {
+      "file": "assets/art/character-looks.png",
+      "width": 1619,
+      "height": 971,
+      "sha256": "1a86530bf25abcd130013de5649b0964b057e0aa8a673d3f7c18686373843e7c",
+      "prompt": "Use case: stylized-concept. Asset type: game character portrait atlas. One single rectangular sprite sheet with EXACTLY FIVE EQUAL COLUMNS and THREE EQUAL ROWS, 15 separate square-ish head-and-shoulders fantasy character portraits. Every cell has identical dimensions, straight perfectly regular grid boundaries, each head centered safely INSIDE its own cell with margin and no crossing boundaries. Background in each cell deep charcoal teal, subtle narrow empty gutters only; no labels, no lettering, no watermark. Painterly detailed medieval fantasy RPG artwork, consistent warm light and rich materials, readable at 48px. TOP ROW five WARRIORS: 1 dark-haired armored male vanguard, 2 red-haired armored female shieldbearer, 3 older silver-haired scarred male knight, 4 dark-skinned female warrior with braided hair and steel pauldrons, 5 tan-skinned male fighter with dark beard and a steel helm. MIDDLE ROW five RANGERS/ARCHERS: 1 brown-haired hooded male woodsman, 2 dark-haired female scout with leather armor, 3 dark-skinned male archer with short curls and a green cloak, 4 fair-haired female ranger with fur-lined hood, 5 older tan-skinned female tracker with grey braid. BOTTOM ROW five MAGES: 1 silver-haired bearded male scholar in indigo robes, 2 auburn-haired female spellbinder in violet robes, 3 dark-skinned male mage with short hair and blue robes, 4 dark-haired female mystic in teal hood, 5 older pale female sage with white hair and deep purple robes. All are adult heroic adventurers. Different faces, hairstyles and outfits, equal head scale. No weapons over faces. Strict 5 by 3 uniform atlas; not a collage with variable-sized panels.",
+      "columns": 5,
+      "rows": 3,
+      "rowClasses": [
+        "Warrior",
+        "Archer",
+        "Mage"
+      ],
+      "sampleInset": 0.01
+    }
+  ]
+}

@@ -138,6 +138,7 @@
       G.audio?.play(a.skill.toLowerCase());
       a.rewards = S.loot.merge(a.rewards || [], rewards);
       S.tutorial?.gathered(a.skill, rewards);
+      S.companions.gain(c, D.companionRules.actionXp);
       S.xp.add(c.skills[a.skill], D.config.skillXp * D.tiers[a.tier] * (1 + S.items.toolBonus(c, a.skill, 'Knowledge')));
       if (G.rng() >= S.items.toolBonus(c, a.skill, 'Conservation')) e.charges--;
       G.runtime.recent = rewards;

@@ -16,7 +16,7 @@
   };
   const showOffline = () => {
     if (!G.runtime.offline?.length) return;
-    U.modal('While you were away', '<div class="eyebrow">OFFLINE TRAINING · XP ONLY</div>' + G.runtime.offline.map(r => '<p>' + U.e(r.name) + ' · ' + r.skill + '<br><strong class="gold">+' + G.number(r.xp) + ' XP</strong> over ' + G.number(r.seconds / 3600, 2) + ' hours.</p>').join('') + '<p>25% base active rate. Maximum eight hours. Knowledge applies; Efficiency does not. No items, coins, or combat progress.</p>');
+    U.modal('While you were away', '<div class="eyebrow">OFFLINE TRAINING · XP ONLY</div>' + G.runtime.offline.map(r => '<p>' + U.e(r.name) + ' · ' + r.skill + '<br><strong class="gold">+' + G.number(r.xp) + ' XP</strong> over ' + G.number(r.seconds / 3600, 2) + ' hours.</p>').join('') + '<p>25% base active rate; Faceting uses 15% of that rate. Maximum eight hours. Knowledge applies; Efficiency does not. No items, coins, or combat progress.</p>');
     G.runtime.offline = [];
   };
   const actions = {
@@ -69,7 +69,19 @@
     },
     createClass(el) {
       G.runtime.creation.class = el.dataset.value;
+      G.runtime.creation.appearance.portrait = D.appearanceKind(el.dataset.value);
       U.creation(G.runtime.creation.slot, 1);
+    },
+    createLook(el) {
+      const f = G.runtime.creation;
+      f.appearance = {portrait:D.appearanceKind(f.class), look:Number(el.dataset.look), color:value('create-color') || f.appearance.color};
+      U.creation(f.slot, 3);
+    },
+    customize() { U.customize(); },
+    appearanceLook(el) {
+      G.runtime.appearanceDraft.look = Number(el.dataset.look);
+      G.runtime.appearanceDraft.color = value('appearance-color') || G.runtime.appearanceDraft.color;
+      U.customizer();
     },
     createMode(el) {
       G.runtime.creation.mode = el.dataset.value;
@@ -82,7 +94,8 @@
         G.assert(f.name.length >= 2 && f.name.length <= 24, 'Name must contain 2–24 characters.');
       }
       if (f.step === 3) f.appearance = {
-        portrait: value('create-portrait'),
+        portrait: D.appearanceKind(f.class),
+        look: Number(value('create-portrait')),
         color: value('create-color')
       };
       U.creation(f.slot, f.step + 1);
@@ -243,7 +256,23 @@
       itemAction(['inventory', 'lock'], el.dataset.id);
     },
     enhance(el) {
-      itemAction(['upgrades', 'enhance'], el.dataset.id);
+      U.enhanceConfirmation(el.dataset.id);
+    },
+    enhanceCancel() {
+      U.item(G.runtime.enhancePending.id);
+      G.runtime.enhancePending = null;
+    },
+    enhanceConfirm() {
+      const pending = G.runtime.enhancePending, item = pending && S.items.find(pending.id);
+      G.assert(item && item.enhance === pending.enhance && item.rarity === pending.rarity, 'This item changed. Review its current enhancement quote.');
+      itemAction(['upgrades', 'enhance'], pending.id);
+      G.runtime.enhancePending = null;
+    },
+    adoptCompanion(el) { S.companions.adopt(el.dataset.type); },
+    feedCompanion() { S.companions.feed(value('companion-food')); },
+    reviveCompanion() { S.companions.revive(); },
+    releaseCompanion() {
+      confirm('Release your companion?', '<p>This companion and its levels are permanently released. You can adopt another companion afterward.</p>', () => S.companions.release(), true);
     },
     ascend(el) {
       itemAction(['upgrades', 'ascend'], el.dataset.id);
@@ -305,15 +334,9 @@
       S.shop.rename(value('rename-input'));
       U.close();
     },
-    appearanceForm() {
-      const a = G.character().appearance;
-      U.modal('Change appearance', '<p>Consumes one Appearance Token.</p><label>Portrait<select id="appearance-portrait">' + ['sentinel', 'ranger', 'mystic'].map(n => '<option ' + (a.portrait === n ? 'selected' : '') + '>' + n + '</option>').join('') + '</select></label><label class="spacer">Cloak colour<input type="color" id="appearance-color" value="' + U.e(a.color) + '"></label><div class="modal-actions">' + U.btn('Change appearance', 'appearanceConfirm', '', 'gold-btn') + '</div>');
-    },
+    appearanceForm() { U.customize(); },
     appearanceConfirm() {
-      S.shop.appearance({
-        portrait: value('appearance-portrait'),
-        color: value('appearance-color')
-      });
+      S.character.customize({look:G.runtime.appearanceDraft.look, color:value('appearance-color')});
       U.close();
     },
     listForm(el) {
@@ -468,7 +491,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'afkStart', 'afkStop', 'audioPreview', 'audioPreviewStop', 'closeModal'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'afkStart', 'afkStop', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
@@ -490,6 +513,10 @@
         G.assert(c.eatUnlocks.includes(n), 'This Auto-Eat tier is not unlocked.');
         c.eat = n;
         G.commit();
+      }
+      if (el.id === 'leaderboard-category') {
+        G.runtime.leaderboard = el.value;
+        U.render();
       }
       if (el.id === 'offline-select') {
         S.offline.select(el.value || null);
@@ -533,6 +560,10 @@
   document.addEventListener('input', event => {
     if (!G.account.playable()) return;
     const el = event.target;
+    if (el.id === 'appearance-color') {
+      G.runtime.appearanceDraft.color = el.value;
+      document.querySelector('.customize-preview')?.style.setProperty('--cloak', el.value);
+    }
     if (el.id === 'buy-quantity') {
       const item = D.shop.find(i => i.id === G.runtime.buyItem), label = document.getElementById('buy-total');
       if (item && label) label.textContent = G.money(item.price * (Number(el.value) || 0));
@@ -638,6 +669,7 @@
     try {
       const c = G.character();
       if (c) {
+        S.companions.sync(c);
         S.afk.tick(ms);
         if (c.combat) S.combat.tick(ms / 1000);
         else S.world.tick(ms);

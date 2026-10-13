@@ -87,6 +87,7 @@
         G.runtime.recent = rewards;
       } else G.notify('Fusion failed. Exactly one gem broke; the other two remain. +1 percentage point fail protection.', 'warning');
       if (r.skill === 'Faceting') c.stats.facets++;
+      S.companions.gain(c, D.companionRules.actionXp);
       S.xp.add(c.skills[r.skill], this.xp(r, c) * (1 + S.items.toolBonus(c, r.skill, 'Knowledge')));
       a.rewards = S.loot.merge(a.rewards || [], rewards);
       const lesson = S.tutorial?.current()?.id;

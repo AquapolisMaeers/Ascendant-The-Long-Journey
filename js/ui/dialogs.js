@@ -3,7 +3,7 @@
   U.modal = (title, body, wide = false) => {
     G.runtime.previousFocus = document.activeElement;
     document.getElementById('modal-root').innerHTML = '<div class="modal-backdrop"><section class="modal ' + (wide ? 'wide-modal' : '') + '" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><h2 id="modal-title">' + title + '</h2><button class="modal-close" data-action="closeModal" aria-label="Close dialog">×</button></div>' + body + '</section></div>';
-    setTimeout(() => document.querySelector('.modal input,.modal select,.modal .btn,.modal-close')?.focus(), 0);
+    setTimeout(() => document.querySelector('.modal input:not([type=hidden]),.modal select,.modal .btn,.modal-close')?.focus(), 0);
   };
   U.close = () => {
     document.getElementById('modal-root').innerHTML = '';
@@ -41,7 +41,7 @@
       Ironman: 'Self-sufficient · Marketplace completely hidden',
       'Hardcore Ironman': 'Death permanently converts to Ironman; all progress stays'
     } [n]) + '</small></div></button>').join('') + '</div>' + (f.mode === 'Hardcore' ? '<div class="warning danger-box spacer">HARDCORE: death permanently deletes this character. The slot becomes reusable. There is no recovery.</div>' : '');
-    if (step === 3) body += '<div class="field-grid"><label>Portrait<select id="create-portrait">' + ['sentinel', 'ranger', 'mystic'].map(n => '<option ' + (f.appearance.portrait === n ? 'selected' : '') + '>' + n + '</option>').join('') + '</select></label><label>Cloak colour<input id="create-color" type="color" value="' + f.appearance.color + '"></label></div><p>Appearance is cosmetic. Change it later with an Appearance Token.</p>';
+    if (step === 3) body += U.lookPicker('create', f.class, f.appearance.look ?? 0, 'createLook') + '<label class="spacer">Portrait accent<input id="create-color" type="color" value="' + f.appearance.color + '"></label><p>Five looks for your class. Change your portrait and accent later by clicking your character image.</p>';
     if (step === 4) body += '<div class="panel"><h2>' + U.e(f.name) + '</h2><p>' + f.class + ' · ' + f.mode + '</p><p>Start at Level 1 with a Common Worn class weapon and all seven Common tools. Start with ' + D.config.startingBronze + ' Bronze. The guided tutorial helps you earn food and armour.</p></div><p>Class and mode are permanent. Only a fallen Hardcore Ironman converts to Ironman.</p>' + (f.mode === 'Hardcore' ? '<label class="settings-row"><span>I understand death permanently deletes this character.</span><input type="checkbox" id="hardcore-confirm"></label>' : '');
     body += '<div class="modal-actions">' + (step ? U.btn('Back', 'createBack', '', 'quiet') : '') + U.btn(step === 4 ? 'Begin journey' : 'Continue', step === 4 ? 'createFinish' : 'createNext', '', 'primary') + '</div>';
     U.modal(title, body);
@@ -73,11 +73,11 @@
       body += '<hr><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / 3</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
       if (gear && item.enhance < 25) {
         const q = S.upgrades.quote(item);
-        body += '<section class="upgrade-box"><h3>Enhance to +' + (item.enhance + 1) + '</h3><p>' + G.percent(q.chance) + ' success · ' + G.money(q.coins) + '</p>' + U.ingredients(q.cost) + '<p>Fail protection: +' + G.percent(item.enhanceFail) + '</p>' + U.btn('Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';
+        body += '<section class="upgrade-box"><h3>Enhance to +' + (item.enhance + 1) + '</h3><p>' + G.percent(q.chance) + ' success · ' + G.money(q.coins) + '</p>' + U.upgradePreview(item, false) + U.ingredients(q.cost) + U.prefixGuide(item) + '<p>Fail protection: +' + G.percent(item.enhanceFail) + '</p>' + U.btn('Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';
       }
       if (item.rarity < 7) {
         const q = S.upgrades.quote(item, true);
-        body += '<section class="upgrade-box"><h3>Ascend to ' + D.rarity[item.rarity + 1] + '</h3><p>' + G.percent(q.chance) + ' success · ' + G.money(q.coins) + '</p>' + U.ingredients(q.cost) + '<p>Fail protection: +' + G.percent(item.ascendFail) + (tool ? ' · no skill level requirement' : '') + '</p>' + U.btn('Ascend', 'ascend', 'data-id="' + id + '"', 'gold-btn wide') + '</section>';
+        body += '<section class="upgrade-box"><h3>Ascend to ' + D.rarity[item.rarity + 1] + '</h3><p>' + G.percent(q.chance) + ' success · ' + G.money(q.coins) + '</p>' + U.upgradePreview(item, true) + U.ingredients(q.cost) + (tool ? U.prefixGuide(item) : '') + '<p>Fail protection: +' + G.percent(item.ascendFail) + (tool ? ' · no skill level requirement' : '') + '</p>' + U.btn('Ascend', 'ascend', 'data-id="' + id + '"', 'gold-btn wide') + '</section>';
       }
       body += '</div>';
       if (gear) {
@@ -91,7 +91,7 @@
       }
     } else {
       const info = D.catalog[item.key];
-      body += '<p>' + (info.healing ? 'Restores ' + info.healing + ' HP. Assign this food in World.' : info.rank === 0 && info.category === 'Gems' ? 'Cut this typed uncut gem into Gem I in Crafting → Faceting.' : info.category === 'Gems' ? 'Socket into compatible equipment. Fuse three identical gems to upgrade the rank.' : info.id === 'stone' ? 'Consumed by every rarity Ascension attempt.' : 'An item for your journey.') + '</p><div class="row spacer">' + U.btn(item.locked ? 'Unlock' : 'Lock / favourite', 'lock', 'data-id="' + id + '"') + (info.category === 'Food' ? U.btn('Assign food', 'assignFood', 'data-key="' + item.key + '"', 'primary') : '') + (item.key === 'rename' ? U.btn('Use contract', 'renameForm') : item.key === 'appearance' ? U.btn('Use token', 'appearanceForm') : '') + U.btn('Discard', 'discard', 'data-id="' + id + '"', 'danger') + '</div>';
+      body += U.effectPreview(item) + '<p>' + (info.healing ? 'Restores ' + info.healing + ' HP. Assign this food in World.' : info.rank === 0 && info.category === 'Gems' ? 'Cut this typed uncut gem into Gem I in Crafting → Faceting.' : info.category === 'Gems' ? 'Socket into compatible equipment. Fuse three identical gems to upgrade the rank.' : info.id === 'stone' ? 'Consumed by every rarity Ascension attempt.' : 'An item for your journey.') + '</p><div class="row spacer">' + U.btn(item.locked ? 'Unlock' : 'Lock / favourite', 'lock', 'data-id="' + id + '"') + (info.category === 'Food' ? U.btn('Assign food', 'assignFood', 'data-key="' + item.key + '"', 'primary') : '') + (item.key === 'rename' ? U.btn('Use contract', 'renameForm') : item.key === 'appearance' ? U.btn('Customize appearance', 'appearanceForm') : '') + U.btn('Discard', 'discard', 'data-id="' + id + '"', 'danger') + '</div>';
     }
     U.modal(U.e(U.itemName(item)), body, true);
     G.runtime.modalItem = id;
