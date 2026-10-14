@@ -3,6 +3,14 @@
 RPG.data.patches = [
   {
     "date": "2026-10-14",
+    "title": "Meals with character",
+    "changes": [
+      "All twelve cooked foods have their own comic flavor text in item details and Cooking previews.",
+      "Companion feeding keeps your selected meal after each feed and when returning to the page. Each character remembers its own choice during the session. An empty or locked choice stays selected, with feeding disabled until you restock, unlock it or choose another meal."
+    ]
+  },
+  {
+    "date": "2026-10-14",
     "title": "Compact crafting & new milestones",
     "changes": [
       "Smithing, Cooking and Faceting show illustrated, rarity-colored skill/tool cards. Click one to inspect your tool. Smithing recipes now use the same compact five-column desktop layout as Faceting.",

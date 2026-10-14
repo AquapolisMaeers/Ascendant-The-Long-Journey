@@ -62,6 +62,7 @@
   U.effectPreview = item => {
     const summary = U.itemSummary(item), info = item.kind === 'stack' ? D.catalog[item.key] : null;
     let extra = '';
+    if (info?.flavor) extra += '<small class="food-flavor">“' + U.e(info.flavor) + '”</small>';
     if (info?.rank > 0) {
       const gem = D.gems[info.type], slots = D.slots.filter(slot => D.gemAllowed[slot].includes(info.type));
       extra = '<small>Compatible slots: ' + slots.join(', ') + (gem.style === undefined ? '' : ' · ' + D.classes[gem.style] + ' only') + '</small>';

@@ -65,6 +65,9 @@
       '<div class="grid-3 spacer">'+D.companions.map(entry=>'<section class="panel companion-card">'+U.companionPortrait(entry)+
       '<h3 class="spacer">'+entry.name+'</h3><p class="notes spacer">'+entry.description+'</p><p class="notes spacer">Levels 1–20 · 10 XP per gathering/crafting action · 25 × enemy level XP per victory.</p>'+
       U.btn('Adopt · '+entry.price+' Bronze','adoptCompanion','data-type="'+entry.id+'" '+(c.combat||c.activity||c.dungeon||S.tutorial.active()||c.coins<entry.price?'disabled':''),'gold-btn')+'</section>').join('')+'</div>';
+    const selections=G.runtime.companionFoods ??= {}, selected=selections[c.id] ?? foods[0]?.key ?? '';
+    if(selected) selections[c.id]=selected;
+    const available=foods.some(i=>i.key===selected);
     const bonus=S.companions.bonus(c),value=bonus[d.stat]||0,revive=p.level*D.companionRules.revivePerLevel;
     return intro+'<div class="grid-2"><section class="panel companion-card">'+U.companionPortrait(d)+
       '<div class="row between spacer"><h2>'+d.name+'</h2><span class="badge">'+(p.alive?p.active?'BONUS ACTIVE':'HUNGRY':'STARVED')+'</span></div>'+
@@ -75,8 +78,8 @@
       '<div class="meta-row"><span>'+D.labels[d.stat]+'</span><strong id="companion-bonus">+'+U.statValue(d.stat,value)+'</strong></div>'+
       '<p class="notes spacer">'+d.description+' Bonuses apply while fed and alive; a committed fight keeps its starting stats.</p></section>'+
       '<section class="panel"><h3>Care & upkeep</h3><p class="notes spacer">Hunger loses 10 points per hour, even offline. At zero hunger, bonuses stop and vitality loses 10 per hour. Starved companions keep their levels but need paid revival.</p>'+
-      (p.alive?'<label class="spacer">Cooked food<select id="companion-food">'+(foods.length?foods.map(i=>'<option value="'+i.key+'">'+U.e(D.catalog[i.key].name)+' · '+i.quantity+' owned · +'+G.number(S.companions.nutrition(i.key,p),1)+' hunger · food Lv '+D.catalog[i.key].level+'</option>').join(''):'<option value="">No unlocked cooked food</option>')+'</select></label><div class="row spacer">'+
-        U.btn('Feed one meal','feedCompanion',!foods.length||c.combat||c.activity||p.hunger>=100&&p.health>=100?'disabled':'','gold-btn')+'</div><p class="notes spacer">Matching food and companion levels restore 10 hunger. Lower-level food restores less; higher-level food restores more, up to 50. Vitality restores half the hunger amount. Locked food stays protected.</p>':
+      (p.alive?'<label class="spacer">Cooked food<select id="companion-food">'+(selected&&!available?'<option value="'+U.e(selected)+'" selected disabled>'+U.e(D.catalog[selected]?.name||selected)+' · unavailable (empty or locked)</option>':'')+(foods.length?foods.map(i=>'<option value="'+i.key+'" '+(i.key===selected?'selected':'')+'>'+U.e(D.catalog[i.key].name)+' · '+i.quantity+' owned · +'+G.number(S.companions.nutrition(i.key,p),1)+' hunger · food Lv '+D.catalog[i.key].level+'</option>').join(''):selected?'':'<option value="">No unlocked cooked food</option>')+'</select></label><div class="row spacer">'+
+        U.btn('Feed one meal','feedCompanion',!available||c.combat||c.activity||p.hunger>=100&&p.health>=100?'disabled':'','gold-btn')+'</div><p class="notes spacer">Matching food and companion levels restore 10 hunger. Lower-level food restores less; higher-level food restores more, up to 50. Vitality restores half the hunger amount. Locked food stays protected.</p>':
         U.btn('Revive · '+G.number(revive)+' Bronze','reviveCompanion',c.combat||c.activity||c.coins<revive?'disabled':'','gold-btn spacer'))+
       '<p class="notes spacer">Train together through active gathering, crafting and victories. Offline training does not level companions.</p>'+
       U.btn('Release companion','releaseCompanion',c.combat||c.activity?'disabled':'','danger spacer')+'</section></div>';

@@ -21,6 +21,7 @@
 .settings-grid > * { min-width:0; }
 .settings-grid > .afk-panel { grid-column:1 / -1; }
 .audio-samples summary { cursor:pointer; color:var(--muted); font-size:12px; }
+.food-flavor { margin-top:6px; font-style:italic; }
 #afk-timer { display:block; margin-top:8px; font-variant-numeric:tabular-nums; }
 .craft-status { display:flex; align-items:center; gap:12px; min-height:64px; padding:10px 14px; max-width:100%; text-align:left; border:1px solid var(--rarity,var(--line)); border-radius:5px; background:linear-gradient(135deg,#243038,#161f24); color:var(--text); }
 .craft-status:hover { background:#253239; box-shadow:0 0 12px rgba(var(--rarity-rgb),.15); }

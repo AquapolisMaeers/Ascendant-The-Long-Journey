@@ -517,6 +517,11 @@
     const el = event.target,
       c = G.character();
     try {
+      if (el.id === 'companion-food') {
+        G.runtime.companionFoods ??= {};
+        G.runtime.companionFoods[c.id] = el.value;
+        U.render();
+      }
       if (el.id === 'food-select') {
         G.ensureIdle();
         c.food = el.value || null;

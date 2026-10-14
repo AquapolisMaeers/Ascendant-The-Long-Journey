@@ -187,6 +187,20 @@
     level: D.tiers[tier],
     rarity: 0
   }));
+  const foodFlavor = [
+    'A three-course meal, if you count the head and tail.',
+    'Once fought the current. Now pairs nicely with sitting down.',
+    'Finally lives up to its name: perched on a plate.',
+    'Swam upstream for years just to end up beside a fork.',
+    'All the bite, significantly fewer teeth.',
+    'The only sword in your inventory that improves with butter.',
+    'The runes translate to "needs more salt."',
+    'Crispy outside, slippery past.',
+    'Tastes like dragon. The chef has declined further questions.',
+    "Five-star dining, according to the fish's own review.",
+    'Wise beyond its years. Poor at spotting frying pans.',
+    "Older than the kingdom. Somehow still on today's special."
+  ];
   D.resources.fish.forEach((name, tier) => D.catalog['food:' + tier] = {
     id: 'food:' + tier,
     name: 'Cooked ' + name,
@@ -195,6 +209,7 @@
     tier,
     level: D.tiers[tier],
     healing: D.healing[tier],
+    flavor: foodFlavor[tier],
     rarity: 0
   });
   D.gems.forEach((gem, type) => {
