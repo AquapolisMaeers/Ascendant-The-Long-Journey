@@ -27,6 +27,7 @@
       if (skill === 'Smithing') xp = D.recipes.find(r => r.id === 'bar:' + tier).xp;
       if (skill === 'Cooking') xp = D.recipes.find(r => r.id === 'cook:' + tier).xp;
       if (skill === 'Faceting') xp = D.config.skillXp * D.config.facetingXp * c.skills[skill].level * D.config.offlineFacetingMultiplier;
+      if (skill === 'Smithing' || skill === 'Cooking') xp *= .5;
       return xp / (D.config.actionMs / 1000);
     },
     select(skill) {

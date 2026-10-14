@@ -70,22 +70,28 @@
   };
   U.recipePreview = recipe => {
     if (recipe.piece === undefined) return U.effectPreview({kind:'stack', key:recipe.output});
-    const item = gearFor(recipe), equipped = G.character().equipment[item.slot], stats = S.items.stats(item);
-    const old = equipped ? S.items.stats(equipped) : {};
+    const item = gearFor(recipe), c = G.character(), equipped = c.equipment[item.slot], stats = S.items.stats(item);
+    const before = S.character.stats(c), after = S.character.stats({...c, equipment:{...c.equipment,[item.slot]:item}});
+    const comparison = item.style !== null && item.style !== D.classes.indexOf(c.class) ?
+      '<p class="notes">This weapon requires '+D.classes[item.style]+'. Compare equipment for your class to preview your build.</p>' :
+      '<p class="notes">Replacing '+(equipped?U.e(U.itemName(equipped)):'an empty '+item.slot+' slot')+' with this Common +0 piece.</p>'+
+      '<table class="data-table crafted-comparison"><thead><tr><th>Final stat</th><th>Now</th><th>With craft</th><th>Change</th></tr></thead><tbody>'+
+      Object.keys(D.labels).filter(key=>!key.endsWith('Pct')).map(key=>{
+        const delta=after[key]-before[key],changed=Math.abs(delta)>1e-10;
+        return '<tr><td>'+D.labels[key]+'</td><td>'+U.statValue(key,before[key])+'</td><td>'+U.statValue(key,after[key])+'</td><td class="'+
+          (changed?delta>0?'good':'bad':'')+'">'+(changed?(delta>0?'+':'')+U.statValue(key,delta):'—')+'</td></tr>';
+      }).join('')+'</tbody></table><small>Includes equipped prefixes, gems, perks, companion bonuses and effective caps. The new craft starts without prefixes or gems.</small>';
     return '<div class="recipe-preview"><div class="eyebrow">COMMON +0 · DAMAGE, DEFENCE & HEALTH</div><dl class="preview-stats">' +
       Object.entries(stats).map(([key, val]) => '<div><dt>' + U.itemStatLabel(key, item) + '</dt><dd>' +
         U.statValue(key, val) + '</dd></div>').join('') + '</dl><small>Equip Lv ' + D.tiers[item.tier] +
       (item.style === null ? '' : ' · ' + D.classes[item.style] + ' only') + '</small>' +
-      '<details class="compare-crafted"><summary>Compare inherent stats</summary><dl class="preview-stats">' +
-      Object.entries(stats).map(([key, val]) => '<div><dt>' + U.itemStatLabel(key, item) + '</dt><dd class="' +
-        (val >= (old[key] || 0) ? 'good' : 'bad') + '">' + (val >= (old[key] || 0) ? '+' : '') +
-        U.statValue(key, val - (old[key] || 0)) + '</dd></div>').join('') +
-      '</dl><small>Compared with this slot. Prefixes, gems and perks are applied separately.</small></details></div>';
+      '<details class="compare-crafted"><summary>Compare full equipped stats</summary>'+comparison+'</details></div>';
   };
   U.upgradePreview = (item, ascend) => {
     if (item.kind === 'tool') return '<div class="upgrade-benefits"><strong>On success</strong><small>' +
       D.rarity[item.rarity] + ' → ' + D.rarity[item.rarity + 1] +
-      ' · One work prefix gains a rank. No skill-level requirement.</small></div>';
+      ' · One work prefix gains a rank. No skill-level requirement.</small><small>Prefix capacity: '+
+      S.items.prefixSlots(item)+' → '+S.items.prefixSlots(item,item.rarity+1)+'</small></div>';
     const next = {...item, enhance:item.enhance + (ascend ? 0 : 1), rarity:item.rarity + (ascend ? 1 : 0)};
     const before = S.items.stats(item), after = S.items.stats(next);
     return '<div class="upgrade-benefits"><strong>On success · inherent stats</strong><dl class="preview-stats">' +
@@ -96,13 +102,14 @@
   };
   U.prefixGuide = item => {
     const owned = Object.keys(item.prefixes), tool = item.kind === 'tool';
+    const limit = S.items.prefixSlots(item, tool ? Math.min(7,item.rarity+1) : item.rarity);
     const forced = tool ? null : S.tutorial?.prefix(item);
-    const pool = forced ? [forced.key] : owned.length >= D.config.prefixSlots ? owned :
+    const pool = forced ? [forced.key] : owned.length >= limit ? owned :
       tool ? Object.keys(D.toolPrefixes) : D.prefixPools[item.slot];
     return '<details class="possible-prefixes"><summary>Possible prefixes · ' + pool.length + '</summary><p>' +
-      (forced ? 'This tutorial roll guarantees +2 Primary Damage.' : owned.length >= D.config.prefixSlots ?
-        'All three prefix slots are occupied. Successful rolls now strengthen an existing prefix.' :
-        'A successful roll adds or strengthens one of these prefixes. An item holds up to three different prefixes.') +
+      (forced ? 'This tutorial roll guarantees +2 Primary Damage.' : owned.length >= limit ?
+        'All '+limit+' prefix slots are occupied. Successful rolls now strengthen an existing prefix.' :
+        'A successful roll adds or strengthens one of these prefixes. '+(tool?'The target rarity':'This item')+' holds up to '+limit+' different prefixes.') +
       '</p><div class="prefix-options">' + pool.map(key => {
         const range = D.prefixRanges[key];
         const amount = forced ? '+' + U.statValue(key, forced.increment) :

@@ -70,7 +70,7 @@
       body += '<details class="spacer"><summary>Compare final build if equipped</summary><table class="data-table"><thead><tr><th>Final stat</th><th>Current</th><th>With item</th></tr></thead><tbody>' + Object.keys(D.labels).filter(k => !k.endsWith('Pct')).map(k => '<tr><td>' + D.labels[k] + '</td><td>' + U.statValue(k, before[k]) + '</td><td class="' + (after[k] > before[k] ? 'good' : after[k] < before[k] ? 'bad' : '') + '">' + (after[k] > before[k] ? '↑ ' : after[k] < before[k] ? '↓ ' : '') + U.statValue(k, after[k]) + '</td></tr>').join('') + '</tbody></table><p>Includes prefixes, gems, perks and effective stat caps. Equipping still requires the correct class and level.</p></details>';
     }
     if (gear || tool) {
-      body += '<hr><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / 3</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
+      body += '<hr><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / ' + S.items.prefixSlots(item) + '</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
       if (gear && item.enhance < 25) {
         body += '<section class="upgrade-box upgrade-compact"><h3>Enhance to +' + (item.enhance + 1) + '</h3>' + U.btn('Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';
       }

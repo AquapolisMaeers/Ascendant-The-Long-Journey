@@ -30,11 +30,6 @@
     const roundedSteal = rawSteal > 0 ? Math.max(1, Math.ceil(tenths - Number.EPSILON * Math.max(1, tenths) * 4)) / 10 : 0;
     const healing = Math.min(Math.max(0, a.health - a.hp), roundedSteal);
     a.hp += healing;
-    if (a.relentless && a.hits % D.perkConditional.relentless.hits === 0) a.hp = Math.min(a.health, a.hp + a.health * D.perkConditional.relentless.heal);
-    if (b.hp > 0 && b.secondWind && !b.wind && b.hp / b.health < D.perkConditional.secondWind.threshold) {
-      b.hp = Math.min(b.health, b.hp + b.health * D.perkConditional.secondWind.heal);
-      b.wind = true;
-    }
     events?.push({
       side,
       damage: actual,
@@ -43,6 +38,9 @@
       extra,
       mitigated: damage < a.damage
     });
+    if (a.relentless && a.hits % D.perkConditional.relentless.hits === 0)
+      recover(a, a.health * D.perkConditional.relentless.heal, side, 'Relentless', events);
+    secondWind(b, events, side === 'player' ? 'enemy' : 'player');
     if (b.hp > 0 && !extra && rng() < a.double) strike(f, a, b, side, events, true);
   }
 
@@ -61,9 +59,16 @@
     return true;
   }
 
-  function secondWind(a) {
+  function recover(a, amount, side, source, events) {
+    const healing = Math.min(Math.max(0, a.health - a.hp), amount);
+    if (healing <= 0) return;
+    a.hp += healing;
+    events?.push({side, recovery:true, source, healing});
+  }
+
+  function secondWind(a, events, side) {
     if (a.hp > 0 && a.secondWind && !a.wind && a.hp / a.health < D.perkConditional.secondWind.threshold) {
-      a.hp = Math.min(a.health, a.hp + a.health * D.perkConditional.secondWind.heal);
+      recover(a, a.health * D.perkConditional.secondWind.heal, side, 'Second Wind', events);
       a.wind = true;
     }
   }
@@ -114,8 +119,8 @@
     },
     advance(f, until, events) {
       let guard = 0;
-      secondWind(f.player);
-      secondWind(f.enemy);
+      secondWind(f.player, events, 'player');
+      secondWind(f.enemy, events, 'enemy');
       auto(f, events);
       while (!f.finished && guard++ < 10000) {
         let foodAt = f.food.count && f.food.threshold > 0 && f.player.hp / f.player.health <= f.food.threshold ? Math.max(f.time, f.food.ready) : Infinity;
@@ -170,6 +175,19 @@
     }
   };
   S.combat = {
+    record(events, c = G.character()) {
+      for (const e of events) {
+        if (e.damage && e.side === 'player') c.stats.damage += e.damage;
+        const who = e.side === 'player' ? 'You' : 'Enemy';
+        G.runtime.log.unshift(e.food ? 'You eat and recover ' + G.number(e.healing, 2) + ' HP.' :
+          e.recovery ? who + ' recover ' + G.number(e.healing, 2) + ' HP (' + e.source + ').' :
+          e.miss ? who + ' miss.' : who + ' deal ' + G.number(e.damage, 1) + (e.critical ? ' critical' : '') +
+          ' damage' + (e.extra ? ' (double strike)' : '') + '.' +
+          (e.healing > 0 ? ' ' + who + ' recover ' + G.number(e.healing, 2) + ' HP (Lifesteal).' : ''));
+        G.emit('strike', e);
+      }
+      G.runtime.log = G.runtime.log.slice(0, 60);
+    },
     start() {
       G.ensureProgress();
       const c = G.character(),
@@ -193,12 +211,7 @@
       c.hp = f.player.hp;
       if (f.food.used > used) S.inventory.take(f.food.key, f.food.used - used, c);
       c.foodReady = Date.now() + Math.max(0, f.food.ready - f.time) * 1000;
-      events.forEach(e => {
-        if (e.damage && e.side === 'player') c.stats.damage += e.damage;
-        G.runtime.log.unshift(e.food ? 'You eat and recover ' + G.number(e.healing, 1) + ' HP.' : e.miss ? (e.side === 'player' ? 'You' : 'Enemy') + ' miss.' : (e.side === 'player' ? 'You' : 'Enemy') + ' deal ' + G.number(e.damage, 1) + (e.critical ? ' critical' : '') + ' damage' + (e.extra ? ' (double strike)' : '') + '.');
-        G.emit('strike', e);
-      });
-      G.runtime.log = G.runtime.log.slice(0, 60);
+      this.record(events, c);
       if (events.length) G.save.write();
       if (f.finished) this.finish(f.won);
     },
@@ -215,7 +228,7 @@
         S.inventory.take(f.food.key, 1, c);
         c.hp = f.player.hp;
         c.foodReady = Date.now() + C.foodSeconds * 1000;
-        G.emit('strike', events[0]);
+        this.record(events, c);
       } else {
         G.assert(c.food, 'Select food first.');
         G.assert(c.hp < S.character.stats(c).health, 'Already at full HP.');
@@ -241,7 +254,9 @@
       S.companions.gain(c, D.companionRules.victoryXp * encounter.enemy.level);
       const levelUps = S.xp.add(c, D.loot[encounter.type].xp * encounter.enemy.level);
       if (levelUps) {
+        const before = c.hp;
         c.hp = S.character.stats(c).health;
+        if (c.hp > before) this.record([{side:'player',recovery:true,source:'Level up',healing:c.hp-before}], c);
         G.notify('Level ' + c.level + ' reached. Health fully restored.', 'success');
       }
       if (encounter.type === 'boss') {

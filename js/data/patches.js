@@ -3,6 +3,17 @@
 RPG.data.patches = [
   {
     "date": "2026-10-13",
+    "title": "Stronger tools. Clearer choices.",
+    "changes": [
+      "Tools hold up to 3 prefixes at Common–Rare, 4 at Epic–Mythical, and 5 at Divine–Ascendant. Ascension previews show newly unlocked capacity.",
+      "Offline Smithing and Cooking XP are halved. Active crafting stays unchanged.",
+      "Companion food scales by its required level versus companion level: matching levels give 10 hunger, lower levels give less, higher levels more (up to 50).",
+      "Crafting comparisons show your full build after replacing equipped gear, including existing prefixes, gems, perks and bonuses.",
+      "Combat shows green healing numbers and log entries for food, Lifesteal, Second Wind, Relentless and level-up recovery."
+    ]
+  },
+  {
+    "date": "2026-10-13",
     "title": "Choose your journey. Grow your pack.",
     "changes": [
       "Compact Enhance and Ascend buttons open full confirmations with costs, chances, stat changes and eligible prefix ranges before spending.",

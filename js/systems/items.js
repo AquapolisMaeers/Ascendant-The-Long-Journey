@@ -57,11 +57,14 @@
       const c = G.character();
       return [...c.inventory, ...Object.values(c.equipment), ...Object.values(c.tools)].find(i => i?.id === id);
     },
+    prefixSlots(item, rarity = item.rarity) {
+      return item.kind === 'tool' ? (rarity < 3 ? 3 : rarity < 6 ? 4 : 5) : D.config.prefixSlots;
+    },
     prefix(item) {
       const keys = Object.keys(item.prefixes),
         pool = item.kind === 'tool' ? Object.keys(D.toolPrefixes) : D.prefixPools[item.slot];
       const forced = S.tutorial?.prefix(item);
-      const key = forced?.key || G.pick(G.rng, keys.length >= D.config.prefixSlots ? keys : pool);
+      const key = forced?.key || G.pick(G.rng, keys.length >= this.prefixSlots(item) ? keys : pool);
       const range = D.prefixRanges[key],
         before = item.prefixes[key] || 0;
       const increment = forced?.increment ?? (item.kind === 'tool' ? 1 : range[0] + G.rng() * (range[1] - range[0]));

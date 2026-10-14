@@ -241,6 +241,9 @@
 .recipe-preview small,.output-effects small,.upgrade-benefits small { display:block; color:var(--muted); font-size:11px; line-height:1.5; }
 .output-effects strong,.upgrade-benefits > strong { font-size:12px; color:var(--gold); font-weight:500; }
 .compare-crafted,.possible-prefixes { margin-top:10px; font-size:12px; color:var(--muted); }
+.crafted-comparison { table-layout:fixed; width:100%; }
+.crafted-comparison th,.crafted-comparison td { padding:7px 3px; font-size:10px; overflow-wrap:anywhere; }
+.crafted-comparison th:first-child,.crafted-comparison td:first-child { width:35%; }
 .possible-prefixes { padding:10px; border:1px solid var(--line); border-radius:4px; }
 .possible-prefixes summary { color:var(--gold); cursor:pointer; }
 .possible-prefixes p { font-size:11px; }

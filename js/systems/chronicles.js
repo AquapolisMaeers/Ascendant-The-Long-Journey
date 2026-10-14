@@ -61,6 +61,12 @@
       c.coins-=d.price;c.companion={type,level:1,xp:0,hunger:100,health:100,updatedAt:Date.now()};
       G.notify(d.name+' joins your journey. Keep it fed.','success');G.commit();
     },
+    nutrition(key, p = G.character()?.companion) {
+      const info=D.catalog[key];
+      G.assert(info?.healing&&p, 'Choose cooked food for your companion.');
+      // Matching levels give 10 hunger; preserve useful fractions for low-tier food.
+      return Math.min(50, Math.ceil(100 * info.level / p.level) / 10);
+    },
     feed(key,quantity=1) {
       G.ensureIdle();const c=G.character(),info=D.catalog[key],p=this.view(c.companion);
       G.assert(p?.alive,'Revive your companion before feeding it.');
@@ -69,7 +75,7 @@
       G.assert(p.hunger<100||p.health<100,'Your companion is already healthy and full.');
       this.sync(c);
       S.inventory.take(key,quantity,c);
-      const nutrition=Math.min(50,Math.max(10,info.healing))*quantity;
+      const nutrition=this.nutrition(key,p)*quantity;
       c.companion.hunger=Math.min(100,c.companion.hunger+nutrition);
       c.companion.health=Math.min(100,c.companion.health+nutrition/2);
       G.notify('Companion fed. Its bonuses are active while healthy and fed.','success');G.commit();

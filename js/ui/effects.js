@@ -50,7 +50,7 @@
     if (reduced()) return;
     const attacker = document.getElementById(e.side + '-fighter'),
       defender = document.getElementById((e.side === 'player' ? 'enemy' : 'player') + '-fighter');
-    if (attacker && !e.food) attacker.animate([{
+    if (attacker && !e.food && !e.recovery) attacker.animate([{
       transform: 'translateX(0)'
     }, {
       transform: 'translateX(' + (e.side === 'player' ? 6 : -6) + 'px)'
@@ -59,7 +59,7 @@
     }], {
       duration: e.extra ? 130 : 230
     });
-    if (defender && !e.miss && !e.food) defender.animate([{
+    if (defender && !e.miss && !e.food && !e.recovery) defender.animate([{
       filter: 'brightness(1)'
     }, {
       filter: 'brightness(1.8)'
@@ -68,14 +68,6 @@
     }], {
       duration: 210
     });
-    if (e.healing > 0 && !e.food && G.state.settings.damage) {
-      const el = document.createElement('span');
-      el.className = 'damage-float ' + e.side + ' heal';
-      el.style.top = '53%';
-      el.textContent = '+' + G.number(e.healing, 1);
-      document.getElementById('floating').append(el);
-      setTimeout(() => el.remove(), 1100);
-    }
     if (e.mitigated && defender) {
       defender.classList.add('mitigated');
       setTimeout(() => defender.classList.remove('mitigated'), 300);

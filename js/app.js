@@ -16,7 +16,7 @@
   };
   const showOffline = () => {
     if (!G.runtime.offline?.length) return;
-    U.modal('While you were away', '<div class="eyebrow">OFFLINE TRAINING · XP ONLY</div>' + G.runtime.offline.map(r => '<p>' + U.e(r.name) + ' · ' + r.skill + '<br><strong class="gold">+' + G.number(r.xp) + ' XP</strong> over ' + G.number(r.seconds / 3600, 2) + ' hours.</p>').join('') + '<p>25% base active rate; Faceting uses 15% of that rate. Maximum eight hours. Knowledge applies; Efficiency does not. No items, coins, or combat progress.</p>');
+    U.modal('While you were away', '<div class="eyebrow">OFFLINE TRAINING · XP ONLY</div>' + G.runtime.offline.map(r => '<p>' + U.e(r.name) + ' · ' + r.skill + '<br><strong class="gold">+' + G.number(r.xp) + ' XP</strong> over ' + G.number(r.seconds / 3600, 2) + ' hours.</p>').join('') + '<p>Gathering: 25% base active XP; Smithing/Cooking: 12.5%; Faceting: 3.75%. Maximum eight hours. Knowledge applies; Efficiency does not. No items, coins, or combat progress.</p>');
     G.runtime.offline = [];
   };
   const actions = {
@@ -653,13 +653,27 @@
   window.addEventListener('rpg:strike', ({
     detail: e
   }) => {
-    G.audio.play(e.food ? 'heal' : e.miss ? 'miss' : e.critical ? 'crit' : 'hit', e);
+    G.audio.play(e.food || e.recovery ? 'heal' : e.miss ? 'miss' : e.critical ? 'crit' : 'hit', e);
     if (!G.state.settings.damage) return;
-    const el = document.createElement('span');
-    el.className = 'damage-float ' + e.side + (e.critical ? ' critical' : '') + (e.food ? ' heal' : '');
-    el.textContent = e.miss ? 'MISS' : e.food ? '+' + G.number(e.healing, 1) : G.number(e.damage, 1);
-    document.getElementById('floating').append(el);
-    setTimeout(() => el.remove(), 1100);
+    const show = healing => {
+      const el = document.createElement('span');
+      el.className = 'damage-float ' + e.side + (!healing && e.critical ? ' critical' : '') + (healing ? ' heal' : '');
+      el.textContent = healing ? '+' + G.number(e.healing, 2) + ' HP' : e.miss ? 'MISS' : G.number(e.damage, 1);
+      if (healing) {
+        const fighter = document.getElementById(e.side + '-fighter');
+        if (fighter) {
+          const box = fighter.getBoundingClientRect();
+          el.style.left = (box.left + box.width / 2) + 'px';
+          const existing = document.querySelectorAll('.damage-float.' + e.side + '.heal').length;
+          el.style.top = (box.bottom - 25 - existing * 28) + 'px';
+          el.style.transform = 'translateX(-50%)';
+        }
+      }
+      document.getElementById('floating').append(el);
+      setTimeout(() => el.remove(), 1100);
+    };
+    if (!e.food && !e.recovery) show(false);
+    if (e.healing > 0) show(true);
   });
   const bootstrap = () => {
     G.save.load();

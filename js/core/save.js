@@ -18,7 +18,7 @@
       return;
     }
     if (i.kind === 'tool') {
-      if (!D.skills.includes(i.skill) || i.name !== D.tools[D.skills.indexOf(i.skill)] || !Number.isInteger(i.rarity) || !D.rarity[i.rarity] || typeof i.bound !== 'boolean' || !finite(i.ascendFail, 0, 1) || !i.prefixes || Object.keys(i.prefixes).length > 3 || Object.entries(i.prefixes).some(([k, v]) => !Object.hasOwn(D.toolPrefixes, k) || !Number.isInteger(v) || !finite(v, 1, 7))) fail('tool');
+      if (!D.skills.includes(i.skill) || i.name !== D.tools[D.skills.indexOf(i.skill)] || !Number.isInteger(i.rarity) || !D.rarity[i.rarity] || typeof i.bound !== 'boolean' || !finite(i.ascendFail, 0, 1) || !i.prefixes || Object.keys(i.prefixes).length > G.systems.items.prefixSlots(i) || Object.entries(i.prefixes).some(([k, v]) => !Object.hasOwn(D.toolPrefixes, k) || !Number.isInteger(v) || !finite(v, 1, 7))) fail('tool');
       return;
     }
     if (i.kind !== 'gear' || !Number.isInteger(i.tier) || !D.tiers[i.tier] || !Number.isInteger(i.piece) || !D.pieces[i.piece] || !Number.isInteger(i.rarity) || !D.rarity[i.rarity] || !Number.isInteger(i.enhance) || !finite(i.enhance, 0, 25)) fail('equipment');
