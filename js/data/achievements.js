@@ -44,5 +44,9 @@
     sale: 'completed sale',
     purchase: 'purchase'
   } [key]), 'Marketplace', 1, c => c.stats[key]));
-  add('completionist', 'Every launch achievement', 'Prestige', D.achievements.length, c => D.achievements.filter(a => a.id !== 'completionist' && c.achievements[a.id]).length, 'The Completionist');
+  const launchIds = D.achievements.map(a => a.id);
+  add('completionist', 'Every launch achievement', 'Prestige', launchIds.length, c => launchIds.filter(id => c.achievements[id]).length, 'The Completionist');
+  [1, 10, 100, 1000, 10000].forEach(n => add('quests-' + n, 'Quests completed · ' + n.toLocaleString(), 'Quests', n, c => c.questCompletions ?? 0));
+  add('companion-first', 'Adopt your first companion', 'Companions', 1, c => +!!c.companion);
+  [5, 10, 15, 20].forEach(n => add('companion-level-' + n, 'Companion level ' + n, 'Companions', n, c => c.companion?.level ?? 0));
 })(RPG.data);

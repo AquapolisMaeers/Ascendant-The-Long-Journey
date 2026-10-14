@@ -16,7 +16,7 @@
   };
   const showOffline = () => {
     if (!G.runtime.offline?.length) return;
-    U.modal('While you were away', '<div class="eyebrow">OFFLINE TRAINING · XP ONLY</div>' + G.runtime.offline.map(r => '<p>' + U.e(r.name) + ' · ' + r.skill + '<br><strong class="gold">+' + G.number(r.xp) + ' XP</strong> over ' + G.number(r.seconds / 3600, 2) + ' hours.</p>').join('') + '<p>Gathering: 25% base active XP; Smithing/Cooking: 12.5%; Faceting: 3.75%. Maximum eight hours. Knowledge applies; Efficiency does not. No items, coins, or combat progress.</p>');
+    U.modal('While you were away', '<div class="eyebrow">OFFLINE TRAINING · XP ONLY</div>' + G.runtime.offline.map(r => '<p>' + U.e(r.name) + ' · ' + r.skill + '<br><strong class="gold">+' + G.number(r.xp) + ' XP</strong> over ' + G.number(r.seconds / 3600, 2) + ' hours.</p>').join('') + '<p>Gathering: 25% base active XP; Smithing/Cooking: 12.5%; Faceting: 1.875%. Maximum eight hours. Knowledge applies; Efficiency does not. No items, coins, or combat progress.</p>');
     G.runtime.offline = [];
   };
   const actions = {

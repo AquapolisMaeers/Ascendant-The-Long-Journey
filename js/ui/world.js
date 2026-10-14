@@ -5,6 +5,8 @@
     return '<section class="panel journey-panel"><div class="panel-head"><h3>The journey so far</h3>' + U.icon('Achievements') + '</div><div class="journey-stats">' + [
       ['Advances', G.number(c.stats.advance)],
       ['Creatures defeated', G.number(c.stats.regular + c.stats.elite + c.stats.boss)],
+      ['Elite creatures defeated', G.number(c.stats.elite)],
+      ['Quests completed', G.number(c.questCompletions ?? 0)],
       ['Dungeons conquered', G.number(c.stats.dungeons)],
       ['Deaths', G.number(c.stats.deaths)],
       ['Inventory', c.inventory.length + ' / ' + c.capacity],

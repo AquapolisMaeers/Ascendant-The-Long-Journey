@@ -3,6 +3,17 @@
 RPG.data.patches = [
   {
     "date": "2026-10-14",
+    "title": "Compact crafting & new milestones",
+    "changes": [
+      "Smithing, Cooking and Faceting show illustrated, rarity-colored skill/tool cards. Click one to inspect your tool. Smithing recipes now use the same compact five-column desktop layout as Faceting.",
+      "Offline Faceting XP is halved again to 1.875% of base active XP. Active Faceting XP is unchanged.",
+      "The journey so far now shows elite creatures defeated and quests completed.",
+      "New Quests achievements reward 1, 10, 100, 1,000 and 10,000 completions. Companions achievements reward first adoption and levels 5, 10, 15 and 20. Existing progress counts, with the usual five Ascendant Coins per milestone.",
+      "Character and Skills spacing is trimmed slightly to remove the remaining desktop scrolling. The Completionist keeps its original launch requirements."
+    ]
+  },
+  {
+    "date": "2026-10-14",
     "title": "Mimic gems, new rankings & room to play",
     "changes": [
       "Defeated chest Mimics guarantee a gem. Their other loot rolls stay the same, and naturally rolled gems count toward the guarantee.",

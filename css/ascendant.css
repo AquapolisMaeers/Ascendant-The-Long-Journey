@@ -22,12 +22,22 @@
 .settings-grid > .afk-panel { grid-column:1 / -1; }
 .audio-samples summary { cursor:pointer; color:var(--muted); font-size:12px; }
 #afk-timer { display:block; margin-top:8px; font-variant-numeric:tabular-nums; }
+.craft-status { display:flex; align-items:center; gap:12px; min-height:64px; padding:10px 14px; max-width:100%; text-align:left; border:1px solid var(--rarity,var(--line)); border-radius:5px; background:linear-gradient(135deg,#243038,#161f24); color:var(--text); }
+.craft-status:hover { background:#253239; box-shadow:0 0 12px rgba(var(--rarity-rgb),.15); }
+.craft-status > .item-art { width:38px; height:38px; border-radius:6px; }
+.craft-status > span { min-width:0; }
+.craft-status small { display:block; color:var(--muted); font-size:10px; }
+.craft-status strong { display:block; color:var(--rarity,var(--gold)); font-size:13px; font-weight:500; overflow-wrap:anywhere; }
 @media (min-width:1280px) {
-  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]:has(.faceting-recipes)) { padding-top:18px; padding-bottom:18px; }
-  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]:has(.faceting-recipes)) .page-heading { margin-bottom:14px; }
-  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]:has(.faceting-recipes)) .page-heading h1 { font-size:32px; }
+  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]:has(.compact-recipes)) { padding-top:18px; padding-bottom:18px; }
+  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]:has(.compact-recipes)) .page-heading { margin-bottom:14px; }
+  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]:has(.compact-recipes)) .page-heading h1 { font-size:32px; }
   #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"]) .panel { padding:16px; }
   #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"]) .spacer { margin-top:12px; }
+  #content:is([data-page="Character"],[data-page="Skills"]) { padding-top:14px; padding-bottom:14px; }
+  #content:is([data-page="Character"],[data-page="Skills"]) .panel { padding:14px; }
+  #content:is([data-page="Character"],[data-page="Skills"]) .spacer { margin-top:10px; }
+  #content:is([data-page="Character"],[data-page="Skills"]) .perk-reminder { padding:10px 14px; margin-bottom:12px; }
   #content[data-page="Character"] .equip-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
   #content[data-page="Character"] .equip-grid .item-card { padding:10px; }
   #content[data-page="Character"] .equip-grid .item-art { width:52px; height:52px; }
@@ -35,7 +45,7 @@
   #content[data-page="Character"] .stat-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
   #content[data-page="Character"][data-tab="Stats"] .stat-grid { grid-template-columns:repeat(5,minmax(0,1fr)); }
   #content[data-page="Character"] .stat-cell { padding:10px; }
-  #content[data-page="Character"] .perk-row { margin-bottom:12px; }
+  #content[data-page="Character"] .perk-row { margin-bottom:10px; }
   #content[data-page="Character"] .perk-choices { margin-top:7px; }
   #content[data-page="Character"] .perk { min-height:88px; padding:10px 14px; }
   #content[data-page="Character"] .perk strong { font-size:16px; margin:4px 0; }
@@ -43,7 +53,7 @@
   #content[data-page="Character"] .cosmetic-slots { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); gap:4px 20px; align-items:center; }
   #content[data-page="Character"] .cosmetic-slots > p { margin:0; }
   #content[data-page="Character"] .cosmetic-slots > .grid-2 { grid-column:2; grid-row:1 / span 2; margin:0; }
-  .skills-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+  .skills-grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; }
   .skills-grid .panel-head { margin-bottom:8px; }
   .skills-grid .skill-card .level { font-size:24px; }
   .skills-grid .meta-row { padding:5px 0; }
@@ -62,15 +72,17 @@
   .settings-grid .notes { font-size:11px; }
   .settings-grid hr { margin:14px 0; }
   .settings-grid .afk-controls select { padding:6px 8px; }
-  .faceting-recipes { grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
-  .faceting-recipes .recipe { padding:12px; }
-  .faceting-recipes .recipe h3 { font-size:18px; }
-  .faceting-recipes .recipe-art .item-art { width:52px; height:52px; }
-  .faceting-recipes .output-effects { padding:8px; }
-  .faceting-recipes .ingredients > div { flex-wrap:wrap; gap:4px 10px; }
-  .faceting-recipes .ingredient-name { font-size:11px; }
-  .faceting-recipes .ingredients .mono { margin-left:auto; }
-  .faceting-recipes .recipe-actions { flex-wrap:wrap; }
+  .compact-recipes { grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+  .compact-recipes .recipe { padding:12px; }
+  .compact-recipes .recipe h3 { font-size:18px; }
+  .compact-recipes .recipe-art .item-art { width:52px; height:52px; }
+  .compact-recipes .output-effects { padding:8px; }
+  .compact-recipes .recipe-preview { padding:8px; margin:10px 0; }
+  .compact-recipes .preview-stats { gap:4px; font-size:11px; }
+  .compact-recipes .ingredients > div { flex-wrap:wrap; gap:4px 10px; }
+  .compact-recipes .ingredient-name { font-size:11px; }
+  .compact-recipes .ingredients .mono { margin-left:auto; }
+  .compact-recipes .recipe-actions { flex-wrap:wrap; }
 }
 @media (max-width:700px) { .settings-grid { grid-template-columns:minmax(0,1fr); } }
 .perk-reminder { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 14px 18px; margin-bottom: 18px; border: 1px solid #786947; border-radius: 10px; background: #292820; font-size: 13px; }

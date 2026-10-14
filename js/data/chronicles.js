@@ -1,6 +1,6 @@
 'use strict';
 (function(D) {
-  D.config.offlineFacetingMultiplier = .15;
+  D.config.offlineFacetingMultiplier = .075;
   D.companions = [
     {id:'wolf', name:'Lantern Wolf', portrait:4, price:500, stat:'damagePct', perLevel:.005, description:'A loyal hunter. +0.5% Primary Damage per level.'},
     {id:'boar', name:'Briar Boar', portrait:5, price:500, stat:'healthPct', perLevel:.005, description:'A sturdy trail companion. +0.5% Max Health per level.'},

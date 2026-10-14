@@ -68,6 +68,11 @@
     }
     return summary ? '<div class="output-effects"><strong>' + U.e(summary) + '</strong>' + extra + '</div>' : '';
   };
+  U.craftingStatus = skill => {
+    const c = G.character(), tool = c.tools[skill];
+    return '<button class="craft-status rarity-' + tool.rarity + '" data-action="item" data-id="' + tool.id + '" aria-label="View ' + U.e(tool.name) + '">' + U.itemArt(tool) +
+      '<span><small>' + skill + ' · Level ' + c.skills[skill].level + '</small><strong>' + D.rarity[tool.rarity] + ' ' + U.e(tool.name) + '</strong></span></button>';
+  };
   U.recipePreview = recipe => {
     if (recipe.piece === undefined) return U.effectPreview({kind:'stack', key:recipe.output});
     const item = gearFor(recipe), c = G.character(), equipped = c.equipment[item.slot], stats = S.items.stats(item);
