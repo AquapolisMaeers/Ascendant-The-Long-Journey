@@ -61,13 +61,13 @@
       return rarity < 3 ? 3 : rarity < 6 ? 4 : 5;
     },
     dropTool(skill, rarity) {
-      const item = this.createTool(skill);
-      for (let rank = 0; rank <= rarity; rank++) {
-        item.rarity = rank;
-        if (rank < 2) {
-          const key = G.pick(G.rng, Object.keys(D.toolPrefixes).filter(key => !Object.hasOwn(item.prefixes,key)));
-          item.prefixes[key] = 1;
-        } else this.prefix(item);
+      const item = this.createTool(skill, rarity);
+      for (let roll = 0; roll < rarity; roll++) {
+        const keys = Object.keys(item.prefixes);
+        // Drops fill three distinct prefixes, then improve only those prefixes.
+        const choices = roll < 3 ? Object.keys(D.toolPrefixes).filter(key => !keys.includes(key)) : keys;
+        const key = G.pick(G.rng, choices);
+        item.prefixes[key] = (item.prefixes[key] || 0) + 1;
       }
       return item;
     },

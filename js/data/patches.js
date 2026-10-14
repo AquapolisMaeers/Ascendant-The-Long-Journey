@@ -3,6 +3,15 @@
 RPG.data.patches = [
   {
     "date": "2026-10-13",
+    "title": "Corrected tool drop prefixes",
+    "changes": [
+      "Common tool drops have no prefixes; Uncommon gets one, Rare two, and Epic three distinct prefixes.",
+      "Legendary and higher tool drops keep three prefixes and upgrade existing ones: one extra rank at Legendary, two at Mythical, three at Divine, four at Ascendant.",
+      "This corrects new drops. Existing saved tools retain their prefixes and progress."
+    ]
+  },
+  {
+    "date": "2026-10-13",
     "title": "Regional quests & stronger drops",
     "changes": [
       "Gear now shares tool prefix limits: 3 at Common–Rare, 4 at Epic–Mythical, 5 at Divine–Ascendant. +25 gear can refine missing slots without raising Enhancement.",
