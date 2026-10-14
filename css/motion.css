@@ -303,7 +303,7 @@
   }
   .modal {
     padding:20px;
-    max-height:93vh
+    max-height:calc(100dvh - 24px)
   }
   .fight-row {
     gap:10px;

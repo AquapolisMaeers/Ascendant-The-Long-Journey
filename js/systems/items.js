@@ -58,16 +58,14 @@
       return [...c.inventory, ...Object.values(c.equipment), ...Object.values(c.tools)].find(i => i?.id === id);
     },
     prefixSlots(item, rarity = item.rarity) {
+      if (item.kind === 'tool' && rarity >= 5) return 5;
       return rarity < 3 ? 3 : rarity < 6 ? 4 : 5;
     },
     dropTool(skill, rarity) {
       const item = this.createTool(skill, rarity);
       for (let roll = 0; roll < rarity; roll++) {
-        const keys = Object.keys(item.prefixes);
-        // Drops fill three distinct prefixes, then improve only those prefixes.
-        const choices = roll < 3 ? Object.keys(D.toolPrefixes).filter(key => !keys.includes(key)) : keys;
-        const key = G.pick(G.rng, choices);
-        item.prefixes[key] = (item.prefixes[key] || 0) + 1;
+        // Each rarity step adds a new prefix or one rank to an existing prefix.
+        this.prefix(item);
       }
       return item;
     },

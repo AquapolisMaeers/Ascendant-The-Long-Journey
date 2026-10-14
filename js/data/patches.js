@@ -2,6 +2,16 @@
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
   {
+    "date": "2026-10-14",
+    "title": "Flexible tool prefixes & compact popups",
+    "changes": [
+      "Tool drops receive 0/1/2/3/4/5/6/7 prefix rolls from Common to Ascendant. Each roll adds a prefix or upgrades an existing one; five distinct prefixes become available at Mythical.",
+      "An Epic drop can have three prefixes, two with one upgraded, or one upgraded twice. Ascendant spends seven rolls across up to five prefixes. Existing tools keep their progress.",
+      "Click outside a dialog to close it. Upgrade confirmations cancel without spending anything; Escape and the close button still work.",
+      "Item artwork sits beside the title, and desktop item details place gem sockets beside prefixes and upgrades. Popups use more available screen height and retain scrolling for longer content on smaller screens."
+    ]
+  },
+  {
     "date": "2026-10-13",
     "title": "Corrected tool drop prefixes",
     "changes": [

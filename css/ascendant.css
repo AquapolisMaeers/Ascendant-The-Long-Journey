@@ -279,6 +279,29 @@
 .upgrade-summary strong { display:block; color:var(--gold); font-size:22px; margin:4px 0; overflow-wrap:anywhere; }
 .upgrade-summary.compact { padding:9px; margin:0; border-color:var(--line); }
 .upgrade-summary.compact strong { font-size:16px; }
+.item-modal .modal-head { align-items:center; gap:16px; }
+.item-modal .modal-head h2 { flex:1; min-width:0; overflow-wrap:anywhere; }
+.item-modal .item-art-detail { margin:0; padding:5px; flex-shrink:0; }
+.item-modal .item-art-detail .item-art { width:72px; height:72px; }
+.item-modal hr { margin:14px 0; }
+.item-modal .spacer { margin-top:12px; }
+.item-modal .item-heading { padding:9px; gap:12px; }
+.item-modal .upgrade-box { padding:12px; }
+.item-modal .upgrade-compact { gap:8px; }
+.item-modal .socket-row { padding:8px 0; }
+.item-details-grid { display:grid; gap:20px; }
+.item-details-grid > section { min-width:0; }
+.item-sockets { border-top:1px solid var(--line); padding-top:14px; }
+@media (min-width:1000px) {
+  .location-options { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  .item-details-grid:has(.item-sockets) { grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); }
+  .item-sockets { border-top:0; border-left:1px solid var(--line); padding:0 0 0 20px; }
+}
+@media (max-width:520px) {
+  .item-modal .modal-head { gap:10px; }
+  .item-modal .modal-head h2 { font-size:22px; }
+  .item-modal .item-art-detail .item-art { width:52px; height:52px; }
+}
 .quest-card { min-width:0; }
 .quest-card .panel-head .icon { width:24px; height:24px; }
 .quest-rewards { border-top:1px solid var(--line); padding-top:14px; }

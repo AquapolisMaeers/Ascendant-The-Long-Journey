@@ -1,20 +1,30 @@
 'use strict';
 (function(G, D, S, U) {
   U.modal = (title, body, wide = false) => {
-    G.runtime.previousFocus = document.activeElement;
+    if (!document.querySelector('.modal')) G.runtime.previousFocus = document.activeElement;
     document.getElementById('modal-root').innerHTML = '<div class="modal-backdrop"><section class="modal ' + (wide ? 'wide-modal' : '') + '" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><h2 id="modal-title">' + title + '</h2><button class="modal-close" data-action="closeModal" aria-label="Close dialog">×</button></div>' + body + '</section></div>';
+    const backdrop = document.querySelector('.modal-backdrop');
+    let startedOutside = false;
+    backdrop.onpointerdown = event => { startedOutside = event.target === backdrop; };
+    backdrop.onclick = event => {
+      if (startedOutside && event.target === backdrop) U.close();
+      startedOutside = false;
+    };
     setTimeout(() => document.querySelector('.modal input:not([type=hidden]),.modal select,.modal .btn,.modal-close')?.focus(), 0);
   };
   U.close = () => {
     document.getElementById('modal-root').innerHTML = '';
     G.runtime.modalItem = null;
+    G.runtime.confirmAction = null;
+    G.runtime.enhancePending = null;
+    G.runtime.ascendPending = null;
     G.runtime.previousFocus?.focus();
   };
   U.confirm = (title, body, callback, danger = false) => {
     G.runtime.confirmAction = callback;
     U.modal(title, body + '<div class="modal-actions">' + U.btn('Cancel', 'closeModal', '', 'quiet') + U.btn('Confirm', 'confirm', '', '' + (danger ? 'danger' : 'gold-btn')) + '</div>');
   };
-  U.locations = () => U.modal('Choose a location', '<div class="stack">' + D.locations.map(l => '<button class="slot" data-action="location" data-id="' + l.id + '" ' + (G.character().level < l.level ? 'disabled' : '') + '><span class="slot-number">' + l.level + '</span><div><strong>' + l.name + '</strong><small>Enemies ' + l.level + '–' + l.max + (l.dungeon !== null ? ' · ' + D.dungeons[l.dungeon].name : '') + '</small></div></button>').join('') + '</div>');
+  U.locations = () => U.modal('Choose a location', '<div class="stack location-options">' + D.locations.map(l => '<button class="slot" data-action="location" data-id="' + l.id + '" ' + (G.character().level < l.level ? 'disabled' : '') + '><span class="slot-number">' + l.level + '</span><div><strong>' + l.name + '</strong><small>Enemies ' + l.level + '–' + l.max + (l.dungeon !== null ? ' · ' + D.dungeons[l.dungeon].name : '') + '</small></div></button>').join('') + '</div>', true);
   U.creation = (slot, step = 0) => {
     if (!G.runtime.creation || G.runtime.creation.slot !== slot) G.runtime.creation = {
       slot,
@@ -70,7 +80,7 @@
       body += '<details class="spacer"><summary>Compare final build if equipped</summary><table class="data-table"><thead><tr><th>Final stat</th><th>Current</th><th>With item</th></tr></thead><tbody>' + Object.keys(D.labels).filter(k => !k.endsWith('Pct')).map(k => '<tr><td>' + D.labels[k] + '</td><td>' + U.statValue(k, before[k]) + '</td><td class="' + (after[k] > before[k] ? 'good' : after[k] < before[k] ? 'bad' : '') + '">' + (after[k] > before[k] ? '↑ ' : after[k] < before[k] ? '↓ ' : '') + U.statValue(k, after[k]) + '</td></tr>').join('') + '</tbody></table><p>Includes prefixes, gems, perks and effective stat caps. Equipping still requires the correct class and level.</p></details>';
     }
     if (gear || tool) {
-      body += '<hr><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / ' + S.items.prefixSlots(item) + '</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
+      body += '<hr><div class="item-details-grid"><section class="item-prefixes"><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / ' + S.items.prefixSlots(item) + '</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
       if (gear && (item.enhance < 25 || Object.keys(item.prefixes).length < S.items.prefixSlots(item))) {
         const q = S.upgrades.quote(item);
         body += '<section class="upgrade-box upgrade-compact"><h3>' + (item.enhance===25?'Fill a missing prefix':'Enhance to +'+(item.enhance+1)) + '</h3>' + U.upgradeSummary(q,true) + U.btn(item.enhance===25?'Refine prefixes':'Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';
@@ -79,16 +89,17 @@
         const q = S.upgrades.quote(item,true);
         body += '<section class="upgrade-box upgrade-compact"><h3>Ascend to ' + D.rarity[item.rarity + 1] + '</h3>' + U.upgradeSummary(q,true) + U.btn('Ascend', 'ascend', 'data-id="' + id + '"', 'gold-btn wide') + '</section>';
       }
-      body += '</div>';
+      body += '</div></section>';
       if (gear) {
-        body += '<hr><div class="row between"><h3>Gem sockets</h3><span class="badge">' + S.items.sockets(item) + ' / ' + (item.boss !== null ? 5 : 3) + ' UNLOCKED</span></div><p>Unlock at ' + D.sockets[item.boss !== null ? 'boss' : 'regular'].map(n => '+' + n).join(' / ') + '.</p>';
+        body += '<section class="item-sockets"><div class="row between"><h3>Gem sockets</h3><span class="badge">' + S.items.sockets(item) + ' / ' + (item.boss !== null ? 5 : 3) + ' UNLOCKED</span></div><p>Unlock at ' + D.sockets[item.boss !== null ? 'boss' : 'regular'].map(n => '+' + n).join(' / ') + '.</p>';
         for (let index = 0; index < S.items.sockets(item); index++) {
           const key = item.gems[index],
             gems = c.inventory.filter(i => i.kind === 'stack' && D.catalog[i.key].rank > 0 && D.gemAllowed[item.slot].includes(D.catalog[i.key].type));
           body += '<div class="socket-row">' + U.icon('gem') + (key ? '<span>' + U.e(D.catalog[key].name) + '</span>' + U.btn('Extract', 'extract', 'data-id="' + id + '" data-index="' + index + '"', 'small') + U.btn('Destroy gem', 'destroyGem', 'data-id="' + id + '" data-index="' + index + '"', 'small danger') : '<select id="socket-' + index + '"><option value="">Select a gem</option>' + gems.map(i => '<option value="' + i.key + '">' + U.e(D.catalog[i.key].name) + ' ×' + i.quantity + '</option>').join('') + '</select>' + U.btn('Socket', 'socket', 'data-id="' + id + '" data-index="' + index + '"', 'small')) + '</div>';
         }
-        body += '<hr><div class="row">' + (c.inventory.includes(item) ? U.btn('Equip', 'equip', 'data-id="' + id + '"', 'primary') : U.btn('Unequip', 'unequip', 'data-slot="' + item.slot + '"')) + U.btn(item.locked ? 'Unlock' : 'Lock / favourite', 'lock', 'data-id="' + id + '"') + U.btn('Remove enchantments', 'removeEnchant', 'data-id="' + id + '"', 'danger') + (c.inventory.includes(item) ? U.btn('Discard', 'discard', 'data-id="' + id + '"', 'danger') : '') + '</div>';
+        body += '</section></div><hr><div class="row">' + (c.inventory.includes(item) ? U.btn('Equip', 'equip', 'data-id="' + id + '"', 'primary') : U.btn('Unequip', 'unequip', 'data-slot="' + item.slot + '"')) + U.btn(item.locked ? 'Unlock' : 'Lock / favourite', 'lock', 'data-id="' + id + '"') + U.btn('Remove enchantments', 'removeEnchant', 'data-id="' + id + '"', 'danger') + (c.inventory.includes(item) ? U.btn('Discard', 'discard', 'data-id="' + id + '"', 'danger') : '') + '</div>';
       }
+      else body += '</div>';
     } else {
       const info = D.catalog[item.key];
       body += U.effectPreview(item) + '<p>' + (info.healing ? 'Restores ' + info.healing + ' HP. Assign this food in World.' : info.rank === 0 && info.category === 'Gems' ? 'Cut this typed uncut gem into Gem I in Crafting → Faceting.' : info.category === 'Gems' ? 'Socket into compatible equipment. Fuse three identical gems to upgrade the rank.' : info.id === 'stone' ? 'Consumed by every rarity Ascension attempt.' : 'An item for your journey.') + '</p><div class="row spacer">' + U.btn(item.locked ? 'Unlock' : 'Lock / favourite', 'lock', 'data-id="' + id + '"') + (info.category === 'Food' ? U.btn('Assign food', 'assignFood', 'data-key="' + item.key + '"', 'primary') : '') + (item.key === 'rename' ? U.btn('Use contract', 'renameForm') : item.key === 'appearance' ? U.btn('Customize appearance', 'appearanceForm') : '') + U.btn('Discard', 'discard', 'data-id="' + id + '"', 'danger') + '</div>';

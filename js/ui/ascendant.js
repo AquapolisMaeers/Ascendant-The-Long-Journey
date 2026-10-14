@@ -56,7 +56,11 @@
   U.item = id => {
     item(id);
     const i = S.items.find(id);
-    if (i) document.querySelector('.modal')?.insertAdjacentHTML('afterbegin', '<div class="item-art-detail rarity-' + (i.kind === 'stack' ? D.catalog[i.key].rarity : i.rarity) + '">' + U.itemArt(i) + '</div>');
+    if (i) {
+      const modal = document.querySelector('.modal');
+      modal?.classList.add('item-modal');
+      modal?.querySelector('.modal-head')?.insertAdjacentHTML('afterbegin', '<div class="item-art-detail rarity-' + (i.kind === 'stack' ? D.catalog[i.key].rarity : i.rarity) + '">' + U.itemArt(i) + '</div>');
+    }
   };
   const reward = U.rewardText;
   U.rewardText = r => '<span class="reward-art' + (r.kind === 'gear' || r.kind === 'tool' ? ' rarity-' + r.rarity : '') + '">' + (r.coins ? U.paint('coins') : U.itemArt(r.kind ? r : {kind: 'stack', key: r.key})) + '<span>' + reward(r) + '</span></span>';
