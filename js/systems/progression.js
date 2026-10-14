@@ -4,6 +4,7 @@
     check() {
       const c = G.character();
       if (!c) return;
+      S.quests.sync(c);
       for (const a of D.achievements)
         if (!c.achievements[a.id] && a.metric(c) >= a.target) {
           c.achievements[a.id] = Date.now();
@@ -61,6 +62,7 @@
     resume() {
       for (const c of G.state.slots.filter(Boolean)) {
         S.companions.sync(c);
+        S.quests.sync(c);
         if (c.dungeon) {
           if (c.combat) c.dungeon.interrupted = true;
           else {

@@ -92,22 +92,22 @@
       D.rarity[item.rarity] + ' → ' + D.rarity[item.rarity + 1] +
       ' · One work prefix gains a rank. No skill-level requirement.</small><small>Prefix capacity: '+
       S.items.prefixSlots(item)+' → '+S.items.prefixSlots(item,item.rarity+1)+'</small></div>';
-    const next = {...item, enhance:item.enhance + (ascend ? 0 : 1), rarity:item.rarity + (ascend ? 1 : 0)};
+    const next = {...item, enhance:Math.min(25,item.enhance + (ascend ? 0 : 1)), rarity:item.rarity + (ascend ? 1 : 0)};
     const before = S.items.stats(item), after = S.items.stats(next);
     return '<div class="upgrade-benefits"><strong>On success · inherent stats</strong><dl class="preview-stats">' +
       Object.entries(after).map(([key, val]) => '<div><dt>' + U.itemStatLabel(key, item) + '</dt><dd>' +
         U.statValue(key, before[key]) + ' → ' + U.statValue(key, val) + '</dd></div>').join('') +
-      '</dl><small>' + (ascend ? 'Enhancement, prefixes and sockets are preserved.' : 'One allowed prefix improves.' +
+      '</dl><small>' + (ascend ? 'Enhancement, prefixes and sockets are preserved. Prefix capacity: '+S.items.prefixSlots(item)+' → '+S.items.prefixSlots(next)+'.' : (item.enhance===25?'Fills one missing prefix slot. Enhancement stays +25.':'One allowed prefix improves.') +
         (S.items.sockets(next) > S.items.sockets(item) ? ' Unlocks a new gem socket.' : '')) + '</small></div>';
   };
   U.prefixGuide = item => {
     const owned = Object.keys(item.prefixes), tool = item.kind === 'tool';
     const limit = S.items.prefixSlots(item, tool ? Math.min(7,item.rarity+1) : item.rarity);
     const forced = tool ? null : S.tutorial?.prefix(item);
-    const pool = forced ? [forced.key] : owned.length >= limit ? owned :
+    const pool = forced ? [forced.key] : !tool&&item.enhance===25&&owned.length<limit ? D.prefixPools[item.slot].filter(key=>!owned.includes(key)) : owned.length >= limit ? owned :
       tool ? Object.keys(D.toolPrefixes) : D.prefixPools[item.slot];
     return '<details class="possible-prefixes"><summary>Possible prefixes · ' + pool.length + '</summary><p>' +
-      (forced ? 'This tutorial roll guarantees +2 Primary Damage.' : owned.length >= limit ?
+      (forced ? 'This tutorial roll guarantees +2 Primary Damage.' : !tool&&item.enhance===25&&owned.length<limit ? 'A successful refinement fills one empty prefix slot from this list; Enhancement stays +25.' : owned.length >= limit ?
         'All '+limit+' prefix slots are occupied. Successful rolls now strengthen an existing prefix.' :
         'A successful roll adds or strengthens one of these prefixes. '+(tool?'The target rarity':'This item')+' holds up to '+limit+' different prefixes.') +
       '</p><div class="prefix-options">' + pool.map(key => {

@@ -34,7 +34,7 @@
           chance: Math.min(1, D.ascend.chance[item.rarity] + item.ascendFail)
         };
       }
-      const b = Math.floor(item.enhance / 5),
+      const b = Math.min(4, Math.floor(item.enhance / 5)),
         cost = {
           ['bar:' + item.tier]: D.enhance.bars[b]
         };
@@ -50,20 +50,21 @@
       G.ensureIdle();
       const item = S.items.find(id);
       G.assert(item?.kind === 'gear', 'Only combat gear can be Enhanced.');
-      G.assert(item.enhance < 25, 'Already +25.');
+      G.assert(item.enhance < 25 || Object.keys(item.prefixes).length < S.items.prefixSlots(item), 'Already +25 with every prefix slot filled.');
+      const refining = item.enhance === 25;
       S.tutorial?.guard('enhance', id);
       const q = this.quote(item);
       pay(q.coins, q.cost);
       if (G.rng() < q.chance) {
-        item.enhance++;
+        if (!refining) item.enhance++;
         item.enhanceFail = 0;
-        const prefixEvent = S.items.prefix(item);
+        const prefixEvent = S.items.prefix(item, refining);
         S.items.announcePrefix(item, prefixEvent);
         S.tutorial?.enhanced(item);
         const c = G.character();
         c.stats.enhancements++;
         c.stats.maxEnhance = Math.max(c.stats.maxEnhance, item.enhance);
-        G.notify('Enhancement succeeded: +' + item.enhance + '. One prefix improved.', 'success');
+        G.notify(refining ? 'Prefix refinement succeeded. A missing slot was filled.' : 'Enhancement succeeded: +' + item.enhance + '. One prefix improved.', 'success');
         G.audio?.play('enhance');
         G.emit('effect', {
           kind: 'enhance',

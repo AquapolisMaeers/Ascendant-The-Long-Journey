@@ -1,15 +1,16 @@
 'use strict';
 (function(G,D,S,U) {
+  U.upgradeSummary = (q,compact=false) => '<div class="upgrade-summary '+(compact?'compact':'')+'"><div><small>Success chance</small><strong>'+G.percent(q.chance,1)+'</strong></div><div><small>Coin cost</small><strong>'+G.money(q.coins)+'</strong><small>'+G.number(q.coins)+' Bronze</small></div></div>';
   U.companionPortrait = entry => entry.art === undefined ? U.portraitArt(entry.portrait) :
     '<span class="icon portrait-art companion-art" aria-hidden="true" data-pet-art="'+entry.art+'" style="background-position:'+(entry.art%2*100)+'% '+(Math.floor(entry.art/2)*100)+'%"></span>';
   U.enhanceConfirmation = id => {
     G.ensureIdle();const item=S.items.find(id);
-    G.assert(item?.kind==='gear'&&item.enhance<25,'Choose equipment that can be enhanced.');
+    G.assert(item?.kind==='gear'&&(item.enhance<25||Object.keys(item.prefixes).length<S.items.prefixSlots(item)),'Choose equipment with an Enhancement level or prefix slot available.');
     const q=S.upgrades.quote(item);
     G.runtime.enhancePending={id,enhance:item.enhance,rarity:item.rarity};
     const guide=U.prefixGuide(item).replace('<details class="possible-prefixes">','<details class="possible-prefixes" open>');
     U.modal('Confirm enhancement: '+U.e(U.itemName(item)),
-      '<p>+'+item.enhance+' → +'+(item.enhance+1)+' · '+G.percent(q.chance,0)+' success · '+G.money(q.coins)+'</p>'+
+      '<p>'+(item.enhance===25?'Fill a missing prefix slot at +25.':'+'+item.enhance+' → +'+(item.enhance+1))+'</p>'+U.upgradeSummary(q)+
       U.upgradePreview(item,false)+U.ingredients(q.cost)+guide+
       '<p>Fail protection: +'+G.percent(item.enhanceFail)+'</p>'+
       '<p>Materials and coins are consumed on an attempt. Failure preserves this item and increases fail protection.</p>'+
@@ -22,7 +23,7 @@
     const q=S.upgrades.quote(item,true);
     G.runtime.ascendPending={id,enhance:item.enhance,rarity:item.rarity};
     U.modal('Confirm ascension: '+U.e(U.itemName(item)),
-      '<p>'+D.rarity[item.rarity]+' → '+D.rarity[item.rarity+1]+' · '+G.percent(q.chance,0)+' success · '+G.money(q.coins)+'</p>'+
+      '<p>'+D.rarity[item.rarity]+' → '+D.rarity[item.rarity+1]+'</p>'+U.upgradeSummary(q)+
       U.upgradePreview(item,true)+U.ingredients(q.cost)+
       (item.kind==='tool'?U.prefixGuide(item).replace('<details class="possible-prefixes">','<details class="possible-prefixes" open>'):'')+
       '<p>Fail protection: +'+G.percent(item.ascendFail)+'</p>'+

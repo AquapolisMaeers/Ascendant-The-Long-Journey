@@ -58,13 +58,25 @@
       return [...c.inventory, ...Object.values(c.equipment), ...Object.values(c.tools)].find(i => i?.id === id);
     },
     prefixSlots(item, rarity = item.rarity) {
-      return item.kind === 'tool' ? (rarity < 3 ? 3 : rarity < 6 ? 4 : 5) : D.config.prefixSlots;
+      return rarity < 3 ? 3 : rarity < 6 ? 4 : 5;
     },
-    prefix(item) {
+    dropTool(skill, rarity) {
+      const item = this.createTool(skill);
+      for (let rank = 0; rank <= rarity; rank++) {
+        item.rarity = rank;
+        if (rank < 2) {
+          const key = G.pick(G.rng, Object.keys(D.toolPrefixes).filter(key => !Object.hasOwn(item.prefixes,key)));
+          item.prefixes[key] = 1;
+        } else this.prefix(item);
+      }
+      return item;
+    },
+    prefix(item, fillSlot = false) {
       const keys = Object.keys(item.prefixes),
         pool = item.kind === 'tool' ? Object.keys(D.toolPrefixes) : D.prefixPools[item.slot];
       const forced = S.tutorial?.prefix(item);
-      const key = forced?.key || G.pick(G.rng, keys.length >= this.prefixSlots(item) ? keys : pool);
+      const choices = fillSlot && keys.length < this.prefixSlots(item) ? pool.filter(key=>!keys.includes(key)) : keys.length >= this.prefixSlots(item) ? keys : pool;
+      const key = forced?.key || G.pick(G.rng, choices);
       const range = D.prefixRanges[key],
         before = item.prefixes[key] || 0;
       const increment = forced?.increment ?? (item.kind === 'tool' ? 1 : range[0] + G.rng() * (range[1] - range[0]));

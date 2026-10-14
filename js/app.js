@@ -225,6 +225,11 @@
       S.world.location(+el.dataset.id);
       U.close();
     },
+    questTravel(el) {
+      S.world.location(Number(el.dataset.id));
+      G.runtime.page = 'World';
+      U.render();
+    },
     enterDungeon() {
       S.dungeons.enter();
     },
@@ -694,6 +699,7 @@
       const c = G.character();
       if (c) {
         S.companions.sync(c);
+        if (S.quests.sync(c)) G.commit();
         S.afk.tick(ms);
         if (c.combat) S.combat.tick(ms / 1000);
         else S.world.tick(ms);

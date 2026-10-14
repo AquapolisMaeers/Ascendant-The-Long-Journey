@@ -251,6 +251,7 @@
         return;
       }
       c.stats[encounter.type]++;
+      S.quests.defeated(encounter.enemy, c);
       S.companions.gain(c, D.companionRules.victoryXp * encounter.enemy.level);
       const levelUps = S.xp.add(c, D.loot[encounter.type].xp * encounter.enemy.level);
       if (levelUps) {

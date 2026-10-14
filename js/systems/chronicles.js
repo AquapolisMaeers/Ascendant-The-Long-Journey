@@ -5,6 +5,8 @@
       c.ascendantCoins ??= 0;
       c.ascendantRewards ??= {};
       c.companion ??= null;
+      c.quests ??= null;
+      c.questCompletions ??= 0;
       c.afk.normals ??= true;
       c.afk.dungeons ??= false;
       return c;

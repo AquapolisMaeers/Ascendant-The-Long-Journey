@@ -18,12 +18,12 @@
       return;
     }
     if (i.kind === 'tool') {
-      if (!D.skills.includes(i.skill) || i.name !== D.tools[D.skills.indexOf(i.skill)] || !Number.isInteger(i.rarity) || !D.rarity[i.rarity] || typeof i.bound !== 'boolean' || !finite(i.ascendFail, 0, 1) || !i.prefixes || Object.keys(i.prefixes).length > G.systems.items.prefixSlots(i) || Object.entries(i.prefixes).some(([k, v]) => !Object.hasOwn(D.toolPrefixes, k) || !Number.isInteger(v) || !finite(v, 1, 7))) fail('tool');
+      if (!D.skills.includes(i.skill) || i.name !== D.tools[D.skills.indexOf(i.skill)] || !Number.isInteger(i.rarity) || !D.rarity[i.rarity] || typeof i.bound !== 'boolean' || !finite(i.ascendFail, 0, 1) || !i.prefixes || Object.keys(i.prefixes).length > G.systems.items.prefixSlots(i) || Object.entries(i.prefixes).some(([k, v]) => !Object.hasOwn(D.toolPrefixes, k) || !Number.isInteger(v) || !finite(v, 1, 8))) fail('tool');
       return;
     }
     if (i.kind !== 'gear' || !Number.isInteger(i.tier) || !D.tiers[i.tier] || !Number.isInteger(i.piece) || !D.pieces[i.piece] || !Number.isInteger(i.rarity) || !D.rarity[i.rarity] || !Number.isInteger(i.enhance) || !finite(i.enhance, 0, 25)) fail('equipment');
     if (i.slot !== (i.piece < 3 ? 'Weapon' : D.pieces[i.piece]) || i.style !== (i.piece < 3 ? i.piece : null) || !(i.boss === null || Number.isInteger(i.boss) && D.dungeons[i.boss])) fail('equipment identity');
-    if (!i.prefixes || Object.keys(i.prefixes).length > 3 || Object.entries(i.prefixes).some(([k, v]) => !D.prefixPools[i.slot].includes(k) || !finite(v))) fail('prefixes');
+    if (!i.prefixes || Object.keys(i.prefixes).length > G.systems.items.prefixSlots(i) || Object.entries(i.prefixes).some(([k, v]) => !D.prefixPools[i.slot].includes(k) || !finite(v))) fail('prefixes');
     if (!Array.isArray(i.gems) || i.gems.length > G.systems.items.sockets(i) || i.gems.some(k => k !== null && (!D.catalog[k] || D.catalog[k].category !== 'Gems' || !D.catalog[k].rank || !D.gemAllowed[i.slot].includes(D.catalog[k].type)))) fail('sockets');
     if (!finite(i.enhanceFail, 0, 1) || !finite(i.ascendFail, 0, 1)) fail('fail protection');
   }
@@ -62,6 +62,7 @@
           !finite(p.hunger, 0, 100) || !finite(p.health, 0, 100) || !finite(p.updatedAt)) fail('companion');
       }
       if (c.peaceFoodReady !== undefined && !finite(c.peaceFoodReady)) fail('peace food cooldown');
+      if (!G.systems.quests.valid(c)) fail('quests');
       if (!Number.isInteger(c.seed) || !finite(c.seed, 1, 4294967295) || !finite(c.foodReady) || !c.facetFails || Object.entries(c.facetFails).some(([k, v]) => ![0, 1, 2, 3, 4].includes(+k) || !finite(v, 0, 1))) fail('random state or counters');
       if (typeof c.id !== 'string' || typeof c.name !== 'string' || c.name.length < 2 || c.name.length > 24 || !D.classes.includes(c.class) || !D.modes.includes(c.mode)) fail('character identity');
       if (!Number.isInteger(c.level) || !finite(c.level, 1, 100) || !finite(c.xp) || !finite(c.hp) || !Number.isSafeInteger(c.coins) || !finite(c.coins) || !Number.isInteger(c.capacity) || c.capacity < 50 || c.capacity > 160 || c.capacity % 10 || !Number.isInteger(c.location) || !D.locations[c.location] || D.locations[c.location].level > c.level) fail('character progression');
@@ -84,7 +85,7 @@
         const t = c.tools[skill],
           s = c.skills[skill];
         validateItem(t, ids);
-        if (!s || !Number.isInteger(s.level) || !finite(s.level, 1, 100) || !finite(s.xp) || !t || t.kind !== 'tool' || t.skill !== skill || !Number.isInteger(t.rarity) || !D.rarity[t.rarity] || !t.prefixes || Object.entries(t.prefixes).some(([k, v]) => !Object.hasOwn(D.toolPrefixes, k) || !Number.isInteger(v) || !finite(v, 1, 7))) fail('skill or tool');
+        if (!s || !Number.isInteger(s.level) || !finite(s.level, 1, 100) || !finite(s.xp) || !t || t.kind !== 'tool' || t.skill !== skill || !Number.isInteger(t.rarity) || !D.rarity[t.rarity] || !t.prefixes || Object.entries(t.prefixes).some(([k, v]) => !Object.hasOwn(D.toolPrefixes, k) || !Number.isInteger(v) || !finite(v, 1, 8))) fail('skill or tool');
       }
       if (Object.entries(c.perks).some(([k, v]) => !D.perkLevels.includes(+k) || +k > c.level || ![0, 1, 2].includes(v))) fail('perk choice');
       if (!(c.offline === null || D.skills.includes(c.offline)) || !finite(c.lastSeen) || !Array.isArray(c.eatUnlocks) || c.eatUnlocks.some(v => ![0, .25, .5, .75].includes(v)) || !c.eatUnlocks.includes(c.eat) || c.food !== null && !D.catalog[c.food]?.healing) fail('food or offline selection');

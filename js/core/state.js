@@ -35,6 +35,8 @@
       ascendantCoins: 0,
       ascendantRewards: {},
       companion: null,
+      quests: null,
+      questCompletions: 0,
       seed: G.seed(),
       location: 0,
       inventory: [],

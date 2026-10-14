@@ -135,6 +135,7 @@
         quantity: 1
       });
       S.inventory.reward(rewards);
+      S.quests.gathered(a.skill, rewards, c);
       G.audio?.play(a.skill.toLowerCase());
       a.rewards = S.loot.merge(a.rewards || [], rewards);
       S.tutorial?.gathered(a.skill, rewards);
@@ -317,7 +318,7 @@
           c.stats.bossDrops[loc.dungeon] = [...new Set([...(c.stats.bossDrops[loc.dungeon] || []), piece])];
         }
       }
-      if (G.rng() < table.tool) rewards.push(S.items.createTool(D.skills[G.weighted(G.rng, D.toolDrops.weights)], G.weighted(G.rng, table.rarities)));
+      if (G.rng() < table.tool) rewards.push(S.items.dropTool(D.skills[G.weighted(G.rng, D.toolDrops.weights)], G.weighted(G.rng, table.rarities)));
       if (G.rng() < table.stone) rewards.push({
         key: 'stone',
         quantity: 1

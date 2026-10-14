@@ -71,11 +71,13 @@
     }
     if (gear || tool) {
       body += '<hr><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / ' + S.items.prefixSlots(item) + '</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
-      if (gear && item.enhance < 25) {
-        body += '<section class="upgrade-box upgrade-compact"><h3>Enhance to +' + (item.enhance + 1) + '</h3>' + U.btn('Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';
+      if (gear && (item.enhance < 25 || Object.keys(item.prefixes).length < S.items.prefixSlots(item))) {
+        const q = S.upgrades.quote(item);
+        body += '<section class="upgrade-box upgrade-compact"><h3>' + (item.enhance===25?'Fill a missing prefix':'Enhance to +'+(item.enhance+1)) + '</h3>' + U.upgradeSummary(q,true) + U.btn(item.enhance===25?'Refine prefixes':'Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';
       }
       if (item.rarity < 7) {
-        body += '<section class="upgrade-box upgrade-compact"><h3>Ascend to ' + D.rarity[item.rarity + 1] + '</h3>' + U.btn('Ascend', 'ascend', 'data-id="' + id + '"', 'gold-btn wide') + '</section>';
+        const q = S.upgrades.quote(item,true);
+        body += '<section class="upgrade-box upgrade-compact"><h3>Ascend to ' + D.rarity[item.rarity + 1] + '</h3>' + U.upgradeSummary(q,true) + U.btn('Ascend', 'ascend', 'data-id="' + id + '"', 'gold-btn wide') + '</section>';
       }
       body += '</div>';
       if (gear) {

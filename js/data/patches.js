@@ -3,6 +3,16 @@
 RPG.data.patches = [
   {
     "date": "2026-10-13",
+    "title": "Regional quests & stronger drops",
+    "changes": [
+      "Gear now shares tool prefix limits: 3 at Common–Rare, 4 at Epic–Mythical, 5 at Divine–Ascendant. +25 gear can refine missing slots without raising Enhancement.",
+      "Dropped tools arrive with rarity-based prefix rolls. A Rare Chisel has three total rolls: three prefixes, or two with one upgraded.",
+      "Quests unlock after the tutorial: three slots with creature and gathering objectives in your highest unlocked region. Completion pays coins/materials and starts a 30-minute replacement timer that also runs offline.",
+      "Gathering quests require usable regional skills. Unfinished quests switch when a harder region unlocks. Upgrade boxes and confirmations show larger success chances, coin costs and Bronze totals."
+    ]
+  },
+  {
+    "date": "2026-10-13",
     "title": "Stronger tools. Clearer choices.",
     "changes": [
       "Tools hold up to 3 prefixes at Common–Rare, 4 at Epic–Mythical, and 5 at Divine–Ascendant. Ascension previews show newly unlocked capacity.",

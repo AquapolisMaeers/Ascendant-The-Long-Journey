@@ -147,7 +147,7 @@
     extraRarity: .05,
     inputs: 3
   };
-  D.roman = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+  D.roman = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
   D.skills = ['Mining', 'Woodcutting', 'Fishing', 'Hunting', 'Smithing', 'Cooking', 'Faceting'];
   D.tools = ['Pickaxe', 'Axe', 'Fishing Rod', 'Trap', 'Hammer', 'Frying Pan', 'Chisel'];
   // Nominal material tiers and sale values only; tools have no use/equip level gate.
