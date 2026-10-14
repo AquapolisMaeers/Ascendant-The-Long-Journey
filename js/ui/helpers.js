@@ -71,6 +71,11 @@
   U.render = () => {
     const focused = document.activeElement?.id;
     document.getElementById('app').innerHTML = U.shell();
+    const content = document.getElementById('content');
+    if (content) {
+      content.dataset.page = G.runtime.page;
+      content.dataset.tab = G.runtime.tab || '';
+    }
     if (focused) document.getElementById(focused)?.focus();
     U.applySettings();
     G.emit('rendered');

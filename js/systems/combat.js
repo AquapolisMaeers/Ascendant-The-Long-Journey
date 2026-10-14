@@ -265,7 +265,7 @@
         c.stats.dungeons++;
         c.dungeon = null;
       }
-      const rewards = S.loot.roll(encounter.type, encounter.enemy.level, c.location);
+      const rewards = S.loot.roll(encounter.type, encounter.enemy.level, c.location, encounter.enemy.name === 'Mimic');
       S.tutorial?.victory(encounter, rewards);
       S.inventory.reward(rewards);
       S.loot.present(rewards, 'Victory');

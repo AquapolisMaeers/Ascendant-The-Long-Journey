@@ -36,6 +36,8 @@
     {id:'advance', name:'Most Advances', group:'Journey', metric:c=>c.stats.advance},
     {id:'creatures', name:'Creatures Defeated', group:'Journey', metric:c=>c.stats.regular+c.stats.elite+c.stats.boss},
     {id:'elite', name:'Elite Creatures Defeated', group:'Journey', metric:c=>c.stats.elite},
-    {id:'dungeons', name:'Dungeons Conquered', group:'Journey', metric:c=>c.stats.dungeons}
+    {id:'dungeons', name:'Dungeons Conquered', group:'Journey', metric:c=>c.stats.dungeons},
+    {id:'quests', name:'Most Quests Completed', group:'Journey', metric:c=>c.questCompletions ?? 0},
+    {id:'companion', name:'Highest Companion Level', group:'Journey', metric:c=>c.companion?.level ?? 0, tie:c=>c.companion?.xp ?? 0}
   ];
 })(RPG.data);

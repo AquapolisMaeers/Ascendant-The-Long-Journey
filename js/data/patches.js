@@ -3,6 +3,17 @@
 RPG.data.patches = [
   {
     "date": "2026-10-14",
+    "title": "Mimic gems, new rankings & room to play",
+    "changes": [
+      "Defeated chest Mimics guarantee a gem. Their other loot rolls stay the same, and naturally rolled gems count toward the guarantee.",
+      "Leaderboards adds Most Quests Completed and Highest Companion Level, with XP breaking companion-level ties.",
+      "Character Equipment, Stats and Perks, all seven Skills, Settings and Faceting use compact desktop layouts for 1080p screens. Settings removes the large sound information panel; audio samples remain in a small expandable control.",
+      "Faceting opens on Attack Gem and lists its five ranks. All gems is removed; individual gem types remain selectable.",
+      "Start AFK gives 15 free active minutes, then continues at 10 Bronze per started minute in every location until stopped. Duration selection is removed. The timer counts upward from 00:00; hidden tabs pause time and billing."
+    ]
+  },
+  {
+    "date": "2026-10-14",
     "title": "Flexible tool prefixes & compact popups",
     "changes": [
       "Tool drops receive 0/1/2/3/4/5/6/7 prefix rolls from Common to Ascendant. Each roll adds a prefix or upgrades an existing one; five distinct prefixes become available at Mythical.",

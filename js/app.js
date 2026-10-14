@@ -549,7 +549,7 @@
         U.render();
       }
       if (el.id === 'gem-filter') {
-        G.runtime.gemFilter = el.value === '' ? undefined : +el.value;
+        G.runtime.gemFilter = +el.value;
         U.render();
       }
       if (el.dataset.afk) {

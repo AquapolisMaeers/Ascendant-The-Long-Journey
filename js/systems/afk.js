@@ -4,8 +4,7 @@
   S.afk = {
     run: null,
     status: 'Ready when you are.',
-    minuteRate(c = G.character()) { return 10 * (c.location + 1); },
-    quote(c = G.character()) { return {rate:this.minuteRate(c), maximum:Math.max(0,c.afk.minutes-15)*this.minuteRate(c)}; },
+    minuteRate() { return 10; },
     start() {
       G.ensureProgress();
       const c = G.character();
@@ -29,7 +28,7 @@
     configure(key, value) {
       const choices = {
         interval: [8000, 12000, 16000], chance: [.55, .65, .75, .85, .95],
-        minHp: [.25, .5, .75], minutes: [15, 30, 60],
+        minHp: [.25, .5, .75],
         normals: [true, false], dungeons: [true, false], elites: [true, false], gather: [true, false], chests: [true, false]
       };
       G.assert(choices[key]?.includes(value), 'Invalid AFK setting.');
@@ -41,7 +40,7 @@
       const run = this.run, c = G.character();
       if (!run || document.hidden) return;
       if (!c || c.id !== run.id) { this.stop('Character changed', false); return; }
-      run.elapsed = Math.min(c.afk.minutes * 60000, run.elapsed + ms);
+      run.elapsed += ms;
       let reason = null;
       if (c.pending.length || c.inventory.length >= c.capacity) reason = 'Make inventory space to continue';
       else if (c.dungeon && !run.dungeon || S.tutorial.active()) reason = 'Manual adventure requires your attention';
@@ -55,7 +54,6 @@
           else { c.coins -= cost; run.paidMinutes += due; run.spent += cost; G.commit(); }
         }
       }
-      if (!reason && run.elapsed >= c.afk.minutes * 60000) reason = 'Session timer finished';
       if (reason) { this.stop(reason); G.commit(); return; }
       if (c.combat || c.activity) { run.inspect = 0; return; }
       if (document.querySelector('.modal')) return;

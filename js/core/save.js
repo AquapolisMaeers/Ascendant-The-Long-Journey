@@ -105,7 +105,7 @@
       if (c.activity && (!['advance', 'gather', 'craft'].includes(c.activity.type) || !finite(c.activity.elapsed) || !finite(c.activity.duration, 1, 100000))) fail('activity');
       if (c.activity?.type === 'gather' && (!c.encounter || !D.skills.slice(0, 4).includes(c.activity.skill) || !Number.isInteger(c.activity.tier) || !D.tiers[c.activity.tier])) fail('gather activity');
       if (c.activity?.type === 'craft' && (!D.recipes.some(r => r.id === c.activity.recipe) || !Number.isInteger(c.activity.remaining) || !finite(c.activity.remaining, 1, 1000000))) fail('craft queue');
-      if (!c.afk || ![8000, 12000, 16000].includes(c.afk.interval) || ![.55, .65, .75, .85, .95].includes(c.afk.chance) || ![.25, .5, .75].includes(c.afk.minHp) || ![15, 30, 60].includes(c.afk.minutes) || ['elites', 'gather', 'chests'].some(k => typeof c.afk[k] !== 'boolean')) fail('AFK settings');
+      if (!c.afk || ![8000, 12000, 16000].includes(c.afk.interval) || ![.55, .65, .75, .85, .95].includes(c.afk.chance) || ![.25, .5, .75].includes(c.afk.minHp) || c.afk.minutes !== undefined && ![15, 30, 60].includes(c.afk.minutes) || ['elites', 'gather', 'chests'].some(k => typeof c.afk[k] !== 'boolean')) fail('AFK settings');
       if (['normals','dungeons'].some(k => c.afk[k] !== undefined && typeof c.afk[k] !== 'boolean')) fail('AFK encounter filters');
       if (!finite(c.restReadyAt)) fail('rest cooldown');
       if (c.guide && (!Number.isInteger(c.guide.step) || !D.tutorial.steps[c.guide.step] || typeof c.guide.active !== 'boolean' || !c.guide.gathered)) fail('tutorial');

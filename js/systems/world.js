@@ -288,7 +288,12 @@
       }
       return out;
     },
-    roll(type, level, location) {
+    gem(level) {
+      const rank = G.weighted(G.rng, D.gemDrops.findLast(([min]) => level >= min)[1]) + 1;
+      const gem = G.int(G.rng, 0, D.gems.length - 1);
+      return {key: rank === 1 ? 'uncut:' + gem : 'gem:' + gem + ':' + rank, quantity: 1};
+    },
+    roll(type, level, location, guaranteedGem = false) {
       const table = D.loot[type],
         loc = D.locations[location],
         rewards = [{
@@ -300,12 +305,7 @@
           quantity: table.quantity
         });
       if (G.rng() < table.gem) {
-        const rank = G.weighted(G.rng, D.gemDrops.findLast(([min]) => level >= min)[1]) + 1;
-        const gem = G.int(G.rng, 0, D.gems.length - 1);
-        rewards.push({
-          key: rank === 1 ? 'uncut:' + gem : 'gem:' + gem + ':' + rank,
-          quantity: 1
-        });
+        rewards.push(this.gem(level));
       }
       if (G.rng() < table.gear) {
         const tier = S.world.tier(location, table.divisor),
@@ -323,6 +323,8 @@
         key: 'stone',
         quantity: 1
       });
+      // Complete the ordinary loot rolls first, preserving every other reward.
+      if (guaranteedGem && !rewards.some(r => D.catalog[r.key]?.category === 'Gems')) rewards.push(this.gem(level));
       return rewards;
     },
     present(rewards, label) {
