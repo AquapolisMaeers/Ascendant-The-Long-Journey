@@ -5,6 +5,7 @@
       c.ascendantCoins ??= 0;
       c.ascendantRewards ??= {};
       c.companion ??= null;
+      if (c.companion) c.companion.ascensions ??= 0;
       c.quests ??= null;
       c.questCompletions ??= 0;
       c.afk.normals ??= true;
@@ -33,6 +34,30 @@
   };
   S.companions = {
     definition(p) { return D.companions.find(d=>d.id===p?.type); },
+    cap(p) { return D.companionRules.levelCaps[p?.ascensions || 0]; },
+    name(p) { return D.rarity[p?.ascensions || 0] + ' ' + this.definition(p).name; },
+    ascensionQuote(p = G.character()?.companion) {
+      G.assert(p, 'Adopt a companion first.');
+      const rank = p.ascensions || 0;
+      return {rank, stones:rank + 1, chance:D.companionRules.ascensionChances[rank],
+        cap:this.cap(p), nextCap:D.companionRules.levelCaps[rank + 1], rarity:D.rarity[rank + 1]};
+    },
+    ascend() {
+      G.ensureIdle();
+      const c = G.character(), p = c.companion, q = this.ascensionQuote(p);
+      G.assert(!S.tutorial.active() && !c.dungeon, 'Finish training and leave the dungeon before ascending your companion.');
+      G.assert(this.view(p).alive, 'Revive your companion first.');
+      G.assert(q.nextCap !== undefined, 'Your companion has reached its final rarity.');
+      G.assert(p.level === q.cap, 'Reach companion level ' + q.cap + ' before ascending.');
+      G.assert(S.inventory.available('stone') >= q.stones, 'Not enough unlocked Ascendant Stones.');
+      S.inventory.take('stone', q.stones);
+      const success = G.rng() < q.chance;
+      if (success) { p.ascensions = q.rank + 1; p.xp = 0; }
+      G.notify(success ? this.name(p) + ' ascended. Level cap: ' + q.nextCap + '.' :
+        'Companion ascension failed. ' + q.stones + ' stones consumed; level and rarity preserved.', success ? 'success' : 'warning');
+      G.commit();
+      return success;
+    },
     xpNext(level) { return D.companionRules.xpFactor*level*level; },
     view(p,now=Date.now()) {
       if(!p) return null;
@@ -60,7 +85,7 @@
       G.assert(!c.dungeon,'Adopt companions in the outside world.');
       G.assert(d&&!c.companion,'Choose an available companion; release your current companion before adopting another.');
       G.assert(c.coins>=d.price,'Insufficient coins.');
-      c.coins-=d.price;c.companion={type,level:1,xp:0,hunger:100,health:100,updatedAt:Date.now()};
+      c.coins-=d.price;c.companion={type,level:1,xp:0,ascensions:0,hunger:100,health:100,updatedAt:Date.now()};
       G.notify(d.name+' joins your journey. Keep it fed.','success');G.commit();
     },
     nutrition(key, p = G.character()?.companion) {
@@ -96,11 +121,12 @@
     gain(c,amount) {
       if(!c.companion) return;
       this.sync(c);const p=c.companion;
-      if(!this.view(p).active||p.level===D.companionRules.levelCap) return;
+      const cap = this.cap(p);
+      if(!this.view(p).active||p.level>=cap) return;
       p.xp+=amount;const previous=p.level;
-      while(p.level<D.companionRules.levelCap&&p.xp>=this.xpNext(p.level)){p.xp-=this.xpNext(p.level);p.level++;}
-      if(p.level===D.companionRules.levelCap) p.xp=0;
-      if(p.level>previous) G.notify(this.definition(p).name+' reached companion level '+p.level+'.','success');
+      while(p.level<cap&&p.xp>=this.xpNext(p.level)){p.xp-=this.xpNext(p.level);p.level++;}
+      if(p.level===cap) p.xp=0;
+      if(p.level>previous) G.notify(this.name(p)+' reached companion level '+p.level+(p.level===cap?' — ascension milestone reached.':'.'),'success');
     }
   };
   S.leaderboards = {

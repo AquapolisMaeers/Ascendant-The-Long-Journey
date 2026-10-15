@@ -14,6 +14,7 @@
       damage: true,
       combatLog: true,
       notifications: true,
+      atmosphere: true,
       reduced: false
     },
     savedAt: 0

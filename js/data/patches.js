@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15', title:'Weather, clearer workspaces & companion ascension', changes:[
+    'Dust motes drift across the interface. World has cosmetic rain and wind, an automatic six-minute weather cycle and manual previews. Settings can disable particles; Reduced Motion disables them automatically.',
+    'Shop → Sell now filters Equipment, Tools, Materials, Gems, Food, Stones and Utility. Perks has a new milestone layout with distinct offensive, defensive and utility paths.',
+    'Companions start Common. Level caps by rarity are 20, 40, 50, 60, 70, 80, 90 and 100. Ascend at each cap using 1–7 Ascendant Stones; success chances are 100%, 80%, 60%, 40%, 20%, 20% and 20%. Failure consumes stones but preserves level and rarity. Seven diamonds track ascensions.',
+    'Achievements shows Completionist and overall completion percentages. The Completionist keeps its original launch requirements.',
+    'Active work has a compact progress dock when browsing other pages. Click it to return to your task. AFK skilling moves to Skills → Offline training and Settings, with a World shortcut.',
+    'Fluid typography and responsive cards adapt from small phones to wide displays. Laptop-height layouts use tighter spacing; manual UI scaling remains available.'
+  ]},
   {date:'2026-10-15', title:'A living interface & a view of the road', changes:[
     'World now uses the current location painting as its full-page backdrop, with translucent panels and a compact location summary. The location tint follows your travels.',
     'Inner tabs use a clean gold underline without the red fill. The main navigation keeps its crimson selection.',

@@ -287,6 +287,20 @@
       G.runtime.enhancePending = null;
     },
     adoptCompanion(el) { S.companions.adopt(el.dataset.type); },
+    ascendCompanion() {
+      const c = G.character(), p = c.companion, q = S.companions.ascensionQuote(p);
+      G.assert(q.nextCap !== undefined && p.level === q.cap, 'Reach your current companion level cap first.');
+      confirm('Ascend ' + U.e(S.companions.name(p)) + '?',
+        '<div class="ascension-quote"><strong>' + G.percent(q.chance, 0) + ' success</strong><span>' + q.stones + ' Ascendant Stone' + (q.stones === 1 ? '' : 's') + '</span></div>' +
+        '<p class="spacer">Unlock ' + q.rarity + ' rarity and a level cap of ' + q.nextCap + '. Your current level stays ' + p.level + '.</p>' +
+        '<p class="notes spacer">Every attempt consumes the listed unlocked stones. Failure preserves your companion, level and rarity. Success chances do not change after failure.</p>', () => {
+          G.assert(c === G.character() && c.companion === p && (p.ascensions || 0) === q.rank && p.level === q.cap, 'Your companion changed. Review its current ascension.');
+          S.companions.ascend();
+        });
+    },
+    trainingDialog() { U.trainingDialog(); },
+    activityView() { U.activityView(); },
+    sellCategory(el) { G.runtime.sellCategory = el.dataset.category; U.render(); },
     feedCompanion() { S.companions.feed(value('companion-food')); },
     reviveCompanion() { S.companions.revive(); },
     releaseCompanion() {
@@ -527,7 +541,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'sellCategory', 'trainingDialog', 'activityView', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
@@ -565,8 +579,13 @@
         G.runtime.leaderboard = el.value;
         U.render();
       }
-      if (['offline-select', 'lesson-offline-select'].includes(el.id)) {
+      if (['offline-select', 'lesson-offline-select', 'training-offline-select'].includes(el.id)) {
         S.offline.select(el.value || null);
+      }
+      if (el.id === 'weather-select') {
+        G.assert(['auto', 'clear', 'rain', 'wind'].includes(el.value), 'Choose a weather condition.');
+        c.weather = el.value;
+        G.commit();
       }
       if (el.id === 'title-select') {
         c.title = el.value;

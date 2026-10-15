@@ -32,6 +32,7 @@
     if (!p || p.saveVersion !== D.config.version) fail('unsupported version');
     if (!Array.isArray(p.slots) || p.slots.length !== 3 || !Number.isInteger(p.active) || p.active < 0 || p.active > 2) fail('character slots');
     if (!p.settings || !finite(p.savedAt)) fail('settings or timestamp');
+    if (p.settings.atmosphere !== undefined && typeof p.settings.atmosphere !== 'boolean') fail('atmosphere setting');
     for (const key of ['damage', 'combatLog', 'notifications', 'reduced'])
       if (typeof p.settings[key] !== 'boolean') fail('boolean setting');
     for (const key of ['master', 'music', 'sfx'])
@@ -57,10 +58,13 @@
       }
       if (c.companion !== undefined && c.companion !== null) {
         const p = c.companion;
-        if (!D.companions.some(d => d.id === p.type) || !Number.isInteger(p.level) || !finite(p.level, 1, D.companionRules.levelCap) ||
-          !finite(p.xp) || p.level === D.companionRules.levelCap && p.xp !== 0 || p.level < D.companionRules.levelCap && p.xp >= G.systems.companions.xpNext(p.level) ||
+        const rank = p.ascensions === undefined ? 0 : p.ascensions, cap = D.companionRules.levelCaps[rank];
+        if (!Number.isInteger(rank) || rank < 0 || rank >= D.companionRules.levelCaps.length ||
+          !D.companions.some(d => d.id === p.type) || !Number.isInteger(p.level) || !finite(p.level, rank ? D.companionRules.levelCaps[rank - 1] : 1, cap) ||
+          !finite(p.xp) || p.level === cap && p.xp !== 0 || p.level < cap && p.xp >= G.systems.companions.xpNext(p.level) ||
           !finite(p.hunger, 0, 100) || !finite(p.health, 0, 100) || !finite(p.updatedAt)) fail('companion');
       }
+      if (c.weather !== undefined && !['auto', 'clear', 'rain', 'wind'].includes(c.weather)) fail('weather');
       if (c.peaceFoodReady !== undefined && !finite(c.peaceFoodReady)) fail('peace food cooldown');
       if (!G.systems.quests.valid(c)) fail('quests');
       if (!Number.isInteger(c.seed) || !finite(c.seed, 1, 4294967295) || !finite(c.foodReady) || !c.facetFails || Object.entries(c.facetFails).some(([k, v]) => ![0, 1, 2, 3, 4].includes(+k) || !finite(v, 0, 1))) fail('random state or counters');

@@ -25,6 +25,8 @@
     {name:'Ascendant Stone Boxes',icon:'gem',preview:'Ascendant Stone Box',description:'A future supply of stones for rarity Ascension. Quantity and price: TBD.'}
   ];
   D.companionRules = {levelCap:20, xpFactor:100, hungerPerHour:10, starvationPerHour:10, actionXp:10, victoryXp:25, revivePerLevel:100};
+  D.companionRules.levelCaps = [20, 40, 50, 60, 70, 80, 90, 100];
+  D.companionRules.ascensionChances = [1, .8, .6, .4, .2, .2, .2];
   D.ascendantCurrency = {perCombatLevel:2, achievement:5, prestige:50, milestones:{10:10,25:25,50:50,75:75,100:100}};
   D.leaderboards = [
     {id:'damage', name:'Primary Damage', group:'Combat', metric:c=>RPG.systems.character.stats(c).damage},
