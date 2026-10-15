@@ -1,0 +1,43 @@
+name: Cancel stuck Pages deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_sha:
+        description: Commit SHA of the stuck deployment named in the error
+        required: true
+        default: e9bf40629069d99c837dbb7177e6d170aa702c27
+        type: string
+
+permissions: {}
+
+jobs:
+  cancel:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      pages: write
+    steps:
+      - name: Request cancellation of the specified Pages deployment
+        uses: actions/github-script@v8
+        env:
+          DEPLOYMENT_SHA: ${{ inputs.deployment_sha }}
+        with:
+          script: |
+            const sha = process.env.DEPLOYMENT_SHA.trim();
+            if (!/^[a-f0-9]{40}$/i.test(sha)) {
+              core.setFailed('Enter the complete 40-character commit SHA from the deployment error.');
+              return;
+            }
+            await github.request('POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel', {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pages_deployment_id: sha
+            });
+            await core.summary
+              .addHeading('Pages cancellation requested')
+              .addRaw('GitHub accepted the cancellation request for deployment ' + sha + '. ')
+              .addRaw('Open the latest failed pages build and deployment run, then choose Re-run jobs > Re-run failed jobs. ')
+              .addRaw('If the same conflict remains, wait for cancellation to finish before retrying.')
+              .write();
