@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15', title:'A journey made for thumbs', changes:[
+    'Phones now have a fixed bottom bar for World, Inventory, Crafting and Shop. More opens the full page menu, including character slots. AFK advancing keeps running while you browse.',
+    'A compact sticky header keeps health, level progress and currency in view. Touch controls are larger, form inputs are easier to read, and dialogs open as bottom sheets.',
+    'World groups the inn, region details and AFK controls into expandable sections. Material shopping uses two columns on suitable phones; Inventory keeps search accessible as you scroll.',
+    'Task progress, level cards and toasts sit above the phone navigation. Inner tabs and tables scroll independently, and crafting keeps consistent control spacing. Desktop keeps its existing layout.'
+  ]},
   {date:'2026-10-15', title:'Every level deserves a moment', changes:[
     'Character, skill and companion levels now have a dismissible milestone card showing old and new levels. Multiple gains group together. Ascension milestones and final level caps are called out.',
     'The offline welcome report includes previous/new levels, total levels gained and XP progress for every trained character. It appears after reopening the game or returning from a hidden tab, and waits for existing confirmations to close.',

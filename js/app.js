@@ -26,13 +26,17 @@
       U.modal('Patch notes', U.patchNotes(true));
     },
     navigate(el) {
+      const previous = G.runtime.page;
       const destination = el.dataset.value;
       if (destination === 'Marketplace') S.market.assert();
+      if (document.querySelector('.phone-menu')) U.close();
       G.runtime.page = destination;
       G.runtime.tab = '';
       G.runtime.search = '';
       U.render();
+      if (U.isPhone() && previous !== destination) window.scrollTo({top:0, behavior:'instant'});
     },
+    mobileMenu() { U.mobileMenu(); },
     tab(el) {
       G.runtime.tab = el.dataset.value;
       U.render();
@@ -541,7 +545,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'sellCategory', 'trainingDialog', 'activityView', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');

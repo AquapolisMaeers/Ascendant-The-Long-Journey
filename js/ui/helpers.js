@@ -46,7 +46,8 @@
     Food: 'M5 13c-4-6 4-9 7-5 3-4 11-1 7 5l-4 8H9zM12 8V3l4-1',
     Stones: 'm12 2 7 6 2 10-9 4-9-4L5 8zM12 2v20M5 8l7 4 7-4',
     Storage: 'M3 8h18v13H3zM2 4h20v4H2zM9 12h6v4H9z',
-    AutoEat: 'M12 20 4 12a5 5 0 0 1 8-6 5 5 0 0 1 8 6zM5 3v6M3 5h4M16 10h4'
+    AutoEat: 'M12 20 4 12a5 5 0 0 1 8-6 5 5 0 0 1 8 6zM5 3v6M3 5h4M16 10h4',
+    Menu: 'M4 5h16M4 12h16M4 19h16'
   };
   U.icon = name => '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="' + (paths[name] || paths.gem) + '"/></svg>';
   U.e = G.escape;
