@@ -40,4 +40,16 @@
     if (!G.character() || G.runtime.selecting || !S.tutorial.active()) return html;
     return html.replace('YOUR JOURNEY</div>', 'TUTORIAL IN PROGRESS</div>');
   };
+  let previousView = null;
+  window.addEventListener('rpg:rendered', () => {
+    const view = [G.character()?.id, G.runtime.selecting, G.runtime.page, G.runtime.tab].join('|');
+    if (view === previousView) return;
+    previousView = view;
+    if (G.state.settings.reduced || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const heading = document.querySelector('#content .page-heading h1');
+    if (heading) {
+      heading.getAnimations().forEach(animation => animation.cancel());
+      heading.animate([{transform:'translateX(-8px)'},{transform:'translateX(0)'}], {duration:240,easing:'cubic-bezier(.2,.7,.2,1)'});
+    }
+  });
 })(RPG, RPG.data, RPG.systems, RPG.ui);

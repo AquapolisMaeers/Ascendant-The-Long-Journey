@@ -1,6 +1,11 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15', title:'A living interface & a view of the road', changes:[
+    'World now uses the current location painting as its full-page backdrop, with translucent panels and a compact location summary. The location tint follows your travels.',
+    'Inner tabs use a clean gold underline without the red fill. The main navigation keeps its crimson selection.',
+    'Dialogs settle into place, page titles slide in on navigation, and tabs and selectable cards respond smoothly. Routine gameplay updates do not restart these animations; Reduced Motion disables them.'
+  ]},
   {date:'2026-10-15', title:'A bolder journey, clearer first steps', changes:[
     'New ink-and-crimson presentation, distinct framed menus and a labeled Gold/Silver/Bronze wallet. Screen updates preserve existing elements and no longer replay page fades or pulsing screen effects.',
     'Ascendant Stones sell for 1 Gold. Tool sale prices from Common to Ascendant: 50b, 1s, 2s 50b, 5s, 10s, 25s, 50s, 1g.',

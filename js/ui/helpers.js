@@ -107,6 +107,7 @@
     if (content) {
       content.dataset.page = G.runtime.page;
       content.dataset.tab = G.runtime.tab || '';
+      if (G.runtime.page === 'World') content.style.setProperty('--location-hue', (G.character().location * 7) + 'deg');
     }
     if (focused) document.getElementById(focused)?.focus();
     U.applySettings();

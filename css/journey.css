@@ -20,7 +20,11 @@ h1 { font-weight:700; letter-spacing:-1.2px; }
 .btn.primary,.btn.gold-btn { color:#17121a; background:#edce90; border:1px solid #fff0c8; box-shadow:2px 2px 0 #0008; }
 .btn.primary:hover,.btn.gold-btn:hover { background:#ffe5ac; }
 .tabs { border-bottom:2px solid #686075; }
-.tabs button.active { color:#fff5e6; background:#922c43; border-bottom-color:#ffd48a; }
+.tabs button.active { color:#fff5e6; background:transparent; border-bottom-color:transparent; }
+.tabs button { position:relative; transition:color .18s ease; }
+.tabs button::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:#ffd48a; transform:scaleX(0); transform-origin:left; transition:transform .2s ease; }
+.tabs button.active::after { transform:scaleX(1); }
+.tabs button:hover { color:var(--gold); }
 .badge { border-radius:2px; border-color:#776c81; color:#eee1c6; }
 .item-card { background-color:#151620; border-radius:2px; }
 .compact-recipes .ingredients > div { column-gap:12px; }
@@ -32,7 +36,7 @@ h1 { font-weight:700; letter-spacing:-1.2px; }
 .guide-panel h3 { font-weight:700; }
 .guide-panel p { color:#e0d5df; }
 .modal-backdrop { background:#06070deb; backdrop-filter:blur(5px); }
-.modal { background:#20212d; border:2px solid #e6c68b; border-top:7px solid #c83954; border-radius:2px; box-shadow:10px 10px 0 #0009,0 0 0 5px #12121b; }
+.modal { background:#20212d; border:2px solid #e6c68b; border-top:7px solid #c83954; border-radius:2px; box-shadow:10px 10px 0 #0009,0 0 0 5px #12121b; animation:dialog-arrive .2s cubic-bezier(.2,.7,.2,1); }
 .modal-head { border-bottom:2px solid #716379; padding-bottom:14px; }
 .modal-head h2 { font-weight:700; }
 .modal-close { background:#a62d45; color:white; border:1px solid #ebc78a; border-radius:0; }
@@ -60,9 +64,29 @@ h1 { font-weight:700; letter-spacing:-1.2px; }
 .welcome-art::after { content:''; position:absolute; inset:0; z-index:-1; pointer-events:none; background:linear-gradient(128deg,#a3294422,transparent 50%),repeating-linear-gradient(135deg,transparent 0 14px,#ecd19809 14px 15px); }
 .welcome-art .eyebrow { color:#fff4de; background:#962d43d9; padding:5px 12px; display:table; }
 /* Stable presentation: no repeated screen fades, flashing danger or rarity pulses. */
-.content,.modal,.location-scene,.low-hp .main-column,
+.content,.location-scene,.low-hp .main-column,
 :is(.item-card,.item-art-detail):is(.rarity-4,.rarity-5,.rarity-6,.rarity-7)::after { animation:none!important; }
 .low-hp .hp-top { outline:2px solid #e25c70; outline-offset:4px; }
+/* Motion follows interaction, never the recurring gameplay refresh. */
+@keyframes dialog-arrive { from { transform:translateY(8px) scale(.985); } to { transform:translateY(0) scale(1); } }
+.nav button { transition:background .18s ease,color .18s ease,border-color .18s ease; }
+.nav button::after { transition:transform .18s ease; }
+.nav button.active:hover::after { transform:translateX(3px); }
+:is(.class-option,.look-option,.slot,.perk) { transition:transform .18s ease,border-color .18s ease,background-color .18s ease; }
+:is(.class-option,.look-option,.slot,.perk):hover:not(:disabled) { transform:translateY(-2px); }
+/* The current location painting now fills the World page behind its controls. */
+#content[data-page="World"] { position:relative; isolation:isolate; min-height:calc(100vh - 89px); }
+#content[data-page="World"]::before,#content[data-page="World"]::after { content:''; position:absolute; inset:0; z-index:-2; pointer-events:none; }
+#content[data-page="World"]::before { background:url('../assets/art/wayside.png') center 57% / cover no-repeat; filter:hue-rotate(var(--location-hue,0deg)); }
+#content[data-page="World"]::after { z-index:-1; background:linear-gradient(90deg,#10121b66,#10121b44 60%,#10121b88),linear-gradient(0deg,#0c101bbb,transparent 65%); }
+.world-screen .panel { background:linear-gradient(135deg,#1b1f2bdf,#141923cf); border-color:#7c7b8277; box-shadow:3px 4px 16px #0005; }
+.world-screen .page-heading { border-bottom-color:#e7ddbd77; }
+.world-screen .page-heading h1 { text-shadow:0 2px 8px #000; }
+.world-screen .location-scene { background:#131923b8; filter:none!important; min-height:0; padding:16px 18px; display:grid; gap:10px; border-color:#9b957977; }
+.world-screen .location-scene::after,.world-screen .location-scene .ambient-particles { display:none; }
+.world-screen .location-scene .scene-top { padding:0; }
+.world-screen .location-scene .scene-caption { position:static; max-width:none; color:#d2d5d0; }
+.world-screen .death-risk { background:#10151edb; border-left:2px solid #d1ae6c; padding:8px 10px; color:#e1e2df; }
 @media(min-width:701px) { .topbar { gap:12px; }.topbar .top-progress { min-width:90px; }.identity { min-width:130px; } }
 @media(min-width:701px) and (max-width:1050px) {
   .sidebar .brand { gap:6px; padding-left:0; }.sidebar .brand img { width:22px; }.sidebar .brand strong { font-size:12px; letter-spacing:1px; }.sidebar .brand small { font-size:6px; letter-spacing:1px; }
