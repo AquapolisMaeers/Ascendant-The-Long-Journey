@@ -1,0 +1,36 @@
+/* A shorter task shelf leaves more space for the actual game. */
+.activity-dock { display:grid; grid-template-columns:minmax(0,1fr) auto; width:min(590px,calc(100vw - var(--activity-rail-left,216px) - 44px)); align-items:center; }
+.activity-dock > button { min-height:54px; padding:6px 10px; gap:9px; }
+.activity-dock > button > span:nth-child(2) { gap:0; }
+.activity-dock strong { white-space:nowrap; text-overflow:ellipsis; overflow:hidden; font-size:13px; }
+.activity-dock small { font-size:8px; }
+.activity-dock-icon { width:28px; height:30px; }
+.dock-footer { flex-direction:column; justify-content:center; align-items:flex-end; gap:2px; max-width:175px; min-height:0; padding:4px 10px 4px 0; }
+#dock-time { font-size:10px; line-height:1.25; text-align:right; }
+.dock-footer .btn { min-height:24px; padding:3px 10px; }
+.dock-track { grid-column:1 / -1; }
+#dock-count { font-size:10px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; }
+#dock-percent { font-size:23px; }
+.world-screen .inline-advance { min-height:168px; }.inline-advance .travel-track { max-width:640px; margin:14px auto 8px; }.inline-advance h2 { font:italic 700 27px/1.1 var(--display); }.inline-advance #activity-percent { margin-left:12px; }
+.box-layout { grid-template-columns:minmax(250px,.55fr) minmax(0,1.45fr); gap:16px; }
+.box-offer { padding:16px; }.box-offer .mystery-art { height:114px; }.box-offer .mystery-art .item-art { width:94px; height:94px; }.box-offer .mystery-art b { font-size:28px; padding:5px 10px; right:calc(50% - 59px); bottom:4px; }
+.box-offer h2 { font-size:27px; }.box-offer .spacer { margin-top:12px; }.box-offer .regalia-purchase { margin-top:12px; padding-top:12px; }
+.box-pool-filters { display:grid; grid-template-columns:minmax(0,1fr) minmax(110px,.4fr); gap:12px; margin-top:12px; }
+.box-gem-effect { display:block; color:#a7cfc7; margin-top:2px; font-size:11px; }
+.box-odds { max-height:300px; margin-top:12px; }.box-odds td { padding:6px 10px; }
+.gem-description { color:#c8c3d0; font-size:12px; line-height:1.6; margin:6px 0; }
+.gem-handbook { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.gem-handbook details { padding:12px; border:1px solid #655774; background:#171b28; }
+.gem-handbook summary { cursor:pointer; display:grid; gap:4px; color:#ead4a4; font-size:14px; }.gem-handbook summary span { font-size:11px; color:#afd3ce; }
+.gem-handbook p { font-size:12px; line-height:1.6; color:#c6c3cf; margin-top:10px; }.gem-handbook small { display:block; margin-top:8px; color:#c6a9dc; font-size:11px; }
+.socket-help { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:8px 0; }.socket-help p { color:#c6c3cf; font-size:12px; }
+@media(max-width:700px), (max-width:1000px) and (max-height:500px) and (pointer:coarse) {
+  .activity-dock { width:auto; grid-template-columns:minmax(0,1fr) auto; }
+  .activity-dock > button { min-height:58px; padding:5px 8px; gap:6px; }
+  .activity-dock-icon { display:none; }.activity-dock strong { font-size:13px; }.activity-dock small { font-size:8px; }
+  .dock-footer { padding:3px 8px 3px 0; max-width:135px; }.dock-footer .btn { min-height:44px; padding:7px 12px; font-size:12px; }
+  #dock-count { font-size:10px; }#dock-time { font-size:10px; }#dock-percent { font-size:22px; }
+  .gem-handbook,.box-layout { grid-template-columns:minmax(0,1fr); }.box-offer { padding:14px; }
+  .box-pool-filters { gap:8px; grid-template-columns:minmax(0,1fr) minmax(90px,.5fr); }
+  .box-odds { max-height:34dvh; }.box-pool-filters select { min-width:0; }
+}

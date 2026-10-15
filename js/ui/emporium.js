@@ -35,9 +35,14 @@
       '<div class="regalia-purchase">'+'<span class="collection-owned">'+(equipped?'In use':'Yours forever')+'</span>'+
       U.btn(equipped?'Equipped':'Equip',entry.special?'equipPet':'equipRegalia','data-id="'+entry.id+'" '+(equipped||blocked()||!owned?'disabled':''),'quiet')+'</div></div></article>';
   };
-  U.boxOdds=box=>{
-    const outcomes=S.emporium.outcomes(box),total=outcomes.reduce((n,o)=>n+o.weight,0);
-    return '<div class="box-odds" tabindex="0" aria-label="All box rewards and odds"><table class="data-table"><thead><tr><th>Possible reward</th><th>Chance</th></tr></thead><tbody>'+outcomes.map(o=>'<tr><td>'+U.e(o.entry?.name||(o.key?D.catalog[o.key].name:o.stone?'1 Ascendant Stone':U.price(o.coins)))+(o.key&&D.catalog[o.key].boxOnly?' <small class="exclusive-label">EXCLUSIVE</small>':'')+'</td><td>'+G.percent(o.weight/total,box.kind==='gem'?6:box.kind==='pet'?4:0)+'</td></tr>').join('')+'</tbody></table></div>';
+  U.boxOdds=(box,filter=false)=>{
+    const outcomes=S.emporium.outcomes(box),total=outcomes.reduce((n,o)=>n+o.weight,0),type=G.runtime.boxGemType||'all',rank=G.runtime.boxGemRank||'all';
+    const filters=box.kind==='gem'&&filter?'<div class="box-pool-filters"><label>Gem type<select id="box-gem-type"><option value="all">All types</option>'+D.gems.map((gem,i)=>'<option value="'+i+'" '+(type===String(i)?'selected':'')+'>'+gem.name+'</option>').join('')+'</select></label><label>Rank<select id="box-gem-rank"><option value="all">All ranks</option>'+[1,2,3,4,5].map(i=>'<option value="'+i+'" '+(rank===String(i)?'selected':'')+'>'+D.roman[i]+'</option>').join('')+'</select></label></div>':'';
+    const rows=outcomes.filter(o=>!filters||(type==='all'||String(D.catalog[o.key].type)===type)&&(rank==='all'||String(D.catalog[o.key].rank)===rank));
+    return filters+'<div class="box-odds" tabindex="0" aria-label="Box rewards and unmodified per-opening odds"><table class="data-table"><thead><tr><th>Possible reward</th><th>Chance</th></tr></thead><tbody>'+rows.map(o=>{
+      const info=o.key?D.catalog[o.key]:null,gem=info?D.gems[info.type]:null;
+      return '<tr><td>'+U.e(o.entry?.name||(info?info.name:o.stone?'1 Ascendant Stone':U.price(o.coins)))+(info?.boxOnly?' <small class="exclusive-label">EXCLUSIVE</small>':'')+(gem?'<small class="box-gem-effect">+'+U.statValue(gem.stat,gem.value*info.rank)+' '+D.labels[gem.stat]+'</small>':'')+'</td><td>'+G.percent(o.weight/total,box.kind==='gem'?6:4)+'</td></tr>';
+    }).join('')+'</tbody></table></div>';
   };
   U.emporiumResult=result=>{
     const entry=result.entry;
@@ -59,8 +64,8 @@
     const summary=box.kind==='gem'?'One gem, ranks I\u2013V. Regular types: 90%; exclusive types: 10%. Rank V: 0.5%.':box.duplicate?'One random permanent unlock. Duplicates return '+box.duplicate+' AC.':'One stone at 1%, or 5 / 10 / 15 Silver at 33% each.';
     return U.heading('THE ASCENDANT EMPORIUM','Fortune favours the journey.','Mystery boxes, permanent collections, and a chance at the extraordinary.',ac(c.ascendantCoins))+
       U.tabs(D.emporiumCategories.map(e=>e.name),category.name)+
-      '<section class="emporium-intro"><div><h3>'+category.name+'</h3><p class="notes">'+category.description+'</p></div>'+U.btn('How to earn coins','ascendantHelp','','quiet small')+'</section>'+
-      '<div class="box-layout"><section class="panel box-offer"><div class="mystery-art">'+U.paint(box.kind==='gem'?'gem:6:5':'treasure')+'<b>?</b></div><h2>'+box.name+'</h2><p class="notes spacer">'+summary+'</p><div class="regalia-purchase">'+ac(box.price)+U.btn('Review & open','emporiumOpen','data-id="'+box.id+'" '+(blocked()||c.ascendantCoins<box.price?'disabled':''),'gold-btn')+'</div><p class="notes spacer">Find owned outfits and auras under Character. Your companions wait in the stable.</p></section><section class="panel"><h3>Every possible outcome</h3>'+U.boxOdds(box)+'</section></div>';
+      '<section class="emporium-intro"><div><h3>'+category.name+'</h3><p class="notes">'+category.description+'</p></div>'+'<div class="row">'+(box.kind==='gem'?U.btn('Gem guide','gemGuide','','quiet small'):'')+U.btn('How to earn coins','ascendantHelp','','quiet small')+'</div></section>'+
+      '<div class="box-layout"><section class="panel box-offer"><div class="mystery-art">'+U.paint(box.kind==='gem'?'gem:6:5':'treasure')+'<b>?</b></div><h2>'+box.name+'</h2><p class="notes spacer">'+summary+'</p><div class="regalia-purchase">'+ac(box.price)+U.btn('Review & open','emporiumOpen','data-id="'+box.id+'" '+(blocked()||c.ascendantCoins<box.price?'disabled':''),'gold-btn')+'</div><p class="notes spacer">Find owned outfits and auras under Character. Your companions wait in the stable.</p></section><section class="panel"><h3>Every possible outcome</h3>'+U.boxOdds(box,true)+'</section></div>';
   };
   U.ascendantHelp=()=>U.modal('Earn Ascendant Coins','<p class="notes">Combat levels after Level 1 award 2 AC each. Achievements award 5 AC, or 50 AC when they grant a title. Each reward is claimed once per character.</p><div class="spacer">'+Object.entries(D.ascendantCurrency.milestones).map(([level,n])=>'<div class="meta-row"><span>Combat level '+level+'</span>'+ac(n)+'</div>').join('')+'</div>'+U.btn('Continue','closeModal','','gold-btn spacer'));
   const character=U.screens.Character;
@@ -93,7 +98,7 @@
   const measure=()=>{
     const sidebar=document.querySelector('.sidebar'),dock=document.getElementById('activity-dock');
     if(sidebar)document.body.style.setProperty('--activity-rail-left',Math.max(0,sidebar.getBoundingClientRect().right)+'px');
-    if(dock&&!dock.hidden)document.body.style.setProperty('--activity-space',Math.ceil(dock.getBoundingClientRect().height+24)+'px');
+    if(dock&&!dock.hidden)document.body.style.setProperty('--activity-space',Math.ceil(dock.getBoundingClientRect().height+12)+'px');
     const view=G.runtime.page+'|'+G.runtime.tab;
     if(lastView!==view){document.getElementById('content')?.scrollTo(0,0);lastView=view;}
   };

@@ -10,11 +10,11 @@
   D.regalia = ['outfit','aura'].flatMap(kind => {
     const make = (id,name,stats,color,price,tier,weight) => ({id:kind+':'+id,kind,name:name+(kind==='outfit'?' Vestments':' Aura'),stats,color,price,tier,weight});
     return [
-      ...focus.map(([stat,name,value,color])=>make(stat,name,{[stat]:value},color,125,'Focused',6)),
-      make('aggressive','Crimson Requiem',{damagePct:.03,crit:.0075,critDamage:.025,speed:.01},'#f38d9d',350,'Build',3),
-      make('tanky','Citadel Oath',{healthPct:.04,defencePct:.04,reduction:.005,resistance:.01},'#a7c6cf',350,'Build',3),
-      make('utility','Phantom Masquerade',{speed:.025,dodge:.01,lifeSteal:.0025,double:.005,penetration:.005},'#c3aceb',350,'Build',3),
-      make('sovereign','Eclipse Sovereign',Object.fromEntries(focus.map(([stat,,value])=>[stat,value])),'#f3d18e',1500,'Sovereign',1)
+      ...focus.map(([stat,name,value,color])=>make(stat,name,{[stat]:value},color,125,'Focused',360)),
+      make('aggressive','Crimson Requiem',{damagePct:.03,crit:.0075,critDamage:.025,speed:.01},'#f38d9d',350,'Build',190),
+      make('tanky','Citadel Oath',{healthPct:.04,defencePct:.04,reduction:.005,resistance:.01},'#a7c6cf',350,'Build',190),
+      make('utility','Phantom Masquerade',{speed:.025,dodge:.01,lifeSteal:.0025,double:.005,penetration:.005},'#c3aceb',350,'Build',190),
+      make('sovereign','Eclipse Sovereign',Object.fromEntries(focus.map(([stat,,value])=>[stat,value])),'#f3d18e',1500,'Sovereign',30)
     ];
   });
   const names = ['Moonfang Wolf','Thorncrown Boar','Astral Golem','Sunfire Lynx','Stormcrown Bear','Voidweaver Spider','Eclipse Bat'];
@@ -29,6 +29,17 @@
     {id:'gem-box',name:'Gem Mystery Box',kind:'gem',price:25,duplicate:0}
   ];
   D.regularGemCount = D.gems.length;
+  D.gemDescriptions={
+    damage:'Adds flat damage to each successful attack. Attack, Ranged and Magic gems match your weapon class.',
+    defence:'Adds flat Defence, reducing incoming damage through the normal mitigation formula.',health:'Adds flat maximum health; it does not instantly heal you.',
+    crit:'Raises the chance that an attack becomes a critical hit.',critDamage:'Increases the extra damage dealt by critical hits.',
+    damagePct:'Increases Primary Damage by a percentage. Adds to other percentage damage bonuses.',
+    defencePct:'Increases Defence by a percentage. More effective when you already have Defence.',healthPct:'Increases maximum health by a percentage; it does not instantly heal you.',
+    speed:'Makes your automatic attacks happen more often.',penetration:'Ignores part of the enemy\'s Defence.',double:'Raises the chance of a second attack.',
+    dodge:'Raises the chance of avoiding an enemy attack.',reduction:'Reduces incoming damage after other mitigation.',
+    resistance:'Lowers the enemy\'s chance of critically hitting you.',lifeSteal:'Restores health based on actual damage dealt, without counting overkill.'
+  };
+  D.legacyExclusiveGemSlots={};
   const unique = [
     ['damagePct','Might',.003,'#ec94a0'],['defencePct','Bastion',.004,'#a7c8dc'],['healthPct','Vitality',.004,'#a9d698'],
     ['speed','Haste',.002,'#91d9d3'],['penetration','Piercing',.0015,'#c69fe3'],['double','Echo',.0015,'#b7c0ed'],
@@ -43,13 +54,14 @@
       D.itemIllustrations[id]={...D.itemIllustrations['gem:5:'+rank],name:D.catalog[id].name};
     }
     const offensive=['damagePct','speed','penetration','double','lifeSteal'].includes(stat);
-    const slots=offensive?['Weapon','Gloves','Necklace','Ring']:['Helmet','Plate','Greaves','Boots','Necklace','Ring'];
+    D.legacyExclusiveGemSlots[type]=offensive?['Weapon','Gloves','Necklace','Ring']:['Helmet','Plate','Greaves','Boots','Necklace','Ring'];
+    const slots=D.slots.filter(slot=>D.prefixPools[slot].includes(stat));
     slots.forEach(slot=>D.gemAllowed[slot].push(type));
   });
   D.gemBoxRanks=[600,250,100,45,5];
   D.emporiumCategories = [
-    {name:'Outfit Mystery Boxes',box:'outfit-box',description:'All 19 outfits. Focused: 6% each; build sets: 3% each; Eclipse Sovereign: 1%.'},
-    {name:'Aura Mystery Boxes',box:'aura-box',description:'All 19 auras. Focused: 6% each; build sets: 3% each; Eclipse Sovereign: 1%.'},
+    {name:'Outfit Mystery Boxes',box:'outfit-box',description:'All 19 outfits. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
+    {name:'Aura Mystery Boxes',box:'aura-box',description:'All 19 auras. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
     {name:'Pet Mystery Boxes',box:'pet-box',description:'Seven special companions at equal odds. Every companion starts Common and grows with you.'},
     {name:'Gem Mystery Boxes',box:'gem-box',description:'All 17 gem types, ranks I\u2013V. Regular types: 90%; exclusive stat types: 10%. Rank V: 0.5% overall.'},
     {name:'Ascendant Stone Boxes',box:'stone-box',description:'1%: one Ascendant Stone. Otherwise: normal coins. Every outcome is shown before opening.'}

@@ -39,6 +39,7 @@
       regalia: {owned:[],outfit:null,aura:null},
       specialPets: [],
       petStable: {},
+      gemSocketRules: 1,
       quests: null,
       questCompletions: 0,
       seed: G.seed(),

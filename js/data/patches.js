@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15',title:'A clearer view of your journey',changes:[
+    'The activity tracker is shorter, reserving less screen space while keeping progress, timers and Stop controls. Advancing on World uses inline progress again; the tracker follows you when you visit another page.',
+    'The equipped portrait now uses one shaded character model with fitted armor, paired gloves and boots, and correctly held swords, bows and staves. Gear materials and rarity accents update with equipment; Reduced Motion still disables shine.',
+    'Mystery boxes have a more compact layout. Outfit and aura boxes now have a 90% focused pool, 9.5% build pool and exactly 0.5% Eclipse Sovereign chance. Gem reward filters retain the real per-opening odds.',
+    'A Gem guide explains every gem bonus, rank and compatible slot. Exclusive gem slots now follow their matching prefix rules. Older saves safely return newly incompatible socketed gems to inventory or Pending Loot.'
+  ]},
   {date:'2026-10-15',title:'Fortune, gems and the gear you wear',changes:[
     'The Emporium now offers mystery boxes only. Direct outfit, aura and special-pet sales are removed; existing collections, equipment and companion progression are preserved. Pet descriptions show their actual bonuses without counterpart comparison text.',
     'The 25 AC Gem Mystery Box contains all 17 types at ranks I to V: 90% regular gems and 10% exclusive stat gems. Rank chances are 60%, 25%, 10%, 4.5% and 0.5%. Every possible reward and its odds appear before confirmation.',

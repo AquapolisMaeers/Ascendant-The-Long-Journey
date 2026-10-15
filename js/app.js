@@ -304,6 +304,8 @@
     trainingDialog() { U.trainingDialog(); },
     activityView() { U.activityView(); },
     gearPortrait() { U.gearPortrait(); },
+    gemGuide() { U.gemGuide(); },
+    gemGuideBack(el) { if(S.items.find(el.dataset.id))U.item(el.dataset.id);else U.close(); },
     portraitEquipment() { U.close(); G.runtime.page='Character'; G.runtime.tab='Equipment'; U.render(); if(U.isPhone())window.scrollTo(0,0); },
     emporiumOpen(el) { U.emporiumOpen(el.dataset.id); },
     equipRegalia(el) { S.emporium.equip(el.dataset.id); U.close(); },
@@ -557,7 +559,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
@@ -612,6 +614,8 @@
         U.render();
       }
       if (el.id === 'regalia-filter') { G.runtime.regaliaGroup=el.value; G.runtime.emporiumPage=0; U.render(); }
+      if (el.id === 'box-gem-type') { G.runtime.boxGemType=el.value; U.render(); }
+      if (el.id === 'box-gem-rank') { G.runtime.boxGemRank=el.value; U.render(); }
       if (el.id === 'smithing-category') {
         G.runtime.smithingCategory = el.value;
         U.render();

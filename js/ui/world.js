@@ -33,6 +33,7 @@
       out = '<section class="panel"><div class="row between"><h3>' + d.name + '</h3>' + U.btn('Leave dungeon', 'leaveDungeon', c.combat ? 'disabled' : '', 'small danger') + '</div><div class="room-track">' + ['Creature', 'Creature', 'Sanctuary', 'Elite', 'Boss'].map((n, i) => '<div class="room-step ' + (c.dungeon.room === i + 1 ? 'current' : c.dungeon.room > i + 1 ? 'done' : '') + '">' + (i + 1) + ' · ' + n + '</div>').join('') + '</div><small class="muted">Continuous run · no checkpoints' + (c.dungeon.interrupted ? ' · interrupted run ends after this fight' : '') + '</small></section>';
     }
     if (c.combat) return out + U.fight(c.combat);
+    if (a?.type === 'advance') return out + '<section class="panel encounter inline-advance"><div class="encounter-idle"><h2>Following the old road\u2026</h2><p>One encounter waits beyond the mist.</p><div class="travel-track"><i id="activity-bar" style="width:' + G.clamp(a.elapsed/a.duration*100,0,100) + '%"></i></div><small id="activity-time">' + ((a.duration-a.elapsed)/1000).toFixed(1) + ' seconds</small><strong id="activity-percent">' + Math.floor(a.elapsed/a.duration*100) + '%</strong></div></section>';
     if (a) return out;
     if (c.dungeon?.cleared) return out + '<section class="panel encounter"><div class="encounter-idle">' + U.icon('dungeon') + '<h2>Room cleared</h2><p>Prepare your equipment and provisions before continuing.</p>' + U.btn('Enter next room ' + U.icon('arrow'), 'nextRoom', '', 'primary advance-btn') + '</div></section>';
     if (!e) return out + '<section class="panel encounter"><div class="encounter-idle">' + U.icon('World') + '<div class="eyebrow">BEYOND THE LANTERN LIGHT</div><h2 class="spacer">Take the next step.</h2><p>Travel deeper into ' + D.locations[c.location].name + '. Discover creatures, resources, and the unexpected.</p>' + U.btn('ADVANCE ' + U.icon('arrow'), 'advance', c.pending.length || (S.tutorial.active() && ![...D.skills.slice(0, 4), 'fight'].includes(S.tutorial.current().id)) ? 'disabled' : '', 'primary advance-btn') + '<div class="footer-note">4 SECOND JOURNEY &nbsp; · &nbsp; ONE DISCOVERY</div></div></section>';
@@ -87,6 +88,7 @@
     if (c.activity) {
       width('activity-bar', c.activity.elapsed / c.activity.duration);
       set('activity-time', ((c.activity.duration - c.activity.elapsed) / 1000).toFixed(1) + ' seconds');
+      set('activity-percent', Math.floor(G.clamp(c.activity.elapsed/c.activity.duration,0,1)*100) + '%');
     }
     const f = c.combat;
     if (f) {

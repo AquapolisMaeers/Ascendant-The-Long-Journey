@@ -87,7 +87,7 @@
   U.shell = () => {
     const html = shell(), c = G.character();
     if (!c || G.runtime.selecting) return html;
-    const a = c.activity, run = S.afk.run, visible = a || c.combat || run,
+    const a = c.activity, run = S.afk.run, visible = (a || c.combat || run) && !(G.runtime.page === 'World' && a?.type === 'advance'),
       stop = run ? U.btn('Stop AFK', 'afkStop', '', 'quiet small') : a && a.type !== 'advance' ? U.btn('Stop', 'stopActivity', '', 'quiet small') : '';
     return html + '<aside class="activity-dock" id="activity-dock" aria-label="Current activity" ' + (visible ? '' : 'hidden') + '><button data-action="activityView" title="Return to the active task"><span class="activity-dock-icon">' + U.icon(a?.skill || (a?.type === 'craft' ? D.recipes.find(r => r.id === a.recipe)?.skill : c.combat ? 'Weapon' : 'clock')) +
       '</span><span><small id="dock-kind">WORK IN PROGRESS</small><strong id="dock-title"></strong><span id="dock-count"></span></span><span id="dock-percent"></span></button><div class="dock-footer"><span id="dock-time"></span>' + stop + '</div><div class="dock-track" role="progressbar" aria-label="Activity progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="dock-bar"></i></div></aside>';
@@ -129,7 +129,7 @@
     progress.setAttribute('aria-label', c.combat ? 'Enemy health depleted' : 'Activity progress');
   };
   const dockObserver = new ResizeObserver(entries => {
-    for (const {target} of entries) document.body.style.setProperty('--activity-space', Math.ceil(target.getBoundingClientRect().height + 24) + 'px');
+    for (const {target} of entries) document.body.style.setProperty('--activity-space', Math.ceil(target.getBoundingClientRect().height + 12) + 'px');
   });
   let watchedDock;
   window.addEventListener('rpg:rendered', () => {

@@ -55,6 +55,7 @@
       if (characterIds.has(c.id)) fail('duplicate character ID');
       characterIds.add(c.id);
       if (!D.validAppearance(c.appearance)) fail('appearance');
+      if (c.gemSocketRules !== undefined && c.gemSocketRules !== 1) fail('gem socket rules');
       if (c.regalia !== undefined) {
         if (!record(c.regalia) || !idsValid(c.regalia.owned,D.regalia.map(r=>r.id))) fail('regalia collection');
         for (const kind of ['outfit','aura']) if (c.regalia[kind] !== null &&
@@ -209,6 +210,21 @@
     migrate(p) {
       let guard = 0;
       while (p?.saveVersion !== D.config.version && this.migrations[p?.saveVersion] && guard++ < 10) p = this.migrations[p.saveVersion](p);
+      if(Array.isArray(p?.slots)) for(const c of p.slots.filter(Boolean)) {
+        if(c.gemSocketRules !== undefined || !Array.isArray(c.inventory) || !Array.isArray(c.pending) || !c.equipment || !Array.isArray(c.listings)) continue;
+        for(const item of [...Object.values(c.equipment),...c.inventory,...c.pending,...c.listings.map(l=>l?.item)]) {
+          if(item?.kind!=='gear'||!Array.isArray(item.gems)||!Array.isArray(D.gemAllowed[item.slot]))continue;
+          item.gems=item.gems.map(key=>{
+            const gem=D.catalog[key];
+            if(!gem?.boxOnly||D.gemAllowed[item.slot].includes(gem.type)||!D.legacyExclusiveGemSlots[gem.type]?.includes(item.slot))return key;
+            const stack=c.inventory.find(i=>i.kind==='stack'&&i.key===key&&Number.isSafeInteger(i.quantity+1));
+            if(stack)stack.quantity++;
+            else (c.inventory.length<c.capacity?c.inventory:c.pending).push({id:G.uid(),kind:'stack',key,quantity:1,locked:!!item.locked});
+            return null;
+          });
+        }
+        c.gemSocketRules=1;
+      }
       validate(p);
       p.slots.filter(Boolean).forEach(c => G.systems.chronicles.normalize(c));
       return this.applyFates(p);
