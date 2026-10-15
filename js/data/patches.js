@@ -1,6 +1,13 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15', title:'The price of the road & a sharper interface', changes:[
+    'AFK advancing keeps 15 free active minutes, then charges the displayed regional rate: 10 Bronze at the Crossroads, rising to 15 Silver in the Ancient Dominion.',
+    'Travelling costs the destination fare multiplied by regions crossed. Review and confirm the total before paying; returning uses the return destination rate.',
+    'World weather follows location. Weather controls and the status strip are removed. Dust motes and wind are more pronounced; Reduced Motion and the ambient-effects setting remain available.',
+    'The crimson interface gains sharper card accents, new locally hosted display and reading fonts, and a framed Ascendant Coins wallet.',
+    'Smithing, Cooking and Faceting keep the same HUD, heading, tabs and toolbar spacing. Switching disciplines no longer animates the title or shifts the page width.'
+  ]},
   {date:'2026-10-15', title:'Weather, clearer workspaces & companion ascension', changes:[
     'Dust motes drift across the interface. World has cosmetic rain and wind, an automatic six-minute weather cycle and manual previews. Settings can disable particles; Reduced Motion disables them automatically.',
     'Shop → Sell now filters Equipment, Tools, Materials, Gems, Food, Stones and Utility. Perks has a new milestone layout with distinct offensive, defensive and utility paths.',

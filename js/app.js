@@ -235,13 +235,10 @@
       U.locations();
     },
     location(el) {
-      S.world.location(+el.dataset.id);
-      U.close();
+      U.travelConfirmation(Number(el.dataset.id));
     },
     questTravel(el) {
-      S.world.location(Number(el.dataset.id));
-      G.runtime.page = 'World';
-      U.render();
+      U.travelConfirmation(Number(el.dataset.id));
     },
     enterDungeon() {
       S.dungeons.enter();
@@ -541,7 +538,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'sellCategory', 'trainingDialog', 'activityView', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'sellCategory', 'trainingDialog', 'activityView', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
@@ -581,11 +578,6 @@
       }
       if (['offline-select', 'lesson-offline-select', 'training-offline-select'].includes(el.id)) {
         S.offline.select(el.value || null);
-      }
-      if (el.id === 'weather-select') {
-        G.assert(['auto', 'clear', 'rain', 'wind'].includes(el.value), 'Choose a weather condition.');
-        c.weather = el.value;
-        G.commit();
       }
       if (el.id === 'title-select') {
         c.title = el.value;

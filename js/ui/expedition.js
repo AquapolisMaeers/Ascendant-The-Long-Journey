@@ -64,17 +64,11 @@
   const achievements = U.screens.Achievements;
   U.screens.Achievements = () => achievements().replace('<div class="tabs"', U.completionPanel() + '<div class="tabs"');
 
-  U.weather = (c = G.character(), now = Date.now()) => {
-    if (!c) return 'clear';
-    return c.weather && c.weather !== 'auto' ? c.weather : ['clear', 'wind', 'rain', 'clear', 'rain', 'wind'][(Math.floor(now / 360000) + c.location) % 6];
-  };
-  U.weatherControls = () => '<div class="weather-strip"><span><i class="weather-dot"></i><strong id="weather-label">' + ({clear:'Drifting dust', rain:'Rainfall', wind:'Windswept'}[U.weather()]) +
-    '</strong><small>Atmosphere · cosmetic</small></span><label>Weather<select id="weather-select" aria-label="Weather effects">' +
-    [['auto','Auto · changing weather'],['clear','Clear · dust motes'],['rain','Rain'],['wind','Wind']].map(([value, label]) => '<option value="' + value + '" ' + ((G.character().weather || 'auto') === value ? 'selected' : '') + '>' + label + '</option>').join('') + '</select></label></div>';
+  U.weather = (c = G.character()) => D.locationWeather[c?.location] || 'clear';
   const world = U.screens.World;
   U.screens.World = () => {
     const configure = U.btn('Configure', 'navigate', 'data-value="Settings"', 'small quiet');
-    return world().replace('<div class="world-grid">', U.weatherControls() + '<div class="world-grid">').replace(configure,
+    return world().replace(configure,
       configure + U.btn('Offline training', 'trainingDialog', 'title="AFK skilling: ' + (G.character().offline || 'Not assigned') + '"', 'small quiet training-link'));
   };
 

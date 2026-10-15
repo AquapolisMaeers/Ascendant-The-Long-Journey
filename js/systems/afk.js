@@ -4,14 +4,14 @@
   S.afk = {
     run: null,
     status: 'Ready when you are.',
-    minuteRate() { return 10; },
+    minuteRate(c = G.character()) { return D.afkMinuteRates[c.location]; },
     start() {
       G.ensureProgress();
       const c = G.character();
       G.assert(!c.dungeon && !S.tutorial.active(), 'Finish the tutorial and leave the dungeon before AFK advancing.');
       G.assert(c.hp / S.character.stats(c).health > c.afk.minHp, 'Recover above your AFK health limit first.');
       G.assert(!this.run, 'An AFK session is already running.');
-      this.run = { id: c.id, elapsed: 0, inspect: 0, skipped: 0, fights: 0, paidMinutes:0, spent:0, rate:this.minuteRate(c), dungeon:false };
+      this.run = { id: c.id, location:c.location, elapsed: 0, inspect: 0, skipped: 0, fights: 0, paidMinutes:0, spent:0, rate:this.minuteRate(c), dungeon:false };
       this.status = 'Following your filters.';
       G.commit();
     },
@@ -40,6 +40,7 @@
       const run = this.run, c = G.character();
       if (!run || document.hidden) return;
       if (!c || c.id !== run.id) { this.stop('Character changed', false); return; }
+      if (c.location !== run.location) { this.stop('Location changed', false); return; }
       run.elapsed += ms;
       let reason = null;
       if (c.pending.length || c.inventory.length >= c.capacity) reason = 'Make inventory space to continue';

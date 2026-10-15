@@ -1,0 +1,69 @@
+/* Locally hosted OFL fonts keep every screen available offline. */
+@font-face { font-family:'Source Sans 3'; src:url('../assets/fonts/SourceSans3[wght].ttf') format('truetype'); font-weight:200 900; font-style:normal; font-display:swap; }
+@font-face { font-family:'Barlow Condensed'; src:url('../assets/fonts/BarlowCondensed-Bold.ttf') format('truetype'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Barlow Condensed'; src:url('../assets/fonts/BarlowCondensed-BoldItalic.ttf') format('truetype'); font-weight:700; font-style:italic; font-display:swap; }
+:root { --display:'Barlow Condensed','Arial Narrow',sans-serif; }
+html { scrollbar-gutter:stable; }
+body { font-family:'Source Sans 3','Segoe UI',sans-serif; }
+h1,h2,h3,.brand strong,.nav button,.page-heading .eyebrow { font-family:var(--display); font-weight:700; }
+.page-heading h1,.welcome-art h1 { font-style:italic; letter-spacing:.2px; }
+.nav button { font-size:16px; letter-spacing:.35px; }
+.brand strong { font-size:21px; letter-spacing:1.7px; }
+.panel-head h3 { letter-spacing:.5px; }
+.recipe h3,.panel > h3 { font-size:22px; line-height:1.15; }
+.tabs button { font-weight:650; letter-spacing:.15px; }
+.panel-head::after { content:''; width:26px; height:5px; background:#c8435d; transform:skewX(-28deg); flex-shrink:0; margin-left:8px; }
+.panel-head h3 { margin-right:auto; }
+.recipe { position:relative; border-top:2px solid #c45b6c; }
+.recipe::after { content:''; position:absolute; right:0; top:0; width:22px; height:9px; background:#c45b6c; clip-path:polygon(30% 0,100% 0,100% 100%,0 100%); pointer-events:none; }
+.stat-cell { background:linear-gradient(135deg,#332936,#191d29); border-left:3px solid #a93651; }
+.stat-cell > small { letter-spacing:.5px; }
+.sell-categories .btn { border-radius:0; border-bottom:2px solid #73566a; }
+.sell-categories .selected { border-bottom-color:#f1d28c; background:linear-gradient(110deg,#4d2d3a,#25212d); }
+.data-table th { color:#f1d8a7; border-bottom:2px solid #a83d55; }
+.data-table tr:nth-child(even) { background:#ffffff04; }
+.ascendant-wallet.btn { position:relative; display:flex; align-items:center; gap:9px; padding:7px 12px; min-height:49px; background:linear-gradient(115deg,#203338,#131c28); border:2px solid #8abec2; box-shadow:3px 3px 0 #080a10; border-radius:2px; color:#e1ffff; }
+.ascendant-wallet.btn:hover { background:#30454d; border-color:#d2f4ee; }
+.ascendant-coin { display:grid; place-items:center; width:29px; height:29px; flex-shrink:0; border:2px solid #caeae6; border-radius:50%; box-shadow:inset 0 0 0 3px #3f6874; color:#ecfff5; background:#315260; font-size:23px; line-height:1; }
+.ascendant-balance { display:flex; flex-direction:column; align-items:flex-start; line-height:1.05; }
+.ascendant-balance small { font-size:8px; letter-spacing:1.3px; color:#b5dcdd; }
+.ascendant-balance strong { font-size:20px; font-variant-numeric:tabular-nums; margin-top:3px; }
+#content[data-page="Crafting"] > .toolbar { min-height:82px; display:flex; align-items:center; gap:18px; margin-top:0; margin-bottom:20px; }
+#content[data-page="Crafting"] > .toolbar > label { width:260px; flex:0 1 260px; }
+#content[data-page="Crafting"] .craft-status { min-height:62px; }
+#content[data-page="Crafting"] > .page-heading h1 { transform:none; }
+.travel-intro { margin-bottom:16px; }
+.travel-option { border-left:4px solid #b33a52; gap:14px; }
+.travel-option > div { flex:1; min-width:0; }
+.travel-option strong { font-family:var(--display); font-size:21px; letter-spacing:.3px; }
+.travel-option.current { opacity:1; border-color:#ceae70; background:#302b26; }
+.travel-option:disabled:not(.current) { opacity:.55; }
+.travel-fare { margin-left:auto; color:#f3d18b; text-align:right; font-size:13px; white-space:nowrap; }
+.travel-route { padding:16px 20px; background:linear-gradient(110deg,#522738,#20212d); border-left:5px solid #e0bf80; }
+.travel-route small { color:#d4bcc7; letter-spacing:1px; }
+.travel-route h3 { font-size:30px; margin:6px 0; font-style:italic; }
+.travel-route p { color:#d5ced7; }
+.travel-quote { margin-top:18px; padding:14px 18px; background:#11151f; border:1px solid #b89c6b; }
+.travel-quote > span { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; color:#d3bd97; letter-spacing:1px; font-size:11px; }
+.travel-quote strong { font-size:24px; color:#ffe2a2; letter-spacing:0; }
+.travel-quote p { font-size:12px; color:#beb8c7; margin-top:4px; }
+@media(min-width:701px) {
+  .sidebar .brand,.sidebar .nav-label,.sidebar-foot { flex-shrink:0; }
+  .sidebar .nav { min-height:0; flex:1; overflow-y:auto; align-content:start; scrollbar-width:thin; scrollbar-color:#806273 transparent; overscroll-behavior:contain; }
+}
+@media(max-width:1050px) {
+  .ascendant-wallet.btn { min-height:36px; padding:5px 8px; gap:6px; }
+  .ascendant-coin { width:23px; height:23px; font-size:18px; }
+  .ascendant-balance strong { font-size:16px; margin-top:0; }
+  .ascendant-balance small { font-size:7px; letter-spacing:.5px; }
+}
+@media(max-width:700px) {
+  .ascendant-wallet .ascendant-balance small { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+  .topbar .ascendant-wallet.btn { grid-column:3; grid-row:2; }
+  .travel-option { gap:8px; padding:12px 8px; flex-wrap:wrap; }
+  .travel-option .slot-number { width:32px; min-width:32px; }
+  .travel-option strong { font-size:18px; }
+  .travel-fare { width:100%; padding-left:40px; text-align:left; }
+  #content[data-page="Crafting"] > .toolbar { flex-wrap:wrap; align-items:stretch; gap:10px; }
+  #content[data-page="Crafting"] > .toolbar > label { width:100%; flex-basis:100%; }
+}

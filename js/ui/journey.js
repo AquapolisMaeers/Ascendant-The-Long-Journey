@@ -30,7 +30,7 @@
   U.tutorial = (...args) => {
     if (!G.character()?.tutorial) { tutorial(...args); return; }
     U.modal('Your field guide', '<p>Gather resources to prepare equipment, meals and gems for the next fight. Mining supplies ore, Woodcutting supplies logs, Fishing supplies raw fish, and Hunting supplies hides. Smithing turns these into bars and equipment; Cooking makes healing food; Faceting prepares gems for sockets.</p>' +
-      U.skillPreferences('guide-') + '<h3 class="spacer">Train at your own pace</h3><p class="spacer">AFK skilling under Skills → Offline training earns offline XP only for up to eight hours. Gathering earns 25% of base active XP, Smithing and Cooking 12.5%, and Faceting 1.875%. Knowledge applies; ingredients are not consumed and no items or coins are produced.</p><p class="spacer">AFK advancing runs while the game is visible. Configure encounter filters, minimum estimated victory chance and a low-health stop in Settings. For gathering only, turn on gathering and turn every other encounter filter off. Your first 15 active minutes are free; then each started minute costs 10 Bronze. Estimates cannot guarantee survival.</p>' +
+      U.skillPreferences('guide-') + '<h3 class="spacer">Train at your own pace</h3><p class="spacer">AFK skilling under Skills → Offline training earns offline XP only for up to eight hours. Gathering earns 25% of base active XP, Smithing and Cooking 12.5%, and Faceting 1.875%. Knowledge applies; ingredients are not consumed and no items or coins are produced.</p><p class="spacer">AFK advancing runs while the game is visible. Configure encounter filters, minimum estimated victory chance and a low-health stop in Settings. For gathering only, turn on gathering and turn every other encounter filter off. Your first 15 active minutes are free; then each started minute uses the regional rate shown in the AFK panel. Travel also has a quoted fee based on your destination and distance. Estimates cannot guarantee survival.</p>' +
       '<h3 class="spacer">Recover before taking risks</h3><p class="spacer">The campfire restores full health free once every 30 minutes. The inn offers paid healing with no cooldown, charging your level times HP restored, rounded up in Bronze. Food and Auto-Eat help you survive fights. Rest outside combat and dungeons. The wallet shows Gold, Silver and Bronze; 100 Bronze equals 1 Silver, and 100 Silver equals 1 Gold.</p>' +
       U.toolPrefixHelp() + U.btn('Return to the world', 'closeModal', '', 'primary spacer'), true);
   };
@@ -42,7 +42,7 @@
   };
   let previousView = null;
   window.addEventListener('rpg:rendered', () => {
-    const view = [G.character()?.id, G.runtime.selecting, G.runtime.page, G.runtime.tab].join('|');
+    const view = [G.character()?.id, G.runtime.selecting, G.runtime.page, G.runtime.page === 'Crafting' ? '' : G.runtime.tab].join('|');
     if (view === previousView) return;
     previousView = view;
     if (G.state.settings.reduced || matchMedia('(prefers-reduced-motion: reduce)').matches) return;

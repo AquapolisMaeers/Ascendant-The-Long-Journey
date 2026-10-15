@@ -53,11 +53,7 @@ body { font-size:calc(clamp(13px,.72917vw,16px) * var(--text-scale)); }
 .offline-training .panel-head { margin-bottom:8px; padding-bottom:6px; }
 .offline-training .panel-head .badge { font-size:8px; }.offline-training .notes { font-size:11px; }.offline-training details { color:var(--muted); font-size:11px; }
 .world-screen .afk-panel .training-link { padding:7px 8px; font-size:10px; }
-.content:has(.guide-panel) .world-screen :is(.weather-strip,.training-link) { display:none; }
-.weather-strip { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:-4px 0 12px; font-size:11px; }
-.weather-strip > span { display:flex; align-items:center; flex-wrap:wrap; gap:8px; padding:5px 9px; background:#101720ba; border-radius:3px; }
-.weather-strip small { color:#c3c7cd; font-size:9px; }.weather-dot { width:5px; height:5px; border-radius:50%; background:#d9d0a4; }
-.weather-strip label { display:flex; align-items:center; gap:8px; font-size:10px; color:#e8e4d8; }.weather-strip select { padding:4px 8px; font-size:10px; background:#121922e8; }
+.content:has(.guide-panel) .world-screen .training-link { display:none; }
 .activity-dock { position:fixed; bottom:18px; left:238px; width:330px; z-index:40; border:1px solid #cab17d; border-radius:5px; background:#151a25f5; box-shadow:0 6px 24px #0008; overflow:hidden; }
 .activity-dock[hidden] { display:none; }.activity-dock > button { display:flex; width:100%; align-items:center; gap:12px; border:0; background:none; padding:12px 14px; color:var(--text); text-align:left; }
 .activity-dock > button > span:nth-child(2) { display:grid; gap:2px; min-width:0; flex:1; }.activity-dock strong { font-size:13px; overflow-wrap:anywhere; }.activity-dock small { color:#ddc58d; text-transform:uppercase; font-size:8px; letter-spacing:1px; }
@@ -101,7 +97,6 @@ body:has(.activity-dock:not([hidden])) #content { padding-bottom:110px; }
   .content:has(+ .activity-dock) { padding-bottom:100px; }.perk-options { grid-template-columns:1fr; }.perk-card-label small { width:auto; margin-left:auto; }.perk-path-card > strong { font-size:18px; }.perk-path-card p { font-size:12px; }
   .perk-overview { align-items:flex-start; padding:12px; }.perk-overview > span { max-width:110px; }.companion-marks { display:flex; margin:8px 0 0; }
   .ascension-quote { flex-wrap:wrap; }.completion-panel { gap:12px; }.completion-ring { width:72px; height:72px; }.completion-ring > strong { font-size:17px; }.completion-panel h3 { font-size:17px; }
-  .weather-strip { align-items:flex-start; gap:8px; }.weather-strip small { display:none; }.weather-strip label { display:grid; gap:2px; }.weather-strip select { max-width:165px; }
   .sell-categories { gap:6px; }.sell-categories .btn { gap:6px; }.companion-milestones { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media(prefers-reduced-motion:reduce) { #atmosphere { display:none; } }

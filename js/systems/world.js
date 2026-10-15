@@ -110,12 +110,22 @@
       c.encounter = null;
       G.commit();
     },
+    travelQuote(id, c = G.character()) {
+      G.assert(Number.isInteger(id) && D.locations[id], 'Choose a valid location.');
+      const distance = Math.abs(id - c.location), perStep = D.travelStepPrices[id];
+      return {from:c.location, to:id, distance, perStep, coins:distance * perStep};
+    },
     location(id) {
       G.ensureProgress();
       const c = G.character();
       G.assert(!c.dungeon, 'Leave the dungeon first.');
       G.assert(!S.tutorial?.active(), 'Finish the required tutorial before changing location.');
       G.assert(D.locations[id] && c.level >= D.locations[id].level, 'Location is locked.');
+      const quote = this.travelQuote(id, c);
+      if (!quote.distance) return;
+      G.assert(c.coins >= quote.coins, 'Not enough coins for this journey.');
+      S.afk?.stop('Location changed', false);
+      c.coins -= quote.coins;
       c.encounter = null;
       c.location = id;
       G.commit();

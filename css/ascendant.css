@@ -30,9 +30,9 @@
 .craft-status small { display:block; color:var(--muted); font-size:10px; }
 .craft-status strong { display:block; color:var(--rarity,var(--gold)); font-size:13px; font-weight:500; overflow-wrap:anywhere; }
 @media (min-width:1280px) {
-  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]:has(.compact-recipes)) { padding-top:18px; padding-bottom:18px; }
-  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]:has(.compact-recipes)) .page-heading { margin-bottom:14px; }
-  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]:has(.compact-recipes)) .page-heading h1 { font-size:32px; }
+  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]) { padding-top:18px; padding-bottom:18px; }
+  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]) .page-heading { margin-bottom:14px; }
+  #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"],[data-page="Crafting"]) .page-heading h1 { font-size:32px; }
   #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"]) .panel { padding:16px; }
   #content:is([data-page="Character"],[data-page="Skills"],[data-page="Settings"]) .spacer { margin-top:12px; }
   #content:is([data-page="Character"],[data-page="Skills"]) { padding-top:14px; padding-bottom:14px; }
