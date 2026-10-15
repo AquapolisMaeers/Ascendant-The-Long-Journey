@@ -73,36 +73,68 @@
   };
 
   U.activityView = () => {
-    const a = G.character()?.activity;
-    G.runtime.page = a?.type === 'craft' ? 'Crafting' : 'World';
-    G.runtime.tab = a?.type === 'craft' ? D.recipes.find(r => r.id === a.recipe).skill : '';
+    const a = G.character()?.activity, recipe = a?.type === 'craft' ? D.recipes.find(r => r.id === a.recipe) : null;
+    G.runtime.page = recipe ? 'Crafting' : 'World';
+    G.runtime.tab = recipe?.skill || '';
+    if (recipe) {
+      G.runtime.craftTier = recipe.tier;
+      if (recipe.skill === 'Smithing') G.runtime.smithingCategory = U.smithingCategory(recipe);
+      if (recipe.skill === 'Faceting') G.runtime.gemFilter = recipe.type;
+    }
     U.render();
   };
   const shell = U.shell;
   U.shell = () => {
-    const html = shell();
-    const c = G.character();
+    const html = shell(), c = G.character();
     if (!c || G.runtime.selecting) return html;
-    const visible = c.activity && !['World', 'Crafting'].includes(G.runtime.page);
-    return html + '<aside class="activity-dock" id="activity-dock" aria-label="Current activity" ' + (visible ? '' : 'hidden') + '><button data-action="activityView" title="Return to the active task"><span class="activity-dock-icon">' + U.icon(c.activity?.skill || (c.activity?.type === 'craft' ? D.recipes.find(r => r.id === c.activity.recipe)?.skill : 'clock')) +
-      '</span><span><small id="dock-kind">WORK IN PROGRESS</small><strong id="dock-title"></strong><span id="dock-count"></span></span><span id="dock-percent"></span></button><div class="dock-track" role="progressbar" aria-label="Activity progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="dock-bar"></i></div></aside>';
+    const a = c.activity, run = S.afk.run, visible = a || c.combat || run,
+      stop = run ? U.btn('Stop AFK', 'afkStop', '', 'quiet small') : a && a.type !== 'advance' ? U.btn('Stop', 'stopActivity', '', 'quiet small') : '';
+    return html + '<aside class="activity-dock" id="activity-dock" aria-label="Current activity" ' + (visible ? '' : 'hidden') + '><button data-action="activityView" title="Return to the active task"><span class="activity-dock-icon">' + U.icon(a?.skill || (a?.type === 'craft' ? D.recipes.find(r => r.id === a.recipe)?.skill : c.combat ? 'Weapon' : 'clock')) +
+      '</span><span><small id="dock-kind">WORK IN PROGRESS</small><strong id="dock-title"></strong><span id="dock-count"></span></span><span id="dock-percent"></span></button><div class="dock-footer"><span id="dock-time"></span>' + stop + '</div><div class="dock-track" role="progressbar" aria-label="Activity progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="dock-bar"></i></div></aside>';
   };
   const live = U.live;
   U.live = () => {
     live();
-    const a = G.character()?.activity, dock = document.getElementById('activity-dock');
-    if (!a || !dock || dock.hidden) return;
-    const recipe = a.type === 'craft' ? D.recipes.find(r => r.id === a.recipe) : null,
-      part = G.character().pending.length ? 0 : G.clamp(a.elapsed / a.duration, 0, 1),
-      total = a.total || a.remaining || D.config.nodeCharges, done = a.type === 'craft' ? total - a.remaining : a.type === 'gather' ? D.config.nodeCharges - G.character().encounter.charges : 0,
-      ratio = a.type === 'advance' ? part : G.clamp((done + part) / total, 0, 1), percent = Math.floor(ratio * 100);
+    const c = G.character(), a = c?.activity, dock = document.getElementById('activity-dock'), run = S.afk.run;
+    if (!c || !dock || dock.hidden) return;
     const set = (id, text) => { const el = document.getElementById(id); if (el && el.textContent !== text) el.textContent = text; };
-    set('dock-kind', G.character().pending.length ? 'PAUSED · BAG FULL' : recipe?.skill || a.skill || 'Travelling');
-    set('dock-title', recipe?.name || (a.type === 'gather' ? a.skill + ' resources' : 'Discovering the road'));
-    set('dock-count', a.type === 'craft' ? done + ' / ' + total + ' actions · ' + a.remaining + ' left' : a.type === 'gather' ? G.character().encounter.charges + ' node charges left' : 'One encounter ahead');
-    set('dock-percent', percent + '%');
-    document.getElementById('dock-bar').style.width = percent + '%';
-    dock.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', percent);
+    const seconds = ms => (Math.max(0, ms) / 1000).toFixed(1) + 's';
+    const duration = ms => { const s = Math.ceil(Math.max(0, ms) / 1000); return s >= 60 ? Math.floor(s / 60) + 'm ' + s % 60 + 's' : s + 's'; };
+    let ratio = 0;
+    if (a) {
+      const recipe = a.type === 'craft' ? D.recipes.find(r => r.id === a.recipe) : null,
+        part = G.clamp(a.elapsed / a.duration, 0, 1), total = a.total || a.remaining || 1,
+        done = a.type === 'craft' ? total - a.remaining : 0;
+      ratio = a.type === 'craft' ? G.clamp((done + part) / total, 0, 1) : part;
+      set('dock-kind', c.pending.length ? 'PAUSED \u00b7 BAG FULL' : (run ? 'AFK \u00b7 ' : '') + (recipe?.skill || a.skill || 'Travelling'));
+      set('dock-title', recipe?.name || (a.type === 'gather' ? D.catalog[D.resourceKinds[D.skills.indexOf(a.skill)] + ':' + a.tier].name : 'Discovering the road'));
+      set('dock-count', a.type === 'craft' ? done + ' / ' + total + ' actions \u00b7 ' + a.remaining + ' left' : a.type === 'gather' ? c.encounter.charges + ' node charges left \u00b7 current action' : 'One encounter ahead');
+      const queue = (Math.max(0, (a.remaining || 1) - 1) * a.duration + Math.max(0, a.duration - a.elapsed));
+      set('dock-time', seconds(a.elapsed) + ' / ' + seconds(a.duration) + (c.pending.length ? ' \u00b7 Paused' : a.type === 'craft' ? ' \u00b7 ~' + duration(queue) + ' left' : ' \u00b7 ' + seconds(a.duration - a.elapsed) + ' left'));
+    } else if (c.combat) {
+      ratio = G.clamp(1 - c.combat.enemy.hp / c.combat.enemy.health, 0, 1);
+      set('dock-kind', (run ? 'AFK \u00b7 ' : '') + 'Combat');
+      set('dock-title', c.combat.enemy.name);
+      set('dock-count', G.number(Math.max(0, c.combat.enemy.hp), 1) + ' enemy HP \u00b7 damage dealt');
+      set('dock-time', c.combat.time.toFixed(1) + 's elapsed');
+    } else {
+      set('dock-kind', 'AFK ADVANCING'); set('dock-title', 'Following your filters');
+      set('dock-count', S.afk.status); set('dock-time', duration(run?.elapsed || 0) + ' session');
+    }
+    const percent = Math.floor(ratio * 100), progress = dock.querySelector('[role="progressbar"]');
+    set('dock-percent', !a && !c.combat ? '\u2014' : percent + '%');
+    document.getElementById('dock-bar').style.width = ratio * 100 + '%';
+    progress.setAttribute('aria-valuenow', percent);
+    progress.setAttribute('aria-valuetext', document.getElementById('dock-count').textContent + '. ' + document.getElementById('dock-time').textContent);
+    progress.setAttribute('aria-label', c.combat ? 'Enemy health depleted' : 'Activity progress');
   };
-  window.addEventListener('rpg:rendered', () => U.live());
+  const dockObserver = new ResizeObserver(entries => {
+    for (const {target} of entries) document.body.style.setProperty('--activity-space', Math.ceil(target.getBoundingClientRect().height + 28) + 'px');
+  });
+  let watchedDock;
+  window.addEventListener('rpg:rendered', () => {
+    const dock = document.getElementById('activity-dock');
+    if (dock !== watchedDock) { dockObserver.disconnect(); if (dock) dockObserver.observe(dock); watchedDock = dock; }
+    U.live();
+  });
 })(RPG, RPG.data, RPG.systems, RPG.ui);

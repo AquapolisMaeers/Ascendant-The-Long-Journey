@@ -75,7 +75,7 @@
   const shop = U.screens.Shop;
   U.screens.Shop = () => {
     const names = ['Utility', 'Materials', 'Character', 'Storage', 'Sell'], current = names.includes(G.runtime.tab) ? G.runtime.tab : 'Utility';
-    if (current === 'Storage') return shop().replace('<h2>A place for everything</h2>', '<div class="storage-heading"><span class="signal-icon">' + U.icon('Storage') + '</span><div><div class="eyebrow">ROOM FOR THE ROAD</div><h2>A place for everything</h2></div></div>');
+    if (current === 'Storage') return shop().replace('<h2>A place for everything</h2>', '<div class="storage-heading"><span class="storage-art">' + U.paint('treasure') + '<b aria-hidden="true">+</b></span><div><div class="eyebrow">ROOM FOR THE ROAD</div><h2>A place for everything</h2></div></div>');
     if (current === 'Sell') return shop();
     const c = G.character(), accents = {Utility:'rose', Materials:'teal', Character:'violet'};
     return U.heading('THE QUARTERMASTER', 'Shop', 'Practical provisions for a longer journey.', '<span class="badge">' + G.money(c.coins) + '</span>') + U.tabs(names, current) +

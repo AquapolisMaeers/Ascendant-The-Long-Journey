@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15', title:'More room for the journey', changes:[
+    'Smithing now separates recipes into Bars, Armor, Weapons and Accessories. All metal tiers keep their full recipe selection, and returning to a task restores its category and tier.',
+    'One compact bottom-left tracker follows crafting, gathering, travelling and AFK sessions across every page. It shows percentages, completed actions, elapsed/total action time and estimated batch time, with Stop controls where available.',
+    'Desktop spacing is tighter on shorter browser windows. Companion choices use a compact grid and achievements use eight-record pages, keeping every record accessible.',
+    'Storage gains matching chest artwork with a plus badge. Crafting keeps a steady header across disciplines, and phone notifications clear the bottom navigation.'
+  ]},
   {date:'2026-10-15', title:'A journey made for thumbs', changes:[
     'Phones now have a fixed bottom bar for World, Inventory, Crafting and Shop. More opens the full page menu, including character slots. AFK advancing keeps running while you browse.',
     'A compact sticky header keeps health, level progress and currency in view. Touch controls are larger, form inputs are easier to read, and dialogs open as bottom sheets.',

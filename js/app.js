@@ -303,6 +303,7 @@
     },
     trainingDialog() { U.trainingDialog(); },
     activityView() { U.activityView(); },
+    achievementPage(el) { G.runtime.achievementGroup = el.dataset.group; G.runtime.achievementPage = +el.dataset.page; U.render(); },
     sellCategory(el) { G.runtime.sellCategory = el.dataset.category; U.render(); },
     feedCompanion() { S.companions.feed(value('companion-food')); },
     reviveCompanion() { S.companions.revive(); },
@@ -545,7 +546,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'achievementPage', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
@@ -592,6 +593,10 @@
       }
       if (el.id === 'inventory-sort') {
         G.runtime.sort = el.value;
+        U.render();
+      }
+      if (el.id === 'smithing-category') {
+        G.runtime.smithingCategory = el.value;
         U.render();
       }
       if (el.id === 'craft-tier') {
