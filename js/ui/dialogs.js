@@ -18,6 +18,7 @@
     G.runtime.confirmAction = null;
     G.runtime.enhancePending = null;
     G.runtime.ascendPending = null;
+    G.runtime.commandToolAccess = null;
     G.runtime.previousFocus?.focus();
   };
   U.confirm = (title, body, callback, danger = false, cancelAction = 'closeModal') => {
@@ -130,10 +131,16 @@
     const [title, text] = pages[step];
     U.modal(title, '<div class="eyebrow">FIELD GUIDE ' + (step + 1) + ' / 4</div><p class="spacer">' + text + '</p><div class="modal-actions">' + U.btn(step === 3 ? 'Return to the world' : 'Next', step === 3 ? 'closeModal' : 'tutorialNext', '', 'primary') + '</div>');
   };
+  U.commandPanel = () => {
+    U.modal('Command panel', '<form id="command-form" autocomplete="off"><label>Command<input id="command-input" type="text" maxlength="128" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="command-feedback" required></label><p id="command-feedback" class="notes spacer" role="status"></p><div class="modal-actions">' + U.btn('Cancel', 'closeModal', 'type="button"', 'quiet') + '<button type="submit" class="btn gold-btn">Run</button></div></form>');
+    const input = document.getElementById('command-input');
+    setTimeout(() => { if (input?.isConnected) input.focus(); }, 0);
+  };
   U.debug = () => {
     const c = G.character();
     G.assert(c, 'Create a character first.');
-    U.modal('Developer tools', '<div class="warning">Debug changes mark this character as modified. Export a normal save before balancing experiments.</div><div class="field-grid"><label>Character level<input id="debug-level" type="number" min="1" max="100" value="' + c.level + '"></label><label>Skill<select id="debug-skill">' + D.skills.map(s => '<option>' + s + '</option>').join('') + '</select></label><label>Skill level<input id="debug-skill-level" type="number" min="1" max="100" value="100"></label><label>XP amount<input id="debug-xp" type="number" min="0" value="500"></label><label>HP<input id="debug-hp" type="number" min="0" value="100"></label><label>Tier<select id="debug-tier">' + D.tiers.map((n, i) => '<option value="' + i + '">' + n + '</option>').join('') + '</select></label><label>Piece<select id="debug-piece">' + D.pieces.map((n, i) => '<option value="' + i + '">' + n + '</option>').join('') + '</select></label><label>Rarity<select id="debug-rarity">' + D.rarity.map((n, i) => '<option value="' + i + '">' + n + '</option>').join('') + '</select></label><label>Boss set<select id="debug-boss">' + D.dungeons.map((n, i) => '<option value="' + i + '">' + n.prefix + '</option>').join('') + '</select></label><label>Gem rank<select id="debug-gem-rank"><option value="0">Uncut</option>' + [1, 2, 3, 4, 5].map(n => '<option>' + n + '</option>').join('') + '</select></label></div><div class="row spacer">' + [
+    G.assert(!G.runtime.selecting && G.runtime.commandToolAccess === c.id, 'Command unavailable.');
+    U.modal('Command Tool', '<div class="warning">Debug changes mark this character as modified. Export a normal save before balancing experiments.</div><div class="field-grid"><label>Character level<input id="debug-level" type="number" min="1" max="100" value="' + c.level + '"></label><label>Skill<select id="debug-skill">' + D.skills.map(s => '<option>' + s + '</option>').join('') + '</select></label><label>Skill level<input id="debug-skill-level" type="number" min="1" max="100" value="100"></label><label>XP amount<input id="debug-xp" type="number" min="0" value="500"></label><label>HP<input id="debug-hp" type="number" min="0" value="100"></label><label>Tier<select id="debug-tier">' + D.tiers.map((n, i) => '<option value="' + i + '">' + n + '</option>').join('') + '</select></label><label>Piece<select id="debug-piece">' + D.pieces.map((n, i) => '<option value="' + i + '">' + n + '</option>').join('') + '</select></label><label>Rarity<select id="debug-rarity">' + D.rarity.map((n, i) => '<option value="' + i + '">' + n + '</option>').join('') + '</select></label><label>Boss set<select id="debug-boss">' + D.dungeons.map((n, i) => '<option value="' + i + '">' + n.prefix + '</option>').join('') + '</select></label><label>Gem rank<select id="debug-gem-rank"><option value="0">Uncut</option>' + [1, 2, 3, 4, 5].map(n => '<option>' + n + '</option>').join('') + '</select></label></div><div class="row spacer">' + [
       ['Set character level', 'level'],
       ['Set skill level', 'skill'],
       ['Add XP', 'xp'],

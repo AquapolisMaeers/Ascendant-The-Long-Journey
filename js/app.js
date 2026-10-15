@@ -469,6 +469,7 @@
       U.modal('Offline game', '<p>All game files and artwork are local. Choose or create a character to access presentation and audio settings. Saves remain in this browser.</p><div class="row spacer">' + U.btn('Import save', 'import') + U.btn('Reset local save', 'reset', '', 'danger') + '</div>');
     },
     debug(el) {
+      G.assert(G.character() && !G.runtime.selecting && G.runtime.commandToolAccess === G.character().id, 'Command unavailable.');
       const command = el.dataset.command;
       if (command === 'reset') {
         actions.reset();
@@ -645,15 +646,26 @@
     }
     if (el.classList.contains('market-filter')) document.getElementById('market-results').textContent = 'Filters updated. No online listings are available in this offline build.';
   });
+  document.addEventListener('submit', event => {
+    if (event.target.id !== 'command-form') return;
+    event.preventDefault();
+    if (!G.account.playable()) return;
+    const input = document.getElementById('command-input'), c = G.character();
+    if (input.value.trim() === 'command_tool_developer_access' && c && !G.runtime.selecting) {
+      G.runtime.commandToolAccess = c.id;
+      U.debug();
+      return;
+    }
+    input.setAttribute('aria-invalid', 'true');
+    document.getElementById('command-feedback').textContent = 'Command not recognized.';
+    input.focus();
+  });
   document.addEventListener('keydown', e => {
     if (!G.account.playable()) return;
-    if (e.ctrlKey && e.shiftKey && e.code === 'KeyD') {
+    const editing = e.target.closest?.('input,textarea,select,[contenteditable]:not([contenteditable="false"]),[role="textbox"]');
+    if (e.key === '/' && !e.ctrlKey && !e.altKey && !e.metaKey && !e.repeat && !e.isComposing && !editing && !document.querySelector('.modal') && G.character() && !G.runtime.selecting) {
       e.preventDefault();
-      try {
-        U.debug();
-      } catch (error) {
-        G.notify(error.message, 'error');
-      }
+      U.commandPanel();
     }
     if (e.key === 'Escape') U.close();
     if (e.key === 'Tab' && document.querySelector('.modal')) {
