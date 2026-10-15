@@ -85,6 +85,7 @@
     },
     createMode(el) {
       G.runtime.creation.mode = el.dataset.value;
+      G.runtime.creation.modeConfirmed = false;
       U.creation(G.runtime.creation.slot, 2);
     },
     createNext() {
@@ -93,6 +94,13 @@
         f.name = value('create-name').trim();
         G.assert(f.name.length >= 2 && f.name.length <= 24, 'Name must contain 2–24 characters.');
       }
+      if (f.step === 2 && !f.modeConfirmed) {
+        confirm('Confirm ' + f.mode + ' mode', '<div class="warning spacer">' + D.modeDescriptions[f.mode] + '</div><p>Mode is permanent, except that a fallen Hardcore Ironman becomes Ironman. Continue with this choice?</p>', () => {
+          f.modeConfirmed = true;
+          U.creation(f.slot, 3);
+        }, f.mode.includes('Hardcore'), 'createModeCancel');
+        return;
+      }
       if (f.step === 3) f.appearance = {
         portrait: D.appearanceKind(f.class),
         look: Number(value('create-portrait')),
@@ -100,12 +108,14 @@
       };
       U.creation(f.slot, f.step + 1);
     },
+    createModeCancel() { U.creation(G.runtime.creation.slot, 2); },
     createBack() {
       const f = G.runtime.creation;
       U.creation(f.slot, f.step - 1);
     },
     createFinish() {
       const f = G.runtime.creation;
+      G.assert(f.modeConfirmed, 'Confirm your game mode before beginning.');
       G.assert(f.mode !== 'Hardcore' || document.getElementById('hardcore-confirm').checked, 'Acknowledge permanent Hardcore death before creating this character.');
       G.assert(!G.state.slots[f.slot], 'This character slot is occupied.');
       resumeSelection();
@@ -118,6 +128,7 @@
       U.close();
       S.tutorial.ensure();
       G.commit();
+      G.runtime.justCreatedTutorial = true;
       U.tutorial(0);
       showOffline();
     },
@@ -140,6 +151,8 @@
       U.close();
       S.tutorial.start();
     },
+    tutorialLesson() { U.lesson(); },
+    tutorialAcknowledge() { S.tutorial.acknowledge(); },
     tutorialTask() {
       const c = G.character(),
         step = S.tutorial.current();
@@ -331,7 +344,15 @@
       U.close();
     },
     craft(el) {
-      S.crafting.start(el.dataset.id, el.dataset.quantity);
+      const r = D.recipes.find(r => r.id === el.dataset.id);
+      G.assert(r, 'Choose a recipe.');
+      const quantity = el.dataset.quantity === 'max' ? S.crafting.max(r) : Number(el.dataset.quantity);
+      G.assert(Number.isInteger(quantity) && quantity > 0, 'No crafts available with your unlocked ingredients.');
+      confirm('Prepare ' + quantity + ' × ' + U.e(r.name) + '?',
+        '<p>Queue <strong>' + quantity + '</strong> ' + r.skill + ' actions. Each action takes ingredients only when it completes. Stop at any time to keep unused ingredients.</p>' +
+        U.ingredients(Object.fromEntries(Object.entries(r.cost).map(([key, n]) => [key, n * quantity]))) +
+        '<p class="notes spacer">The queue stops before the next craft if there is no room for its possible output. Tool bonuses can change the final yield and cost.</p>',
+        () => S.crafting.start(r.id, quantity));
     },
     buy(el) {
       const item = D.shop.find(i => i.id === el.dataset.id);
@@ -517,6 +538,12 @@
     const el = event.target,
       c = G.character();
     try {
+      if (el.dataset.preference) {
+        S.world.setPreference(el.dataset.preference, el.value);
+        if (document.querySelector('.modal .skill-preferences')) {
+          if (S.tutorial.active()) U.lesson(); else U.tutorial();
+        }
+      }
       if (el.id === 'companion-food') {
         G.runtime.companionFoods ??= {};
         G.runtime.companionFoods[c.id] = el.value;
@@ -538,7 +565,7 @@
         G.runtime.leaderboard = el.value;
         U.render();
       }
-      if (el.id === 'offline-select') {
+      if (['offline-select', 'lesson-offline-select'].includes(el.id)) {
         S.offline.select(el.value || null);
       }
       if (el.id === 'title-select') {
@@ -639,6 +666,7 @@
     div.className = 'toast ' + detail.type;
     div.textContent = detail.message;
     document.getElementById('toasts').append(div);
+    while (document.getElementById('toasts').children.length > 3) document.getElementById('toasts').firstElementChild.remove();
     setTimeout(() => div.remove(), detail.type === 'error' ? 9000 : 5000);
   });
   window.addEventListener('rpg:change', () => U.render());

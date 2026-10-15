@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15', title:'A bolder journey, clearer first steps', changes:[
+    'New ink-and-crimson presentation, distinct framed menus and a labeled Gold/Silver/Bronze wallet. Screen updates preserve existing elements and no longer replay page fades or pulsing screen effects.',
+    'Ascendant Stones sell for 1 Gold. Tool sale prices from Common to Ascendant: 50b, 1s, 2s 50b, 5s, 10s, 25s, 50s, 1g.',
+    'Craft quantity buttons now open a confirmation. Full bags stop crafting before the next payment; stopping keeps all unused ingredients.',
+    'Class selection includes character stories and practical build guidance. Every mode asks for confirmation.',
+    'Tutorial training is clearly marked and explains gathering preferences, offline skilling, active AFK advancing, campfire, inn and tool prefixes.',
+    'Primary and secondary gathering preferences split the existing 50% gathering chance at 4:2:1:1: 25%, 12.5%, 6.25%, 6.25%. Change preferences in Skills; saved per character.'
+  ]},
   {
     "date": "2026-10-14",
     "title": "Meals with character",

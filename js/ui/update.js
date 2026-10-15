@@ -7,6 +7,7 @@
   U.tutorial = () => {
     const c = G.character();
     if (S.tutorial.active()) {
+      if (G.runtime.justCreatedTutorial) { G.runtime.justCreatedTutorial = false; U.lesson(true); return; }
       U.close();
       G.runtime.page = 'World';
       U.render();
@@ -49,7 +50,10 @@
       label = 'Equip your Common Worn Plate';
       action = 'tutorialTask';
     }
-    return '<section class="panel guide-panel"><div class="row between"><span class="eyebrow">REQUIRED TUTORIAL ' + (c.guide.step + 1) + ' / ' + D.tutorial.steps.length + '</span></div><h3>' + step.title + '</h3><p class="notes">' + step.text + '</p><div class="row spacer">' + U.btn(label, action, (c.activity || c.combat || c.pending.length ? 'disabled' : ''), 'gold-btn') + (step.id === 'fight' ? '<small class="muted">Your food is assigned at 25% Auto-Eat.</small>' : '') + '</div></section>';
+    if (['preferences', 'offline', 'afk', 'recovery', 'prefixes', 'ready'].includes(step.id)) {
+      label = step.id === 'ready' ? 'Complete tutorial' : 'Open lesson'; action = 'tutorialLesson';
+    }
+    return '<section class="panel guide-panel" aria-label="Tutorial lesson"><div class="row between"><span class="eyebrow">REQUIRED TUTORIAL ' + (c.guide.step + 1) + ' / ' + D.tutorial.steps.length + '</span></div><h3>' + step.title + '</h3><p class="notes">' + step.text + '</p><div class="row spacer">' + U.btn(label, action, (c.activity || c.combat || c.pending.length ? 'disabled' : ''), 'gold-btn') + (step.id === 'fight' ? '<small class="muted">Your food is assigned at 25% Auto-Eat.</small>' : '') + '</div></section>';
   };
   U.restPanel = () => {
     const c = G.character(),
@@ -102,7 +106,7 @@
     if (G.runtime.tab !== 'Sell') return shop();
     const c = G.character(),
       items = c.inventory.filter(i => !i.bound);
-    return U.heading('THE QUARTERMASTER', 'Shop', 'Sell spare items for Bronze.', '<span class="badge">' + G.money(c.coins) + '</span>') + U.tabs(['Utility', 'Materials', 'Character', 'Storage', 'Sell'], 'Sell') + '<section class="panel"><h3>Prices follow materials</h3><p class="notes spacer">Raw materials sell for their required level in Bronze. Bars include their ore and fuel costs; gear includes all original recipe ingredients. Rarity, Enhancement and inserted gems do not increase the sale price.</p><p class="notes">Locked items and bound starter tools cannot be sold.</p></section><div class="grid-3 spacer">' + (items.map(i => '<section class="recipe">' + U.itemCard(i) + '<div class="row between spacer"><span class="gold">' + S.shop.value(i) + ' Bronze each</span>' + U.btn('Sell…', 'sellForm', 'data-id="' + i.id + '" ' + (i.locked ? 'disabled' : ''), 'small gold-btn') + '</div></section>').join('') || '<p class="empty">No spare items to sell.</p>') + '</div>';
+    return U.heading('THE QUARTERMASTER', 'Shop', 'Sell spare items for Bronze.', '<span class="badge">' + G.money(c.coins) + '</span>') + U.tabs(['Utility', 'Materials', 'Character', 'Storage', 'Sell'], 'Sell') + '<section class="panel"><h3>Prices follow materials</h3><p class="notes spacer">Raw materials sell for their required level in Bronze. Bars include their ore and fuel costs; gear includes all original recipe ingredients. Equipment rarity, Enhancement and inserted gems do not increase gear sale prices.</p><p class="notes">Ascendant Stones sell for 1 Gold each. Tools sell by rarity: 50b, 1s, 2s 50b, 5s, 10s, 25s, 50s, 1g. Locked items and bound starter tools cannot be sold.</p></section><div class="grid-3 spacer">' + (items.map(i => '<section class="recipe">' + U.itemCard(i) + '<div class="row between spacer"><span class="gold">' + G.money(S.shop.value(i)) + ' each</span>' + U.btn('Sell…', 'sellForm', 'data-id="' + i.id + '" ' + (i.locked ? 'disabled' : ''), 'small gold-btn') + '</div></section>').join('') || '<p class="empty">No spare items to sell.</p>') + '</div>';
   };
   const item = U.item;
   U.item = id => {
@@ -119,7 +123,7 @@
     } else if (i && c.inventory.includes(i)) {
       const extra = document.createElement('div');
       extra.className = 'row spacer';
-      extra.innerHTML = U.btn('Sell for ' + S.shop.value(i) + ' Bronze each…', 'sellForm', 'data-id="' + id + '" ' + (i.locked ? 'disabled' : ''), 'gold-btn');
+      extra.innerHTML = U.btn('Sell for ' + G.money(S.shop.value(i)) + ' each…', 'sellForm', 'data-id="' + id + '" ' + (i.locked ? 'disabled' : ''), 'gold-btn');
       document.querySelector('.modal').append(extra);
     }
   };
@@ -141,7 +145,7 @@
     const item = S.items.find(id);
     G.assert(item && !item.locked && !item.bound, 'This item cannot be sold.');
     G.runtime.sellItem = id;
-    U.modal('Sell ' + U.e(U.itemName(item)) + '?', '<p>' + S.shop.value(item) + ' Bronze per item.</p>' + (item.kind === 'gear' && (item.enhance || item.gems.some(Boolean)) ? '<div class="warning">Selling permanently removes this equipment, its upgrades, and every inserted gem.</div>' : '') + '<label>Quantity<input id="sell-quantity" type="number" min="1" max="' + (item.quantity || 1) + '" value="1"></label>' + U.quantityButtons('sellQuantity', item.quantity || 1) + '<div class="meta-row"><span>Total sale</span><strong id="sell-total">' + G.money(S.shop.value(item)) + '</strong></div><div class="modal-actions">' + U.btn('Cancel', 'closeModal', '', 'quiet') + U.btn('Sell selected quantity', 'sellConfirm', '', 'gold-btn') + '</div>');
+    U.modal('Sell ' + U.e(U.itemName(item)) + '?', '<p>' + G.money(S.shop.value(item)) + ' per item.</p>' + (item.kind === 'gear' && (item.enhance || item.gems.some(Boolean)) ? '<div class="warning">Selling permanently removes this equipment, its upgrades, and every inserted gem.</div>' : '') + '<label>Quantity<input id="sell-quantity" type="number" min="1" max="' + (item.quantity || 1) + '" value="1"></label>' + U.quantityButtons('sellQuantity', item.quantity || 1) + '<div class="meta-row"><span>Total sale</span><strong id="sell-total">' + G.money(S.shop.value(item)) + '</strong></div><div class="modal-actions">' + U.btn('Cancel', 'closeModal', '', 'quiet') + U.btn('Sell selected quantity', 'sellConfirm', '', 'gold-btn') + '</div>');
   };
   U.saveWarning = () => G.save.error || G.runtime.loadFailure ? '<div class="warning danger-box">Save problem: ' + U.e(G.save.error || 'Progress could not be loaded.') + ' ' + U.btn('Export a backup', 'export', '', 'small') + '</div>' : '';
   const shell = U.shell;

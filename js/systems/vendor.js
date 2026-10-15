@@ -2,10 +2,11 @@
 (function(G, D, S) {
   S.shop.value = function(item) {
     if (item.kind === 'gear') return Object.entries(S.items.recipe(item)).reduce((n, [key, q]) => n + q * this.stackValue(key), 0);
-    if (item.kind === 'tool') return item.bound ? 0 : D.toolLevels[item.rarity];
+    if (item.kind === 'tool') return item.bound ? 0 : D.toolSellPrices[item.rarity];
     return this.stackValue(item.key);
   };
   S.shop.stackValue = function(key) {
+    if (key === 'stone') return 10000;
     const data = D.catalog[key];
     if (!data) return 0;
     if (data.kind === 'bar') {

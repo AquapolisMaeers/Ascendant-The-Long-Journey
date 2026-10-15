@@ -20,11 +20,22 @@
     G.runtime.ascendPending = null;
     G.runtime.previousFocus?.focus();
   };
-  U.confirm = (title, body, callback, danger = false) => {
+  U.confirm = (title, body, callback, danger = false, cancelAction = 'closeModal') => {
     G.runtime.confirmAction = callback;
-    U.modal(title, body + '<div class="modal-actions">' + U.btn('Cancel', 'closeModal', '', 'quiet') + U.btn('Confirm', 'confirm', '', '' + (danger ? 'danger' : 'gold-btn')) + '</div>');
+    U.modal(title, body + '<div class="modal-actions">' + U.btn('Cancel', cancelAction, '', 'quiet') + U.btn('Confirm', 'confirm', '', '' + (danger ? 'danger' : 'gold-btn')) + '</div>');
   };
   U.locations = () => U.modal('Choose a location', '<div class="stack location-options">' + D.locations.map(l => '<button class="slot" data-action="location" data-id="' + l.id + '" ' + (G.character().level < l.level ? 'disabled' : '') + '><span class="slot-number">' + l.level + '</span><div><strong>' + l.name + '</strong><small>Enemies ' + l.level + '–' + l.max + (l.dungeon !== null ? ' · ' + D.dungeons[l.dungeon].name : '') + '</small></div></button>').join('') + '</div>', true);
+  D.modeDescriptions = {
+    Regular: 'A forgiving start to a long journey. Defeat restores your health but costs stored items and coins: one item and 10% of coins in the first land, increasing by one item and five percentage points per land. Equipped gear and tools are protected. The Marketplace preview is available.',
+    Ironman: 'Build your own legacy through gathering, crafting and battle. The Marketplace is hidden. Defeat has the same item and coin penalties as Regular; equipped gear and tools are protected.',
+    Hardcore: 'Every fight puts this entire chronicle at stake. Death permanently deletes this character, including its inventory, equipment and progress. There is no recovery; the empty slot can start a new journey.',
+    'Hardcore Ironman': 'Begin a self-sufficient journey with one unbroken life. The Marketplace is hidden. Your first death permanently changes this character to Ironman and applies the normal regional item and coin losses. Your remaining progress survives.'
+  };
+  D.classStories = {
+    Warrior: {title:'Stand where others falter', story:'You know the weight of a blade and the promise made by standing your ground. Whether you once guarded a village gate or took up a discarded sword yesterday, you step into danger so that the road behind you stays open. Your story is written in the fights you choose and the people you imagine protecting.', play:'Your weapon uses Attack for primary damage. Seek melee weapons and Attack gems, then choose perks and prefixes to shape offence, defence or utility. Preparation, food and equipment determine how safely you can face the next opponent.'},
+    Archer: {title:'Read the road before it reads you', story:'A broken branch, a moving shadow, a breath held steady: you notice what the hurried traveller misses. Beyond the lantern light, patience is its own kind of courage. You set out with a bow and the belief that careful preparation can turn a dangerous journey into a story worth telling.', play:'Your weapon uses Ranged for primary damage. Seek bows and Ranged gems, then shape your build through offensive, defensive or utility perks. The bow is your combat identity; all classes use the same automatic combat timing rules unless their stats or perks modify them.'},
+    Mage: {title:'Give the unknown a name', story:'The world is full of things that refuse to explain themselves. You answer with curiosity, a staff and a little stubbornness. Every gem you cut and every ruin you enter is another question asked of the dark. You travel because there is always one more mystery beyond the next ridge.', play:'Your weapon uses Magic for primary damage. Seek staves and Magic gems, and develop your own balance of offence, defence and utility. Spells are your weapon style within automatic combat; there is no separate mana resource or active spell rotation.'}
+  };
   U.creation = (slot, step = 0) => {
     if (!G.runtime.creation || G.runtime.creation.slot !== slot) G.runtime.creation = {
       slot,
@@ -44,7 +55,7 @@
       length: 5
     }, (_, i) => '<i class="' + (i <= step ? 'active' : '') + '"></i>').join('') + '</div>';
     if (step === 0) body += '<label>Character name<input id="create-name" minlength="2" maxlength="24" placeholder="Enter your name" value="' + U.e(f.name) + '" autocomplete="off"></label><p>2–24 characters. Each character has a separate inventory, skills, currency, and achievements.</p>';
-    if (step === 1) body += '<div class="class-options">' + D.classes.map(n => '<button class="class-option ' + (f.class === n ? 'active' : '') + '" data-action="createClass" data-value="' + n + '">' + U.icon(n) + '<span>' + n + '</span></button>').join('') + '</div><p>Warrior uses Attack, Archer uses Ranged, Mage uses Magic. Classes share the same mathematical perk template. Your class is permanent.</p>';
+    if (step === 1) body += '<div class="class-options">' + D.classes.map(n => '<button class="class-option ' + (f.class === n ? 'active' : '') + '" data-action="createClass" data-value="' + n + '">' + U.icon(n) + '<span>' + n + '</span></button>').join('') + '</div><section class="class-story spacer">' + U.characterPortrait(f.class, f.appearance) + '<div class="eyebrow">' + f.class + '</div><h3>' + D.classStories[f.class].title + '</h3><p class="spacer">' + D.classStories[f.class].story + '</p><p class="notes spacer">' + D.classStories[f.class].play + '</p><p class="notes spacer">Every class can master all seven skills. Classes share the same perk balance; class is permanent.</p></section>';
     if (step === 2) body += '<div class="stack">' + D.modes.map(n => '<button class="slot ' + (f.mode === n ? 'gold' : '') + '" data-action="createMode" data-value="' + n + '"><div><strong>' + (f.mode === n ? '◆ ' : '') + n + '</strong><small>' + ({
       Regular: 'Normal death · Marketplace preview',
       Hardcore: 'Death permanently deletes this character',
@@ -80,7 +91,8 @@
       body += '<details class="spacer"><summary>Compare final build if equipped</summary><table class="data-table"><thead><tr><th>Final stat</th><th>Current</th><th>With item</th></tr></thead><tbody>' + Object.keys(D.labels).filter(k => !k.endsWith('Pct')).map(k => '<tr><td>' + D.labels[k] + '</td><td>' + U.statValue(k, before[k]) + '</td><td class="' + (after[k] > before[k] ? 'good' : after[k] < before[k] ? 'bad' : '') + '">' + (after[k] > before[k] ? '↑ ' : after[k] < before[k] ? '↓ ' : '') + U.statValue(k, after[k]) + '</td></tr>').join('') + '</tbody></table><p>Includes prefixes, gems, perks and effective stat caps. Equipping still requires the correct class and level.</p></details>';
     }
     if (gear || tool) {
-      body += '<hr><div class="item-details-grid"><section class="item-prefixes"><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / ' + S.items.prefixSlots(item) + '</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
+      if (tool) body += U.toolPrefixHelp();
+      body += '<hr><div class="item-details-grid"><section class="item-prefixes"><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / ' + S.items.prefixSlots(item) + '</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) + ' — ' + D.toolPrefixDescriptions[key] : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
       if (gear && (item.enhance < 25 || Object.keys(item.prefixes).length < S.items.prefixSlots(item))) {
         const q = S.upgrades.quote(item);
         body += '<section class="upgrade-box upgrade-compact"><h3>' + (item.enhance===25?'Fill a missing prefix':'Enhance to +'+(item.enhance+1)) + '</h3>' + U.upgradeSummary(q,true) + U.btn(item.enhance===25?'Refine prefixes':'Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';

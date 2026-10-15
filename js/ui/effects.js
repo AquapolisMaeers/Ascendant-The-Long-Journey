@@ -1,9 +1,7 @@
 'use strict';
 (function(G) {
   const reduced = () => G.state.settings.reduced || matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let pending = null,
-    previousCoins = null,
-    previousId = null;
+  let pending = null;
   window.addEventListener('rpg:effect', ({
     detail
   }) => {
@@ -18,30 +16,7 @@
     }
     const effect = pending;
     pending = null;
-    const target = document.querySelector('.modal') || document.querySelector('.encounter');
-    if (!target) return;
-    const colors = {
-      enhance: '#c5a465',
-      ascend: '#cbb5df',
-      socket: '#9bd1cb',
-      failure: '#b95448',
-      victory: '#92b49d',
-      death: '#a33138',
-      fusion: '#b8b0d8',
-      boss: '#aa4746',
-      room: '#899590'
-    };
-    const color = colors[effect.kind] || colors.enhance;
-    target.animate([{
-      boxShadow: 'inset 0 0 0 ' + color + '00'
-    }, {
-      boxShadow: 'inset 0 0 45px ' + color + '50'
-    }, {
-      boxShadow: 'inset 0 0 0 ' + color + '00'
-    }], {
-      duration: 650,
-      easing: 'ease-out'
-    });
+    // Rewards keep their text and art without a panel-wide flash.
     if (effect.socket) G.notify('A new gem socket has opened.', 'success');
   }
   window.addEventListener('rpg:strike', ({
@@ -58,15 +33,6 @@
       transform: 'translateX(0)'
     }], {
       duration: e.extra ? 130 : 230
-    });
-    if (defender && !e.miss && !e.food && !e.recovery) defender.animate([{
-      filter: 'brightness(1)'
-    }, {
-      filter: 'brightness(1.8)'
-    }, {
-      filter: 'brightness(1)'
-    }], {
-      duration: 210
     });
     if (e.mitigated && defender) {
       defender.classList.add('mitigated');
@@ -89,29 +55,5 @@
     el.innerHTML = '<div class="eyebrow">A TITLE EARNED</div><strong>' + G.escape(detail.title) + '</strong>';
     document.body.append(el);
     setTimeout(() => el.remove(), 4500);
-  });
-  window.addEventListener('rpg:rendered', () => {
-    const c = G.character();
-    if (!c) return;
-    const current = c.coins,
-      from = previousId === c.id ? (previousCoins ?? current) : current;
-    previousCoins = current;
-    previousId = c.id;
-    if (from === current || reduced()) return;
-    const start = performance.now();
-    const step = now => {
-      const p = Math.min(1, (now - start) / 350),
-        n = Math.round(from + (current - from) * (1 - Math.pow(1 - p, 3)));
-      for (const [cls, v] of [
-          ['g', Math.floor(n / 10000)],
-          ['s', Math.floor(n % 10000 / 100)],
-          ['b', n % 100]
-        ]) {
-        const el = document.querySelector('.currency-' + cls);
-        if (el) el.innerHTML = '<i class="coin"></i>' + v;
-      }
-      if (p < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
   });
 })(RPG);

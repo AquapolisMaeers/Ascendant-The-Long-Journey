@@ -142,11 +142,17 @@
       this.advanceStep();
     },
     equipped(item) {
-      if (this.active() && this.current().id === 'equip' && item.id === G.character().guide.plateId) this.finish();
+      if (this.active() && this.current().id === 'equip' && item.id === G.character().guide.plateId) this.advanceStep();
+    },
+    acknowledge() {
+      const id = this.current()?.id;
+      G.assert(['preferences', 'offline', 'afk', 'recovery', 'prefixes', 'ready'].includes(id), 'Complete the current practical lesson first.');
+      if (id === 'ready') this.finish();
+      else { this.advanceStep(); G.commit(); }
     },
     finish(skip = false) {
       const c = G.character();
-      G.assert(!skip && this.active() && this.current().id === 'equip' && c.equipment.Plate?.id === c.guide.plateId, 'The tutorial is required. Complete every lesson and equip the tutorial Plate to finish.');
+      G.assert(!skip && this.active() && this.current().id === 'ready' && c.equipment.Plate?.id === c.guide.plateId, 'The tutorial is required. Complete every lesson and equip the tutorial Plate to finish.');
       if (this.active()) {
         G.assert(!c.combat && !c.activity, 'Finish or stop the current tutorial action first.');
         c.guide.active = false;

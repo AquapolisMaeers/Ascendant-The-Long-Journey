@@ -11,6 +11,16 @@
     max(recipe) {
       return Math.min(...Object.entries(recipe.cost).map(([k, n]) => Math.floor(S.inventory.available(k) / n)));
     },
+    hasRoom(r, c = G.character()) {
+      // Reserve possible bonuses, counting only ingredient slots certain to be freed.
+      const yieldMax = 1 + (S.items.toolBonus(c, r.skill, 'Yield') > 0 ? 1 : 0);
+      let slots = r.piece !== undefined ? yieldMax : c.inventory.some(i => i.kind === 'stack' && i.key === r.output) ? 0 : 1;
+      if (r.skill !== 'Faceting' && r.piece === undefined && r.tier < 11 && S.items.toolBonus(c, r.skill, 'Fortune') > 0 &&
+          !c.inventory.some(i => i.kind === 'stack' && i.key === r.output.split(':')[0] + ':' + (r.tier + 1))) slots++;
+      const freed = S.items.toolBonus(c, r.skill, 'Conservation') > 0 ? 0 : Object.entries(r.cost).filter(([key, n]) =>
+        c.inventory.some(i => i.kind === 'stack' && !i.locked && i.key === key && i.quantity === (r.skill === 'Faceting' && r.rank > 0 ? 1 : n))).length;
+      return !c.pending.length && c.inventory.length - freed + slots <= c.capacity;
+    },
     start(id, quantity) {
       G.ensureProgress();
       const c = G.character(),
@@ -39,6 +49,13 @@
       const c = G.character(),
         a = c.activity,
         r = D.recipes.find(r => r.id === a.recipe);
+      if (!this.hasRoom(r, c)) {
+        c.activity = null;
+        S.loot.present(a.rewards || [], 'Crafting stopped: inventory full');
+        G.notify('Crafting stopped: make room in your bag. Unstarted crafts used no ingredients.', 'warning');
+        G.commit();
+        return;
+      }
       if (!S.inventory.has(r.cost)) {
         c.activity = null;
         G.notify('Crafting stopped: missing unlocked ingredients.', 'warning');
@@ -94,9 +111,11 @@
       S.tutorial?.crafted(r, success, rewards);
       if (lesson && lesson !== S.tutorial?.current()?.id) a.remaining = 1;
       a.remaining--;
-      if (a.remaining <= 0) {
+      const full = a.remaining > 0 && !this.hasRoom(r, c);
+      if (a.remaining <= 0 || full) {
         c.activity = null;
-        S.loot.present(a.rewards, 'Crafting complete');
+        S.loot.present(a.rewards, full ? 'Crafting stopped: inventory full' : 'Crafting complete');
+        if (full) G.notify('Crafting stopped: make room in your bag. Unstarted crafts used no ingredients.', 'warning');
       }
       G.commit();
     }

@@ -1,0 +1,96 @@
+/* Original fantasy print direction: ink, ivory, crimson, and engraved gold. */
+:root { --bg:#111119; --panel:#1b1c28; --panel2:#242635; --line:#464859; --text:#f2eee5; --muted:#b7b8c5; --gold:#ecc87b; --crimson:#d33d52; --green:#92c9ae; --red:#ff9d9d; }
+body { background:radial-gradient(ellipse at 90% 0,#34304744,transparent 55%),#111119; }
+h1,h2,h3 { color:#faf4e8; }
+h1 { font-weight:700; letter-spacing:-1.2px; }
+.eyebrow { color:var(--gold); font-weight:800; letter-spacing:2px; }
+.sidebar { background:linear-gradient(165deg,#29232f 0,#13131e 38%); border-right:3px solid #e2c88a; box-shadow:8px 0 0 #07080d70; }
+.brand strong { color:#fff4d9; font-weight:800; letter-spacing:1.5px; font-size:16px; }
+.nav-label { color:#d5c5b4; }
+.nav button { border-radius:0; border-left:3px solid #59505d; color:#c7c8d3; }
+.nav button:hover { background:#39303e; border-color:#ebc881; }
+.nav button.active { background:#ab2940; border-color:#ffe2aa; color:#fff8e9; box-shadow:3px 3px 0 #080910; font-weight:800; }
+.topbar { background:#191a26; border-bottom:2px solid #6e6171; }
+.page-heading { border-bottom:1px solid #666071; padding-bottom:14px; }
+.page-heading > div:first-child > .eyebrow { display:table; background:#a12e48; color:#fff6e8; padding:3px 18px 3px 10px; clip-path:polygon(0 0,100% 0,calc(100% - 9px) 100%,0 100%); margin-bottom:8px; }
+.page-heading h1 { text-shadow:3px 3px 0 #08080d; }
+.panel,.recipe,.perk-row { background:linear-gradient(135deg,#252633,#1a1c27 80%); border:1px solid #545365; border-radius:2px; box-shadow:4px 4px 0 #06070c80; }
+.panel-head { border-bottom:1px solid #525060; padding-bottom:8px; }
+.btn { border-radius:2px; font-weight:650; border-color:#777184; }
+.btn.primary,.btn.gold-btn { color:#17121a; background:#edce90; border:1px solid #fff0c8; box-shadow:2px 2px 0 #0008; }
+.btn.primary:hover,.btn.gold-btn:hover { background:#ffe5ac; }
+.tabs { border-bottom:2px solid #686075; }
+.tabs button.active { color:#fff5e6; background:#922c43; border-bottom-color:#ffd48a; }
+.badge { border-radius:2px; border-color:#776c81; color:#eee1c6; }
+.item-card { background-color:#151620; border-radius:2px; }
+.compact-recipes .ingredients > div { column-gap:12px; }
+.bar { background:#090b12; border:1px solid #555263; }
+.bar > i { background:linear-gradient(90deg,#b38c51,#f2d598); }
+.bar.hp > i { background:linear-gradient(90deg,#488168,#92c9ae); }
+.guide-panel { position:relative; background:linear-gradient(110deg,#462536,#231e2b 75%); border:2px solid #e2c286; border-left:8px solid #e44861; padding:14px 18px; box-shadow:5px 5px 0 #06070c99; }
+.guide-panel .eyebrow { display:inline-block; color:#fff6e1; background:#9b2942; padding:3px 10px; letter-spacing:1.5px; }
+.guide-panel h3 { font-weight:700; }
+.guide-panel p { color:#e0d5df; }
+.modal-backdrop { background:#06070deb; backdrop-filter:blur(5px); }
+.modal { background:#20212d; border:2px solid #e6c68b; border-top:7px solid #c83954; border-radius:2px; box-shadow:10px 10px 0 #0009,0 0 0 5px #12121b; }
+.modal-head { border-bottom:2px solid #716379; padding-bottom:14px; }
+.modal-head h2 { font-weight:700; }
+.modal-close { background:#a62d45; color:white; border:1px solid #ebc78a; border-radius:0; }
+.class-story { padding:18px; border-left:4px solid #d4485c; background:#151720; }
+.class-story .character-portrait { float:right; width:90px; height:105px; margin:0 0 12px 18px; }
+.class-option.active { background:#832c43; border-color:#f1d294; }
+.prefix-handbook { padding:10px 14px; border:1px solid #6b6176; background:#141620; }
+.prefix-handbook summary { cursor:pointer; color:#f2d598; font-weight:700; }
+.prefix-handbook dl { margin:12px 0 0; }
+.prefix-handbook dt { font-weight:700; color:#f1e5cc; margin-top:10px; }
+.prefix-handbook dd { margin:2px 0 0; color:#c2c4d0; font-size:12px; }
+.preference-odds { display:flex; gap:8px 16px; flex-wrap:wrap; font-size:12px; }
+.preference-odds span { background:#121420; border:1px solid #6b5c70; padding:5px 10px; }
+.currencies { position:relative; display:flex; gap:12px; padding:16px 12px 7px; background:#0e1019; border:2px solid #d1ae6c; border-radius:2px; box-shadow:3px 3px 0 #0008; white-space:nowrap; }
+.currencies .wallet-label { position:absolute; top:1px; left:10px; color:#f4dca4; font-size:8px; font-weight:800; letter-spacing:2px; }
+.currencies > span { display:inline-flex; align-items:center; gap:4px; font-size:17px; font-weight:800; }
+.currency-g { color:#ffe097; }.currency-s { color:#e5e9f5; }.currency-b { color:#f4b28d; }
+.currencies small { font-size:10px; }
+.welcome-art { border-right:3px solid #ecc87b; }
+.welcome-art h1 { font-style:italic; text-shadow:4px 4px 0 #090a11; }
+.slot { border-color:#655a70; border-radius:2px; background:#1a1b28; }
+.slot:hover { border-color:#f2d598; background:#322433; }
+.nav button.active { clip-path:polygon(0 0,100% 0,calc(100% - 7px) 100%,0 100%); }
+.welcome-art { position:relative; isolation:isolate; }
+.welcome-art::after { content:''; position:absolute; inset:0; z-index:-1; pointer-events:none; background:linear-gradient(128deg,#a3294422,transparent 50%),repeating-linear-gradient(135deg,transparent 0 14px,#ecd19809 14px 15px); }
+.welcome-art .eyebrow { color:#fff4de; background:#962d43d9; padding:5px 12px; display:table; }
+/* Stable presentation: no repeated screen fades, flashing danger or rarity pulses. */
+.content,.modal,.location-scene,.low-hp .main-column,
+:is(.item-card,.item-art-detail):is(.rarity-4,.rarity-5,.rarity-6,.rarity-7)::after { animation:none!important; }
+.low-hp .hp-top { outline:2px solid #e25c70; outline-offset:4px; }
+@media(min-width:701px) { .topbar { gap:12px; }.topbar .top-progress { min-width:90px; }.identity { min-width:130px; } }
+@media(min-width:701px) and (max-width:1050px) {
+  .sidebar .brand { gap:6px; padding-left:0; }.sidebar .brand img { width:22px; }.sidebar .brand strong { font-size:12px; letter-spacing:1px; }.sidebar .brand small { font-size:6px; letter-spacing:1px; }
+  .topbar { display:grid; grid-template-columns:minmax(0,1fr) auto auto; height:auto; gap:8px 12px; }
+  .topbar .identity { grid-column:1; grid-row:1; min-width:0; }.topbar .identity > div { min-width:0; overflow-wrap:anywhere; }
+  .topbar .currencies { grid-column:2; grid-row:1; margin:0; }.topbar > .btn[data-value="Settings"] { grid-column:3; grid-row:1; }
+  .topbar .top-progress { display:grid; max-width:none; min-width:0; width:100%; grid-column:1; grid-row:2; }
+  .topbar .top-progress.hp-top { display:grid; grid-column:2 / span 2; grid-row:2; }
+  .topbar .top-training { grid-column:1 / span 2; grid-row:3; min-width:0; width:100%; display:flex; }.topbar .top-training select { min-width:0; }
+  .topbar .ascendant-wallet { grid-column:3; grid-row:3; padding:6px; }
+}
+@media(min-width:1200px) {
+  #content[data-page="Skills"] .skill-preferences { display:grid; grid-template-columns:minmax(160px,.55fr) minmax(280px,1fr) minmax(260px,.8fr); gap:10px 18px; align-items:center; }
+  #content[data-page="Skills"] .skill-preferences > .panel-head { display:block; border:0; padding:0; margin-bottom:0; }
+  #content[data-page="Skills"] .skill-preferences > .panel-head .badge { margin-top:5px; display:table; }
+  #content[data-page="Skills"] .skill-preferences > p { display:none; }
+  #content[data-page="Skills"] .skill-preferences > .spacer { margin-top:0; }
+  #content[data-page="Skills"] .preference-odds { gap:5px; }
+  #content[data-page="Skills"] .skill-card .panel-head { margin-bottom:8px; padding-bottom:6px; }
+  #content[data-page="Skills"] .skill-card { padding:10px 14px; }
+  .content:has(.world-screen) > .guide-panel { display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:24px; padding:12px 16px; }
+  .content:has(.world-screen) > .guide-panel > :is(div:first-child,h3,p) { grid-column:1; }
+  .content:has(.world-screen) > .guide-panel > .row.spacer { grid-column:2; grid-row:1 / span 3; margin-top:0; align-self:center; max-width:270px; }
+  .content:has(.guide-panel) .world-screen > .page-heading .eyebrow { display:none; }
+  .content:has(.guide-panel) .world-screen .afk-panel :is(.afk-summary,.afk-status,#afk-timer) { display:none; }
+}
+@media(max-width:700px) {
+  .currencies { gap:8px; padding:14px 8px 5px; }.currencies > span { font-size:13px; gap:3px; }.currencies .coin { display:none; }
+  .guide-panel { padding:12px; }.modal { max-width:calc(100vw - 24px); }.skill-preferences .grid-2 { grid-template-columns:1fr; }
+  .class-story { padding:12px; }.class-story .character-portrait { width:64px; height:78px; }
+}

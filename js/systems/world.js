@@ -1,6 +1,24 @@
 'use strict';
 (function(G, D, S) {
   S.world = {
+    preferences(c = G.character()) {
+      return c.skillPreferences || {primary: 'Fishing', secondary: 'Mining'};
+    },
+    setPreference(rank, skill) {
+      G.assert(['primary', 'secondary'].includes(rank) && D.skills.slice(0, 4).includes(skill), 'Choose a gathering skill.');
+      const c = G.character(), p = {...this.preferences(c)}, other = rank === 'primary' ? 'secondary' : 'primary';
+      if (p[other] === skill) p[other] = p[rank];
+      p[rank] = skill;
+      c.skillPreferences = p;
+      G.commit();
+    },
+    encounterWeights(c = G.character()) {
+      const weights = [...D.encounters[D.locations[c.location].dungeon === null ? 'without' : 'with']],
+        skills = D.skills.slice(0, 4), p = this.preferences(c),
+        total = D.encounters.types.reduce((sum, type, i) => sum + (skills.includes(type) ? weights[i] : 0), 0);
+      return weights.map((weight, i) => skills.includes(D.encounters.types[i]) ? total *
+        (D.encounters.types[i] === p.primary ? 4 : D.encounters.types[i] === p.secondary ? 2 : 1) / 8 : weight);
+    },
     tier(location, divisor = 2, starter = false) {
       if (location === 0 && starter) return G.weighted(G.rng, [70, 30]);
       const max = D.tierFor(D.locations[location].max);
@@ -55,7 +73,7 @@
       const c = G.character(),
         loc = D.locations[c.location];
       if (!forced && S.tutorial?.discover()) return;
-      const type = forced || D.encounters.types[G.weighted(G.rng, D.encounters[loc.dungeon === null ? 'without' : 'with'])];
+      const type = forced || D.encounters.types[G.weighted(G.rng, this.encounterWeights(c))];
       let e = {
         type
       };

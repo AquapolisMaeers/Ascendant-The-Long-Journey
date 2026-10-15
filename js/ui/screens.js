@@ -29,7 +29,7 @@
   };
   U.screens.Skills = () => {
     const c = G.character();
-    return U.heading('THE WORK OF PATIENCE', 'Skills', 'Seven disciplines. A lifetime of mastery.') + '<p class="notes spacer">Choose AFK skilling in the top bar. Offline XP: gathering 25% base, Smithing/Cooking 12.5%, Faceting 1.875%; up to eight hours; Knowledge applies. No items, coins or ingredients are gained or consumed.</p><div class="grid-3 spacer skills-grid">' + D.skills.map((skill, index) => {
+    return U.heading('THE WORK OF PATIENCE', 'Skills', 'Seven disciplines. A lifetime of mastery.') + U.skillPreferences() + U.toolPrefixHelp() + '<p class="notes spacer">Choose AFK skilling in the top bar. Offline XP: gathering 25% base, Smithing/Cooking 12.5%, Faceting 1.875%; up to eight hours; Knowledge applies. No items, coins or ingredients are gained or consumed.</p><div class="grid-3 spacer skills-grid">' + D.skills.map((skill, index) => {
       const track = c.skills[skill],
         tool = c.tools[skill],
         kind = D.resourceKinds[index];

@@ -66,11 +66,43 @@
     if (!c || G.runtime.selecting) return U.welcome();
     const stats = S.character.stats(c),
       nav = ['World', 'Character', 'Inventory', 'Skills', 'Crafting', 'Shop', ...(S.market.allowed() ? ['Marketplace'] : []), 'Quests', 'Achievements', 'Leaderboards', 'Companions', 'Emporium', 'Settings'];
-    return '<div class="shell ' + (c.hp / stats.health < .25 ? 'low-hp' : '') + '"><aside class="sidebar"><div class="brand"><img src="assets/icons/crest.svg" alt=""><div><strong>ASCENDANT</strong><small>THE LONG JOURNEY</small></div></div><div class="nav-label">YOUR JOURNEY</div><nav class="nav" aria-label="Main navigation">' + nav.map(n => '<button data-action="navigate" data-value="' + n + '" class="' + (G.runtime.page === n ? 'active' : '') + '">' + U.icon(n) + n + '</button>').join('') + '</nav><div class="sidebar-foot">' + U.btn('Character slots', 'slots', '', 'small quiet') + '<div class="offline-badge">● OFFLINE · LOCAL SAVE</div><div class="save-status"><span class="save-led"></span><span id="save-status">' + U.e(G.save.status) + '</span><div id="save-time">' + (G.state.savedAt ? new Date(G.state.savedAt).toLocaleTimeString() : '') + '</div></div></div></aside><div class="main-column"><header class="topbar"><div class="identity"><button class="portrait customize-character" data-action="customize" aria-label="Customize character appearance" title="Customize your character" style="--cloak:' + U.e(c.appearance.color) + '">' + U.characterPortrait(c.class, c.appearance) + '</button><div><strong>' + U.e(c.name) + '</strong><small>' + c.class + ' · ' + c.mode + '</small></div></div><div class="top-progress"><div class="bar-label"><span>LEVEL ' + c.level + '</span><span>' + G.number(c.xp) + ' / ' + (c.level === 100 ? 'MAX' : G.number(D.xpNext(c.level))) + '</span></div>' + U.bar(c.xp, D.xpNext(c.level)) + '</div><div class="top-progress hp-top"><div class="bar-label"><span>HEALTH</span><span id="top-hp-label">' + G.number(c.hp, 1) + ' / ' + G.number(c.combat?.player.health || stats.health, 1) + '</span></div>' + U.bar(c.hp, c.combat?.player.health || stats.health, 'hp', 'top-hp') + '</div><label class="top-training" title="Offline base XP: gathering 25%, Smithing/Cooking 12.5%, Faceting 1.875%; maximum 8 hours; no items or costs">AFK skilling<select id="offline-select" aria-label="AFK skilling"><option value="">None</option>' + D.skills.map(skill => '<option value="' + skill + '" ' + (c.offline === skill ? 'selected' : '') + '>' + skill + '</option>').join('') + '</select></label><div class="currencies"><span class="currency-g"><i class="coin"></i>' + Math.floor(c.coins / 10000) + '</span><span class="currency-s"><i class="coin"></i>' + Math.floor(c.coins % 10000 / 100) + '</span><span class="currency-b"><i class="coin"></i>' + c.coins % 100 + '</span></div>' + U.btn('AC <strong id="ascendant-coins">' + G.number(c.ascendantCoins || 0) + '</strong>', 'navigate', 'data-value="Emporium" title="Ascendant Coins" aria-label="Ascendant Coins and Emporium"', 'small quiet ascendant-wallet') + U.btn(U.icon('Settings'), 'navigate', 'data-value="Settings" aria-label="Settings"', 'small quiet') + '</header><main class="content" id="content">' + (c.pending.length ? '<div class="warning">' + c.pending.length + ' pending reward' + (c.pending.length > 1 ? 's' : '') + '. Progression paused until you make inventory space. ' + U.btn('Resolve loot', 'navigate', 'data-value="Inventory"', 'small') + '</div>' : '') + (U.screens[G.runtime.page] || U.screens.World)() + '</main></div></div>';
+    return '<div class="shell ' + (c.hp / stats.health < .25 ? 'low-hp' : '') + '"><aside class="sidebar"><div class="brand"><img src="assets/icons/crest.svg" alt=""><div><strong>ASCENDANT</strong><small>THE LONG JOURNEY</small></div></div><div class="nav-label">YOUR JOURNEY</div><nav class="nav" aria-label="Main navigation">' + nav.map(n => '<button data-action="navigate" data-value="' + n + '" class="' + (G.runtime.page === n ? 'active' : '') + '">' + U.icon(n) + n + '</button>').join('') + '</nav><div class="sidebar-foot">' + U.btn('Character slots', 'slots', '', 'small quiet') + '<div class="offline-badge">● OFFLINE · LOCAL SAVE</div><div class="save-status"><span class="save-led"></span><span id="save-status">' + U.e(G.save.status) + '</span><div id="save-time">' + (G.state.savedAt ? new Date(G.state.savedAt).toLocaleTimeString() : '') + '</div></div></div></aside><div class="main-column"><header class="topbar"><div class="identity"><button class="portrait customize-character" data-action="customize" aria-label="Customize character appearance" title="Customize your character" style="--cloak:' + U.e(c.appearance.color) + '">' + U.characterPortrait(c.class, c.appearance) + '</button><div><strong>' + U.e(c.name) + '</strong><small>' + c.class + ' · ' + c.mode + '</small></div></div><div class="top-progress"><div class="bar-label"><span>LEVEL ' + c.level + '</span><span>' + G.number(c.xp) + ' / ' + (c.level === 100 ? 'MAX' : G.number(D.xpNext(c.level))) + '</span></div>' + U.bar(c.xp, D.xpNext(c.level)) + '</div><div class="top-progress hp-top"><div class="bar-label"><span>HEALTH</span><span id="top-hp-label">' + G.number(c.hp, 1) + ' / ' + G.number(c.combat?.player.health || stats.health, 1) + '</span></div>' + U.bar(c.hp, c.combat?.player.health || stats.health, 'hp', 'top-hp') + '</div><label class="top-training" title="Offline base XP: gathering 25%, Smithing/Cooking 12.5%, Faceting 1.875%; maximum 8 hours; no items or costs">AFK skilling<select id="offline-select" aria-label="AFK skilling"><option value="">None</option>' + D.skills.map(skill => '<option value="' + skill + '" ' + (c.offline === skill ? 'selected' : '') + '>' + skill + '</option>').join('') + '</select></label><div class="currencies" aria-label="Wallet" title="100 Bronze = 1 Silver; 100 Silver = 1 Gold"><small class="wallet-label">WALLET</small><span class="currency-g"><i class="coin"></i>' + Math.floor(c.coins / 10000) + ' <small>G</small></span><span class="currency-s"><i class="coin"></i>' + Math.floor(c.coins % 10000 / 100) + ' <small>S</small></span><span class="currency-b"><i class="coin"></i>' + c.coins % 100 + ' <small>B</small></span></div>' + U.btn('AC <strong id="ascendant-coins">' + G.number(c.ascendantCoins || 0) + '</strong>', 'navigate', 'data-value="Emporium" title="Ascendant Coins" aria-label="Ascendant Coins and Emporium"', 'small quiet ascendant-wallet') + U.btn(U.icon('Settings'), 'navigate', 'data-value="Settings" aria-label="Settings"', 'small quiet') + '</header><main class="content" id="content">' + (c.pending.length ? '<div class="warning">' + c.pending.length + ' pending reward' + (c.pending.length > 1 ? 's' : '') + '. Progression paused until you make inventory space. ' + U.btn('Resolve loot', 'navigate', 'data-value="Inventory"', 'small') + '</div>' : '') + (U.screens[G.runtime.page] || U.screens.World)() + '</main></div></div>';
+  };
+  // Keep existing images, focus, disclosure state and animation nodes alive.
+  U.patch = (root, html) => {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    const morph = (parent, next) => {
+      const desired = [...next.childNodes];
+      desired.forEach((fresh, index) => {
+        let old = parent.childNodes[index];
+        if (!old) { parent.append(fresh.cloneNode(true)); return; }
+        if (old.nodeType !== fresh.nodeType || old.nodeName !== fresh.nodeName ||
+            old.nodeType === 1 && old.id !== fresh.id) {
+          parent.replaceChild(fresh.cloneNode(true), old); return;
+        }
+        if (old.nodeType !== 1) {
+          if (old.nodeValue !== fresh.nodeValue) old.nodeValue = fresh.nodeValue;
+          return;
+        }
+        for (const attr of [...old.attributes])
+          if (!fresh.hasAttribute(attr.name) && !(old.tagName === 'DETAILS' && attr.name === 'open')) old.removeAttribute(attr.name);
+        for (const attr of fresh.attributes)
+          if (old.getAttribute(attr.name) !== attr.value) old.setAttribute(attr.name, attr.value);
+        morph(old, fresh);
+        if (old instanceof HTMLInputElement) {
+          old.checked = fresh.checked;
+          if (old !== document.activeElement) old.value = fresh.value;
+        }
+        if (old instanceof HTMLSelectElement && old !== document.activeElement) old.value = fresh.value;
+      });
+      while (parent.childNodes.length > desired.length) parent.lastChild.remove();
+    };
+    morph(root, template.content);
   };
   U.render = () => {
     const focused = document.activeElement?.id;
-    document.getElementById('app').innerHTML = U.shell();
+    U.patch(document.getElementById('app'), U.shell());
     const content = document.getElementById('content');
     if (content) {
       content.dataset.page = G.runtime.page;

@@ -108,6 +108,7 @@
       if (!c.afk || ![8000, 12000, 16000].includes(c.afk.interval) || ![.55, .65, .75, .85, .95].includes(c.afk.chance) || ![.25, .5, .75].includes(c.afk.minHp) || c.afk.minutes !== undefined && ![15, 30, 60].includes(c.afk.minutes) || ['elites', 'gather', 'chests'].some(k => typeof c.afk[k] !== 'boolean')) fail('AFK settings');
       if (['normals','dungeons'].some(k => c.afk[k] !== undefined && typeof c.afk[k] !== 'boolean')) fail('AFK encounter filters');
       if (!finite(c.restReadyAt)) fail('rest cooldown');
+      if (c.skillPreferences !== undefined && (!c.skillPreferences || !D.skills.slice(0, 4).includes(c.skillPreferences.primary) || !D.skills.slice(0, 4).includes(c.skillPreferences.secondary) || c.skillPreferences.primary === c.skillPreferences.secondary)) fail('skill preferences');
       if (c.guide && (!Number.isInteger(c.guide.step) || !D.tutorial.steps[c.guide.step] || typeof c.guide.active !== 'boolean' || !c.guide.gathered)) fail('tutorial');
       if (c.activity?.rewards) {
         if (!Array.isArray(c.activity.rewards)) fail('activity rewards');

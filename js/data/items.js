@@ -152,6 +152,14 @@
   D.tools = ['Pickaxe', 'Axe', 'Fishing Rod', 'Trap', 'Hammer', 'Frying Pan', 'Chisel'];
   // Nominal material tiers and sale values only; tools have no use/equip level gate.
   D.toolLevels = [1, 5, 10, 20, 40, 60, 80, 100];
+  D.toolSellPrices = [50, 100, 250, 500, 1000, 2500, 5000, 10000];
+  D.toolPrefixDescriptions = {
+    Efficiency: 'Speeds up active gathering and crafting by 5% per rank. Does not speed up offline XP.',
+    Yield: 'Adds a 5% chance per rank to produce one extra item on a successful action.',
+    Fortune: 'Adds a 1% chance per rank to find one resource from the next tier when gathering, cooking or smelting. Does not apply to equipment or gems.',
+    Knowledge: 'Adds 5% skill XP per rank, including offline training.',
+    Conservation: 'Adds a 5% chance per rank to preserve a gathering charge or each crafting ingredient. Failed gem fusion still breaks exactly one gem.'
+  };
   D.toolPrefixes = {
     Efficiency: .05,
     Yield: .05,
