@@ -1,0 +1,75 @@
+'use strict';
+(function(G,D,S) {
+  const freshPet=type=>({type,level:1,xp:0,ascensions:0,hunger:100,health:100,updatedAt:Date.now()});
+  const idle=()=>{ G.ensureProgress(); G.assert(!G.character().dungeon&&!S.tutorial.active(),'Finish the tutorial and leave the dungeon first.'); };
+  S.emporium = {
+    normalize(c) { c.regalia ??= {owned:[],outfit:null,aura:null}; c.specialPets ??= []; c.petStable ??= {}; },
+    bonus(c) {
+      const bonus={};
+      for(const kind of ['outfit','aura']) {
+        const item=D.regalia.find(r=>r.id===c.regalia?.[kind]&&r.kind===kind);
+        if(item&&c.regalia.owned.includes(item.id)) for(const [key,n] of Object.entries(item.stats)) bonus[key]=(bonus[key]||0)+n;
+      }
+      return bonus;
+    },
+    entry(id) { return D.regalia.find(r=>r.id===id)||D.specialCompanions.find(p=>p.id===id)||D.emporiumBoxes.find(b=>b.id===id); },
+    owned(entry,c=G.character()) { return entry.special?c.specialPets.includes(entry.id):c.regalia.owned.includes(entry.id); },
+    pay(c,amount) { G.assert(Number.isSafeInteger(amount)&&amount>0&&c.ascendantCoins>=amount,'Not enough Ascendant Coins.'); c.ascendantCoins-=amount; },
+    buy(id) {
+      idle();const c=G.character(),entry=this.entry(id);this.normalize(c);
+      G.assert(entry&&!D.emporiumBoxes.includes(entry),'Choose an available outfit, aura or pet.');
+      G.assert(!this.owned(entry,c),'Already in your collection.');
+      this.pay(c,entry.price);
+      if(entry.special)c.specialPets.push(id);else c.regalia.owned.push(id);
+      G.commit();return {entry,duplicate:false};
+    },
+    equip(id) {
+      idle();const c=G.character(),entry=D.regalia.find(r=>r.id===id);this.normalize(c);
+      G.assert(entry&&this.owned(entry,c),'Collect this item before equipping it.');
+      c.regalia[entry.kind]=id;this.changed(c);
+    },
+    unequip(kind) { idle();G.assert(['outfit','aura'].includes(kind),'Unknown collection slot.');const c=G.character();this.normalize(c);c.regalia[kind]=null;this.changed(c); },
+    changed(c) { c.hp=Math.min(c.hp,S.character.stats(c).health);G.runtime.estimate=null;G.commit(); },
+    equipPet(type) {
+      idle();const c=G.character();this.normalize(c);
+      G.assert(D.allCompanions.some(p=>p.id===type)&&(c.specialPets.includes(type)||Object.hasOwn(c.petStable,type)),'This companion is not in your stable.');
+      G.assert(c.companion?.type!==type,'This companion is already travelling with you.');
+      if(c.companion){ S.companions.sync(c); c.petStable[c.companion.type]=G.clone(c.companion); }
+      c.companion=c.petStable[type]||freshPet(type);delete c.petStable[type];S.companions.sync(c);this.changed(c);
+    },
+    outcomes(box) {
+      if(box.kind==='outfit'||box.kind==='aura')return D.regalia.filter(r=>r.kind===box.kind).map(entry=>({entry,weight:entry.weight}));
+      if(box.kind==='pet')return D.specialCompanions.map(entry=>({entry,weight:1}));
+      return [{coins:500,weight:33},{coins:1000,weight:33},{coins:1500,weight:33},{stone:1,weight:1}];
+    },
+    open(id) {
+      idle();const c=G.character(),box=D.emporiumBoxes.find(b=>b.id===id);this.normalize(c);G.assert(box,'Choose an available box.');
+      // Reserve a potential stone before paying or rolling. No lost rewards or rerolls on a full bag.
+      if(box.kind==='stone'){
+        const stack=c.inventory.find(i=>i.kind==='stack'&&i.key==='stone');
+        G.assert(c.inventory.length<c.capacity||stack,'Free one inventory slot before opening a stone box.');
+        G.assert(!stack||stack.quantity<1e15,'This stone stack is full.');
+        G.assert(c.coins<=1e15-1500,'Make room in your coin balance before opening a stone box.');
+      }
+      G.assert(c.ascendantCoins>=box.price,'Not enough Ascendant Coins.');
+      const outcomes=this.outcomes(box), result=outcomes[G.weighted(G.rng,outcomes.map(o=>o.weight))];
+      this.pay(c,box.price);
+      if(result.entry) {
+        const duplicate=this.owned(result.entry,c);
+        if(duplicate)c.ascendantCoins+=box.duplicate;
+        else if(result.entry.special)c.specialPets.push(result.entry.id);else c.regalia.owned.push(result.entry.id);
+        G.commit();return {...result,duplicate,refund:duplicate?box.duplicate:0};
+      }
+      if(result.stone)S.inventory.reward([{key:'stone',quantity:1}]);else c.coins+=result.coins;
+      G.commit();return result;
+    }
+  };
+  const normalize=S.chronicles.normalize;
+  S.chronicles.normalize=c=>{normalize(c);S.emporium.normalize(c);return c;};
+  const release=S.companions.release;
+  S.companions.release=()=>{
+    const c=G.character();
+    if(!S.companions.definition(c.companion)?.special)return release();
+    G.ensureIdle();S.companions.sync(c);c.petStable[c.companion.type]=G.clone(c.companion);c.companion=null;S.emporium.changed(c);
+  };
+})(RPG,RPG.data,RPG.systems);

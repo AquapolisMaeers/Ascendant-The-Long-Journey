@@ -303,12 +303,22 @@
     },
     trainingDialog() { U.trainingDialog(); },
     activityView() { U.activityView(); },
+    emporiumBuy(el) { U.emporiumBuy(el.dataset.id); },
+    emporiumOpen(el) { U.emporiumOpen(el.dataset.id); },
+    equipRegalia(el) { S.emporium.equip(el.dataset.id); U.close(); },
+    unequipRegalia(el) { S.emporium.unequip(el.dataset.kind); },
+    equipPet(el) { S.emporium.equipPet(el.dataset.id); U.close(); },
+    regaliaCollection(el) { U.regaliaCollection(el.dataset.kind); },
+    visitEmporium(el) { U.close(); G.runtime.page='Emporium'; G.runtime.tab=el.dataset.kind==='outfit'?'Outfits':'Auras'; U.render(); },
+    ascendantHelp() { U.ascendantHelp(); },
+    emporiumPage(el) { const category=D.emporiumCategories.find(e=>e.name===G.runtime.tab)||D.emporiumCategories[0]; G.runtime.emporiumView=category.name+'|'+(G.runtime.regaliaGroup||'All'); G.runtime.emporiumPage=+el.dataset.page; U.render(); },
     achievementPage(el) { G.runtime.achievementGroup = el.dataset.group; G.runtime.achievementPage = +el.dataset.page; U.render(); },
     sellCategory(el) { G.runtime.sellCategory = el.dataset.category; U.render(); },
     feedCompanion() { S.companions.feed(value('companion-food')); },
     reviveCompanion() { S.companions.revive(); },
     releaseCompanion() {
-      confirm('Release your companion?', '<p>This companion and its levels are permanently released. You can adopt another companion afterward.</p>', () => S.companions.release(), true);
+      const special=S.companions.definition(G.character().companion)?.special;
+      confirm(special?'Return your companion to the stable?':'Release your companion?', special?'<p>Your special companion keeps its level and ascensions. Select it from your stable to travel together again.</p>':'<p>This regular companion and its levels are permanently released. You can adopt another companion afterward.</p>', () => S.companions.release(), !special);
     },
     ascend(el) {
       U.ascendConfirmation(el.dataset.id);
@@ -546,7 +556,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'achievementPage', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'achievementPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
@@ -595,6 +605,12 @@
         G.runtime.sort = el.value;
         U.render();
       }
+      if (el.id === 'inventory-kind') {
+        G.runtime.inventoryKinds ??= {};
+        G.runtime.inventoryKinds[el.dataset.category] = el.value;
+        U.render();
+      }
+      if (el.id === 'regalia-filter') { G.runtime.regaliaGroup=el.value; G.runtime.emporiumPage=0; U.render(); }
       if (el.id === 'smithing-category') {
         G.runtime.smithingCategory = el.value;
         U.render();

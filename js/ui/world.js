@@ -82,7 +82,7 @@
       },
       width = (id, n) => {
         const el = document.getElementById(id);
-        if (el) el.style.width = G.clamp(n * 100, 0, 100) + '%';
+        if (el) { el.style.width = G.clamp(n * 100, 0, 100) + '%'; if (el.parentElement.classList.contains('hp')) el.style.background = U.healthColor(n); }
       };
     if (c.activity) {
       width('activity-bar', c.activity.elapsed / c.activity.duration);

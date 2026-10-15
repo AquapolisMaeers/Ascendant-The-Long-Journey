@@ -43,6 +43,7 @@
         Object.entries(D.perkEffects[index][choice]).forEach(([k, v]) => add(k, v));
       }
       Object.entries(S.companions?.bonus(c) || {}).forEach(([key, value]) => add(key, value));
+      Object.entries(S.emporium?.bonus(c) || {}).forEach(([key, value]) => add(key, value));
       for (const stat of ['damage', 'defence', 'health']) s[stat] *= 1 + s[stat + 'Pct'];
       s.raw = {
         ...s

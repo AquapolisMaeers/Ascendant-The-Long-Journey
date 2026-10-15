@@ -129,7 +129,7 @@
     progress.setAttribute('aria-label', c.combat ? 'Enemy health depleted' : 'Activity progress');
   };
   const dockObserver = new ResizeObserver(entries => {
-    for (const {target} of entries) document.body.style.setProperty('--activity-space', Math.ceil(target.getBoundingClientRect().height + 28) + 'px');
+    for (const {target} of entries) document.body.style.setProperty('--activity-space', Math.ceil(target.getBoundingClientRect().height + 24) + 'px');
   });
   let watchedDock;
   window.addEventListener('rpg:rendered', () => {

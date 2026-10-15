@@ -1,0 +1,68 @@
+/* Regalia: engraved silhouettes, jewel light and crimson print. */
+.low-hp .hp-top { outline:none; }
+.bar.hp > i { transition:width .18s linear,background-color .45s ease; }
+.emporium-intro { display:flex; justify-content:space-between; align-items:center; gap:20px; border-left:4px solid #c47c97; padding:10px 16px; background:linear-gradient(105deg,#3f273d,#191d29); margin-bottom:14px; }
+.emporium-intro h3 { font:italic 700 27px/1.1 var(--display); }.emporium-intro .btn { flex-shrink:0; }
+.collection-toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 14px; }
+.collection-toolbar label { width:220px; }.collection-toolbar > div { display:flex; gap:8px; }
+.regalia-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.regalia-card { --regalia:#cfaccb; min-width:0; display:flex; flex-direction:column; background:linear-gradient(135deg,#262333,#191b28); border:1px solid #6c6077; border-top:3px solid var(--regalia); box-shadow:4px 4px 0 #06091199; }
+.regalia-card.sovereign { border-color:#ddbd80; background:linear-gradient(145deg,#45302b,#211e30 65%); }
+.regalia-art-stage { position:relative; display:grid; place-items:center; min-height:158px; background:repeating-linear-gradient(135deg,#ffffff05 0 1px,transparent 1px 14px),radial-gradient(ellipse at 50% 90%,color-mix(in srgb,var(--regalia) 24%,#141620),#12151f 75%); border-bottom:1px solid #74627c; }
+.regalia-edition { position:absolute; top:8px; left:0; font-size:9px; font-weight:700; letter-spacing:1px; background:#4b293f; color:#f8e6cc; padding:3px 18px 3px 10px; clip-path:polygon(0 0,100% 0,calc(100% - 8px) 100%,0 100%); }
+.regalia-art { display:inline-grid; place-items:center; color:var(--regalia); width:136px; height:136px; flex-shrink:0; filter:drop-shadow(4px 6px 2px #0007); }
+.regalia-art svg { width:100%; height:100%; }.regalia-seal { fill:#181823; stroke:currentColor; stroke-width:1; opacity:.5; }
+.dressed-portrait { position:relative; box-shadow:inset 0 -7px 0 color-mix(in srgb,var(--outfit-color) 75%,transparent),0 0 0 2px var(--outfit-color),0 0 14px 3px var(--aura-color); }
+.regalia-rays { fill:none; stroke:currentColor; stroke-width:1.5; opacity:.5; }.outfit-cape { fill:#11121d; stroke:currentColor; stroke-width:1.4; }
+.outfit-body { fill:color-mix(in srgb,currentColor 32%,#1d1928); stroke:currentColor; stroke-width:2; }.regalia-etch { stroke:currentColor; stroke-width:1; fill:none; opacity:.8; }.regalia-jewel { fill:#f6dfb4; stroke:#2a1d2a; }
+.regalia-glyph { fill:currentColor; }.aura-orbit { fill:none; stroke:currentColor; stroke-width:2; stroke-dasharray:16 5 2 5; transform-origin:center; animation:aura-turn 30s linear infinite; }
+.aura-crest { fill:color-mix(in srgb,currentColor 26%,#1e162e); stroke:currentColor; stroke-width:2; }.sovereign-art .regalia-rays { stroke-width:3; opacity:1; }.sovereign-art { filter:drop-shadow(0 0 8px #edd09a44); }
+@keyframes aura-turn { to { transform:rotate(360deg); } }
+.regalia-body { display:flex; flex-direction:column; gap:10px; padding:14px; flex:1; }.regalia-body h3 { font:700 25px/1.1 var(--display); margin:0; color:#f6e8d6; }
+.regalia-stats { margin:0; display:grid; gap:3px; font-size:12px; }.regalia-stats > div { display:flex; justify-content:space-between; gap:14px; }.regalia-stats dt { color:#bdb9c9; }.regalia-stats dd { margin:0; color:#f1d29b; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.regalia-body details > summary { color:#e3c698; font-size:12px; cursor:pointer; }.regalia-body details .regalia-stats { margin-top:8px; }
+.regalia-purchase { display:flex; justify-content:space-between; align-items:center; gap:10px; padding-top:12px; margin-top:auto; border-top:1px solid #67576d; }.regalia-purchase .btn { white-space:nowrap; }
+.ac-price { display:inline-flex; gap:5px; align-items:center; color:#b9e5e0; font-weight:750; font-size:20px; white-space:nowrap; font-variant-numeric:tabular-nums; }.ac-price > span { color:#c4eeeb; }.ac-price small { font-size:10px; letter-spacing:1px; }
+.collection-owned { font-size:11px; color:#a6c9b4; }
+.regalia-confirm,.regalia-equipped { display:flex; align-items:center; gap:20px; }.regalia-confirm > div,.regalia-equipped > div { flex:1; min-width:0; }.regalia-confirm .regalia-stats { margin-top:12px; }
+.equipped-regalia .regalia-equipped { align-items:flex-start; }.equipped-regalia .regalia-equipped .regalia-stats { margin-top:12px; }
+.emporium-result { display:grid; justify-items:center; gap:14px; text-align:center; }.emporium-result h3 { font:italic 700 32px/1.1 var(--display); }.emporium-result > .item-art { width:110px; height:110px; }
+.special-pet-art { position:relative; display:inline-grid; place-items:center; width:112px; height:112px; border:1px solid #a7dfd4; border-radius:50%; background:radial-gradient(ellipse,#467d7755,#171a2a); flex-shrink:0; }.special-pet-art > .portrait-art { display:block; width:88px; height:88px; }.special-pet-art > b { position:absolute; right:0; bottom:0; display:grid; place-items:center; width:28px; height:28px; border:1px solid #b5e5de; background:#263c45; color:#c5f1e8; border-radius:50%; }
+.pet-rate { font-size:12px; }.pet-stable > summary { cursor:pointer; font:700 23px/1.2 var(--display); color:#d2c5e4; }.stable-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }.stable-pet { display:flex; gap:14px; align-items:center; padding:12px; border:1px solid #635b71; background:#171b28; }.stable-pet > .portrait-art,.stable-pet .special-pet-art { width:70px; height:70px; }.stable-pet .special-pet-art .portrait-art { width:56px; height:56px; }.stable-pet > div { display:grid; gap:5px; }.stable-pet small { color:#b8b5c5; }
+.box-layout { display:grid; grid-template-columns:minmax(260px,.7fr) minmax(0,1.3fr); gap:18px; align-items:start; }.box-offer h2 { font:italic 700 30px/1.1 var(--display); }.box-offer .regalia-purchase { margin-top:20px; }.box-odds { max-height:320px; overflow:auto; scrollbar-width:thin; margin-top:14px; }.box-odds .data-table { margin:0; }.box-odds th { position:sticky; top:0; background:#262336; }.box-odds td:last-child { text-align:right; white-space:nowrap; color:#d9c4e8; }.box-odds td { font-size:12px; padding:7px 10px; }
+.box-quote { display:flex; gap:20px; align-items:center; }.box-quote > .icon { width:55px; height:55px; color:#e0b483; }.mystery-art { display:grid; place-items:center; position:relative; height:160px; background:radial-gradient(ellipse,#73536f66,transparent 70%); }.mystery-art .item-art { width:128px; height:128px; }.mystery-art b { position:absolute; font:700 36px/1 var(--display); right:calc(50% - 76px); bottom:10px; background:#a22f49; padding:8px 14px; color:#fce7b7; transform:rotate(8deg); border:2px solid #f1d19a; }
+/* A reserved task shelf: the page scrolls above it instead of behind it. */
+body:has(.activity-dock:not([hidden]))::after { content:''; position:fixed; left:var(--activity-rail-left,216px); right:0; bottom:0; height:var(--activity-space,140px); border-top:1px solid #7d5e73; background:linear-gradient(110deg,#221c2b,#141720); box-shadow:0 -6px 18px #090b1266; z-index:30; pointer-events:none; }
+body:has(.activity-dock:not([hidden])) .shell { height:calc(100dvh / var(--scale)); min-height:0; }
+body:has(.activity-dock:not([hidden])) .sidebar { height:calc(100dvh / var(--scale)); }
+body:has(.activity-dock:not([hidden])) .main-column { height:calc(100dvh / var(--scale)); min-height:0; display:flex; flex-direction:column; overflow:hidden; padding-bottom:calc(var(--activity-space,140px) / var(--scale)); }
+body:has(.activity-dock:not([hidden])) .topbar { flex-shrink:0; }
+body:has(.activity-dock:not([hidden])) #content { min-height:0!important; width:100%; margin:0 auto; flex:1; overflow-y:auto; overscroll-behavior-y:contain; padding-bottom:20px!important; scrollbar-gutter:stable; }
+body:has(.activity-dock:not([hidden])) #content[data-page="Inventory"] > .toolbar { top:0; }
+body:has(.activity-dock:not([hidden])) .activity-dock { bottom:10px; left:calc(var(--activity-rail-left,216px) + 22px); }
+@media(min-width:1280px) and (max-height:1080px) {
+  #content[data-page="Shop"] .shop-section-label { margin-bottom:12px; }
+  #content[data-page="Shop"] .shop-art-stage { height:128px; }
+  #content[data-page="Shop"] .shop-art-stage > .item-art { width:90px; height:90px; }
+  #content[data-page="Shop"] .shop-offer-body { padding:14px 16px; }
+  #content[data-page="Shop"] .shop-offer-body h3 { font-size:25px; margin:6px 0; }
+  #content[data-page="Shop"] .shop-offer-body > p { margin-bottom:8px; min-height:0; }
+  #content[data-page="Shop"] .shop-purchase { padding-top:10px; }
+  #content[data-page="Shop"] .shop-availability { margin-top:6px; }
+}
+@media(max-width:1200px) { .regalia-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }.stable-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:700px), (max-width:1000px) and (max-height:500px) and (pointer:coarse) {
+  .world-screen.combat-view > .page-heading,.world-screen.combat-view :is(.location-scene,.inn-panel,.rest-panel,.afk-panel,.death-risk) { display:none; }
+  body:has(.activity-dock:not([hidden]))::after { left:0; bottom:var(--phone-nav-space); }
+  body:has(.activity-dock:not([hidden])) .main-column { height:100dvh; padding-bottom:calc(var(--phone-nav-space) + var(--activity-space,150px)); }
+  body:has(.activity-dock:not([hidden])) .shell { height:100dvh; }
+  body:has(.activity-dock:not([hidden])) .activity-dock { bottom:calc(var(--phone-nav-space) + 8px); left:10px; }
+  #content[data-page="Inventory"] #inventory-kind { width:100%; flex-basis:100%; }
+  .emporium-intro { flex-wrap:wrap; gap:10px; padding:12px; }.emporium-intro h3 { font-size:25px; }
+  .collection-toolbar { flex-wrap:wrap; }.collection-toolbar > label { width:100%; }.collection-toolbar > .notes { flex:1; }
+  .regalia-grid,.box-layout,.stable-grid { grid-template-columns:minmax(0,1fr); }.regalia-art-stage { min-height:142px; }.regalia-body { padding:15px; }
+  .regalia-body h3 { font-size:26px; }.regalia-stats { font-size:14px; gap:6px; }.regalia-art { width:126px; height:126px; }
+  .regalia-confirm,.regalia-equipped { flex-direction:column; gap:14px; }.regalia-confirm > div,.regalia-equipped > div { width:100%; }.equipped-regalia .regalia-equipped { align-items:center; }
+  .collection-modal { grid-template-columns:minmax(0,1fr); }.box-odds { max-height:38dvh; }.box-odds .data-table { display:table; width:100%; }
+  .stable-pet > div { min-width:0; }.regalia-purchase .btn { min-height:44px; }
+}

@@ -8,6 +8,16 @@
     throw Error('Invalid save: ' + m);
   };
   const finite = (n, min = 0, max = 1e15) => typeof n === 'number' && Number.isFinite(n) && n >= min && n <= max;
+  const record = o => o && typeof o === 'object' && !Array.isArray(o);
+  const idsValid = (list, known) => Array.isArray(list) && list.length <= known.length && new Set(list).size === list.length && list.every(id => known.includes(id));
+  function validatePet(p) {
+    if (!record(p)) fail('companion');
+    const rank = p.ascensions === undefined ? 0 : p.ascensions, cap = D.companionRules.levelCaps[rank];
+    if (!Number.isInteger(rank) || rank < 0 || rank >= D.companionRules.levelCaps.length ||
+      !D.allCompanions.some(d => d.id === p.type) || !Number.isInteger(p.level) || !finite(p.level, rank ? D.companionRules.levelCaps[rank - 1] : 1, cap) ||
+      !finite(p.xp) || p.level === cap && p.xp !== 0 || p.level < cap && p.xp >= G.systems.companions.xpNext(p.level) ||
+      !finite(p.hunger, 0, 100) || !finite(p.health, 0, 100) || !finite(p.updatedAt)) fail('companion');
+  }
 
   function validateItem(i, ids) {
     if (!i || typeof i.id !== 'string' || ids.has(i.id)) fail('duplicate or missing item ID');
@@ -45,6 +55,19 @@
       if (characterIds.has(c.id)) fail('duplicate character ID');
       characterIds.add(c.id);
       if (!D.validAppearance(c.appearance)) fail('appearance');
+      if (c.regalia !== undefined) {
+        if (!record(c.regalia) || !idsValid(c.regalia.owned,D.regalia.map(r=>r.id))) fail('regalia collection');
+        for (const kind of ['outfit','aura']) if (c.regalia[kind] !== null &&
+          (!c.regalia.owned.includes(c.regalia[kind]) || !D.regalia.some(r=>r.id===c.regalia[kind]&&r.kind===kind))) fail('equipped regalia');
+      }
+      if (c.specialPets !== undefined && !idsValid(c.specialPets,D.specialCompanions.map(p=>p.id))) fail('special pet collection');
+      if (c.petStable !== undefined) {
+        if (!record(c.petStable) || Object.keys(c.petStable).length>D.allCompanions.length) fail('pet stable');
+        for (const [type,pet] of Object.entries(c.petStable)) {
+          validatePet(pet);
+          if (type!==pet.type || c.companion?.type===type || type.startsWith('special-')&&!c.specialPets?.includes(type)) fail('pet stable ownership');
+        }
+      }
       if (c.ascendantCoins !== undefined && (!Number.isSafeInteger(c.ascendantCoins) || !finite(c.ascendantCoins))) fail('Ascendant Coins');
       if (c.ascendantRewards !== undefined) {
         if (!c.ascendantRewards || typeof c.ascendantRewards !== 'object' || Array.isArray(c.ascendantRewards)) fail('Ascendant rewards');
@@ -57,12 +80,8 @@
         }
       }
       if (c.companion !== undefined && c.companion !== null) {
-        const p = c.companion;
-        const rank = p.ascensions === undefined ? 0 : p.ascensions, cap = D.companionRules.levelCaps[rank];
-        if (!Number.isInteger(rank) || rank < 0 || rank >= D.companionRules.levelCaps.length ||
-          !D.companions.some(d => d.id === p.type) || !Number.isInteger(p.level) || !finite(p.level, rank ? D.companionRules.levelCaps[rank - 1] : 1, cap) ||
-          !finite(p.xp) || p.level === cap && p.xp !== 0 || p.level < cap && p.xp >= G.systems.companions.xpNext(p.level) ||
-          !finite(p.hunger, 0, 100) || !finite(p.health, 0, 100) || !finite(p.updatedAt)) fail('companion');
+        validatePet(c.companion);
+        if (c.companion.type.startsWith('special-')&&!c.specialPets?.includes(c.companion.type)) fail('active pet ownership');
       }
       if (c.weather !== undefined && !['auto', 'clear', 'rain', 'wind'].includes(c.weather)) fail('weather');
       if (c.peaceFoodReady !== undefined && !finite(c.peaceFoodReady)) fail('peace food cooldown');

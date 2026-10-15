@@ -52,7 +52,8 @@
   U.icon = name => '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="' + (paths[name] || paths.gem) + '"/></svg>';
   U.e = G.escape;
   U.btn = (label, action, attrs = '', cls = '') => '<button class="btn ' + cls + '" data-action="' + action + '" ' + attrs + '>' + label + '</button>';
-  U.bar = (value, max, cls = '', id = '') => '<div class="bar ' + cls + '"><i ' + (id ? 'id="' + id + '"' : '') + ' style="width:' + G.clamp(value / max * 100, 0, 100) + '%"></i></div>';
+  U.healthColor = ratio => 'hsl(' + (G.clamp(ratio,0,1) * 135).toFixed(2) + ' 52% 57%)';
+  U.bar = (value, max, cls = '', id = '') => '<div class="bar ' + cls + '"><i ' + (id ? 'id="' + id + '"' : '') + ' style="width:' + G.clamp(value / max * 100, 0, 100) + '%;' + (cls === 'hp' ? 'background:' + U.healthColor(value / max) : '') + '"></i></div>';
   U.heading = (eyebrow, title, description, actions = '') => '<div class="page-heading"><div><div class="eyebrow">' + eyebrow + '</div><h1>' + title + '</h1><p>' + description + '</p></div><div class="row">' + actions + '</div></div>';
   U.tabs = (names, current) => '<div class="tabs" role="tablist">' + names.map(n => '<button role="tab" aria-selected="' + (n === current) + '" class="' + (n === current ? 'active' : '') + '" data-action="tab" data-value="' + n + '">' + n + '</button>').join('') + '</div>';
   U.itemName = i => i.kind === 'gear' ? S.items.name(i) : i.kind === 'tool' ? i.name : D.catalog[i.key].name;

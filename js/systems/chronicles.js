@@ -33,7 +33,7 @@
     }
   };
   S.companions = {
-    definition(p) { return D.companions.find(d=>d.id===p?.type); },
+    definition(p) { return D.allCompanions.find(d=>d.id===p?.type); },
     cap(p) { return D.companionRules.levelCaps[p?.ascensions || 0]; },
     name(p) { return D.rarity[p?.ascensions || 0] + ' ' + this.definition(p).name; },
     ascensionQuote(p = G.character()?.companion) {
@@ -84,6 +84,7 @@
       G.assert(!S.tutorial.active(),'Finish the required tutorial before adopting a companion.');
       G.assert(!c.dungeon,'Adopt companions in the outside world.');
       G.assert(d&&!c.companion,'Choose an available companion; release your current companion before adopting another.');
+      G.assert(!c.petStable?.[type],'This companion is already in your stable. Choose Travel together to restore its progress.');
       G.assert(c.coins>=d.price,'Insufficient coins.');
       c.coins-=d.price;c.companion={type,level:1,xp:0,ascensions:0,hunger:100,health:100,updatedAt:Date.now()};
       G.notify(d.name+' joins your journey. Keep it fed.','success');G.commit();

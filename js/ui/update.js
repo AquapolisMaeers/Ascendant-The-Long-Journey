@@ -75,7 +75,7 @@
   const world = U.screens.World;
   U.screens.World = () => U.guidePanel() + world()
     .replace('<aside class="world-side">', '<aside class="world-side">' + U.restPanel())
-    .replace('<section class="location-scene"', U.innPanel() + '<section class="location-scene"');
+    .replace('<p class="notes death-risk">', U.innPanel() + '<p class="notes death-risk">');
   const encounter = U.encounter;
   U.encounter = () => {
     const c = G.character(),

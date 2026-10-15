@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15',title:'The Ascendant collection opens',changes:[
+    'Health bars now blend from green through amber to red as health falls. The low-health rectangle is removed. Inventory adds material and gem-type filters, and the current region appears above the Wayside inn.',
+    'The activity card has a reserved bottom shelf. Pages scroll above it, keeping controls clear on desktop and phone. Shop cards use tighter desktop spacing.',
+    'Collect 19 outfits and 19 auras: fifteen stat focuses, aggressive/tanky/utility builds, and Eclipse Sovereign. Equip one of each under Character > Outfits & Auras. Small bonuses obey existing combat caps; collections persist outside inventory.',
+    'Seven special companions give exactly twice the matching regular pet bonus. A companion stable preserves levels and ascensions when switching; feeding, hunger and rarity rules remain the same.',
+    'Outfit and aura boxes cost 75 AC with displayed per-item odds: focused 6%, build 3%, Sovereign 1%. Pet boxes cost 125 AC with seven equally likely pets. Duplicate collection rewards return a stated partial AC refund.',
+    'Stone boxes cost 5 AC: 1% for one Ascendant Stone, or 33% each for 5, 10 or 15 Silver. Every box requires confirmation and lists all outcomes. Added 24 achievements for storage, companion milestones and collections.'
+  ]},
   {date:'2026-10-15', title:'More room for the journey', changes:[
     'Smithing now separates recipes into Bars, Armor, Weapons and Accessories. All metal tiers keep their full recipe selection, and returning to a task restores its category and tier.',
     'One compact bottom-left tracker follows crafting, gathering, travelling and AFK sessions across every page. It shows percentages, completed actions, elapsed/total action time and estimated batch time, with Stop controls where available.',
