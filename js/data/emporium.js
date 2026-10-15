@@ -19,22 +19,41 @@
   });
   const names = ['Moonfang Wolf','Thorncrown Boar','Astral Golem','Sunfire Lynx','Stormcrown Bear','Voidweaver Spider','Eclipse Bat'];
   D.specialCompanions = D.companions.map((pet,i)=>({...pet,id:'special-'+pet.id,base:pet.id,name:names[i],price:300,perLevel:pet.perLevel*2,special:true,
-    description:'Twice the '+pet.name+' bonus. Same rarity milestones, feeding and upkeep.'}));
+    description:'A special companion with its own powerful bond. Same rarity milestones, feeding and upkeep.'}));
   D.allCompanions = [...D.companions,...D.specialCompanions];
   D.emporiumBoxes = [
     {id:'outfit-box',name:'Outfit Mystery Box',kind:'outfit',price:75,duplicate:15},
     {id:'aura-box',name:'Aura Mystery Box',kind:'aura',price:75,duplicate:15},
     {id:'pet-box',name:'Special Pet Mystery Box',kind:'pet',price:125,duplicate:25},
-    {id:'stone-box',name:'Ascendant Stone Box',kind:'stone',price:5,duplicate:0}
+    {id:'stone-box',name:'Ascendant Stone Box',kind:'stone',price:5,duplicate:0},
+    {id:'gem-box',name:'Gem Mystery Box',kind:'gem',price:25,duplicate:0}
   ];
-  D.emporiumCategories.forEach(c=>{
-    c.description={Outfits:'Equip one outfit. Focus a stat, shape a build, or collect the Eclipse Sovereign.',Auras:'Equip one aura alongside your outfit. Bonuses follow the same combat caps.',
-      'Special Pets':'Seven special companions, each with exactly twice its regular counterpart\'s bonus. One active pet at a time.',
-      'Outfit Mystery Boxes':'All 19 outfits. Focused: 6% each; build sets: 3% each; Eclipse Sovereign: 1%.',
-      'Aura Mystery Boxes':'All 19 auras. Focused: 6% each; build sets: 3% each; Eclipse Sovereign: 1%.',
-      'Pet Mystery Boxes':'All seven special pets at equal odds. A lower price for a random companion.',
-      'Ascendant Stone Boxes':'1%: one Ascendant Stone. Otherwise: normal coins. Every outcome is shown before opening.'}[c.name];
+  D.regularGemCount = D.gems.length;
+  const unique = [
+    ['damagePct','Might',.003,'#ec94a0'],['defencePct','Bastion',.004,'#a7c8dc'],['healthPct','Vitality',.004,'#a9d698'],
+    ['speed','Haste',.002,'#91d9d3'],['penetration','Piercing',.0015,'#c69fe3'],['double','Echo',.0015,'#b7c0ed'],
+    ['dodge','Evasion',.0015,'#b4a8dd'],['reduction','Warding',.001,'#c5d7b6'],['resistance','Resolve',.002,'#dfc697'],
+    ['lifeSteal','Siphon',.0005,'#f08a9e']
+  ];
+  unique.forEach(([stat,name,value,color])=>{
+    const type=D.gems.length;D.gems.push({stat,name,value,color,boxOnly:true});
+    for(let rank=1;rank<=5;rank++) {
+      const id='gem:'+type+':'+rank;
+      D.catalog[id]={id,name:name+' Gem '+D.roman[rank],category:'Gems',type,rank,level:D.facet.levels[rank-1],rarity:rank,boxOnly:true};
+      D.itemIllustrations[id]={...D.itemIllustrations['gem:5:'+rank],name:D.catalog[id].name};
+    }
+    const offensive=['damagePct','speed','penetration','double','lifeSteal'].includes(stat);
+    const slots=offensive?['Weapon','Gloves','Necklace','Ring']:['Helmet','Plate','Greaves','Boots','Necklace','Ring'];
+    slots.forEach(slot=>D.gemAllowed[slot].push(type));
   });
+  D.gemBoxRanks=[600,250,100,45,5];
+  D.emporiumCategories = [
+    {name:'Outfit Mystery Boxes',box:'outfit-box',description:'All 19 outfits. Focused: 6% each; build sets: 3% each; Eclipse Sovereign: 1%.'},
+    {name:'Aura Mystery Boxes',box:'aura-box',description:'All 19 auras. Focused: 6% each; build sets: 3% each; Eclipse Sovereign: 1%.'},
+    {name:'Pet Mystery Boxes',box:'pet-box',description:'Seven special companions at equal odds. Every companion starts Common and grows with you.'},
+    {name:'Gem Mystery Boxes',box:'gem-box',description:'All 17 gem types, ranks I\u2013V. Regular types: 90%; exclusive stat types: 10%. Rank V: 0.5% overall.'},
+    {name:'Ascendant Stone Boxes',box:'stone-box',description:'1%: one Ascendant Stone. Otherwise: normal coins. Every outcome is shown before opening.'}
+  ];
   const add=(id,name,group,target,metric,title)=>D.achievements.push({id,name,group,target,metric,title});
   [40,50,60,70,80,90,100].forEach(n=>add('companion-level-'+n,'Companion level '+n,'Companions',n,c=>Math.max(c.companion?.level||0,...Object.values(c.petStable||{}).map(p=>p.level))));
   [1,3,5,7].forEach(n=>add('companion-bond-'+n,'Companion ascensions \u00b7 '+n,'Companions',n,c=>Math.max(c.companion?.ascensions||0,...Object.values(c.petStable||{}).map(p=>p.ascensions||0)),n===7?'Soulbound':null));

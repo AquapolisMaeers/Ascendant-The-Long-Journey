@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15',title:'Fortune, gems and the gear you wear',changes:[
+    'The Emporium now offers mystery boxes only. Direct outfit, aura and special-pet sales are removed; existing collections, equipment and companion progression are preserved. Pet descriptions show their actual bonuses without counterpart comparison text.',
+    'The 25 AC Gem Mystery Box contains all 17 types at ranks I to V: 90% regular gems and 10% exclusive stat gems. Rank chances are 60%, 25%, 10%, 4.5% and 0.5%. Every possible reward and its odds appear before confirmation.',
+    'Ten box-exclusive gem types add damage, defence and health percentages, attack speed, penetration, double attack, dodge, damage reduction, critical resistance and lifesteal. Their bonuses obey existing caps and compatible-slot rules. Existing gems keep their normal loot and Faceting sources.',
+    'Outfits & Auras stays available when viewing Perks. The top player icon now composes the exact equipped item artwork, with individual rarity glow and a gentle shine for rarer equipment. Click it for a larger preview and equipment access; Reduced Motion disables the shine.'
+  ]},
   {date:'2026-10-15',title:'The Ascendant collection opens',changes:[
     'Health bars now blend from green through amber to red as health falls. The low-health rectangle is removed. Inventory adds material and gem-type filters, and the current region appears above the Wayside inn.',
     'The activity card has a reserved bottom shelf. Pages scroll above it, keeping controls clear on desktop and phone. Shop cards use tighter desktop spacing.',

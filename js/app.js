@@ -303,13 +303,14 @@
     },
     trainingDialog() { U.trainingDialog(); },
     activityView() { U.activityView(); },
-    emporiumBuy(el) { U.emporiumBuy(el.dataset.id); },
+    gearPortrait() { U.gearPortrait(); },
+    portraitEquipment() { U.close(); G.runtime.page='Character'; G.runtime.tab='Equipment'; U.render(); if(U.isPhone())window.scrollTo(0,0); },
     emporiumOpen(el) { U.emporiumOpen(el.dataset.id); },
     equipRegalia(el) { S.emporium.equip(el.dataset.id); U.close(); },
     unequipRegalia(el) { S.emporium.unequip(el.dataset.kind); },
     equipPet(el) { S.emporium.equipPet(el.dataset.id); U.close(); },
     regaliaCollection(el) { U.regaliaCollection(el.dataset.kind); },
-    visitEmporium(el) { U.close(); G.runtime.page='Emporium'; G.runtime.tab=el.dataset.kind==='outfit'?'Outfits':'Auras'; U.render(); },
+    visitEmporium(el) { U.close(); G.runtime.page='Emporium'; G.runtime.tab=el.dataset.kind==='outfit'?'Outfit Mystery Boxes':'Aura Mystery Boxes'; U.render(); },
     ascendantHelp() { U.ascendantHelp(); },
     emporiumPage(el) { const category=D.emporiumCategories.find(e=>e.name===G.runtime.tab)||D.emporiumCategories[0]; G.runtime.emporiumView=category.name+'|'+(G.runtime.regaliaGroup||'All'); G.runtime.emporiumPage=+el.dataset.page; U.render(); },
     achievementPage(el) { G.runtime.achievementGroup = el.dataset.group; G.runtime.achievementPage = +el.dataset.page; U.render(); },
@@ -522,7 +523,7 @@
         key: k + ':' + value('debug-tier'),
         quantity: 1000
       })));
-      if (command === 'gems') S.inventory.reward(D.gems.map((g, i) => ({
+      if (command === 'gems') S.inventory.reward(D.gems.slice(0, +value('debug-gem-rank') === 0 ? D.regularGemCount : D.gems.length).map((g, i) => ({
         key: +value('debug-gem-rank') === 0 ? 'uncut:' + i : 'gem:' + i + ':' + value('debug-gem-rank'),
         quantity: 100
       })));
@@ -556,7 +557,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'achievementPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');

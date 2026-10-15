@@ -318,7 +318,7 @@
     },
     gem(level) {
       const rank = G.weighted(G.rng, D.gemDrops.findLast(([min]) => level >= min)[1]) + 1;
-      const gem = G.int(G.rng, 0, D.gems.length - 1);
+      const gem = G.int(G.rng, 0, D.regularGemCount - 1);
       return {key: rank === 1 ? 'uncut:' + gem : 'gem:' + gem + ':' + rank, quantity: 1};
     },
     roll(type, level, location, guaranteedGem = false) {

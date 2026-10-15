@@ -16,12 +16,7 @@
     owned(entry,c=G.character()) { return entry.special?c.specialPets.includes(entry.id):c.regalia.owned.includes(entry.id); },
     pay(c,amount) { G.assert(Number.isSafeInteger(amount)&&amount>0&&c.ascendantCoins>=amount,'Not enough Ascendant Coins.'); c.ascendantCoins-=amount; },
     buy(id) {
-      idle();const c=G.character(),entry=this.entry(id);this.normalize(c);
-      G.assert(entry&&!D.emporiumBoxes.includes(entry),'Choose an available outfit, aura or pet.');
-      G.assert(!this.owned(entry,c),'Already in your collection.');
-      this.pay(c,entry.price);
-      if(entry.special)c.specialPets.push(id);else c.regalia.owned.push(id);
-      G.commit();return {entry,duplicate:false};
+      G.assert(false,'Outfits, auras and special pets are found in their mystery boxes.');
     },
     equip(id) {
       idle();const c=G.character(),entry=D.regalia.find(r=>r.id===id);this.normalize(c);
@@ -40,10 +35,16 @@
     outcomes(box) {
       if(box.kind==='outfit'||box.kind==='aura')return D.regalia.filter(r=>r.kind===box.kind).map(entry=>({entry,weight:entry.weight}));
       if(box.kind==='pet')return D.specialCompanions.map(entry=>({entry,weight:1}));
+      if(box.kind==='gem')return D.gems.flatMap((gem,type)=>D.gemBoxRanks.map((rankWeight,i)=>({key:'gem:'+type+':'+(i+1),quantity:1,weight:rankWeight*(gem.boxOnly?7:90)})));
       return [{coins:500,weight:33},{coins:1000,weight:33},{coins:1500,weight:33},{stone:1,weight:1}];
     },
     open(id) {
       idle();const c=G.character(),box=D.emporiumBoxes.find(b=>b.id===id);this.normalize(c);G.assert(box,'Choose an available box.');
+      if(box.kind==='gem') {
+        // A guaranteed free slot covers every possible roll. Never charge, roll or discard a paid reward on overflow.
+        const rows=this.outcomes(box);
+        G.assert(rows.every(r=>{const stack=c.inventory.find(i=>i.kind==='stack'&&i.key===r.key);return stack?Number.isSafeInteger(stack.quantity+1):c.inventory.length<c.capacity;}),'Free one inventory slot before opening a gem box.');
+      }
       // Reserve a potential stone before paying or rolling. No lost rewards or rerolls on a full bag.
       if(box.kind==='stone'){
         const stack=c.inventory.find(i=>i.kind==='stack'&&i.key==='stone');
@@ -60,7 +61,8 @@
         else if(result.entry.special)c.specialPets.push(result.entry.id);else c.regalia.owned.push(result.entry.id);
         G.commit();return {...result,duplicate,refund:duplicate?box.duplicate:0};
       }
-      if(result.stone)S.inventory.reward([{key:'stone',quantity:1}]);else c.coins+=result.coins;
+      if(result.key)S.inventory.reward([{key:result.key,quantity:1}]);
+      else if(result.stone)S.inventory.reward([{key:'stone',quantity:1}]);else c.coins+=result.coins;
       G.commit();return result;
     }
   };

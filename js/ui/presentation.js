@@ -65,7 +65,7 @@
     if (info?.flavor) extra += '<small class="food-flavor">“' + U.e(info.flavor) + '”</small>';
     if (info?.rank > 0) {
       const gem = D.gems[info.type], slots = D.slots.filter(slot => D.gemAllowed[slot].includes(info.type));
-      extra = '<small>Compatible slots: ' + slots.join(', ') + (gem.style === undefined ? '' : ' · ' + D.classes[gem.style] + ' only') + '</small>';
+      extra = '<small>Compatible slots: ' + slots.join(', ') + (gem.style === undefined ? '' : ' · ' + D.classes[gem.style] + ' only') + (gem.boxOnly ? ' · Gem Mystery Box exclusive' : '') + '</small>';
     }
     return summary ? '<div class="output-effects"><strong>' + U.e(summary) + '</strong>' + extra + '</div>' : '';
   };
