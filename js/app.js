@@ -15,10 +15,12 @@
     G.runtime.needsResume = false;
   };
   const showOffline = () => {
-    if (!G.runtime.offline?.length) return;
-    U.modal('While you were away', '<div class="eyebrow">OFFLINE TRAINING · XP ONLY</div>' + G.runtime.offline.map(r => '<p>' + U.e(r.name) + ' · ' + r.skill + '<br><strong class="gold">+' + G.number(r.xp) + ' XP</strong> over ' + G.number(r.seconds / 3600, 2) + ' hours.</p>').join('') + '<p>Gathering: 25% base active XP; Smithing/Cooking: 12.5%; Faceting: 1.875%. Maximum eight hours. Knowledge applies; Efficiency does not. No items, coins, or combat progress.</p>');
+    if (!G.runtime.offline?.length || G.runtime.selecting || document.querySelector('.modal')) return;
+    U.offlineReport(G.runtime.offline);
     G.runtime.offline = [];
   };
+  window.addEventListener('rpg:dialog-closed', () => setTimeout(showOffline, 0));
+  window.addEventListener('rpg:offline-progress', () => setTimeout(showOffline, 0));
   const actions = {
     patchNotes() {
       U.modal('Patch notes', U.patchNotes(true));
@@ -57,7 +59,7 @@
       G.runtime.estimate = null;
       U.close();
       G.commit();
-      if (result.xp > 0) G.notify('Offline ' + result.skill + ': +' + G.number(result.xp) + ' XP.');
+      S.offline.record(result);
       showOffline();
     },
     create(el) {
@@ -368,7 +370,7 @@
     buy(el) {
       const item = D.shop.find(i => i.id === el.dataset.id);
       if (item?.category === 'Materials') { U.buyMaterialsForm(item.id); return; }
-      confirm('Purchase ' + item.name + '?', '<p>Cost: ' + G.money(item.price) + '. ' + item.description + '</p>', () => S.shop.buy(item.id));
+      confirm('Purchase ' + item.name + '?', U.shopPreview(item) + '<p>Cost: ' + G.money(item.price) + '. ' + item.description + '</p>', () => S.shop.buy(item.id));
     },
     expand() {
       const c = G.character();
@@ -802,8 +804,10 @@
       last = performance.now();
       if (G.character()) {
         const r = S.offline.apply(G.character());
-        if (r.xp > 0) G.notify('Offline ' + r.skill + ': +' + G.number(r.xp) + ' XP.');
+        if (r.levelsGained) S.offline.record(r);
+        else if (r.xp > 0) G.notify('Offline ' + r.skill + ': +' + G.number(r.xp) + ' XP.');
         G.commit();
+        showOffline();
       }
     }
   });

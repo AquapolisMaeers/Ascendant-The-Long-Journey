@@ -102,7 +102,8 @@
     return c;
   };
   G.systems.xp = {
-    add(track, amount) {
+    add(track, amount, {silent = false} = {}) {
+      const previous = track.level;
       track.xp += Math.max(0, amount);
       let count = 0;
       while (track.level < D.config.levelCap && track.xp >= D.xpNext(track.level)) {
@@ -111,6 +112,14 @@
         count++;
       }
       if (track.level === D.config.levelCap) track.xp = 0;
+      if (count && !silent) {
+        const c = G.state.slots.find(c => c && (c === track || Object.values(c.skills).includes(track)));
+        if (c) G.emit('levelup', {
+          characterId:c.id, characterName:c.name, kind:c === track ? 'character' : 'skill',
+          skill:c === track ? null : D.skills.find(skill => c.skills[skill] === track),
+          from:previous, to:track.level
+        });
+      }
       return count;
     }
   };

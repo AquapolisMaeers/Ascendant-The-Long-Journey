@@ -47,13 +47,34 @@
     el.className = 'loot-popup' + (rarity >= 0 ? ' rarity-' + rarity : '') + (rarity >= 2 ? ' rare-reveal' : '');
     if (rarity >= 4) G.audio.play('rare');
   });
-  window.addEventListener('rpg:prestige', ({
-    detail
-  }) => {
+  let prestige = null, prestigeTimer = 0;
+  const prestigeQueue = [];
+  const showPrestige = () => {
+    const id = G.character()?.id;
+    while (prestigeQueue.length && prestigeQueue[0].characterId !== id) prestigeQueue.shift();
+    if (prestige || !prestigeQueue.length || document.hidden || G.runtime.selecting || document.querySelector('.modal')) return;
+    prestige = prestigeQueue.shift();
     const el = document.createElement('div');
     el.className = 'prestige-banner';
-    el.innerHTML = '<div class="eyebrow">A TITLE EARNED</div><strong>' + G.escape(detail.title) + '</strong>';
+    el.innerHTML = '<div class="eyebrow">A TITLE EARNED</div><strong>' + G.escape(prestige.title) + '</strong>';
     document.body.append(el);
-    setTimeout(() => el.remove(), 4500);
+    prestigeTimer = setTimeout(() => { el.remove(); prestige = null; showPrestige(); }, 4500);
+  };
+  const pausePrestige = () => {
+    if (!prestige) return;
+    clearTimeout(prestigeTimer);
+    document.querySelector('.prestige-banner')?.remove();
+    prestigeQueue.unshift(prestige); prestige = null;
+  };
+  window.addEventListener('rpg:prestige', ({detail}) => {
+    prestigeQueue.push({...detail, characterId:G.character()?.id});
+    showPrestige();
+  });
+  window.addEventListener('rpg:dialog-opened', pausePrestige);
+  window.addEventListener('rpg:dialog-closed', () => setTimeout(showPrestige, 0));
+  document.addEventListener('visibilitychange', () => document.hidden ? pausePrestige() : showPrestige());
+  window.addEventListener('rpg:rendered', () => {
+    if (prestige && (prestige.characterId !== G.character()?.id || G.runtime.selecting)) pausePrestige();
+    showPrestige();
   });
 })(RPG);

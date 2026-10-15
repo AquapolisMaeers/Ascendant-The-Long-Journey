@@ -1,0 +1,90 @@
+/* Crimson print, jewel accents and readable progress celebrations. */
+.nav button { --nav-ink:#d7b99f; }
+.nav button[data-value="World"],.nav button[data-value="Shop"],.nav button[data-value="Achievements"] { --nav-ink:#f0cc80; }
+.nav button[data-value="Inventory"],.nav button[data-value="Emporium"],.nav button[data-value="Leaderboards"] { --nav-ink:#8fced1; }
+.nav button[data-value="Character"],.nav button[data-value="Crafting"] { --nav-ink:#f099a3; }
+.nav button[data-value="Skills"],.nav button[data-value="Companions"] { --nav-ink:#a7d1ab; }
+.nav button[data-value="Quests"],.nav button[data-value="Marketplace"] { --nav-ink:#c2ace9; }
+.nav .icon { color:var(--nav-ink); background:#ffffff08; padding:4px; border:1px solid #ffffff18; border-radius:2px; width:27px; height:27px; flex-shrink:0; }
+.nav button.active .icon { color:#fff3d8; background:#52182f; border-color:#f5ca864d; }
+.skill-card { --discipline:#e8ba80; border-top:2px solid var(--discipline); }
+.skill-card[data-skill="Mining"] { --discipline:#aebbd5; }.skill-card[data-skill="Woodcutting"] { --discipline:#9ec58b; }
+.skill-card[data-skill="Fishing"] { --discipline:#84c7d1; }.skill-card[data-skill="Hunting"] { --discipline:#d29d80; }
+.skill-card[data-skill="Cooking"] { --discipline:#e39791; }.skill-card[data-skill="Faceting"] { --discipline:#c0a4e3; }
+.skill-card .panel-head h3 { display:flex; align-items:center; gap:8px; }
+.skill-card .panel-head h3 > .icon { color:var(--discipline); padding:3px; background:#ffffff09; border-radius:2px; width:24px; height:24px; }
+.skill-card .level { color:var(--discipline); font-family:var(--display); font-size:24px; line-height:1; }
+.skill-card .bar.skill > i { background:linear-gradient(90deg,#675568,var(--discipline)); }
+.shop-section-label { display:flex; gap:12px; align-items:center; margin:4px 0 20px; }
+.shop-section-label > span { display:grid; place-items:center; background:#69283d; color:#f5d59b; width:42px; height:42px; border-left:3px solid #f0c77d; transform:skewX(-8deg); }
+.shop-section-label strong { display:block; font:700 23px/1.2 var(--display); color:#f9e9ce; }
+.shop-section-label small { display:block; color:#bcbdcc; margin-top:3px; font-size:12px; }
+.shop-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:20px; align-items:stretch; }
+.shop-offer { --offer:#dc8495; --offer-shade:#61283d; padding:0; overflow:hidden; display:flex; flex-direction:column; border-top:3px solid var(--offer); }
+.shop-offer.teal { --offer:#8fcac6; --offer-shade:#204b50; }.shop-offer.violet { --offer:#c3a8e7; --offer-shade:#4b365f; }
+.shop-art-stage { position:relative; isolation:isolate; height:166px; display:grid; place-items:center; background:radial-gradient(ellipse at 50% 90%,var(--offer-shade),transparent 65%),repeating-linear-gradient(140deg,#ffffff05 0 1px,transparent 1px 12px),#141722; border-bottom:1px solid #62576b; }
+.shop-art-stage::before { content:''; position:absolute; width:132px; height:92px; bottom:12px; border:1px solid #ffffff14; transform:skewX(-14deg); background:#ffffff04; z-index:-1; }
+.shop-art-stage > .item-art { width:116px; height:116px; margin-top:18px; border-radius:12px; filter:drop-shadow(5px 9px 3px #0007); }
+.shop-edition { position:absolute; top:12px; left:0; background:var(--offer-shade); color:#fbeedf; font-size:9px; font-weight:750; letter-spacing:1.3px; padding:4px 22px 4px 12px; clip-path:polygon(0 0,100% 0,calc(100% - 10px) 100%,0 100%); }
+.shop-art-corner { position:absolute; bottom:0; right:0; width:52px; height:12px; background:var(--offer); clip-path:polygon(25% 0,100% 0,100% 100%,0 100%); }
+.shop-offer-body { display:flex; flex-direction:column; flex:1; padding:18px 20px; min-width:0; }
+.shop-offer-body > .eyebrow { color:var(--offer); font-size:9px; letter-spacing:1.8px; }
+.shop-offer-body h3 { font:700 28px/1.1 var(--display); margin:7px 0 10px; color:#fff3e5; }
+.shop-offer-body > p { min-height:38px; margin-bottom:12px; }
+.shop-offer-body .output-effects { margin-bottom:14px; }
+.shop-purchase { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; border-top:1px solid #605467; padding-top:14px; margin-top:auto; }
+.shop-cost small { display:block; color:#bcb6c9; font-size:8px; letter-spacing:1.5px; }
+.shop-cost strong { display:block; color:#f5d28c; font-size:18px; line-height:1.3; }
+.shop-availability { display:block; margin-top:10px; font-size:10px; color:#bcb8c9; }
+.shop-upgrade-icon { display:grid; place-items:center; position:relative; width:90px; height:100px; color:#edb2bc; }
+.shop-upgrade-icon > .icon { width:72px; height:72px; filter:drop-shadow(4px 5px 0 #0006); }
+.shop-upgrade-icon b { display:block; position:absolute; bottom:0; right:-2px; padding:3px 9px; background:#eee1bf; color:#372138; transform:skewX(-8deg); font:700 19px/1.1 var(--display); }
+.trade-preview { display:flex; align-items:center; gap:18px; padding:14px; margin-bottom:18px; background:linear-gradient(120deg,#3b2537,#191d2b); border-left:4px solid var(--rarity,#de9da6); }
+.trade-art { display:grid; place-items:center; background:#11151e; border:1px solid #9c7a8a77; padding:5px; flex-shrink:0; }
+.trade-art > .item-art { width:72px; height:72px; border-radius:6px; }.trade-art .shop-upgrade-icon { width:72px; height:72px; }.trade-art .shop-upgrade-icon > .icon { width:52px; height:52px; }
+.trade-preview > div:last-child { min-width:0; }.trade-preview small { display:block; text-transform:uppercase; letter-spacing:1px; color:#cbbacb; font-size:9px; }
+.trade-preview strong { display:block; font:700 24px/1.15 var(--display); color:#fff1d9; overflow-wrap:anywhere; margin:5px 0; }.trade-preview span:not(.item-art):not(.shop-upgrade-icon) { color:#f3ce89; font-size:12px; }
+.storage-heading { display:flex; align-items:center; gap:14px; }.storage-heading > .signal-icon { width:58px; height:58px; background:#3a2c45; color:#d3b7ef; }.storage-heading .eyebrow { margin-bottom:4px; }
+.sell-grid .recipe { padding:14px; }.sell-grid .item-card { display:grid; grid-template-columns:76px minmax(0,1fr); gap:3px 12px; text-align:left; min-height:130px; padding:12px 10px; background:linear-gradient(125deg,#25202f,#151b27); }
+.sell-grid .item-card > .item-art { width:70px; height:70px; margin:0; grid-column:1; grid-row:1 / span 3; align-self:center; }
+.sell-grid .item-card > .name,.sell-grid .item-card > small,.sell-grid .item-card > .item-summary { grid-column:2; min-width:0; margin:0; }
+.sell-grid .item-card > .name { padding-right:20px; align-self:end; }.sell-grid .item-card > small { font-size:9px; }.sell-grid .item-summary { font-size:10px; line-height:1.35; }
+.signal-icon { display:grid; place-items:center; width:42px; height:42px; background:#2d3f45; color:#a6d9d5; border:1px solid #9bc6c344; flex-shrink:0; }
+.signal-icon > .icon { width:25px; height:25px; }
+.offline-welcome { display:flex; align-items:center; gap:15px; margin-bottom:20px; }.offline-welcome h3 { font-size:29px; margin:4px 0; font-style:italic; }.offline-welcome > .signal-icon { width:58px; height:58px; background:#6c2a42; border-color:#d28c9f; color:#ffe0b4; }
+.offline-results { display:grid; gap:12px; }.offline-result { padding:14px; background:#141c29; border:1px solid #5e6176; border-left:4px solid #88babd; }
+body:has(.modal .offline-results) #toasts { z-index:95; }
+.prestige-banner { background:linear-gradient(115deg,#542637,#1a1d2a); border:1px solid #e5c488; border-top:4px solid #cd405b; box-shadow:5px 5px 0 #080a14b0; }
+.prestige-banner strong { font:700 italic 34px/1.1 var(--display); color:#ffe6b2; }
+.offline-result.leveled { background:linear-gradient(120deg,#382333,#1b2331); border-left-color:#edc577; }
+.offline-result-title { display:flex; align-items:center; gap:12px; }.offline-result-title strong { display:block; color:#fff2e0; font-size:17px; }.offline-result-title small { display:block; color:#b8c3d0; font-size:12px; }
+.offline-xp { color:#e8ca88; font-weight:700; margin-left:auto; text-align:right; }
+.offline-level-gain { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:14px; padding:10px 14px; border:1px solid #b8996866; background:#0f131e90; }
+.offline-level-gain > span:first-child { color:#ebc781; font-size:9px; letter-spacing:1.5px; }.offline-level-gain strong { display:block; color:#fff2ce; font:700 36px/1.2 var(--display); letter-spacing:1px; }.offline-level-gain strong > span { color:#df8399; margin:0 8px; }
+.offline-level-gain > span:last-child { color:#dfc997; font-size:12px; }.offline-current-level { margin-top:12px; }.offline-track { margin-top:10px; }.offline-track small { display:block; margin-top:5px; color:#aeb9ca; font-size:10px; }
+.levelup-popup { position:fixed; bottom:22px; right:22px; z-index:90; width:390px; max-width:calc(100vw - 32px); background:#171a27f7; border:2px solid #e1bc7a; border-top:5px solid #d4415e; box-shadow:6px 6px 0 #090a12b0,0 12px 45px #0007; animation:level-arrive .26s ease-out; }
+.levelup-popup[hidden] { display:none; }
+.levelup-head { display:flex; justify-content:space-between; align-items:center; padding:8px 10px 8px 16px; background:linear-gradient(115deg,#67283e,#29212f); color:#f4d9a7; font-size:9px; font-weight:800; letter-spacing:2px; }
+.levelup-dismiss { width:27px; height:27px; display:grid; place-items:center; background:#311d2c; border:1px solid #c9959b; border-radius:0; color:#fff1dc; font-size:20px; line-height:1; cursor:pointer; }
+.levelup-list { max-height:min(420px,calc(100svh - 200px)); overflow:auto; }
+.levelup-entry { --level-ink:#ecc783; display:grid; grid-template-columns:42px minmax(0,1fr) auto; align-items:center; gap:10px; padding:15px 14px; background:radial-gradient(ellipse at 0 0,#d23f5c18,transparent 65%); }
+.levelup-entry + .levelup-entry { border-top:1px solid #625068; }.levelup-entry.skill { --level-ink:#99d0ce; }.levelup-entry.companion { --level-ink:#c9b2ec; }
+.levelup-emblem { display:grid; place-items:center; width:42px; height:48px; background:#322938; border:1px solid #88738d; color:var(--level-ink); overflow:hidden; }
+.levelup-emblem > .icon { width:29px; height:29px; }.levelup-emblem > :is(.character-portrait,.portrait-art) { width:42px; height:48px; }
+.levelup-entry small { display:block; color:var(--level-ink); font-size:8px; letter-spacing:1px; }.levelup-entry h3 { font:700 23px/1.1 var(--display); color:#fff2dc; margin:5px 0; overflow-wrap:anywhere; }
+.levelup-entry p { color:#c0bacd; font-size:11px; line-height:1.4; }.levelup-numbers { text-align:right; align-self:start; }.levelup-numbers strong { display:flex; gap:5px; align-items:center; color:#fff0ca; font:700 29px/1.1 var(--display); font-variant-numeric:tabular-nums; }.levelup-numbers strong > span { font:17px 'Source Sans 3',sans-serif; color:var(--level-ink); }.levelup-numbers small { margin-top:6px; letter-spacing:0; }
+body:has(.levelup-popup:not([hidden])) #toasts { bottom:calc(22px + var(--levelup-space,180px)); }
+body:has(.activity-dock:not([hidden])) .levelup-popup { bottom:110px; }
+body:has(.activity-dock:not([hidden])):has(.levelup-popup:not([hidden])) #toasts { bottom:calc(110px + var(--levelup-space,180px)); }
+@keyframes level-arrive { from { transform:translateY(12px); } to { transform:translateY(0); } }
+.reduce-motion .levelup-popup { animation:none; }
+@media(prefers-reduced-motion:reduce) { .levelup-popup { animation:none; } }
+@media(max-width:700px) {
+  .nav .icon { width:22px; height:22px; padding:3px; }
+  .shop-grid { gap:15px; }.shop-art-stage { height:146px; }.shop-art-stage > .item-art { width:102px; height:102px; }.shop-offer-body { padding:16px; }.shop-offer-body h3 { font-size:26px; }
+  .shop-section-label strong { font-size:21px; }.shop-section-label small { font-size:11px; }
+  .offline-welcome h3 { font-size:24px; }.offline-result-title { gap:8px; flex-wrap:wrap; }.offline-result-title > .signal-icon { width:32px; height:32px; }.offline-result-title strong { font-size:15px; }.offline-xp { font-size:13px; }
+  .offline-level-gain { flex-wrap:wrap; gap:6px 14px; }.offline-level-gain strong { font-size:31px; }
+  .levelup-popup { right:12px; bottom:12px; max-width:calc(100vw - 24px); }.levelup-entry { grid-template-columns:32px minmax(0,1fr) auto; padding:12px 10px; gap:8px; }.levelup-emblem { width:32px; height:40px; }.levelup-emblem > :is(.character-portrait,.portrait-art) { width:32px; height:40px; }.levelup-entry h3 { font-size:21px; }.levelup-numbers strong { font-size:25px; }.levelup-entry small { font-size:7px; letter-spacing:.6px; }
+  .trade-preview { gap:12px; padding:10px; }.trade-art > .item-art { width:58px; height:58px; }.trade-preview strong { font-size:21px; }
+}

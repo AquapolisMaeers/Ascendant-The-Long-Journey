@@ -126,7 +126,10 @@
       p.xp+=amount;const previous=p.level;
       while(p.level<cap&&p.xp>=this.xpNext(p.level)){p.xp-=this.xpNext(p.level);p.level++;}
       if(p.level===cap) p.xp=0;
-      if(p.level>previous) G.notify(this.name(p)+' reached companion level '+p.level+(p.level===cap?' — ascension milestone reached.':'.'),'success');
+      if(p.level>previous) G.emit('levelup', {
+        characterId:c.id, characterName:c.name, kind:'companion', companionType:p.type,
+        companionName:this.name(p), from:previous, to:p.level, cap
+      });
     }
   };
   S.leaderboards = {

@@ -38,7 +38,15 @@
     food: 'M5 13c-4-6 4-9 7-5 3-4 11-1 7 5l-4 8H9zM12 8V3l4-1',
     arrow: 'M3 12h17M14 5l7 7-7 7',
     lock: 'M6 10h12v12H6zM8 10V6a4 4 0 0 1 8 0v4M12 15v3',
-    clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M12 6v6l4 3'
+    clock: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M12 6v6l4 3',
+    Tools: 'm4 21 7-7M14 3a6 6 0 0 0-7 7l7 7a6 6 0 0 0 7-7l-4 3-4-4z',
+    Materials: 'M3 9 9 5l6 4-6 4zM9 13v7l-6-4V9M9 20l6-4V9M15 13l6-4v7l-6 4',
+    Utility: 'M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3M8 15h8',
+    Gems: 'm12 2 9 7-9 13L3 9zM3 9h18M8 3l4 19 4-19',
+    Food: 'M5 13c-4-6 4-9 7-5 3-4 11-1 7 5l-4 8H9zM12 8V3l4-1',
+    Stones: 'm12 2 7 6 2 10-9 4-9-4L5 8zM12 2v20M5 8l7 4 7-4',
+    Storage: 'M3 8h18v13H3zM2 4h20v4H2zM9 12h6v4H9z',
+    AutoEat: 'M12 20 4 12a5 5 0 0 1 8-6 5 5 0 0 1 8 6zM5 3v6M3 5h4M16 10h4'
   };
   U.icon = name => '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="' + (paths[name] || paths.gem) + '"/></svg>';
   U.e = G.escape;

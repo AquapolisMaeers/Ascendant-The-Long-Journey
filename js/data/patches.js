@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15', title:'Every level deserves a moment', changes:[
+    'Character, skill and companion levels now have a dismissible milestone card showing old and new levels. Multiple gains group together. Ascension milestones and final level caps are called out.',
+    'The offline welcome report includes previous/new levels, total levels gained and XP progress for every trained character. It appears after reopening the game or returning from a hidden tab, and waits for existing confirmations to close.',
+    'Shop offers, purchase confirmations and sale dialogs now show matching artwork. Auto-Eat upgrades have dedicated 50% and 75% emblems; ownership, prices and level requirements are clearer.',
+    'Angled shop ribbons, compact illustrated sale cards, colored navigation icons and distinct skill accents add teal, violet, sage and warm gold to the crimson theme. Reduced Motion remains supported.'
+  ]},
   {date:'2026-10-15', title:'The price of the road & a sharper interface', changes:[
     'AFK advancing keeps 15 free active minutes, then charges the displayed regional rate: 10 Bronze at the Crossroads, rising to 15 Silver in the Ancient Dominion.',
     'Travelling costs the destination fare multiplied by regions crossed. Review and confirm the total before paying; returning uses the return destination rate.',

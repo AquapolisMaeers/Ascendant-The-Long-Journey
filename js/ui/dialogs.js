@@ -11,6 +11,7 @@
       startedOutside = false;
     };
     setTimeout(() => document.querySelector('.modal input:not([type=hidden]),.modal select,.modal .btn,.modal-close')?.focus(), 0);
+    G.emit('dialog-opened');
   };
   U.close = () => {
     document.getElementById('modal-root').innerHTML = '';
@@ -20,6 +21,7 @@
     G.runtime.ascendPending = null;
     G.runtime.commandToolAccess = null;
     G.runtime.previousFocus?.focus();
+    G.emit('dialog-closed');
   };
   U.confirm = (title, body, callback, danger = false, cancelAction = 'closeModal') => {
     G.runtime.confirmAction = callback;

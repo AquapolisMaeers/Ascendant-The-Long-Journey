@@ -34,30 +34,50 @@
     select(skill) {
       G.assert(skill === null || D.skills.includes(skill), 'Choose a valid AFK discipline.');
       const c = G.character();
-      this.apply(c);
+      const result = this.apply(c);
+      if (result.levelsGained) this.record(result);
       c.offline = skill;
       G.commit();
     },
     apply(c, now = Date.now()) {
       const seconds = G.clamp((now - c.lastSeen) / 1000, 0, D.config.offlineHours * 3600);
       let earned = 0;
+      const previous = c.offline ? c.skills[c.offline].level : null;
       if (c.offline && seconds >= 1) {
         const skill = c.offline,
           rate = this.rate(c, skill);
         earned = rate * seconds * D.config.offlineRate * (1 + S.items.toolBonus(c, skill, 'Knowledge'));
-        S.xp.add(c.skills[skill], earned);
+        S.xp.add(c.skills[skill], earned, {silent:true});
       }
       c.lastSeen = now;
       S.market.expire(c);
       return {
+        characterId: c.id,
         name: c.name,
         skill: c.offline,
         seconds,
-        xp: earned
+        xp: earned,
+        fromLevel: previous,
+        toLevel: c.offline ? c.skills[c.offline].level : null,
+        levelsGained: c.offline ? c.skills[c.offline].level - previous : 0,
+        progressXp: c.offline ? c.skills[c.offline].xp : 0
       };
+    },
+    record(result) {
+      if (!result.xp) return;
+      const rows = G.runtime.offline ??= [], existing = rows.find(row => row.characterId === result.characterId && row.skill === result.skill);
+      if (existing) {
+        existing.xp += result.xp;
+        existing.seconds += result.seconds;
+        existing.toLevel = result.toLevel;
+        existing.levelsGained = existing.toLevel - existing.fromLevel;
+        existing.progressXp = result.progressXp;
+      } else rows.push(result);
+      G.emit('offline-progress');
     },
     applyAll() {
       G.runtime.offline = G.state.slots.filter(Boolean).map(c => this.apply(c)).filter(r => r.xp > 0);
+      if (G.runtime.offline.length) G.emit('offline-progress');
     },
     resume() {
       for (const c of G.state.slots.filter(Boolean)) {
