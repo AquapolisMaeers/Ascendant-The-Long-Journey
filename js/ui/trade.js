@@ -13,15 +13,22 @@
     }
     if(G.runtime.tab!=='Exchange')return shop();
     const f=G.runtime.exchange??={from:'logs',to:'fish',tier:0,quantity:1};
-    return intro('Exchange')+'<section class="panel exchange-panel"><div class="panel-head"><div><div class="eyebrow">THE BARTER COUNTER</div><h2>Ten for one.</h2></div><span class="badge">SAME TIER \u00b7 10 : 1</span></div><p class="notes spacer">Trade raw ore, lumber, fish or hides for another raw material of the same tier. Locked materials stay protected.</p><label class="exchange-tier spacer">Material tier<select id="exchange-tier">'+D.tiers.map((level,t)=>'<option value="'+t+'" '+(t===f.tier?'selected':'')+'>Level '+level+' \u00b7 '+D.tierNames[t]+'</option>').join('')+'</select></label><div class="exchange-pair spacer"><div class="exchange-side"><small>YOU GIVE</small>'+U.paint(f.from+':'+f.tier)+'<label>From your inventory<select id="exchange-from">'+options(f.from)+'</select></label><strong id="exchange-give"></strong><small id="exchange-owned"></small></div><span class="exchange-arrow" aria-hidden="true">\u2192</span><div class="exchange-side"><small>YOU RECEIVE</small>'+U.paint(f.to+':'+f.tier)+'<label>Choose your return<select id="exchange-to">'+options(f.to)+'</select></label><strong id="exchange-receive"></strong><small>No coins or XP awarded</small></div></div><div class="exchange-order spacer"><label>Quantity to receive<input id="exchange-quantity" type="number" min="1" max="1000000" value="'+f.quantity+'" inputmode="numeric"></label>'+U.btn('Review exchange','exchangeReview','id="exchange-review"','gold-btn')+'</div><p class="notes spacer" id="exchange-feedback" role="status"></p></section>';
+    return intro('Exchange')+'<section class="panel exchange-panel"><div class="panel-head"><div><div class="eyebrow">THE BARTER COUNTER</div><h2>Ten for one.</h2></div><span class="badge">SAME TIER \u00b7 10 : 1</span></div><p class="notes spacer">Trade raw ore, lumber, fish or hides for another raw material of the same tier. Locked materials stay protected.</p><label class="exchange-tier spacer">Material tier<select id="exchange-tier">'+D.tiers.map((level,t)=>'<option value="'+t+'" '+(t===f.tier?'selected':'')+'>Level '+level+' \u00b7 '+D.tierNames[t]+'</option>').join('')+'</select></label><div class="exchange-pair spacer"><div class="exchange-side"><small>YOU GIVE</small>'+U.paint(f.from+':'+f.tier)+'<label>From your inventory<select id="exchange-from">'+options(f.from)+'</select></label><strong id="exchange-give"></strong><small id="exchange-owned"></small></div><span class="exchange-arrow" aria-hidden="true">\u2192</span><div class="exchange-side"><small>YOU RECEIVE</small>'+U.paint(f.to+':'+f.tier)+'<label>Choose your return<select id="exchange-to">'+options(f.to)+'</select></label><strong id="exchange-receive"></strong><small>No coins or XP awarded</small></div></div><div class="exchange-order spacer"><label>Quantity to receive<div class="quantity-with-max"><input id="exchange-quantity" type="number" min="1" max="1000000" value="'+f.quantity+'" inputmode="numeric">'+U.btn('Max','exchangeMax','id="exchange-max"','quiet')+'</div></label>'+U.btn('Review exchange','exchangeReview','id="exchange-review"','gold-btn')+'</div><p class="notes spacer" id="exchange-feedback" role="status"></p></section>';
   };
   U.exchangeLive=()=>{
     if(G.runtime.page!=='Shop'||G.runtime.tab!=='Exchange')return;
     const f=G.runtime.exchange,c=G.character(),input=document.getElementById('exchange-quantity');if(!input)return;
-    const quantity=Number(input.value),valid=Number.isSafeInteger(quantity)&&quantity>0&&quantity<=1000000;
+    let maximum=0;try{maximum=S.exchange.quote(f.from,f.to,f.tier,1).max;}catch{}
+    input.max=String(maximum);input.disabled=maximum<1;
+    if(maximum<1)input.value='0';
+    else if(Number(input.value)>maximum)input.value=String(maximum);
+    else if(input!==document.activeElement&&Number(input.value)<1)input.value='1';
+    const maxButton=document.getElementById('exchange-max');if(maxButton)maxButton.disabled=maximum<1;
+    const quantity=Number(input.value),valid=Number.isSafeInteger(quantity)&&quantity>0&&quantity<=maximum;
     f.quantity=input.value===''?'':quantity;
     let q,message='';
     try{q=S.exchange.quote(f.from,f.to,f.tier,quantity);if(q.available<q.cost)message='Not enough unlocked materials. You can receive up to '+q.max+'.';else if(!q.room)message='Make room for the received material first.';else if(!q.fits)message='The received stack would be too large.';}catch(error){message=error.message;}
+    if(maximum<1)message='No exchange available. You need at least 10 unlocked materials and room for the return.';
     if(c.activity||c.combat||c.dungeon)message='Finish your current activity before exchanging.';
     else if(c.pending.length)message='Resolve Pending Loot before exchanging.';
     else if(S.tutorial.active())message='Finish the tutorial before exchanging.';
@@ -30,6 +37,10 @@
     document.getElementById('exchange-owned').textContent=S.inventory.available(f.from+':'+f.tier)+' unlocked in your inventory';
     document.getElementById('exchange-feedback').textContent=message||'Review and confirm before trading. Every 10 materials returns 1.';
     document.getElementById('exchange-review').disabled=!!message;
+  };
+  U.exchangeMax=()=>{
+    const f=G.runtime.exchange,q=S.exchange.quote(f.from,f.to,f.tier,1),input=document.getElementById('exchange-quantity');
+    if(input){input.value=String(q.max);U.exchangeLive();}
   };
   U.exchangeReview=()=>{
     const c=G.character(),f=G.runtime.exchange,q=S.exchange.quote(f.from,f.to,f.tier,Number(document.getElementById('exchange-quantity').value));

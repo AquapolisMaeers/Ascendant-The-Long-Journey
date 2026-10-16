@@ -159,24 +159,7 @@
     },
     tutorialLesson() { U.lesson(); },
     tutorialAcknowledge() { S.tutorial.acknowledge(); },
-    tutorialTask() {
-      const c = G.character(),
-        step = S.tutorial.current();
-      G.assert(step, 'No active tutorial lesson.');
-      if (step.id === 'enhance') {
-        U.item(c.guide.weaponId);
-        return;
-      }
-      if (step.id === 'equip') {
-        U.item(c.guide.plateId);
-        return;
-      }
-      G.runtime.page = 'Crafting';
-      G.runtime.tab = step.title;
-      G.runtime.craftTier = 0;
-      G.runtime.gemFilter = step.id === 'facet' ? D.classes.indexOf(c.class) : undefined;
-      U.render();
-    },
+    tutorialTask() { U.lesson(); },
     rest() {
       S.recovery.rest();
     },
@@ -201,6 +184,7 @@
       U.close();
     },
     exchangeReview() { U.exchangeReview(); },
+    exchangeMax() { U.exchangeMax(); },
     companionPage(el) { G.runtime.companionPage=Number(el.dataset.page); U.render(); },
     openChest() {
       S.world.openChest();
@@ -375,16 +359,12 @@
       G.commit();
       U.close();
     },
+    craftQuantity(el) { U.selectCraftQuantity(el.dataset.id,el.dataset.quantity); },
     craft(el) {
-      const r = D.recipes.find(r => r.id === el.dataset.id);
-      G.assert(r, 'Choose a recipe.');
-      const quantity = el.dataset.quantity === 'max' ? S.crafting.max(r) : Number(el.dataset.quantity);
-      G.assert(Number.isInteger(quantity) && quantity > 0, 'No crafts available with your unlocked ingredients.');
-      confirm('Prepare ' + quantity + ' × ' + U.e(r.name) + '?',
-        '<p>Queue <strong>' + quantity + '</strong> ' + r.skill + ' actions. Each action takes ingredients only when it completes. Stop at any time to keep unused ingredients.</p>' +
-        U.ingredients(Object.fromEntries(Object.entries(r.cost).map(([key, n]) => [key, n * quantity]))) +
-        '<p class="notes spacer">The queue stops before the next craft if there is no room for its possible output. Tool bonuses can change the final yield and cost.</p>',
-        () => S.crafting.start(r.id, quantity));
+      const r=D.recipes.find(r=>r.id===el.dataset.id),c=G.character(),quantity=G.runtime.craftQuantities?.[c.id]?.[r?.id];
+      G.assert(r&&Number.isSafeInteger(quantity)&&quantity>0,'Select a quantity first.');
+      G.assert(quantity<=S.crafting.max(r),'Choose a quantity your unlocked ingredients can make.');
+      S.crafting.start(r.id,quantity);
     },
     buy(el) {
       const item = D.shop.find(i => i.id === el.dataset.id);
@@ -560,7 +540,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
@@ -571,6 +551,7 @@
     const el = event.target,
       c = G.character();
     try {
+      if (el.dataset.preferenceMode) S.world.setPreferenceMode(el.value);
       if (el.dataset.preference) {
         S.world.setPreference(el.dataset.preference, el.value);
         if (document.querySelector('.modal .skill-preferences')) {
@@ -635,7 +616,8 @@
         U.render();
       }
       if (el.dataset.afk) {
-        S.afk.configure(el.dataset.afk, el.type === 'checkbox' ? el.checked : Number(el.value));
+        if(el.dataset.afkPercent)G.assert(el.value.trim()!==''&&el.validity.valid,'Enter a percentage from 0 to 100.');
+        S.afk.configure(el.dataset.afk, el.type === 'checkbox' ? el.checked : Number(el.value)/(el.dataset.afkPercent?100:1));
       }
       if (el.dataset.setting) {
         G.state.settings[el.dataset.setting] = el.type === 'checkbox' ? el.checked : +el.value;

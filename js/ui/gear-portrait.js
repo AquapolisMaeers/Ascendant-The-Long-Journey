@@ -1,10 +1,7 @@
 'use strict';
 (function(G,D,S,U) {
   U.equippedPortrait=c=>U.characterPortrait(c.class,c.appearance);
-  U.gearPortrait=()=>{
-    const c=G.character();
-    U.modal('Your adventurer','<div class="citizen-preview">'+U.characterPortrait(c.class,c.appearance)+'<div><div class="eyebrow">'+U.e(c.class.toUpperCase())+'</div><h3>'+U.e(c.name)+'</h3><p class="notes spacer">Every great journey begins with an ordinary citizen.</p></div></div><div class="modal-actions">'+U.btn('Close','closeModal','','quiet')+U.btn('Manage equipment','portraitEquipment','','gold-btn')+'</div>');
-  };
+  U.gearPortrait=()=>U.customize();
   const itemArt=U.itemArt;
   U.itemArt=item=>{
     const info=item.kind==='stack'?D.catalog[item.key]:null,gem=info?.boxOnly?D.gems[info.type]:null;

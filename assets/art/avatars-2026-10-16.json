@@ -1,0 +1,73 @@
+{
+  "tool": "built-in image_gen",
+  "mode": "generation",
+  "assets": [
+    {
+      "id": "warrior-1",
+      "path": "assets/art/citizens/citizen-warrior-1.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square portrait bitmap for a medieval RPG avatar picker. Subject: An adult female village militia recruit with dark brown skin, tightly tied practical dark hair, plain patched charcoal linen and a worn brown leather shoulder strap. A calm, capable ordinary citizen. No armor or jewelry. Style reference: the attached existing citizen portrait. Match its warm cinematic side light, semi-realistic hand-painted photographic detail, plain near-black brown vignette background, believable anatomy and head-and-shoulders framing. Depict a different person as described, not the reference identity. Simple inexpensive clothing and a grounded approachable expression. A humble early-game medieval citizen. Single centered subject, readable face at small icon size, comfortable margin. No frame, trim, border, medallion, typography, UI, logo or watermark. No heroic armor, ornate weapons or aristocratic clothing.",
+      "reference": "assets/art/citizens/citizen-warrior.png",
+      "bytes": 2403134,
+      "sha256": "a935540a32fa83db66b4e34f8d18ec622569961638aee0a951182b6c06a40508",
+      "runtimePath": "assets/art/citizens/citizen-warrior-1.webp",
+      "runtimeBytes": 45102,
+      "runtimeSha256": "729fb5eaa3bb253353ae44a3adddbebdf4222ad9942868a934e6245ac1eada6e"
+    },
+    {
+      "id": "warrior-2",
+      "path": "assets/art/citizens/citizen-warrior-2.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square portrait bitmap for a medieval RPG avatar picker. Subject: An older male village watch apprentice with weathered light skin, short graying hair and a modest trimmed beard, wearing an undyed rough linen shirt and a faded brown wool vest. A working person beginning warrior training, not a veteran hero. No armor or jewelry. Style reference: the attached existing citizen portrait. Match its warm cinematic side light, semi-realistic hand-painted photographic detail, plain near-black brown vignette background, believable anatomy and head-and-shoulders framing. Depict a different person as described, not the reference identity. Simple inexpensive clothing and a grounded approachable expression. A humble early-game medieval citizen. Single centered subject, readable face at small icon size, comfortable margin. No frame, trim, border, medallion, typography, UI, logo or watermark. No heroic armor, ornate weapons or aristocratic clothing.",
+      "reference": "assets/art/citizens/citizen-warrior.png",
+      "bytes": 2523077,
+      "sha256": "9d98a3d9811cbddcd570fcdbc50c0e1faeedb28c7e63b89889e0930e0582868d",
+      "runtimePath": "assets/art/citizens/citizen-warrior-2.webp",
+      "runtimeBytes": 50146,
+      "runtimeSha256": "1e73ad469a118465ae2bc3c6479442f55adc3011f28076bea34e17fc808a78e9"
+    },
+    {
+      "id": "archer-1",
+      "path": "assets/art/citizens/citizen-archer-1.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square portrait bitmap for a medieval RPG avatar picker. Subject: An adult male village forester apprentice with warm brown skin and short black hair, plain faded moss-gray hood and patched linen clothes, a simple wooden bow barely visible over his shoulder. No armor or jewelry. Style reference: the attached existing citizen portrait. Match its warm cinematic side light, semi-realistic hand-painted photographic detail, plain near-black brown vignette background, believable anatomy and head-and-shoulders framing. Depict a different person as described, not the reference identity. Simple inexpensive clothing and a grounded approachable expression. A humble early-game medieval citizen. Single centered subject, readable face at small icon size, comfortable margin. No frame, trim, border, medallion, typography, UI, logo or watermark. No heroic armor, ornate weapons or aristocratic clothing.",
+      "reference": "assets/art/citizens/citizen-archer.png",
+      "bytes": 2547787,
+      "sha256": "3a1f40312618fc68e7271d81bfec61301be5b4fe0dc16bfb5b6214563d37b8dc",
+      "runtimePath": "assets/art/citizens/citizen-archer-1.webp",
+      "runtimeBytes": 55344,
+      "runtimeSha256": "72c09c66bc0b2b7d5f550362a0231cdaa61a7ca4dcc0c5046f5f2f01fe9d2fd6"
+    },
+    {
+      "id": "archer-2",
+      "path": "assets/art/citizens/citizen-archer-2.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square portrait bitmap for a medieval RPG avatar picker. Subject: An older adult female village hunter apprentice with freckled pale skin and practical tied red-gray hair, plain weathered olive hood and coarse brown wool clothing, a simple wooden bow barely visible. No elaborate leather armor or jewelry. Style reference: the attached existing citizen portrait. Match its warm cinematic side light, semi-realistic hand-painted photographic detail, plain near-black brown vignette background, believable anatomy and head-and-shoulders framing. Depict a different person as described, not the reference identity. Simple inexpensive clothing and a grounded approachable expression. A humble early-game medieval citizen. Single centered subject, readable face at small icon size, comfortable margin. No frame, trim, border, medallion, typography, UI, logo or watermark. No heroic armor, ornate weapons or aristocratic clothing.",
+      "reference": "assets/art/citizens/citizen-archer.png",
+      "bytes": 2565095,
+      "sha256": "f9e08ae1cff7e71bacbb3c734702ed2e4f455b02c03a4f4b1f63ecb5770c1857",
+      "runtimePath": "assets/art/citizens/citizen-archer-2.webp",
+      "runtimeBytes": 56982,
+      "runtimeSha256": "2a14eb7a27bbb297fc53ea142c9ae185793d4ce79c92556cafa80dab72418bdb"
+    },
+    {
+      "id": "mage-1",
+      "path": "assets/art/citizens/citizen-mage-1.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square portrait bitmap for a medieval RPG avatar picker. Subject: An adult male village scribe and apprentice hedge mage with East Asian features, slightly tousled black hair, a plain faded gray wool hood over a rough linen shirt, holding a small battered notebook. No robes of office, staff, magical glow or jewelry. Style reference: the attached existing citizen portrait. Match its warm cinematic side light, semi-realistic hand-painted photographic detail, plain near-black brown vignette background, believable anatomy and head-and-shoulders framing. Depict a different person as described, not the reference identity. Simple inexpensive clothing and a grounded approachable expression. A humble early-game medieval citizen. Single centered subject, readable face at small icon size, comfortable margin. No frame, trim, border, medallion, typography, UI, logo or watermark. No heroic armor, ornate weapons or aristocratic clothing.",
+      "reference": "assets/art/citizens/citizen-mage.png",
+      "bytes": 2394395,
+      "sha256": "1dc2d0c966d15781d22dbe2e9134b2214784b8baa83f8f6fd04153588f5c153c",
+      "runtimePath": "assets/art/citizens/citizen-mage-1.webp",
+      "runtimeBytes": 45396,
+      "runtimeSha256": "eb7083d75b826ac19991afcc54481ae9d7eb692621633b76c23eae087e40a40a"
+    },
+    {
+      "id": "mage-2",
+      "path": "assets/art/citizens/citizen-mage-2.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square portrait bitmap for a medieval RPG avatar picker. Subject: An older adult female village herbalist and apprentice hedge mage with dark brown skin, short tightly curled gray hair, simple patched brown wool shawl and coarse linen clothing, holding a small battered notebook. No fine robes, staff, magical glow or jewelry. Style reference: the attached existing citizen portrait. Match its warm cinematic side light, semi-realistic hand-painted photographic detail, plain near-black brown vignette background, believable anatomy and head-and-shoulders framing. Depict a different person as described, not the reference identity. Simple inexpensive clothing and a grounded approachable expression. A humble early-game medieval citizen. Single centered subject, readable face at small icon size, comfortable margin. No frame, trim, border, medallion, typography, UI, logo or watermark. No heroic armor, ornate weapons or aristocratic clothing.",
+      "reference": "assets/art/citizens/citizen-mage.png",
+      "bytes": 2506075,
+      "sha256": "c8a18dd14d506ebd193e82701ca24f52a02b29da4574dcf0e8fb1396fa3afa7b",
+      "runtimePath": "assets/art/citizens/citizen-mage-2.webp",
+      "runtimeBytes": 50614,
+      "runtimeSha256": "d0a246d66a404aa4fdbee98f61b204775a61c721924abf232c68190aaf4fef94"
+    }
+  ],
+  "runtimeProcessing": "Browser Canvas export: maximum edge 512px, WebP quality 0.9. Original PNGs preserved unchanged."
+}

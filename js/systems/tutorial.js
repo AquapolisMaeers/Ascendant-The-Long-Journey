@@ -93,8 +93,6 @@
         }]);
         G.notify('Faceting lesson: one typed uncut gem supplied.', 'success');
       }
-      G.runtime.page = 'World';
-      G.runtime.tab = '';
       G.ui.close();
       window.scrollTo(0, 0);
       G.notify('Next lesson: ' + this.current().title, 'info');
@@ -147,6 +145,7 @@
     acknowledge() {
       const id = this.current()?.id;
       G.assert(['preferences', 'offline', 'afk', 'recovery', 'prefixes', 'ready'].includes(id), 'Complete the current practical lesson first.');
+      G.assert(G.runtime.page===this.current().route.page,'Follow the directions to '+this.current().route.page+' before completing this lesson.');
       if (id === 'ready') this.finish();
       else { this.advanceStep(); G.commit(); }
     },

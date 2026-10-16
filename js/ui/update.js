@@ -73,7 +73,7 @@
       }).join('') + '</div></section>';
   };
   const world = U.screens.World;
-  U.screens.World = () => U.guidePanel() + world()
+  U.screens.World = () => world()
     .replace('<aside class="world-side">', '<aside class="world-side">' + U.restPanel())
     .replace('<p class="notes death-risk">', U.innPanel() + '<p class="notes death-risk">');
   const encounter = U.encounter;
@@ -153,7 +153,7 @@
   const shell = U.shell;
   U.shell = () => {
     const html = shell();
-    return G.character() ? html.replace('<main class="content" id="content">', '<main class="content" id="content">' + U.saveWarning() + (G.runtime.page !== 'World' ? U.guidePanel() : '')) : html;
+    return G.character() ? html.replace('<main class="content" id="content">', '<main class="content" id="content">' + U.saveWarning()) : html;
   };
   window.addEventListener('rpg:save-error', () => {
     const content = document.getElementById('content');

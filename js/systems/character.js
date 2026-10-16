@@ -59,7 +59,10 @@
       G.assert(D.perkLevels.includes(level) && c.level >= level, 'Perk milestone is locked.');
       G.assert(c.perks[level] === undefined, 'This milestone already has a selected perk.');
       G.assert([0, 1, 2].includes(choice), 'Invalid perk.');
+      const previousHealth=this.stats(c).health;
       c.perks[level] = choice;
+      const health=this.stats(c).health;
+      c.hp=Math.min(health,c.hp+Math.max(0,health-previousHealth));
       S.tutorial?.perkChosen();
       G.runtime.estimate = null;
       G.commit();

@@ -1,5 +1,6 @@
 'use strict';
 (function(D) {
+  D.citizenLooks={Warrior:['Village recruit','Militia apprentice','Town watchman'],Archer:['Village forester','Woodland apprentice','Village hunter'],Mage:['Village scribe','Hedge apprentice','Village herbalist']};
   D.characterLooks = {
     Warrior: ['Vanguard', 'Shieldbearer', 'Veteran', 'Ironwarden', 'Helmguard'],
     Archer: ['Woodsman', 'Scout', 'Longbow', 'Frostwalker', 'Tracker'],

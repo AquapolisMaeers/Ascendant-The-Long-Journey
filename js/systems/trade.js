@@ -8,8 +8,10 @@
       const input=from+':'+tier,output=to+':'+tier,cost=quantity*10;
       const source=c.inventory.find(i=>i.kind==='stack'&&i.key===input),target=c.inventory.find(i=>i.kind==='stack'&&i.key===output);
       const available=S.inventory.available(input,c),room=!!target||c.inventory.length-(source?.quantity===cost?1:0)<c.capacity;
+      let max=Math.min(1000000,Math.floor(available/10),target?Number.MAX_SAFE_INTEGER-target.quantity:1000000);
+      if(!target&&c.inventory.length>=c.capacity)max=source&&!source.locked&&source.quantity%10===0&&source.quantity/10<=max?source.quantity/10:0;
       return {from,to,tier,quantity,input,output,cost,available,room,
-        fits:!target||Number.isSafeInteger(target.quantity+quantity),max:Math.min(1000000,Math.floor(available/10))};
+        fits:!target||Number.isSafeInteger(target.quantity+quantity),max};
     },
     trade(from,to,tier,quantity) {
       G.ensureProgress();const c=G.character();

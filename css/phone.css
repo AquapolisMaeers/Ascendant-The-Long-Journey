@@ -88,7 +88,7 @@
   body:has(.activity-dock:not([hidden])) #toasts { bottom:calc(var(--phone-nav-space) + 90px); }
   body:has(.levelup-popup:not([hidden])) #toasts { bottom:calc(var(--phone-nav-space) + 10px + var(--levelup-space,180px)); }
   body:has(.activity-dock:not([hidden])):has(.levelup-popup:not([hidden])) #toasts { bottom:calc(var(--phone-nav-space) + 90px + var(--levelup-space,180px)); }
-  .loot-popup { right:10px; top:calc(var(--phone-header-height,110px) + 10px); max-width:calc(100vw - 20px); }.prefix-popup { top:calc(var(--phone-header-height,110px) + 8px); width:calc(100vw - 28px); max-width:360px; }
+  .loot-popup { left:auto; bottom:auto; transform:none; right:10px; top:calc(var(--phone-header-height,110px) + 10px); max-width:calc(100vw - 20px); }.prefix-popup { top:calc(var(--phone-header-height,110px) + 8px); width:calc(100vw - 28px); max-width:360px; }
   .welcome-art { min-height:200px; padding:24px 20px; }.welcome-art h1 { font-size:44px; }.welcome-art blockquote { font-size:17px; }.welcome-form { padding:24px 18px; }.slot { min-height:82px; }.slot strong { font-size:18px; }.slot small { font-size:12px; }
   .class-option { min-height:90px; }.class-story { font-size:14px; }.perk-path-card { padding:14px; min-height:110px; }.perk-path-card p { font-size:13px; }.perk-card-label > span { font-size:10px; }
 }

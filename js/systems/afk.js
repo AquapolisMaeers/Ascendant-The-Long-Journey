@@ -13,6 +13,7 @@
       G.assert(!this.run, 'An AFK session is already running.');
       this.run = { id: c.id, location:c.location, elapsed: 0, inspect: 0, skipped: 0, fights: 0, paidMinutes:0, spent:0, rate:this.minuteRate(c), dungeon:false };
       this.status = 'Following your filters.';
+      c.afk.interval=D.config.afkAdvanceMs;
       G.commit();
     },
     stop(reason = 'Stopped', notify = true) {
@@ -27,11 +28,10 @@
     },
     configure(key, value) {
       const choices = {
-        interval: [8000, 12000, 16000], chance: [.55, .65, .75, .85, .95],
-        minHp: [.25, .5, .75],
+        interval: [8000],
         normals: [true, false], dungeons: [true, false], elites: [true, false], gather: [true, false], chests: [true, false]
       };
-      G.assert(choices[key]?.includes(value), 'Invalid AFK setting.');
+      G.assert(['chance','minHp'].includes(key)?typeof value==='number'&&Number.isFinite(value)&&value>=0&&value<=1:choices[key]?.includes(value), 'Enter a percentage from 0 to 100.');
       this.stop('Filters changed', false);
       G.character().afk[key] = value;
       G.commit();

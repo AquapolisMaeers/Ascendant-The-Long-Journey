@@ -1,9 +1,21 @@
 'use strict';
 (function(G, D, S, U) {
-  U.characterPortrait = (className) => '<span class="character-portrait citizen-portrait" role="img" aria-label="'+U.e(className+' village citizen')+'" data-class="'+U.e(className)+'" style="background-image:url(assets/art/citizens/citizen-'+className.toLowerCase()+'.webp)"></span>';
-  U.lookPicker = (prefix,className) => '<input type="hidden" id="'+prefix+'-portrait" value="0"><div class="citizen-preview">'+U.characterPortrait(className)+'<div><h3>A humble beginning</h3><p class="notes">A citizen taking their first steps as a '+className.toLowerCase()+'.</p></div></div>';
-  U.customize = () => U.gearPortrait();
-  U.customizer = () => U.gearPortrait();
+  U.citizenLook=(className,look)=>Number.isInteger(look)&&D.citizenLooks[className]?.[look]?look:0;
+  U.characterPortrait = (className,appearance={}) => {
+    const look=U.citizenLook(className,appearance.look);
+    return '<span class="character-portrait citizen-portrait" role="img" aria-label="'+U.e(className+' / '+D.citizenLooks[className][look])+'" data-class="'+U.e(className)+'" data-look="'+look+'" style="background-image:url(assets/art/citizens/citizen-'+className.toLowerCase()+(look?'-'+look:'')+'.webp)"></span>';
+  };
+  U.lookPicker = (prefix,className,look=0,action='createLook') => {
+    look=U.citizenLook(className,look);
+    return '<input type="hidden" id="'+prefix+'-portrait" value="'+look+'"><div class="look-picker" role="group" aria-label="'+className+' citizen portraits">'+D.citizenLooks[className].map((name,index)=>'<button type="button" class="look-option '+(look===index?'selected':'')+'" data-action="'+action+'" data-look="'+index+'" aria-pressed="'+(look===index)+'">'+U.characterPortrait(className,{look:index})+'<span>'+U.e(name)+'</span></button>').join('')+'</div>';
+  };
+  U.customize = () => {
+    const c=G.character();G.runtime.appearanceDraft={look:U.citizenLook(c.class,c.appearance.look),color:c.appearance.color};U.customizer();
+  };
+  U.customizer = () => {
+    const c=G.character(),draft=G.runtime.appearanceDraft;
+    U.modal('Your citizen portrait','<div class="citizen-preview">'+U.characterPortrait(c.class,draft)+'<div><div class="eyebrow">'+U.e(c.class.toUpperCase())+'</div><h3>'+U.e(c.name)+'</h3><p class="notes spacer">An ordinary beginning. Choose the face of your journey.</p></div></div><div class="spacer">'+U.lookPicker('appearance',c.class,draft.look,'appearanceLook')+'</div><input type="hidden" id="appearance-color" value="'+U.e(draft.color)+'"><div class="modal-actions">'+U.btn('Cancel','closeModal','','quiet')+U.btn('Manage equipment','portraitEquipment','','quiet')+U.btn('Save portrait','appearanceConfirm','','gold-btn')+'</div>');
+  };
 
   U.itemStatLabel = (key, item) => key === 'damage' && item?.style !== null && item?.style !== undefined ?
     D.primary[item.style] + ' Damage' : D.labels[key];

@@ -82,7 +82,7 @@
       peaceFoodReady: 0,
       facetFails: {},
       offline: null,
-      skillPreferences: {primary: 'Fishing', secondary: 'Mining'},
+      skillPreferences: {mode:'balanced',primary: 'Fishing', secondary: 'Mining'},
       lastSeen: Date.now(),
       listings: [],
       encounter: null,
@@ -91,7 +91,7 @@
       dungeon: null,
       tutorial: 0,
       guide: null,
-      afk: { interval: 12000, chance: .75, minHp: .25, normals: true, dungeons: false, elites: false, gather: false, chests: true },
+      afk: { interval: 8000, chance: .75, minHp: .25, normals: true, dungeons: false, elites: false, gather: false, chests: true },
       restReadyAt: 0,
       debugUsed: false
     };

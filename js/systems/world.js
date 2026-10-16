@@ -4,11 +4,16 @@
     preferences(c = G.character()) {
       return c.skillPreferences || {primary: 'Fishing', secondary: 'Mining'};
     },
+    setPreferenceMode(mode) {
+      G.assert(['balanced','preferred'].includes(mode),'Choose Balanced or Preferred gathering.');
+      G.character().skillPreferences={...this.preferences(),mode};G.commit();
+    },
     setPreference(rank, skill) {
       G.assert(['primary', 'secondary'].includes(rank) && D.skills.slice(0, 4).includes(skill), 'Choose a gathering skill.');
       const c = G.character(), p = {...this.preferences(c)}, other = rank === 'primary' ? 'secondary' : 'primary';
       if (p[other] === skill) p[other] = p[rank];
       p[rank] = skill;
+      p.mode='preferred';
       c.skillPreferences = p;
       G.commit();
     },
@@ -17,7 +22,7 @@
         skills = D.skills.slice(0, 4), p = this.preferences(c),
         total = D.encounters.types.reduce((sum, type, i) => sum + (skills.includes(type) ? weights[i] : 0), 0);
       return weights.map((weight, i) => skills.includes(D.encounters.types[i]) ? total *
-        (D.encounters.types[i] === p.primary ? 4 : D.encounters.types[i] === p.secondary ? 2 : 1) / 8 : weight);
+        (p.mode==='balanced'?2:D.encounters.types[i] === p.primary ? 4 : D.encounters.types[i] === p.secondary ? 2 : 1) / 8 : weight);
     },
     tier(location, divisor = 2, starter = false) {
       if (location === 0 && starter) return G.weighted(G.rng, [70, 30]);
@@ -97,7 +102,7 @@
       c.activity = {
         type: 'advance',
         elapsed: 0,
-        duration: automated ? c.afk.interval : D.config.advanceMs,
+        duration: automated ? D.config.afkAdvanceMs : D.config.advanceMs,
         afk: automated
       };
       G.commit();

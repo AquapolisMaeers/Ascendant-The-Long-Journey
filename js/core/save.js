@@ -129,10 +129,10 @@
       if (c.activity && (!['advance', 'gather', 'craft'].includes(c.activity.type) || !finite(c.activity.elapsed) || !finite(c.activity.duration, 1, 100000))) fail('activity');
       if (c.activity?.type === 'gather' && (!c.encounter || !D.skills.slice(0, 4).includes(c.activity.skill) || !Number.isInteger(c.activity.tier) || !D.tiers[c.activity.tier])) fail('gather activity');
       if (c.activity?.type === 'craft' && (!D.recipes.some(r => r.id === c.activity.recipe) || !Number.isInteger(c.activity.remaining) || !finite(c.activity.remaining, 1, 1000000))) fail('craft queue');
-      if (!c.afk || ![8000, 12000, 16000].includes(c.afk.interval) || ![.55, .65, .75, .85, .95].includes(c.afk.chance) || ![.25, .5, .75].includes(c.afk.minHp) || c.afk.minutes !== undefined && ![15, 30, 60].includes(c.afk.minutes) || ['elites', 'gather', 'chests'].some(k => typeof c.afk[k] !== 'boolean')) fail('AFK settings');
+      if (!c.afk || c.afk.interval !== D.config.afkAdvanceMs || !finite(c.afk.chance,0,1) || !finite(c.afk.minHp,0,1) || c.afk.minutes !== undefined && ![15, 30, 60].includes(c.afk.minutes) || ['elites', 'gather', 'chests'].some(k => typeof c.afk[k] !== 'boolean')) fail('AFK settings');
       if (['normals','dungeons'].some(k => c.afk[k] !== undefined && typeof c.afk[k] !== 'boolean')) fail('AFK encounter filters');
       if (!finite(c.restReadyAt)) fail('rest cooldown');
-      if (c.skillPreferences !== undefined && (!c.skillPreferences || !D.skills.slice(0, 4).includes(c.skillPreferences.primary) || !D.skills.slice(0, 4).includes(c.skillPreferences.secondary) || c.skillPreferences.primary === c.skillPreferences.secondary)) fail('skill preferences');
+      if (c.skillPreferences !== undefined && (!c.skillPreferences || c.skillPreferences.mode!==undefined&&!['balanced','preferred'].includes(c.skillPreferences.mode) || !D.skills.slice(0, 4).includes(c.skillPreferences.primary) || !D.skills.slice(0, 4).includes(c.skillPreferences.secondary) || c.skillPreferences.primary === c.skillPreferences.secondary)) fail('skill preferences');
       if (c.guide && (!Number.isInteger(c.guide.step) || !D.tutorial.steps[c.guide.step] || typeof c.guide.active !== 'boolean' || !c.guide.gathered)) fail('tutorial');
       if (c.activity?.rewards) {
         if (!Array.isArray(c.activity.rewards)) fail('activity rewards');
@@ -211,6 +211,7 @@
       let guard = 0;
       while (p?.saveVersion !== D.config.version && this.migrations[p?.saveVersion] && guard++ < 10) p = this.migrations[p.saveVersion](p);
       if(Array.isArray(p?.slots)) for(const c of p.slots.filter(Boolean)) {
+        if(c.afk&&[8000,12000,16000].includes(c.afk.interval))c.afk.interval=D.config.afkAdvanceMs;
         if(c.gemSocketRules !== undefined || !Array.isArray(c.inventory) || !Array.isArray(c.pending) || !c.equipment || !Array.isArray(c.listings)) continue;
         for(const item of [...Object.values(c.equipment),...c.inventory,...c.pending,...c.listings.map(l=>l?.item)]) {
           if(item?.kind!=='gear'||!Array.isArray(item.gems)||!Array.isArray(D.gemAllowed[item.slot]))continue;

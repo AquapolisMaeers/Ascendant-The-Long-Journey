@@ -1,7 +1,7 @@
 'use strict';
 (function(G,D,S,U) {
   U.companionStatValue=(stat,value)=>['damage','defence','health'].includes(stat)?G.number(value,2):G.percent(value,3);
-  U.upgradeSummary = (q,compact=false) => '<div class="upgrade-summary '+(compact?'compact':'')+'"><div><small>Success chance</small><strong>'+G.percent(q.chance,1)+'</strong></div><div><small>Coin cost</small><strong>'+G.money(q.coins)+'</strong><small>'+G.number(q.coins)+' Bronze</small></div></div>';
+  U.upgradeSummary = (q,compact=false) => '<div class="upgrade-summary '+(compact?'compact':'')+'"><div><small>Success chance</small><strong>'+G.percent(q.chance,1)+'</strong></div><div><small>Coin cost</small><strong>'+G.money(q.coins)+'</strong></div></div>';
   U.companionPortrait = entry => entry.art === undefined ? U.portraitArt(entry.portrait) :
     '<span class="icon portrait-art companion-art" aria-hidden="true" data-pet-art="'+entry.art+'" style="background-position:'+(entry.art%2*100)+'% '+(Math.floor(entry.art/2)*100)+'%"></span>';
   U.enhanceConfirmation = id => {

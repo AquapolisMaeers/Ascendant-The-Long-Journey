@@ -11,6 +11,7 @@
     levelCap: 100,
     slots: 3,
     advanceMs: 4000,
+    afkAdvanceMs: 8000,
     actionMs: 4000,
     nodeCharges: 5,
     attackSeconds: 2,

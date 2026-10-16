@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-16',title:'Learn the route, choose your pace',changes:[
+    'Tutorial lessons explain where to click and why each task matters. Follow the navigation yourself; completing a practical lesson keeps you on the current page.',
+    'Crafting quantities now select a batch without starting it. Press Cook, Smith, Cut or Fuse when ready. Health perks immediately add their gained maximum HP to current health.',
+    'Skills adds Balanced gathering for equal odds across all four gathering skills. Preferred skills retains primary and secondary choices. Both keep the same combined gathering chance.',
+    'AFK advancing always uses an 8-second interval. Type your own minimum estimated victory chance and low-health stop percentage in Settings.',
+    'Upgrade windows show one clear currency total. Exchange quantities respect available unlocked inventory and include a Max button.',
+    'Choose from three humble citizen portraits per class during creation or by clicking your avatar. Six new portraits match the existing plain medieval style.'
+  ]},
   {date:'2026-10-15',title:'Humble beginnings, a fuller stable and the barter counter',changes:[
     'Class portraits now show ordinary medieval citizens in plain clothing. The 3D character and rarity frame are removed. The seven special companions have new painted portraits matching the regular companion art style.',
     'Every special companion gains a second level-scaled stat. Collect multiple regular and special companions, then equip one for its bonuses. Active, Stable and Adopt views keep the collection organized. Returning any companion to the stable preserves its progress.',
