@@ -1,6 +1,11 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-16',title:'A steadier fight on the phone',changes:[
+    'Faceting groups all 17 gem types. The ten advanced types now fuse three matching gems into the next rank, II–V. Their starting gems still come from mystery boxes.',
+    'Phones keep Eat, food counts and cooldowns above navigation, with larger health bars and an expandable combat log. Food setup moves beside the encounter.',
+    'Desktop tabs have slightly larger labels and icons. Faceting tool Ascension no longer needs an uncut Attack gem.'
+  ]},
   {date:'2026-10-16',title:'The trade quarter, mounts and a new face',changes:[
     'General shop and Ascendant Emporium now share the Shop page with separate selectors. The coin wallet opens the Emporium there. The sidebar has fewer, shorter rows, and clicking the Ascendant name returns to World.',
     'A 75 AC Mount Mystery Box offers 19 mounts mirroring outfit and aura bonuses. Focused rewards total 90%, build rewards 9.5%, and Eclipse Sovereign 0.5%. Duplicates return 15 AC. Collect several, equip one under Character > Mounts.',

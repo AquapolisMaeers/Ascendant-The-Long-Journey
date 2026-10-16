@@ -69,11 +69,23 @@
       D.catalog[id]={id,name:name+' Gem '+D.roman[rank],category:'Gems',type,rank,level:D.facet.levels[rank-1],rarity:rank,boxOnly:true};
       D.itemIllustrations[id]={...D.itemIllustrations['gem:5:'+rank],name:D.catalog[id].name};
     }
+    // Advanced gems start in boxes; fuse existing ranks using the usual rules.
+    for(let rank=1;rank<5;rank++) D.recipes.push({
+      id:'facet:'+type+':'+rank,name:name+' Gem '+D.roman[rank+1],skill:'Faceting',
+      tier:D.tierFor(D.facet.levels[rank]),level:D.facet.levels[rank],type,rank,
+      cost:{['gem:'+type+':'+rank]:D.facet.inputs},output:'gem:'+type+':'+(rank+1),
+      xp:D.config.skillXp*D.facet.levels[rank]*D.config.facetingXp
+    });
     const offensive=['damagePct','speed','penetration','double','lifeSteal'].includes(stat);
     D.legacyExclusiveGemSlots[type]=offensive?['Weapon','Gloves','Necklace','Ring']:['Helmet','Plate','Greaves','Boots','Necklace','Ring'];
     const slots=D.slots.filter(slot=>D.prefixPools[slot].includes(stat));
     slots.forEach(slot=>D.gemAllowed[slot].push(type));
   });
+  D.facetingGroups=[
+    {name:'Standard gems',types:D.gems.map((_,type)=>type).filter(type=>type<D.regularGemCount)},
+    {name:'Advanced gems \u00b7 Offence',types:D.gems.map((_,type)=>type).filter(type=>type>=D.regularGemCount&&['damagePct','speed','penetration','double','lifeSteal'].includes(D.gems[type].stat))},
+    {name:'Advanced gems \u00b7 Defence',types:D.gems.map((_,type)=>type).filter(type=>type>=D.regularGemCount&&!['damagePct','speed','penetration','double','lifeSteal'].includes(D.gems[type].stat))}
+  ];
   D.gemBoxRanks=[600,250,100,45,5];
   D.emporiumCategories = [
     {name:'Outfit Mystery Boxes',box:'outfit-box',description:'All 19 outfits. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},

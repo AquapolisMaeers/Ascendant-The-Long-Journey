@@ -1,0 +1,54 @@
+/* Keep the fight readable and healing within reach of the bottom navigation. */
+@media(max-width:700px), (max-width:1000px) and (max-height:500px) and (pointer:coarse) {
+  .content:has(.combat-view) { padding:12px 12px calc(var(--phone-nav-space) + var(--phone-combat-space,150px)); }
+  .content:has(.combat-view) > :is(.guide-panel,.perk-reminder) { display:none; }
+  .combat-view .world-grid,.combat-view .world-main,.combat-view .world-side { display:block; }
+  .combat-view .world-main > .panel:has(.room-track) { padding:10px; margin-bottom:10px; }
+  .combat-view .room-track { margin:6px 0; }
+  .combat-view .world-main > .panel:has(.room-track) .room-step { font-size:10px; padding:6px 3px; }
+  .world-screen.combat-view .encounter { padding:14px 12px; background:linear-gradient(135deg,#252536f5,#151b29f5); }
+  .combat-view .panel-head .eyebrow { font-size:11px; letter-spacing:1px; }
+  .combat-view .fight-row { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; gap:12px; }
+  .combat-view .versus { display:none; }
+  .combat-view .fighter { min-width:0; padding:10px 8px; background:#0d132b66; border:1px solid #86738b66; }
+  .combat-view .fighter > .character-portrait,.combat-view .fighter > .portrait-art { width:52px; height:52px; margin:0 auto 8px; }
+  .combat-view .fighter h3 { font-size:18px; line-height:1.15; min-height:2.3em; margin:0 0 8px; overflow-wrap:anywhere; }
+  .combat-view .fighter .bar.hp { height:11px; margin:8px 0; }
+  .combat-view .fighter .fight-meta { color:#f6e9db; font-size:13px; font-variant-numeric:tabular-nums; }
+  .combat-view .fighter .bar.thin { height:4px; margin:9px 0 0; }
+  .world-screen.combat-view .encounter > .meta-row { font-size:13px; padding:12px 0 0; }
+  .combat-view .encounter > .footer-note { display:none; }
+  .phone-combat-log { margin-top:8px; border-top:1px solid #756077; }
+  .phone-combat-log > summary { min-height:44px; padding:12px 2px; font-size:14px; color:#d8c6df; cursor:pointer; }
+  .combat-view .phone-combat-log .combat-log { max-height:160px; font-size:13px; line-height:1.5; margin:0; padding:0 0 6px; border:0; }
+  .world-screen .phone-combat-food { position:fixed; z-index:55; bottom:calc(var(--phone-nav-space) + 8px); left:10px; right:10px; margin:0; padding:12px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 12px; align-items:center; background:#202231fa; border:1px solid #b68b82; border-top:3px solid #d5b579; box-shadow:0 -5px 22px #07091499; }
+  .phone-food-info { min-width:0; display:grid; gap:5px; }
+  .phone-food-info strong { font-size:15px; line-height:1.2; overflow-wrap:anywhere; }
+  .phone-food-info small,.phone-food-hint { font-size:12px; color:#d4c7db; }
+  .phone-food-action { display:grid; gap:4px; text-align:center; }
+  .phone-food-action #food-cooldown { font-size:11px; color:#dbc9a7; font-variant-numeric:tabular-nums; }
+  .phone-food-action #eat-button { min-height:48px; min-width:132px; font-size:15px; padding:10px 12px; }
+  .phone-food-hint { grid-column:1 / -1; }
+  .phone-combat-stop { grid-column:1 / -1; }
+  body:has(.phone-combat-food) :is(#toasts,.levelup-popup) { bottom:calc(var(--phone-nav-space) + var(--phone-combat-space,150px)); }
+  body:has(.phone-combat-food):has(.levelup-popup:not([hidden])) #toasts { bottom:calc(var(--phone-nav-space) + var(--phone-combat-space,150px) + var(--levelup-space,180px)); }
+  .phone-food-setup { margin:12px 0; }
+  .phone-food-setup > summary { min-height:56px; }
+  .phone-food-setup > summary > span { font-size:21px; }
+  .phone-food-setup > summary > small { font-size:10px; }
+  .phone-food-setup .food-panel label { font-size:13px; margin:10px 0; }
+  .phone-food-setup .food-panel select { min-height:44px; padding:8px; }
+  .phone-food-setup .food-panel .meta-row { font-size:13px; }
+  .faceting-source { margin:-6px 0 18px; }
+}
+@media(max-height:500px) and (max-width:1000px) and (pointer:coarse) {
+  body:has(.phone-combat-food) .topbar { grid-template-columns:repeat(4,minmax(0,1fr)); padding:6px 12px; }
+  body:has(.phone-combat-food) .topbar :is(.currencies,.ascendant-wallet,.top-progress:not(.hp-top)) { display:none; }
+  body:has(.phone-combat-food) .topbar .hp-top { grid-column:3 / span 2; grid-row:1; }
+  .combat-view .fighter { display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 10px; text-align:left; }
+  .combat-view .fighter > .character-portrait,.combat-view .fighter > .portrait-art { grid-row:1 / span 3; width:40px; height:40px; margin:0; }
+  .combat-view .fighter h3 { min-height:0; font-size:17px; margin:0; }
+  .combat-view .fighter :is(.bar,.fight-meta) { grid-column:2; }
+  .world-screen .phone-combat-food { padding:8px 12px; }
+  .phone-food-action { display:flex; align-items:center; gap:12px; }
+}
