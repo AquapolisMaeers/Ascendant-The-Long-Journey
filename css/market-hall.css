@@ -21,9 +21,9 @@ button.brand:hover strong { color:var(--gold); }
   .sidebar { padding-top:22px; padding-bottom:14px; overflow-y:auto; }
   .sidebar .brand { padding:0 8px 17px; }
   .sidebar .nav-label { margin-top:10px; margin-bottom:8px; }
-  .sidebar .nav { gap:3px; }
-  .sidebar .nav button { min-height:38px; padding:7px 12px; gap:10px; font-size:13px; }
-  .sidebar .nav button .icon { width:18px; height:18px; }
+  .sidebar .nav { gap:4px; }
+  .sidebar .nav button { min-height:42px; padding:8px 12px; gap:10px; font-size:15px; }
+  .sidebar .nav button .icon { width:20px; height:20px; }
   .sidebar-foot { padding-top:16px; gap:8px; }
   .sidebar-foot .btn { min-height:30px; padding:6px 9px; }
   .shop-sections { margin-bottom:10px; padding-bottom:8px; }

@@ -13,12 +13,11 @@
         const r = item.rarity,
           skillIndex = D.skills.indexOf(item.skill),
           tier = D.tierFor(D.toolLevels[Math.min(7, r + 1)]),
-          kind = skillIndex < 4 ? D.resourceKinds[skillIndex] : skillIndex === 4 ? 'bar' : skillIndex === 5 ? 'fish' : 'uncut';
+          kind = skillIndex < 4 ? D.resourceKinds[skillIndex] : skillIndex === 4 ? 'bar' : skillIndex === 5 ? 'fish' : null;
         const cost = {
           stone: 1
         };
-        if (kind === 'uncut') cost['uncut:0'] = Math.ceil(D.tuning.toolBaseMaterials * D.ascend.materials[r]);
-        else cost[kind + ':' + tier] = Math.ceil(D.tuning.toolBaseMaterials * D.ascend.materials[r]);
+        if (kind) cost[kind + ':' + tier] = Math.ceil(D.tuning.toolBaseMaterials * D.ascend.materials[r]);
         return {
           coins: D.coinUnits[tier] * D.ascend.coins[r],
           cost,
