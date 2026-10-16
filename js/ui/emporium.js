@@ -26,7 +26,7 @@
   const portrait=U.companionPortrait;
   U.companionPortrait=entry=>entry?.special?'<span class="special-pet-art" role="img" aria-label="'+U.e(entry.name)+'"><img class="special-pet-illustration" src="'+entry.illustration+'" alt="" decoding="async"><b aria-hidden="true">\u2726</b></span>':portrait(entry);
   const art=entry=>entry.special?U.companionPortrait(entry):U.regaliaArt(entry);
-  const petStats=p=>'<p class="notes pet-rate">+'+U.statValue(p.stat,p.perLevel)+' '+D.labels[p.stat]+' per level</p>';
+  const petStats=p=>'<p class="notes pet-rate">'+Object.entries(S.companions.rates(p)).map(([stat,rate])=>'+'+U.companionStatValue(stat,rate)+' '+D.labels[stat]+' per level').join('<br>')+'</p>';
   const blocked=()=>{const c=G.character();return c.combat||c.activity||c.dungeon||c.pending.length||S.tutorial.active();};
   const itemCard=(entry,collection=false)=>{
     const c=G.character(),owned=S.emporium.owned(entry,c),equipped=entry.special?c.companion?.type===entry.id:c.regalia[entry.kind]===entry.id;
@@ -41,14 +41,14 @@
     const rows=outcomes.filter(o=>!filters||(type==='all'||String(D.catalog[o.key].type)===type)&&(rank==='all'||String(D.catalog[o.key].rank)===rank));
     return filters+'<div class="box-odds" tabindex="0" aria-label="Box rewards and unmodified per-opening odds"><table class="data-table"><thead><tr><th>Possible reward</th><th>Chance</th></tr></thead><tbody>'+rows.map(o=>{
       const info=o.key?D.catalog[o.key]:null,gem=info?D.gems[info.type]:null;
-      return '<tr><td>'+(o.entry?.special?'<span class="pet-outcome">'+U.companionPortrait(o.entry)+'<span>'+U.e(o.entry.name)+'</span></span>':U.e(o.entry?.name||(info?info.name:o.stone?'1 Ascendant Stone':U.price(o.coins))))+(info?.boxOnly?' <small class="exclusive-label">EXCLUSIVE</small>':'')+(gem?'<small class="box-gem-effect">+'+U.statValue(gem.stat,gem.value*info.rank)+' '+D.labels[gem.stat]+'</small>':'')+'</td><td>'+G.percent(o.weight/total,box.kind==='gem'?6:4)+'</td></tr>';
+      return '<tr><td>'+(o.entry?.special?'<span class="pet-outcome">'+U.companionPortrait(o.entry)+'<span>'+U.e(o.entry.name)+'<small class="pet-outcome-rates">'+Object.entries(S.companions.rates(o.entry)).map(([stat,rate])=>'+'+U.companionStatValue(stat,rate)+' '+D.labels[stat]+' / level').join('<br>')+'</small></span></span>':U.e(o.entry?.name||(info?info.name:o.stone?'1 Ascendant Stone':U.price(o.coins))))+(info?.boxOnly?' <small class="exclusive-label">EXCLUSIVE</small>':'')+(gem?'<small class="box-gem-effect">+'+U.statValue(gem.stat,gem.value*info.rank)+' '+D.labels[gem.stat]+'</small>':'')+'</td><td>'+G.percent(o.weight/total,box.kind==='gem'?6:4)+'</td></tr>';
     }).join('')+'</tbody></table></div>';
   };
   U.emporiumResult=result=>{
     const entry=result.entry;
     U.modal(result.duplicate?'Already in your collection':entry?'A new chapter in your collection':result.key?'A gem for your journey':result.stone?'An Ascendant Stone!':'Coins for the road',
       '<div class="emporium-result">'+(entry?art(entry):result.key?U.itemArt({kind:'stack',key:result.key}):U.paint(result.stone?'stone':'coins'))+'<h3>'+U.e(entry?.name||(result.key?D.catalog[result.key].name:result.stone?'1 Ascendant Stone':U.price(result.coins)))+'</h3>'+
-      (result.duplicate?'<p class="notes">You already own this reward. Returned '+ac(result.refund)+'. Your existing item or pet is preserved.</p>':entry?'<p class="notes">Added to your permanent collection. Equip it whenever you are ready.</p>':result.key?U.effectPreview({kind:'stack',key:result.key})+'<p class="notes">Added to your inventory.</p>':'<p class="notes">Added to your '+(result.stone?'inventory':'wallet')+'.</p>')+'</div><div class="modal-actions">'+U.btn('Continue','closeModal','','quiet')+
+      (entry?.special?petStats(entry):'')+(result.duplicate?'<p class="notes">You already own this reward. Returned '+ac(result.refund)+'. Your existing item or pet is preserved.</p>':entry?'<p class="notes">Added to your permanent collection. Equip it whenever you are ready.</p>':result.key?U.effectPreview({kind:'stack',key:result.key})+'<p class="notes">Added to your inventory.</p>':'<p class="notes">Added to your '+(result.stone?'inventory':'wallet')+'.</p>')+'</div><div class="modal-actions">'+U.btn('Continue','closeModal','','quiet')+
       (entry&&!result.duplicate?U.btn('Equip now',entry.special?'equipPet':'equipRegalia','data-id="'+entry.id+'"','gold-btn'):'')+'</div>');
   };
   U.emporiumOpen=id=>{
@@ -81,15 +81,6 @@
   U.regaliaCollection=kind=>{
     const entries=D.regalia.filter(r=>r.kind===kind&&G.character().regalia.owned.includes(r.id));
     U.modal(kind==='outfit'?'Your outfits':'Your auras',entries.length?'<div class="regalia-grid collection-modal">'+entries.map(e=>itemCard(e,true)).join('')+'</div>':'<p class="notes">Your collection begins in the Ascendant Emporium.</p>'+U.btn('Visit the Emporium','visitEmporium','data-kind="'+kind+'"','gold-btn spacer'),true);
-  };
-  const companions=U.screens.Companions;
-  U.screens.Companions=()=>{
-    const c=G.character();S.emporium.normalize(c);
-    const stable=[...new Set([...c.specialPets,...Object.keys(c.petStable)])].filter(type=>type!==c.companion?.type);
-    return companions().replace('Release companion',S.companions.definition(c.companion)?.special?'Return to stable':'Release companion')+(stable.length?'<details class="panel spacer pet-stable"><summary>Companion stable \u00b7 '+stable.length+' waiting</summary><p class="notes spacer">One companion travels with you. Switching preserves levels and ascensions; hunger and vitality continue to age in the stable.</p><div class="stable-grid spacer">'+stable.map(type=>{
-      const pet=D.allCompanions.find(p=>p.id===type),p=c.petStable[type];
-      return '<div class="stable-pet">'+U.companionPortrait(pet)+'<div><strong>'+pet.name+'</strong><small>'+D.rarity[p?.ascensions||0]+' \u00b7 Level '+(p?.level||1)+'</small>'+U.btn('Travel together','equipPet','data-id="'+type+'" '+(blocked()?'disabled':''),'small quiet')+'</div></div>';
-    }).join('')+'</div></details>':'');
   };
   const levelArt=U.companionPortrait;
   // The existing level card also resolves special companion portraits.

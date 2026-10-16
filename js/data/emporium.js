@@ -27,8 +27,10 @@
     'A celestial koi that swims through the air. Its comet-tail traces the rhythm of your next attack.',
     'A masked night owl with a velvet mantle. It gathers stolen vitality beneath its watchful, violet eyes.'
   ];
+  const secondBonuses=[['penetration',.0005],['reduction',.00025],['healthPct',.002],['critDamage',.002],['damagePct',.001],['dodge',.0005],['resistance',.0005]];
   D.specialCompanions = D.companions.map((pet,i)=>({...pet,id:'special-'+pet.id,base:pet.id,name:names[i],price:300,perLevel:pet.perLevel*2,special:true,
-    illustration:'assets/art/companions/special-'+pet.id+'.svg',description:stories[i]}));
+    bonusesPerLevel:{[pet.stat]:pet.perLevel*2,[secondBonuses[i][0]]:secondBonuses[i][1]},
+    illustration:'assets/art/companions/special-'+pet.id+'-painted.webp',description:stories[i]}));
   D.allCompanions = [...D.companions,...D.specialCompanions];
   D.emporiumBoxes = [
     {id:'outfit-box',name:'Outfit Mystery Box',kind:'outfit',price:75,duplicate:15},

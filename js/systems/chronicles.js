@@ -66,9 +66,10 @@
       const health=Math.max(0,p.health-Math.max(0,hours-untilEmpty)*D.companionRules.starvationPerHour);
       return {...p,hunger,health,active:hunger>0&&health>0,alive:health>0};
     },
+    rates(d) { return d?.bonusesPerLevel || (d ? {[d.stat]:d.perLevel} : {}); },
     bonus(c) {
       const p=this.view(c.companion),d=this.definition(p);
-      return p?.active&&d?{[d.stat]:d.perLevel*p.level}:{};
+      return p?.active&&d?Object.fromEntries(Object.entries(this.rates(d)).map(([stat,rate])=>[stat,rate*p.level])):{};
     },
     sync(c,now=Date.now()) {
       if(!c.companion) return;
@@ -83,11 +84,12 @@
       G.ensureIdle();const c=G.character(),d=D.companions.find(d=>d.id===type);
       G.assert(!S.tutorial.active(),'Finish the required tutorial before adopting a companion.');
       G.assert(!c.dungeon,'Adopt companions in the outside world.');
-      G.assert(d&&!c.companion,'Choose an available companion; release your current companion before adopting another.');
-      G.assert(!c.petStable?.[type],'This companion is already in your stable. Choose Travel together to restore its progress.');
+      G.assert(d,'Choose an available companion.');
+      G.assert(c.companion?.type!==type&&!c.petStable?.[type],'You already own this companion. Choose it from your stable.');
       G.assert(c.coins>=d.price,'Insufficient coins.');
-      c.coins-=d.price;c.companion={type,level:1,xp:0,ascensions:0,hunger:100,health:100,updatedAt:Date.now()};
-      G.notify(d.name+' joins your journey. Keep it fed.','success');G.commit();
+      const pet={type,level:1,xp:0,ascensions:0,hunger:100,health:100,updatedAt:Date.now()};
+      c.coins-=d.price;if(c.companion)(c.petStable??={})[type]=pet;else c.companion=pet;
+      G.notify(d.name+' joins your '+(c.companion===pet?'journey':'stable')+'. Only your equipped companion grants bonuses.','success');G.commit();
     },
     nutrition(key, p = G.character()?.companion) {
       const info=D.catalog[key];

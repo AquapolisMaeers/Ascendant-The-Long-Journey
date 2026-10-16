@@ -1,5 +1,6 @@
 'use strict';
 (function(G,D,S,U) {
+  U.companionStatValue=(stat,value)=>['damage','defence','health'].includes(stat)?G.number(value,2):G.percent(value,3);
   U.upgradeSummary = (q,compact=false) => '<div class="upgrade-summary '+(compact?'compact':'')+'"><div><small>Success chance</small><strong>'+G.percent(q.chance,1)+'</strong></div><div><small>Coin cost</small><strong>'+G.money(q.coins)+'</strong><small>'+G.number(q.coins)+' Bronze</small></div></div>';
   U.companionPortrait = entry => entry.art === undefined ? U.portraitArt(entry.portrait) :
     '<span class="icon portrait-art companion-art" aria-hidden="true" data-pet-art="'+entry.art+'" style="background-position:'+(entry.art%2*100)+'% '+(Math.floor(entry.art/2)*100)+'%"></span>';
@@ -69,13 +70,13 @@
     if(selected) selections[c.id]=selected;
     const available=foods.some(i=>i.key===selected);
     const bonus=S.companions.bonus(c),value=bonus[d.stat]||0,revive=p.level*D.companionRules.revivePerLevel;
-    return intro+'<div class="grid-2"><section class="panel companion-card">'+U.companionPortrait(d)+
+    return intro+'<div class="grid-2"><section class="panel companion-card"><div class="companion-profile">'+U.companionPortrait(d)+'<div class="companion-profile-copy">'+
       '<div class="row between spacer"><h2 class="rarity-'+(p.ascensions||0)+' rarity-text">'+S.companions.name(p)+U.companionMarks(p)+'</h2><span class="badge">'+(p.alive?p.active?'BONUS ACTIVE':'HUNGRY':'STARVED')+'</span></div>'+
       '<div class="bar-label spacer"><span>LEVEL '+p.level+'</span><span>'+(p.level===S.companions.cap(p)?'LEVEL CAP REACHED':G.number(p.xp)+' / '+G.number(S.companions.xpNext(p.level))+' XP')+'</span></div>'+
-      U.bar(p.level===S.companions.cap(p)?1:p.xp,p.level===S.companions.cap(p)?1:S.companions.xpNext(p.level),'skill')+U.companionAscensionPanel(p)+
+      U.bar(p.level===S.companions.cap(p)?1:p.xp,p.level===S.companions.cap(p)?1:S.companions.xpNext(p.level),'skill')+'</div></div>'+U.companionAscensionPanel(p)+
       '<div class="meta-row"><span>Hunger</span><strong id="companion-hunger">'+G.number(p.hunger,1)+' / 100</strong></div>'+U.bar(p.hunger,100)+
       '<div class="meta-row"><span>Vitality</span><strong id="companion-health">'+G.number(p.health,1)+' / 100</strong></div>'+U.bar(p.health,100,'hp')+
-      '<div class="meta-row"><span>'+D.labels[d.stat]+'</span><strong id="companion-bonus">+'+U.statValue(d.stat,value)+'</strong></div>'+
+      Object.entries(S.companions.rates(d)).map(([stat])=>'<div class="meta-row"><span>'+D.labels[stat]+'</span><strong id="companion-bonus-'+stat+'">+'+U.companionStatValue(stat,bonus[stat]||0)+'</strong></div>').join('')+
       '<p class="notes spacer">'+d.description+' Bonuses apply while fed and alive; a committed fight keeps its starting stats.</p></section>'+
       '<section class="panel"><h3>Care & upkeep</h3><p class="notes spacer">Hunger loses 10 points per hour, even offline. At zero hunger, bonuses stop and vitality loses 10 per hour. Starved companions keep their levels but need paid revival.</p>'+
       (p.alive?'<label class="spacer">Cooked food<select id="companion-food">'+(selected&&!available?'<option value="'+U.e(selected)+'" selected disabled>'+U.e(D.catalog[selected]?.name||selected)+' · unavailable (empty or locked)</option>':'')+(foods.length?foods.map(i=>'<option value="'+i.key+'" '+(i.key===selected?'selected':'')+'>'+U.e(D.catalog[i.key].name)+' · '+i.quantity+' owned · +'+G.number(S.companions.nutrition(i.key,p),1)+' hunger · food Lv '+D.catalog[i.key].level+'</option>').join(''):selected?'':'<option value="">No unlocked cooked food</option>')+'</select></label><div class="row spacer">'+
@@ -109,7 +110,7 @@
     if(G.runtime.page==='Companions'&&c.companion) {
       const p=S.companions.view(c.companion),set=(id,text)=>{const el=document.getElementById(id);if(el)el.textContent=text};
       set('companion-hunger',G.number(p.hunger,1)+' / 100');set('companion-health',G.number(p.health,1)+' / 100');
-      const d=S.companions.definition(p);set('companion-bonus','+'+U.statValue(d.stat,S.companions.bonus(c)[d.stat]||0));
+      const d=S.companions.definition(p),bonus=S.companions.bonus(c);for(const stat of Object.keys(S.companions.rates(d)))set('companion-bonus-'+stat,'+'+U.companionStatValue(stat,bonus[stat]||0));
     }
   };
 })(RPG,RPG.data,RPG.systems,RPG.ui);

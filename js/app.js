@@ -200,6 +200,8 @@
       S.shop.buy(G.runtime.buyItem, Number(value('buy-quantity')));
       U.close();
     },
+    exchangeReview() { U.exchangeReview(); },
+    companionPage(el) { G.runtime.companionPage=Number(el.dataset.page); U.render(); },
     openChest() {
       S.world.openChest();
     },
@@ -320,8 +322,7 @@
     feedCompanion() { S.companions.feed(value('companion-food')); },
     reviveCompanion() { S.companions.revive(); },
     releaseCompanion() {
-      const special=S.companions.definition(G.character().companion)?.special;
-      confirm(special?'Return your companion to the stable?':'Release your companion?', special?'<p>Your special companion keeps its level and ascensions. Select it from your stable to travel together again.</p>':'<p>This regular companion and its levels are permanently released. You can adopt another companion afterward.</p>', () => S.companions.release(), !special);
+      confirm('Return your companion to the stable?', '<p>Your companion keeps its level, XP and ascensions. Its bonuses stop until you equip it again. You can own several companions and equip one at a time.</p>', () => S.companions.release());
     },
     ascend(el) {
       U.ascendConfirmation(el.dataset.id);
@@ -559,7 +560,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
@@ -616,6 +617,11 @@
       if (el.id === 'regalia-filter') { G.runtime.regaliaGroup=el.value; G.runtime.emporiumPage=0; U.render(); }
       if (el.id === 'box-gem-type') { G.runtime.boxGemType=el.value; U.render(); }
       if (el.id === 'box-gem-rank') { G.runtime.boxGemRank=el.value; U.render(); }
+      if (el.id === 'shop-region') { G.runtime.shopRegion=Number(el.value);G.runtime.shopMaterialTier=null;U.render(); }
+      if (el.id === 'shop-material-tier') { G.runtime.shopMaterialTier=Number(el.value);U.render(); }
+      if (['exchange-from','exchange-to','exchange-tier'].includes(el.id)) {
+        const f=G.runtime.exchange,key=el.id.slice(9);f[key]=key==='tier'?Number(el.value):el.value;U.render();
+      }
       if (el.id === 'smithing-category') {
         G.runtime.smithingCategory = el.value;
         U.render();
@@ -651,6 +657,7 @@
   document.addEventListener('input', event => {
     if (!G.account.playable()) return;
     const el = event.target;
+    if (el.id==='exchange-quantity') U.exchangeLive();
     if (el.id === 'appearance-color') {
       G.runtime.appearanceDraft.color = el.value;
       document.querySelector('.customize-preview')?.style.setProperty('--cloak', el.value);

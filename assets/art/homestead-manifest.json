@@ -1,0 +1,118 @@
+{
+  "tool": "built-in image_gen",
+  "mode": "generation",
+  "processing": "PNG files copied unchanged; originals preserved in generated-image storage.",
+  "assets": [
+    {
+      "id": "citizen-warrior",
+      "path": "assets/art/citizens/citizen-warrior.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: A young adult village militia recruit, unadorned worn brown wool tunic over an undyed linen shirt, practical rough leather shoulder strap. Ordinary medieval working-class citizen training as a warrior. No armor, no helmet, no scars of legendary battles, no ornate weapons. Modest, hopeful expression. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Close head-and-shoulders portrait, clean silhouette and believable human anatomy. Humble inexpensive everyday clothing. A modest early-game citizen, not a hero or noble. Original grounded medieval fantasy aesthetic. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": null,
+      "sha256": "4430eeac4df4b9b05356b1bbdcf12234f5c6443bfdcff70b1b55b35511372cf3",
+      "bytes": 2507605,
+      "runtimePath": "assets/art/citizens/citizen-warrior.webp",
+      "runtimeBytes": 43986,
+      "runtimeSha256": "506b45ecc19af65e6f565b763d4b79dfc9f2ed65824b16a3d9a4b20116824265"
+    },
+    {
+      "id": "citizen-archer",
+      "path": "assets/art/citizens/citizen-archer.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: An adult village forester apprentice, worn moss-brown hood and plain linen clothing, a simple wooden bow just visible over one shoulder. Ordinary medieval working-class citizen learning archery. No fine leather armor, no fancy equipment, no jewelry. Grounded and approachable. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Close head-and-shoulders portrait, clean silhouette and believable human anatomy. Humble inexpensive everyday clothing. A modest early-game citizen, not a hero or noble. Original grounded medieval fantasy aesthetic. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": null,
+      "sha256": "12d506fde76b4b9071ab5812d5e84ed48a498298966c82d44abc726882cd991f",
+      "bytes": 2568618,
+      "runtimePath": "assets/art/citizens/citizen-archer.webp",
+      "runtimeBytes": 54130,
+      "runtimeSha256": "9b309f52f8a61c4fb92daa66657a95c4226f064c2cffdc55a682ba91739275dd"
+    },
+    {
+      "id": "citizen-mage",
+      "path": "assets/art/citizens/citizen-mage.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: An adult village scribe and apprentice hedge mage, plain faded gray-brown wool hood and patched linen clothing, holding the edge of a small battered notebook. Ordinary medieval working-class citizen studying magic. No glowing staff, no ornate robes, no hat, no magical aura, no jewelry. Thoughtful and approachable. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Close head-and-shoulders portrait, clean silhouette and believable human anatomy. Humble inexpensive everyday clothing. A modest early-game citizen, not a hero or noble. Original grounded medieval fantasy aesthetic. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": null,
+      "sha256": "8fb8e74a362a581d5e661fc4ff4ed70616db8a37a77a8e21237c37db6d11f060",
+      "bytes": 2546624,
+      "runtimePath": "assets/art/citizens/citizen-mage.webp",
+      "runtimeBytes": 47266,
+      "runtimeSha256": "1863d75ee1360fa6241ea4161771bd36092cd450b21cd18764127f63efc5b392"
+    },
+    {
+      "id": "special-wolf",
+      "path": "assets/art/companions/special-wolf-painted.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: Vesperglass Kirin, an elegant small antlered kirin with realistic soft pale smoke-blue fur and translucent branching antlers catching faint teal dusk light. Deer-like face and ears, luminous amber eyes, a companion animal rather than a human. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Match the supplied reference companion atlas in its realistic fur/feather/scale detail, believable anatomy, warm depth and close portrait framing. Reference is style only; depict ONLY the described new creature. No grids or collage. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": "assets/art/companions-atlas.png",
+      "sha256": "7f2e3ade21a92dee4cc565843722a58aed2594a99977e1693e6d012e35449814",
+      "bytes": 2770080,
+      "runtimePath": "assets/art/companions/special-wolf-painted.webp",
+      "runtimeBytes": 70250,
+      "runtimeSha256": "74b62b5a50762c055042211600717867a40d7f36d2cc8d209f89c62ab9074344"
+    },
+    {
+      "id": "special-boar",
+      "path": "assets/art/companions/special-boar-painted.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: Mossbell Terrapin, a wise small turtle with realistic textured olive skin, ancient moss-covered shell, tiny weathered brass bell beneath the chin, gentle alert eyes. Show head, forelegs, and enough of the shell to identify it clearly. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Match the supplied reference companion atlas in its realistic fur/feather/scale detail, believable anatomy, warm depth and close portrait framing. Reference is style only; depict ONLY the described new creature. No grids or collage. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": "assets/art/companions-atlas.png",
+      "sha256": "daf153ae630a0e6e26b316adabfd8f45e5dd0d8610ce97285238e3e37a1d03c3",
+      "bytes": 2817476,
+      "runtimePath": "assets/art/companions/special-boar-painted.webp",
+      "runtimeBytes": 92480,
+      "runtimeSha256": "51d39b566290eae61a45861f06f18ce2bab80af0dd06b98b626cb92376550c14"
+    },
+    {
+      "id": "special-golem",
+      "path": "assets/art/companions/special-golem-painted.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: Cindercoil Wyrmling, a small coiled ember dragon with intricate rust-red and charcoal scales, tiny worn ivory horns, warm amber eyes, a subtle ember glow between scales. Companion animal, gentle but watchful, head and upper coils visible. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Match the supplied reference companion atlas in its realistic fur/feather/scale detail, believable anatomy, warm depth and close portrait framing. Reference is style only; depict ONLY the described new creature. No grids or collage. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": "assets/art/companions-atlas.png",
+      "sha256": "94067d3d2ff35780c2d60369e7af7514612aa30f036b658720a40d64d34983ab",
+      "bytes": 2535036,
+      "runtimePath": "assets/art/companions/special-golem-painted.webp",
+      "runtimeBytes": 80602,
+      "runtimeSha256": "c29a726458de98cb07b0d4223342e7ea769f4eb2c946b2dfca048a645280e00f"
+    },
+    {
+      "id": "special-lynx",
+      "path": "assets/art/companions/special-lynx-painted.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: Prismveil Moth, a beautiful companion moth with realistic velvety thorax and antennae, large delicately patterned mauve, dusky teal and muted amber wings resembling natural stained glass. Full symmetrical wings visible, realistic fine hairs and wing scales. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Match the supplied reference companion atlas in its realistic fur/feather/scale detail, believable anatomy, warm depth and close portrait framing. Reference is style only; depict ONLY the described new creature. No grids or collage. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": "assets/art/companions-atlas.png",
+      "sha256": "d2a2ca0b05225aadf90e1e2c5c58716cf46895b2ed9d386cbf13383112d90052",
+      "bytes": 3272935,
+      "runtimePath": "assets/art/companions/special-lynx-painted.webp",
+      "runtimeBytes": 89186,
+      "runtimeSha256": "324632590cc6257b4021b7a9a022cb2e63a94bfa5d9c87ed7b8905cae87d3980"
+    },
+    {
+      "id": "special-bear",
+      "path": "assets/art/companions/special-bear-painted.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: Gilded Jackalope, a small rabbit companion with realistic richly textured tawny fur, long ears and branching weathered golden-brown antlers, large watchful amber eyes. Head and shoulders, both antlers and ears comfortably inside the image. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Match the supplied reference companion atlas in its realistic fur/feather/scale detail, believable anatomy, warm depth and close portrait framing. Reference is style only; depict ONLY the described new creature. No grids or collage. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": "assets/art/companions-atlas.png",
+      "sha256": "46602cae78fb0664e5e2671739a894d3fbb1bff98ae11d8b20a86f2fdd212e74",
+      "bytes": 2745146,
+      "runtimePath": "assets/art/companions/special-bear-painted.webp",
+      "runtimeBytes": 73738,
+      "runtimeSha256": "4daecb0c721cb2cc2662056b4545094541e926654d40e6fd959c5a98ac144db6"
+    },
+    {
+      "id": "special-spider",
+      "path": "assets/art/companions/special-spider-painted.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: Starwhisker Koi, a celestial koi companion with realistic shimmering pearl and muted teal scales, elegant long pale whiskers and flowing indigo fins, swimming in a dark misty atmosphere. Show full fish angled diagonally; subtle starlight highlights, no surrounding decorative graphics. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Match the supplied reference companion atlas in its realistic fur/feather/scale detail, believable anatomy, warm depth and close portrait framing. Reference is style only; depict ONLY the described new creature. No grids or collage. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": "assets/art/companions-atlas.png",
+      "sha256": "1ede3f372ec215c0f393d2260c89e23bd14fad58a6dfbe2147da091aee0baacb",
+      "bytes": 2412078,
+      "runtimePath": "assets/art/companions/special-spider-painted.webp",
+      "runtimeBytes": 59534,
+      "runtimeSha256": "050139d5d28db1403bc541c18be6eb4229c0589e1f92a736c3ae0dff4f8c9fa1"
+    },
+    {
+      "id": "special-bat",
+      "path": "assets/art/companions/special-bat-painted.png",
+      "prompt": "Use case: stylized-concept. Asset type: one square fantasy RPG portrait image, final bitmap game asset. Subject: Velvet Oracle, a companion night owl with highly detailed dark violet-brown feathers, a naturally pale heart-shaped facial disk that resembles a mask, large gentle violet eyes, a small gold-toned beak, slight feathered ear tufts. Head and folded wings in a dignified three-quarter portrait. Style: richly detailed semi-realistic hand-painted medieval fantasy portrait, photographic material detail and soft painterly edges, warm cinematic side light against a plain near-black brown vignette background. Match the supplied reference companion atlas in its realistic fur/feather/scale detail, believable anatomy, warm depth and close portrait framing. Reference is style only; depict ONLY the described new creature. No grids or collage. Composition: single centered subject, square crop, face readable at small icon size; leave 8% breathing room. No frame, trim, border, medallion, typography, text, UI, logos or watermark.",
+      "reference": "assets/art/companions-atlas.png",
+      "sha256": "c4bd26b16d0e3f4376a0267367bf4be96cd052f8fdf12b2ebf7776f078a68b2e",
+      "bytes": 2689569,
+      "runtimePath": "assets/art/companions/special-bat-painted.webp",
+      "runtimeBytes": 70600,
+      "runtimeSha256": "af6239926d05f037f8b65c4d58db46bb57f99152e96ded35f767b9ae995ef6f3"
+    }
+  ],
+  "runtimeProcessing": "Browser Canvas export: maximum edge 512px, WebP quality 0.9. Original generated PNGs preserved unchanged."
+}

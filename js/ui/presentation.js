@@ -1,35 +1,9 @@
 'use strict';
 (function(G, D, S, U) {
-  U.characterPortrait = (className, appearance = {}) => {
-    const look = Number.isInteger(appearance.look) ? appearance.look : 0;
-    const row = D.classes.indexOf(className), w = .98 / 5, h = .98 / 3;
-    const x = (look + .01) / 5, y = (row + .01) / 3;
-    return '<span class="character-portrait" role="img" aria-label="' + U.e(className + ' · ' + D.characterLooks[className][look]) +
-      '" data-class="' + className + '" data-look="' + look + '" style="background-size:' + 100 / w + '% ' + 100 / h +
-      '%;background-position:' + x / (1 - w) * 100 + '% ' + y / (1 - h) * 100 + '%"></span>';
-  };
-  U.lookPicker = (prefix, className, look, action) =>
-    '<input type="hidden" id="' + prefix + '-portrait" value="' + look + '">' +
-    '<div class="look-picker" role="group" aria-label="' + className + ' portraits">' +
-    D.characterLooks[className].map((name, index) => '<button class="look-option ' + (index === look ? 'selected' : '') +
-      '" data-action="' + action + '" data-look="' + index + '" aria-pressed="' + (index === look) + '">' +
-      U.characterPortrait(className, {look:index}) + '<span>' + U.e(name) + '</span></button>').join('') + '</div>';
-  U.customize = () => {
-    const c = G.character();
-    G.assert(c, 'Choose a character.');
-    G.runtime.appearanceDraft = {look:c.appearance.look ?? 0, color:c.appearance.color};
-    U.customizer();
-  };
-  U.customizer = () => {
-    const c = G.character(), draft = G.runtime.appearanceDraft;
-    U.modal('Customize ' + U.e(c.name), '<div class="customize-preview" style="--cloak:' + U.e(draft.color) + '">' +
-      U.characterPortrait(c.class, draft) + '<div><h3>' + U.e(D.characterLooks[c.class][draft.look]) +
-      '</h3><p>' + c.class + ' · Cosmetic appearance</p></div></div>' +
-      U.lookPicker('appearance', c.class, draft.look, 'appearanceLook') +
-      '<label class="spacer">Portrait accent<input type="color" id="appearance-color" value="' + U.e(draft.color) +
-      '"></label><p>Five base-game looks for your class. Changing appearance is free.</p><div class="modal-actions">' +
-      U.btn('Cancel', 'closeModal', '', 'quiet') + U.btn('Save appearance', 'appearanceConfirm', '', 'gold-btn') + '</div>');
-  };
+  U.characterPortrait = (className) => '<span class="character-portrait citizen-portrait" role="img" aria-label="'+U.e(className+' village citizen')+'" data-class="'+U.e(className)+'" style="background-image:url(assets/art/citizens/citizen-'+className.toLowerCase()+'.webp)"></span>';
+  U.lookPicker = (prefix,className) => '<input type="hidden" id="'+prefix+'-portrait" value="0"><div class="citizen-preview">'+U.characterPortrait(className)+'<div><h3>A humble beginning</h3><p class="notes">A citizen taking their first steps as a '+className.toLowerCase()+'.</p></div></div>';
+  U.customize = () => U.gearPortrait();
+  U.customizer = () => U.gearPortrait();
 
   U.itemStatLabel = (key, item) => key === 'damage' && item?.style !== null && item?.style !== undefined ?
     D.primary[item.style] + ' Damage' : D.labels[key];

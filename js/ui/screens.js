@@ -57,7 +57,7 @@
   };
   U.screens.Shop = () => {
     const c = G.character(),
-      names = ['Utility', 'Materials', 'Character', 'Storage', 'Sell'],
+      names = D.shopTabs,
       current = tab(names);
     return U.heading('THE QUARTERMASTER', 'Shop', 'Practical provisions for a longer journey.', '<span class="badge">' + G.money(c.coins) + '</span>') + U.tabs(names, current) + (current === 'Storage' ? '<section class="panel"><h2>A place for everything</h2><p class="notes spacer">Your inventory holds ' + c.capacity + ' item slots. Stackable types each occupy one slot, regardless of quantity.</p><div class="stat-grid spacer"><div class="stat-cell"><small>Current capacity</small><strong>' + c.capacity + '</strong></div><div class="stat-cell"><small>Maximum capacity</small><strong>160</strong></div></div><div class="spacer">' + (c.capacity < 160 ? U.btn('Add 10 slots · ' + G.money(D.storage[(c.capacity - 50) / 10]), 'expand', '', 'gold-btn') : '<span class="good">Maximum storage unlocked.</span>') + '</div><details class="spacer"><summary>Expansion price ladder</summary><table class="data-table">' + D.storage.map((p, i) => '<tr><td>' + (50 + i * 10) + ' → ' + (60 + i * 10) + '</td><td>' + G.money(p) + '</td></tr>').join('') + '</table></details></section>' : '<div class="grid-3">' + D.shop.filter(i => i.category === current).map(i => '<section class="panel"><div class="eyebrow">' + (i.level ? 'LEVEL ' + i.level + ' REQUIRED' : 'UTILITY') + '</div><h3 class="spacer">' + i.name + '</h3><p class="notes spacer">' + i.description + '</p><div class="row between spacer"><span class="gold">' + G.money(i.price) + '</span>' + U.btn('Purchase', 'buy', 'data-id="' + i.id + '"', 'gold-btn') + '</div></section>').join('') + '</div>');
   };

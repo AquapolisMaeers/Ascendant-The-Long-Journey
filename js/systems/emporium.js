@@ -68,10 +68,9 @@
   };
   const normalize=S.chronicles.normalize;
   S.chronicles.normalize=c=>{normalize(c);S.emporium.normalize(c);return c;};
-  const release=S.companions.release;
   S.companions.release=()=>{
     const c=G.character();
-    if(!S.companions.definition(c.companion)?.special)return release();
-    G.ensureIdle();S.companions.sync(c);c.petStable[c.companion.type]=G.clone(c.companion);c.companion=null;S.emporium.changed(c);
+    G.ensureIdle();G.assert(c.companion,'No companion is equipped.');
+    S.companions.sync(c);c.petStable[c.companion.type]=G.clone(c.companion);c.companion=null;S.emporium.changed(c);
   };
 })(RPG,RPG.data,RPG.systems);

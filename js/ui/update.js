@@ -108,7 +108,7 @@
       items = c.inventory.filter(i => !i.bound);
     const category = U.sellCategoryNames.includes(G.runtime.sellCategory) ? G.runtime.sellCategory : 'All';
     const shown = items.filter(i => category === 'All' || U.saleCategory(i) === category);
-    return U.heading('THE QUARTERMASTER', 'Shop', 'Sell spare items for Bronze.', '<span class="badge">' + G.money(c.coins) + '</span>') + U.tabs(['Utility', 'Materials', 'Character', 'Storage', 'Sell'], 'Sell') + '<section class="panel"><h3>Prices follow materials</h3><p class="notes spacer">Raw materials sell for their required level in Bronze. Bars include their ore and fuel costs; gear includes all original recipe ingredients. Equipment rarity, Enhancement and inserted gems do not increase gear sale prices.</p><p class="notes">Ascendant Stones sell for 1 Gold each. Tools sell by rarity: 50b, 1s, 2s 50b, 5s, 10s, 25s, 50s, 1g. Locked items and bound starter tools cannot be sold.</p></section>' + U.sellCategories(items, category) + '<div class="grid-3 spacer sell-grid">' + (shown.map(i => '<section class="recipe">' + U.itemCard(i) + '<div class="row between spacer"><span class="gold">' + G.money(S.shop.value(i)) + ' each</span>' + U.btn('Sell…', 'sellForm', 'data-id="' + i.id + '" ' + (i.locked ? 'disabled' : ''), 'small gold-btn') + '</div></section>').join('') || '<p class="empty">No spare items in this category.</p>') + '</div>';
+    return U.heading('THE QUARTERMASTER', 'Shop', 'Sell spare items for Bronze.', '<span class="badge">' + G.money(c.coins) + '</span>') + U.tabs(D.shopTabs, 'Sell') + '<section class="panel"><h3>Prices follow materials</h3><p class="notes spacer">Raw materials sell for their required level in Bronze. Bars include their ore and fuel costs; gear includes all original recipe ingredients. Equipment rarity, Enhancement and inserted gems do not increase gear sale prices.</p><p class="notes">Ascendant Stones sell for 1 Gold each. Tools sell by rarity: 50b, 1s, 2s 50b, 5s, 10s, 25s, 50s, 1g. Locked items and bound starter tools cannot be sold.</p></section>' + U.sellCategories(items, category) + '<div class="grid-3 spacer sell-grid">' + (shown.map(i => '<section class="recipe">' + U.itemCard(i) + '<div class="row between spacer"><span class="gold">' + G.money(S.shop.value(i)) + ' each</span>' + U.btn('Sell…', 'sellForm', 'data-id="' + i.id + '" ' + (i.locked ? 'disabled' : ''), 'small gold-btn') + '</div></section>').join('') || '<p class="empty">No spare items in this category.</p>') + '</div>';
   };
   const item = U.item;
   U.item = id => {
@@ -134,7 +134,7 @@
       'data-quantity="' + n + '" ' + (available < 1 ? 'disabled' : ''), 'small quiet')).join('') + '</div>';
   U.buyMaterialsForm = id => {
     const item = D.shop.find(i => i.id === id);
-    G.assert(item?.category === 'Materials', 'Choose a starter material.');
+    G.assert(item?.category === 'Materials', 'Choose a raw material.');
     G.runtime.buyItem = id;
     const max = Math.min(1000000, Math.floor(G.character().coins / item.price));
     U.modal('Buy ' + U.e(item.name), '<p>' + item.price + ' Bronze per unit.</p>' +

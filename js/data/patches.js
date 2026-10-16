@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15',title:'Humble beginnings, a fuller stable and the barter counter',changes:[
+    'Class portraits now show ordinary medieval citizens in plain clothing. The 3D character and rarity frame are removed. The seven special companions have new painted portraits matching the regular companion art style.',
+    'Every special companion gains a second level-scaled stat. Collect multiple regular and special companions, then equip one for its bonuses. Active, Stable and Adopt views keep the collection organized. Returning any companion to the stable preserves its progress.',
+    'Shop materials now use location and tier dropdowns. Supplies from other regions unlock when you reach their region level. Starter materials remain 10 Bronze; higher tiers use increasingly expensive premium prices so gathering stays valuable.',
+    'Shop > Exchange trades 10 unlocked raw materials for 1 different raw material of the same tier. Ore, lumber, raw fish and hides are supported. Review the exact quantities before confirmation; full bags and locked materials are handled safely.'
+  ]},
   {date:'2026-10-15',title:'New bonds, stronger gems and a living model',changes:[
     'All ten exclusive gem types now give twice their previous bonuses at every rank, including gems already owned or socketed. Regular gems, compatible slots and mystery-box odds keep their existing rules.',
     'The seven mystery-box companions become Vesperglass Kirin, Mossbell Terrapin, Cindercoil Wyrmling, Prismveil Moth, Gilded Jackalope, Starwhisker Koi and Velvet Oracle. Each has an original portrait and story. Existing ownership, levels, ascensions and care are preserved.',
