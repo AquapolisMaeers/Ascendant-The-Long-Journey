@@ -7,8 +7,12 @@
     ['penetration','Riftwalker',.01,'#c4a2e6'], ['double','Echo',.01,'#aab6ee'], ['dodge','Shade',.01,'#b2abd0'],
     ['reduction','Bulwark',.005,'#b9c6ad'], ['resistance','Resolve',.01,'#dac4a3'], ['lifeSteal','Bloodmoon',.0025,'#ee8f9e']
   ];
-  D.regalia = ['outfit','aura'].flatMap(kind => {
-    const make = (id,name,stats,color,price,tier,weight) => ({id:kind+':'+id,kind,name:name+(kind==='outfit'?' Vestments':' Aura'),stats,color,price,tier,weight});
+  D.regaliaKinds = ['outfit','aura','mount'];
+  const mountNames = ['Duelist Courser','Ironward Charger','Heartkeeper Stag','Warbringer Destrier','Bastion Warhorse','Lifebloom Hart','Deadeye Strider','Executioner Nightsteed','Gale Runner','Riftwalker Kirin','Echo Courser','Shade Nightmare','Bulwark Charger','Resolve Palfrey','Bloodmoon Steed','Crimson Requiem Destrier','Citadel Oath Warhorse','Phantom Masquerade Kirin','Eclipse Sovereign'];
+  D.regalia = D.regaliaKinds.flatMap(kind => {
+    let index=0;
+    const make = (id,name,stats,color,price,tier,weight) => ({id:kind+':'+id,kind,name:kind==='mount'?mountNames[index++]:name+(kind==='outfit'?' Vestments':' Aura'),stats,color,price,tier,weight,
+      ...(kind==='outfit'?{avatar:'assets/art/outfits/outfit-'+id+'.webp'}:{})});
     return [
       ...focus.map(([stat,name,value,color])=>make(stat,name,{[stat]:value},color,125,'Focused',360)),
       make('aggressive','Crimson Requiem',{damagePct:.03,crit:.0075,critDamage:.025,speed:.01},'#f38d9d',350,'Build',190),
@@ -35,7 +39,8 @@
   D.emporiumBoxes = [
     {id:'outfit-box',name:'Outfit Mystery Box',kind:'outfit',price:75,duplicate:15},
     {id:'aura-box',name:'Aura Mystery Box',kind:'aura',price:75,duplicate:15},
-    {id:'pet-box',name:'Special Pet Mystery Box',kind:'pet',price:125,duplicate:25},
+    {id:'mount-box',name:'Mount Mystery Box',kind:'mount',price:75,duplicate:15},
+    {id:'pet-box',name:'Special Pet Mystery Box',kind:'pet',price:100,duplicate:25},
     {id:'stone-box',name:'Ascendant Stone Box',kind:'stone',price:5,duplicate:0},
     {id:'gem-box',name:'Gem Mystery Box',kind:'gem',price:25,duplicate:0}
   ];
@@ -73,6 +78,7 @@
   D.emporiumCategories = [
     {name:'Outfit Mystery Boxes',box:'outfit-box',description:'All 19 outfits. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
     {name:'Aura Mystery Boxes',box:'aura-box',description:'All 19 auras. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
+    {name:'Mount Mystery Boxes',box:'mount-box',description:'All 19 mounts. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%. Equip one mount for its combat bonuses.'},
     {name:'Pet Mystery Boxes',box:'pet-box',description:'Seven special companions at equal odds. Every companion starts Common and grows with you.'},
     {name:'Gem Mystery Boxes',box:'gem-box',description:'All 17 gem types, ranks I\u2013V. Regular types: 90%; exclusive stat types: 10%. Rank V: 0.5% overall.'},
     {name:'Ascendant Stone Boxes',box:'stone-box',description:'1%: one Ascendant Stone. Otherwise: normal coins. Every outcome is shown before opening.'}
@@ -81,7 +87,7 @@
   [40,50,60,70,80,90,100].forEach(n=>add('companion-level-'+n,'Companion level '+n,'Companions',n,c=>Math.max(c.companion?.level||0,...Object.values(c.petStable||{}).map(p=>p.level))));
   [1,3,5,7].forEach(n=>add('companion-bond-'+n,'Companion ascensions \u00b7 '+n,'Companions',n,c=>Math.max(c.companion?.ascensions||0,...Object.values(c.petStable||{}).map(p=>p.ascensions||0)),n===7?'Soulbound':null));
   [60,100,160].forEach(n=>add('storage-'+n,'Inventory capacity '+n,'Journey',n,c=>c.capacity));
-  for(const kind of ['outfit','aura']) [1,5,19].forEach(n=>add('collection-'+kind+'-'+n,'Collect '+n+' '+(kind==='outfit'?'outfits':'auras'),'Collections',n,c=>(c.regalia?.owned||[]).filter(id=>D.regalia.some(r=>r.id===id&&r.kind===kind)).length,n===19?(kind==='outfit'?'The Wardrobe':'Radiant Soul'):null));
+  for(const kind of D.regaliaKinds) [1,5,19].forEach(n=>add('collection-'+kind+'-'+n,'Collect '+n+' '+kind+'s','Collections',n,c=>(c.regalia?.owned||[]).filter(id=>D.regalia.some(r=>r.id===id&&r.kind===kind)).length,n===19?({outfit:'The Wardrobe',aura:'Radiant Soul',mount:'Keeper of the Reins'}[kind]):null));
   add('regalia-pair','Dress for your legend','Collections',2,c=>+!!c.regalia?.outfit + +!!c.regalia?.aura);
   [1,7].forEach(n=>add('special-pets-'+n,'Befriend '+n+' special companion'+(n===1?'':'s'),'Companions',n,c=>(c.specialPets||[]).length));
   add('sovereign-pair','An eclipse, complete','Collections',2,c=>['outfit:sovereign','aura:sovereign'].filter(id=>c.regalia?.owned.includes(id)).length,'Eclipse Sovereign');

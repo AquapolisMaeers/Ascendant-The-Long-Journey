@@ -43,7 +43,7 @@
     const c = G.character(), chosen = D.perkLevels.filter(level => c.perks[level] !== undefined).length,
       ready = D.perkLevels.filter(level => c.level >= level && c.perks[level] === undefined).length;
     return U.heading('SHAPE YOUR LEGEND', 'Your path to power', 'Each milestone offers three paths. Choose one permanent perk per milestone.', '<span class="badge">' + chosen + ' / 5 CHOSEN</span>') +
-      U.tabs(['Equipment', 'Stats', 'Perks', 'Outfits & Auras'], 'Perks') + '<section class="perk-overview"><div><strong>' + c.class + ' disciplines</strong><p>Build around force, endurance or technique.</p></div>' +
+      U.tabs(['Equipment', 'Stats', 'Perks', 'Outfits & Auras', 'Mounts'], 'Perks') + '<section class="perk-overview"><div><strong>' + c.class + ' disciplines</strong><p>Build around force, endurance or technique.</p></div>' +
       '<span>' + (ready ? ready + ' choice' + (ready === 1 ? '' : 's') + ' available' : 'Your next milestone awaits') + '</span></section>' +
       '<div class="perk-path">' + D.perkLevels.map((level, row) => {
         const selected = c.perks[level], locked = c.level < level;

@@ -2,7 +2,7 @@
 (function(G, D, S, U) {
   const media = matchMedia('(max-width:700px), (max-width:1000px) and (max-height:500px) and (pointer:coarse)');
   U.isPhone = () => media.matches;
-  const pages = () => ['World','Character','Inventory','Skills','Crafting','Shop',...(S.market.allowed() ? ['Marketplace'] : []),'Quests','Achievements','Leaderboards','Companions','Emporium','Settings'];
+  const pages = () => ['World','Character','Inventory','Skills','Crafting','Shop',...(S.market.allowed() ? ['Marketplace'] : []),'Quests','Achievements','Leaderboards','Companions','Settings'];
   U.mobileMenu = () => {
     if (!U.isPhone() || !G.character() || G.runtime.selecting) return;
     const c = G.character();

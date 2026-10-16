@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-16',title:'The trade quarter, mounts and a new face',changes:[
+    'General shop and Ascendant Emporium now share the Shop page with separate selectors. The coin wallet opens the Emporium there. The sidebar has fewer, shorter rows, and clicking the Ascendant name returns to World.',
+    'A 75 AC Mount Mystery Box offers 19 mounts mirroring outfit and aura bonuses. Focused rewards total 90%, build rewards 9.5%, and Eclipse Sovereign 0.5%. Duplicates return 15 AC. Collect several, equip one under Character > Mounts.',
+    'The Special Pet Mystery Box now costs 100 AC. Its rewards and duplicate refund stay the same.',
+    'All 19 outfits have a matching character portrait. Equip an outfit, click your avatar and choose its portrait. Citizen portraits remain available. Changing or removing the outfit restores a selected outfit portrait to your citizen choice.',
+    'New characters start AFK with normal creatures, gathering and chests enabled; elites and dungeons stay off. Existing filter preferences are preserved. The 8-second interval now matches the surrounding Settings controls.',
+    'Mute all audio silences music, effects and ambience while preserving every volume slider. The mute switch and saved volumes persist when you return.'
+  ]},
   {date:'2026-10-16',title:'Learn the route, choose your pace',changes:[
     'Tutorial lessons explain where to click and why each task matters. Follow the navigation yourself; completing a practical lesson keeps you on the current page.',
     'Crafting quantities now select a batch without starting it. Press Cook, Smith, Cut or Fuse when ready. Health perks immediately add their gained maximum HP to current health.',

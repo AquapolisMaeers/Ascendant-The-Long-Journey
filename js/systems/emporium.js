@@ -3,10 +3,10 @@
   const freshPet=type=>({type,level:1,xp:0,ascensions:0,hunger:100,health:100,updatedAt:Date.now()});
   const idle=()=>{ G.ensureProgress(); G.assert(!G.character().dungeon&&!S.tutorial.active(),'Finish the tutorial and leave the dungeon first.'); };
   S.emporium = {
-    normalize(c) { c.regalia ??= {owned:[],outfit:null,aura:null}; c.specialPets ??= []; c.petStable ??= {}; },
+    normalize(c) { c.regalia ??= {owned:[],outfit:null,aura:null}; c.regalia.mount ??= null; c.specialPets ??= []; c.petStable ??= {}; },
     bonus(c) {
       const bonus={};
-      for(const kind of ['outfit','aura']) {
+      for(const kind of D.regaliaKinds) {
         const item=D.regalia.find(r=>r.id===c.regalia?.[kind]&&r.kind===kind);
         if(item&&c.regalia.owned.includes(item.id)) for(const [key,n] of Object.entries(item.stats)) bonus[key]=(bonus[key]||0)+n;
       }
@@ -16,15 +16,15 @@
     owned(entry,c=G.character()) { return entry.special?c.specialPets.includes(entry.id):c.regalia.owned.includes(entry.id); },
     pay(c,amount) { G.assert(Number.isSafeInteger(amount)&&amount>0&&c.ascendantCoins>=amount,'Not enough Ascendant Coins.'); c.ascendantCoins-=amount; },
     buy(id) {
-      G.assert(false,'Outfits, auras and special pets are found in their mystery boxes.');
+      G.assert(false,'Outfits, auras, mounts and special pets are found in their mystery boxes.');
     },
     equip(id) {
       idle();const c=G.character(),entry=D.regalia.find(r=>r.id===id);this.normalize(c);
       G.assert(entry&&this.owned(entry,c),'Collect this item before equipping it.');
       c.regalia[entry.kind]=id;this.changed(c);
     },
-    unequip(kind) { idle();G.assert(['outfit','aura'].includes(kind),'Unknown collection slot.');const c=G.character();this.normalize(c);c.regalia[kind]=null;this.changed(c); },
-    changed(c) { c.hp=Math.min(c.hp,S.character.stats(c).health);G.runtime.estimate=null;G.commit(); },
+    unequip(kind) { idle();G.assert(D.regaliaKinds.includes(kind),'Unknown collection slot.');const c=G.character();this.normalize(c);c.regalia[kind]=null;this.changed(c); },
+    changed(c) { if(c.appearance.outfit&&c.appearance.outfit!==c.regalia.outfit)delete c.appearance.outfit;c.hp=Math.min(c.hp,S.character.stats(c).health);G.runtime.estimate=null;G.commit(); },
     equipPet(type) {
       idle();const c=G.character();this.normalize(c);
       G.assert(D.allCompanions.some(p=>p.id===type)&&(c.specialPets.includes(type)||Object.hasOwn(c.petStable,type)),'This companion is not in your stable.');
@@ -33,7 +33,7 @@
       c.companion=c.petStable[type]||freshPet(type);delete c.petStable[type];S.companions.sync(c);this.changed(c);
     },
     outcomes(box) {
-      if(box.kind==='outfit'||box.kind==='aura')return D.regalia.filter(r=>r.kind===box.kind).map(entry=>({entry,weight:entry.weight}));
+      if(D.regaliaKinds.includes(box.kind))return D.regalia.filter(r=>r.kind===box.kind).map(entry=>({entry,weight:entry.weight}));
       if(box.kind==='pet')return D.specialCompanions.map(entry=>({entry,weight:1}));
       if(box.kind==='gem')return D.gems.flatMap((gem,type)=>D.gemBoxRanks.map((rankWeight,i)=>({key:'gem:'+type+':'+(i+1),quantity:1,weight:rankWeight*(gem.boxOnly?7:90)})));
       return [{coins:500,weight:33},{coins:1000,weight:33},{coins:1500,weight:33},{stone:1,weight:1}];

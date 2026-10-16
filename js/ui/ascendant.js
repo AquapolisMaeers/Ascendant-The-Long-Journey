@@ -70,7 +70,7 @@
     const percentInput=(key,label)=>'<label>'+label+' (%)<input type="number" min="0" max="100" step="0.01" inputmode="decimal" data-afk="'+key+'" data-afk-percent="true" value="'+Number((a[key]*100).toFixed(2))+'"></label>';
     const toggle = (key, label) => '<label class="settings-row">' + label + '<input type="checkbox" data-afk="' + key + '" ' + (a[key] ? 'checked' : '') + '></label>';
     return '<section class="panel afk-panel"><div class="panel-head"><h3>AFK advancing</h3><span class="badge">' + (running ? 'ACTIVE' : 'STOPPED') + '</span></div><div class="afk-controls">' +
-      '<div class="afk-fixed-interval"><small>Advance interval</small><strong>8 seconds</strong></div>'+
+      '<label>Advance interval<span class="afk-fixed-interval" aria-label="Advance interval: 8 seconds">8 seconds</span></label>'+
       percentInput('chance','Minimum estimated win chance')+
       percentInput('minHp','Stop at or below this health')+'</div>'+
       toggle('normals', 'Include normal creatures') + toggle('elites', 'Include elite creatures') + toggle('dungeons', 'Include dungeons') + toggle('gather', 'Gather usable resource nodes') + toggle('chests', 'Open treasure chests') +

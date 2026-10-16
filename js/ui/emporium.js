@@ -65,22 +65,23 @@
     return U.heading('THE ASCENDANT EMPORIUM','Fortune favours the journey.','Mystery boxes, permanent collections, and a chance at the extraordinary.',ac(c.ascendantCoins))+
       U.tabs(D.emporiumCategories.map(e=>e.name),category.name)+
       '<section class="emporium-intro"><div><h3>'+category.name+'</h3><p class="notes">'+category.description+'</p></div>'+'<div class="row">'+(box.kind==='gem'?U.btn('Gem guide','gemGuide','','quiet small'):'')+U.btn('How to earn coins','ascendantHelp','','quiet small')+'</div></section>'+
-      '<div class="box-layout"><section class="panel box-offer"><div class="mystery-art">'+U.paint(box.kind==='gem'?'gem:6:5':'treasure')+'<b>?</b></div><h2>'+box.name+'</h2><p class="notes spacer">'+summary+'</p><div class="regalia-purchase">'+ac(box.price)+U.btn('Review & open','emporiumOpen','data-id="'+box.id+'" '+(blocked()||c.ascendantCoins<box.price?'disabled':''),'gold-btn')+'</div><p class="notes spacer">Find owned outfits and auras under Character. Your companions wait in the stable.</p></section><section class="panel"><h3>Every possible outcome</h3>'+U.boxOdds(box,true)+'</section></div>';
+      '<div class="box-layout"><section class="panel box-offer"><div class="mystery-art">'+U.paint(box.kind==='gem'?'gem:6:5':'treasure')+'<b>?</b></div><h2>'+box.name+'</h2><p class="notes spacer">'+summary+'</p><div class="regalia-purchase">'+ac(box.price)+U.btn('Review & open','emporiumOpen','data-id="'+box.id+'" '+(blocked()||c.ascendantCoins<box.price?'disabled':''),'gold-btn')+'</div><p class="notes spacer">Find outfits and auras under Character, mounts under Character > Mounts, and companions in the stable.</p></section><section class="panel"><h3>Every possible outcome</h3>'+U.boxOdds(box,true)+'</section></div>';
   };
   U.ascendantHelp=()=>U.modal('Earn Ascendant Coins','<p class="notes">Combat levels after Level 1 award 2 AC each. Achievements award 5 AC, or 50 AC when they grant a title. Each reward is claimed once per character.</p><div class="spacer">'+Object.entries(D.ascendantCurrency.milestones).map(([level,n])=>'<div class="meta-row"><span>Combat level '+level+'</span>'+ac(n)+'</div>').join('')+'</div>'+U.btn('Continue','closeModal','','gold-btn spacer'));
   const character=U.screens.Character;
   U.screens.Character=()=>{
     const c=G.character();S.emporium.normalize(c);
-    if(G.runtime.tab!=='Outfits & Auras')return character().replace(/<section class="panel spacer cosmetic-slots">[\s\S]*?<\/section>/,'');
-    return U.heading('PERSONAL REGALIA','Outfits & Auras','Equip one of each. Their bonuses add to your equipment and obey the same combat caps.')+U.tabs(['Equipment','Stats','Perks','Outfits & Auras'],'Outfits & Auras')+
-      '<div class="grid-2 equipped-regalia">'+['outfit','aura'].map(kind=>{
+    if(!['Outfits & Auras','Mounts'].includes(G.runtime.tab))return character().replace(/<section class="panel spacer cosmetic-slots">[\s\S]*?<\/section>/,'');
+    const mounts=G.runtime.tab==='Mounts';
+    return U.heading('PERSONAL REGALIA',mounts?'Mounts':'Outfits & Auras',mounts?'Equip one mount. Combat bonuses use the same caps as gear; travel times stay the same.':'Equip one of each. Their bonuses add to your equipment and obey the same combat caps.')+U.tabs(['Equipment','Stats','Perks','Outfits & Auras','Mounts'],G.runtime.tab)+
+      '<div class="grid-2 equipped-regalia">'+(mounts?['mount']:['outfit','aura']).map(kind=>{
         const entry=D.regalia.find(e=>e.id===c.regalia[kind]);
-        return '<section class="panel"><div class="panel-head"><h3>'+ (kind==='outfit'?'Outfit':'Aura')+'</h3>'+U.btn('Collection','regaliaCollection','data-kind="'+kind+'"','small quiet')+'</div>'+(entry?'<div class="regalia-equipped">'+U.regaliaArt(entry)+'<div><h3>'+entry.name+'</h3>'+U.regaliaStats(entry)+'</div></div>'+U.btn('Unequip','unequipRegalia','data-kind="'+kind+'" '+(blocked()?'disabled':''),'quiet spacer'):'<div class="empty">'+U.icon(kind==='outfit'?'Plate':'gem')+'<p>No '+kind+' equipped.</p></div>')+'</section>';
+        return '<section class="panel"><div class="panel-head"><h3>'+ ({outfit:'Outfit',aura:'Aura',mount:'Mount'}[kind])+'</h3>'+U.btn('Collection','regaliaCollection','data-kind="'+kind+'"','small quiet')+'</div>'+(entry?'<div class="regalia-equipped">'+U.regaliaArt(entry)+'<div><h3>'+entry.name+'</h3>'+U.regaliaStats(entry)+(kind==='outfit'?'<p class="notes spacer">Outfit portrait unlocked while equipped.</p>'+U.btn('Choose avatar','gearPortrait','','small quiet spacer'):'')+'</div></div>'+U.btn('Unequip','unequipRegalia','data-kind="'+kind+'" '+(blocked()?'disabled':''),'quiet spacer'):'<div class="empty">'+U.icon(kind==='outfit'?'Plate':'gem')+'<p>No '+kind+' equipped.</p></div>')+'</section>';
       }).join('')+'</div>';
   };
   U.regaliaCollection=kind=>{
     const entries=D.regalia.filter(r=>r.kind===kind&&G.character().regalia.owned.includes(r.id));
-    U.modal(kind==='outfit'?'Your outfits':'Your auras',entries.length?'<div class="regalia-grid collection-modal">'+entries.map(e=>itemCard(e,true)).join('')+'</div>':'<p class="notes">Your collection begins in the Ascendant Emporium.</p>'+U.btn('Visit the Emporium','visitEmporium','data-kind="'+kind+'"','gold-btn spacer'),true);
+    U.modal(({outfit:'Your outfits',aura:'Your auras',mount:'Your mounts'})[kind],entries.length?'<div class="regalia-grid collection-modal">'+entries.map(e=>itemCard(e,true)).join('')+'</div>':'<p class="notes">Your collection begins in the Ascendant Emporium.</p>'+U.btn('Visit the Emporium','visitEmporium','data-kind="'+kind+'"','gold-btn spacer'),true);
   };
   const levelArt=U.companionPortrait;
   // The existing level card also resolves special companion portraits.

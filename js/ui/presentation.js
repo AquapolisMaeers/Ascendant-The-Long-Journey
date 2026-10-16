@@ -2,19 +2,22 @@
 (function(G, D, S, U) {
   U.citizenLook=(className,look)=>Number.isInteger(look)&&D.citizenLooks[className]?.[look]?look:0;
   U.characterPortrait = (className,appearance={}) => {
+    const outfit=D.regalia.find(r=>r.id===appearance.outfit&&r.kind==='outfit');
+    if(outfit)return '<span class="character-portrait citizen-portrait outfit-portrait" role="img" aria-label="'+U.e(outfit.name)+' portrait" data-class="'+U.e(className)+'" data-outfit="'+outfit.id+'" style="background-image:url('+outfit.avatar+')"></span>';
     const look=U.citizenLook(className,appearance.look);
     return '<span class="character-portrait citizen-portrait" role="img" aria-label="'+U.e(className+' / '+D.citizenLooks[className][look])+'" data-class="'+U.e(className)+'" data-look="'+look+'" style="background-image:url(assets/art/citizens/citizen-'+className.toLowerCase()+(look?'-'+look:'')+'.webp)"></span>';
   };
-  U.lookPicker = (prefix,className,look=0,action='createLook') => {
+  U.lookPicker = (prefix,className,look=0,action='createLook',outfitSelected=false) => {
     look=U.citizenLook(className,look);
-    return '<input type="hidden" id="'+prefix+'-portrait" value="'+look+'"><div class="look-picker" role="group" aria-label="'+className+' citizen portraits">'+D.citizenLooks[className].map((name,index)=>'<button type="button" class="look-option '+(look===index?'selected':'')+'" data-action="'+action+'" data-look="'+index+'" aria-pressed="'+(look===index)+'">'+U.characterPortrait(className,{look:index})+'<span>'+U.e(name)+'</span></button>').join('')+'</div>';
+    return '<input type="hidden" id="'+prefix+'-portrait" value="'+look+'"><div class="look-picker" role="group" aria-label="'+className+' citizen portraits">'+D.citizenLooks[className].map((name,index)=>'<button type="button" class="look-option '+(!outfitSelected&&look===index?'selected':'')+'" data-action="'+action+'" data-look="'+index+'" aria-pressed="'+(!outfitSelected&&look===index)+'">'+U.characterPortrait(className,{look:index})+'<span>'+U.e(name)+'</span></button>').join('')+'</div>';
   };
   U.customize = () => {
-    const c=G.character();G.runtime.appearanceDraft={look:U.citizenLook(c.class,c.appearance.look),color:c.appearance.color};U.customizer();
+    const c=G.character();G.runtime.appearanceDraft={look:U.citizenLook(c.class,c.appearance.look),color:c.appearance.color,...(c.appearance.outfit?{outfit:c.appearance.outfit}:{})};U.customizer();
   };
   U.customizer = () => {
-    const c=G.character(),draft=G.runtime.appearanceDraft;
-    U.modal('Your citizen portrait','<div class="citizen-preview">'+U.characterPortrait(c.class,draft)+'<div><div class="eyebrow">'+U.e(c.class.toUpperCase())+'</div><h3>'+U.e(c.name)+'</h3><p class="notes spacer">An ordinary beginning. Choose the face of your journey.</p></div></div><div class="spacer">'+U.lookPicker('appearance',c.class,draft.look,'appearanceLook')+'</div><input type="hidden" id="appearance-color" value="'+U.e(draft.color)+'"><div class="modal-actions">'+U.btn('Cancel','closeModal','','quiet')+U.btn('Manage equipment','portraitEquipment','','quiet')+U.btn('Save portrait','appearanceConfirm','','gold-btn')+'</div>');
+    const c=G.character(),draft=G.runtime.appearanceDraft,outfit=D.regalia.find(r=>r.id===c.regalia.outfit&&r.kind==='outfit'&&c.regalia.owned.includes(r.id));
+    const outfitChoice=outfit?'<section class="outfit-avatar-choice spacer"><div><span class="eyebrow">EQUIPPED OUTFIT</span><p class="notes">This portrait is available while '+U.e(outfit.name)+' is equipped.</p></div><button type="button" class="look-option '+(draft.outfit===outfit.id?'selected':'')+'" data-action="appearanceOutfit" aria-pressed="'+(draft.outfit===outfit.id)+'">'+U.characterPortrait(c.class,{outfit:outfit.id})+'<span>'+U.e(outfit.name)+'</span></button></section>':'';
+    U.modal('Your avatar','<div class="citizen-preview">'+U.characterPortrait(c.class,draft)+'<div><div class="eyebrow">'+U.e(c.class.toUpperCase())+'</div><h3>'+U.e(c.name)+'</h3><p class="notes spacer">Choose a citizen portrait or the portrait of your equipped outfit.</p></div></div><div class="spacer">'+U.lookPicker('appearance',c.class,draft.look,'appearanceLook',!!draft.outfit)+'</div>'+outfitChoice+'<input type="hidden" id="appearance-color" value="'+U.e(draft.color)+'"><div class="modal-actions">'+U.btn('Cancel','closeModal','','quiet')+U.btn('Manage equipment','portraitEquipment','','quiet')+U.btn('Save portrait','appearanceConfirm','','gold-btn')+'</div>');
   };
 
   U.itemStatLabel = (key, item) => key === 'damage' && item?.style !== null && item?.style !== undefined ?

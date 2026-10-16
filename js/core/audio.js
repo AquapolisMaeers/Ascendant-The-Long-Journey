@@ -34,7 +34,7 @@
     },
     startMedia(media) {
       media.play().then(() => {
-        if (document.hidden || this.suspended || !G.state.settings.master) media.pause();
+        if (document.hidden || this.suspended || G.state.settings.muted || !G.state.settings.master) media.pause();
       }).catch(() => {});
     },
     sync() {
@@ -42,7 +42,7 @@
       const s = G.state.settings, now = performance.now();
       const dt = Math.min(.1, Math.max(0, (now - (this.mixedAt || now - 50)) / 1000));
       this.mixedAt = now;
-      const silent = document.hidden || this.suspended || !s.master;
+      const silent = document.hidden || this.suspended || s.muted || !s.master;
       const scene = this.scene();
       this.sceneKey = scene;
       const ambience = s.ambience ?? 45;
@@ -68,7 +68,7 @@
       if (silent || !s.music) this.music.pause();
       else if (this.music.paused) this.startMedia(this.music);
       for (const voice of this.voices) {
-        voice.volume = s.master * s.sfx / 10000 * (voice.softGain ?? .7);
+        voice.volume = silent ? 0 : s.master * s.sfx / 10000 * (voice.softGain ?? .7);
         if (silent || !s.sfx) voice.pause();
       }
       this.voices = this.voices.filter(v => !v.ended && !v.paused);
@@ -78,7 +78,7 @@
       if (!effects.includes(kind)) return;
       if (!this.unlocked || document.hidden || this.suspended) return;
       const s = G.state.settings, now = performance.now();
-      if (!s.master || !s.sfx || now - (this.last[kind] ?? -Infinity) < (['loot','rare','achievement'].includes(kind) ? 1500 : 120)) return;
+      if (s.muted || !s.master || !s.sfx || now - (this.last[kind] ?? -Infinity) < (['loot','rare','achievement'].includes(kind) ? 1500 : 120)) return;
       this.last[kind] = now;
       if (['hit','crit'].includes(kind) && event?.side === 'player') {
         kind = {Warrior:'sword', Archer:'bow', Mage:'magic'}[G.character()?.class] || kind;

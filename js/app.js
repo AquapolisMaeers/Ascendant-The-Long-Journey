@@ -27,7 +27,9 @@
     },
     navigate(el) {
       const previous = G.runtime.page;
-      const destination = el.dataset.value;
+      const requested = el.dataset.value;
+      const destination = requested==='Emporium'?'Shop':requested;
+      if(destination==='Shop')G.runtime.shopSection=requested==='Emporium'?'emporium':'general';
       if (destination === 'Marketplace') S.market.assert();
       if (document.querySelector('.phone-menu')) U.close();
       G.runtime.page = destination;
@@ -37,6 +39,7 @@
       if (U.isPhone() && previous !== destination) window.scrollTo({top:0, behavior:'instant'});
     },
     mobileMenu() { U.mobileMenu(); },
+    shopSection(el) { G.runtime.shopSection=el.dataset.section; G.runtime.page='Shop';G.runtime.tab='';U.render(); },
     tab(el) {
       G.runtime.tab = el.dataset.value;
       U.render();
@@ -85,9 +88,15 @@
     },
     customize() { U.customize(); },
     appearanceLook(el) {
+      delete G.runtime.appearanceDraft.outfit;
       G.runtime.appearanceDraft.look = Number(el.dataset.look);
       G.runtime.appearanceDraft.color = value('appearance-color') || G.runtime.appearanceDraft.color;
       U.customizer();
+    },
+    appearanceOutfit() {
+      const c=G.character(),entry=D.regalia.find(r=>r.id===c.regalia.outfit&&r.kind==='outfit');
+      G.assert(entry&&c.regalia.owned.includes(entry.id),'Equip an owned outfit to select its portrait.');
+      G.runtime.appearanceDraft.outfit=entry.id;U.customizer();
     },
     createMode(el) {
       G.runtime.creation.mode = el.dataset.value;
@@ -298,7 +307,7 @@
     unequipRegalia(el) { S.emporium.unequip(el.dataset.kind); },
     equipPet(el) { S.emporium.equipPet(el.dataset.id); U.close(); },
     regaliaCollection(el) { U.regaliaCollection(el.dataset.kind); },
-    visitEmporium(el) { U.close(); G.runtime.page='Emporium'; G.runtime.tab=el.dataset.kind==='outfit'?'Outfit Mystery Boxes':'Aura Mystery Boxes'; U.render(); },
+    visitEmporium(el) { U.close(); G.runtime.page='Shop';G.runtime.shopSection='emporium'; G.runtime.tab=({outfit:'Outfit Mystery Boxes',aura:'Aura Mystery Boxes',mount:'Mount Mystery Boxes'})[el.dataset.kind]||''; U.render(); },
     ascendantHelp() { U.ascendantHelp(); },
     emporiumPage(el) { const category=D.emporiumCategories.find(e=>e.name===G.runtime.tab)||D.emporiumCategories[0]; G.runtime.emporiumView=category.name+'|'+(G.runtime.regaliaGroup||'All'); G.runtime.emporiumPage=+el.dataset.page; U.render(); },
     achievementPage(el) { G.runtime.achievementGroup = el.dataset.group; G.runtime.achievementPage = +el.dataset.page; U.render(); },
@@ -384,7 +393,7 @@
     },
     appearanceForm() { U.customize(); },
     appearanceConfirm() {
-      S.character.customize({look:G.runtime.appearanceDraft.look, color:value('appearance-color')});
+      S.character.customize({look:G.runtime.appearanceDraft.look, color:value('appearance-color'),outfit:G.runtime.appearanceDraft.outfit});
       U.close();
     },
     listForm(el) {
@@ -540,7 +549,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'shopSection', 'appearanceOutfit', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');

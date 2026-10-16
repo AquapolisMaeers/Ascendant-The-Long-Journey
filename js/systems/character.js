@@ -4,7 +4,8 @@
     customize(value) {
       const c = G.character();
       G.assert(c, 'Choose a character.');
-      const appearance = {portrait:D.appearanceKind(c.class), look:value.look, color:value.color};
+      const appearance = {portrait:D.appearanceKind(c.class), look:value.look, color:value.color,...(value.outfit?{outfit:value.outfit}:{})};
+      G.assert(value.outfit===undefined || c.regalia?.outfit===value.outfit&&c.regalia.owned.includes(value.outfit)&&D.regalia.some(r=>r.id===value.outfit&&r.kind==='outfit'),'Equip an owned outfit to select its portrait.');
       G.assert(Number.isInteger(value.look) && D.validAppearance(appearance), 'Choose a valid class portrait and accent colour.');
       c.appearance = appearance;
       G.commit();

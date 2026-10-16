@@ -43,6 +43,7 @@
     if (!Array.isArray(p.slots) || p.slots.length !== 3 || !Number.isInteger(p.active) || p.active < 0 || p.active > 2) fail('character slots');
     if (!p.settings || !finite(p.savedAt)) fail('settings or timestamp');
     if (p.settings.atmosphere !== undefined && typeof p.settings.atmosphere !== 'boolean') fail('atmosphere setting');
+    if (p.settings.muted !== undefined && typeof p.settings.muted !== 'boolean') fail('mute setting');
     for (const key of ['damage', 'combatLog', 'notifications', 'reduced'])
       if (typeof p.settings[key] !== 'boolean') fail('boolean setting');
     for (const key of ['master', 'music', 'sfx'])
@@ -58,9 +59,10 @@
       if (c.gemSocketRules !== undefined && c.gemSocketRules !== 1) fail('gem socket rules');
       if (c.regalia !== undefined) {
         if (!record(c.regalia) || !idsValid(c.regalia.owned,D.regalia.map(r=>r.id))) fail('regalia collection');
-        for (const kind of ['outfit','aura']) if (c.regalia[kind] !== null &&
+        for (const kind of ['outfit','aura','mount']) if (!(kind==='mount'&&c.regalia[kind]===undefined) && c.regalia[kind] !== null &&
           (!c.regalia.owned.includes(c.regalia[kind]) || !D.regalia.some(r=>r.id===c.regalia[kind]&&r.kind===kind))) fail('equipped regalia');
       }
+      if (c.appearance.outfit !== undefined && (!c.regalia?.owned.includes(c.appearance.outfit) || c.regalia.outfit!==c.appearance.outfit || !D.regalia.some(r=>r.id===c.appearance.outfit&&r.kind==='outfit'))) fail('outfit portrait');
       if (c.specialPets !== undefined && !idsValid(c.specialPets,D.specialCompanions.map(p=>p.id))) fail('special pet collection');
       if (c.petStable !== undefined) {
         if (!record(c.petStable) || Object.keys(c.petStable).length>D.allCompanions.length) fail('pet stable');

@@ -15,6 +15,7 @@
       combatLog: true,
       notifications: true,
       atmosphere: true,
+      muted: false,
       reduced: false
     },
     savedAt: 0
@@ -36,7 +37,7 @@
       ascendantCoins: 0,
       ascendantRewards: {},
       companion: null,
-      regalia: {owned:[],outfit:null,aura:null},
+      regalia: {owned:[],outfit:null,aura:null,mount:null},
       specialPets: [],
       petStable: {},
       gemSocketRules: 1,
@@ -91,7 +92,7 @@
       dungeon: null,
       tutorial: 0,
       guide: null,
-      afk: { interval: 8000, chance: .75, minHp: .25, normals: true, dungeons: false, elites: false, gather: false, chests: true },
+      afk: { interval: 8000, chance: .75, minHp: .25, normals: true, dungeons: false, elites: false, gather: true, chests: true },
       restReadyAt: 0,
       debugUsed: false
     };
