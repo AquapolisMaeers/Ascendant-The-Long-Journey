@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Starwhisker Koi">
+<title>Starwhisker Koi</title><defs>
+<linearGradient id="fur" x1=".1" y1="0" x2=".9" y2="1"><stop stop-color="#ede0bd"/><stop offset=".48" stop-color="#81c6ce"/><stop offset="1" stop-color="#727caf"/></linearGradient>
+<linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#81c6ce"/><stop offset="1" stop-color="#727caf"/></linearGradient>
+<linearGradient id="dark" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#727caf"/><stop offset="1" stop-color="#242737"/></linearGradient>
+<radialGradient id="halo"><stop stop-color="#727caf" stop-opacity=".4"/><stop offset="1" stop-color="#151923" stop-opacity="0"/></radialGradient>
+</defs><style>.etch{fill:none;stroke:#f2d7a0;stroke-width:1.4;stroke-linecap:round;opacity:.75}.antler{fill:none;stroke:#e3c48c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style>
+<circle cx="100" cy="100" r="96" fill="url(#halo)"/><path d="M100 15 173 57v86l-73 42-73-42V57Z" fill="none" stroke="#81c6ce" stroke-opacity=".3"/>
+<circle cx="100" cy="100" r="70" fill="none" stroke="#d6bd85" stroke-opacity=".24" stroke-dasharray="1 8"/>
+<ellipse cx="100" cy="169" rx="55" ry="8" fill="#0c101a" opacity=".6"/>
+<g stroke="#262633" stroke-width="1.5" stroke-linejoin="round">
+<path d="M70 106Q24 85 24 54l30 11 22 26Q48 43 71 26l27 36" fill="url(#accent)"/>
+<path d="m35 65 29 35m-2-44 17 39" class="etch"/>
+<path d="M67 109q22-50 70-49 37 1 33 27-9 42-69 51Z" fill="url(#fur)"/>
+<path d="m79 96 12-30 20-14 4 27m-12 52-4 28 31-21 12-23" fill="url(#accent)"/>
+<path d="m132 65-10 19 3 26 16 12 19-18 9-21-11-17" fill="url(#accent)"/>
+<path d="m88 91 10 6-6 10m12-24 10 5-5 11m-27 12 10 6-2 8m21-16 9 5-5 10" class="etch"/>
+<circle cx="151" cy="83" r="6" fill="#192536"/><circle cx="153" cy="81" r="2" fill="#f7dca3"/>
+<path d="M167 94q16 17 4 32m-10-25q6 34-19 41m-48-4-35 15 9-25" fill="none" stroke="#e4d2a0" stroke-width="2"/>
+<path d="m40 131 3-7 3 7 7 3-7 3-3 7-3-7-7-3Zm94-94 2-5 2 5 5 2-5 2-2 5-2-5-5-2Z" fill="#edcf8a"/>
+</g>
+<path d="m24 97 4-8 4 8-4 8Zm144 0 4-8 4 8-4 8Z" fill="#d1b883"/>
+</svg>

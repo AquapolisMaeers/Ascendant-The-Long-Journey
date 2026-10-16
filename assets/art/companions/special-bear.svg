@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Gilded Jackalope">
+<title>Gilded Jackalope</title><defs>
+<linearGradient id="fur" x1=".1" y1="0" x2=".9" y2="1"><stop stop-color="#ede0bd"/><stop offset=".48" stop-color="#dab87a"/><stop offset="1" stop-color="#a57380"/></linearGradient>
+<linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dab87a"/><stop offset="1" stop-color="#a57380"/></linearGradient>
+<linearGradient id="dark" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a57380"/><stop offset="1" stop-color="#242737"/></linearGradient>
+<radialGradient id="halo"><stop stop-color="#a57380" stop-opacity=".4"/><stop offset="1" stop-color="#151923" stop-opacity="0"/></radialGradient>
+</defs><style>.etch{fill:none;stroke:#f2d7a0;stroke-width:1.4;stroke-linecap:round;opacity:.75}.antler{fill:none;stroke:#e3c48c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style>
+<circle cx="100" cy="100" r="96" fill="url(#halo)"/><path d="M100 15 173 57v86l-73 42-73-42V57Z" fill="none" stroke="#dab87a" stroke-opacity=".3"/>
+<circle cx="100" cy="100" r="70" fill="none" stroke="#d6bd85" stroke-opacity=".24" stroke-dasharray="1 8"/>
+<ellipse cx="100" cy="169" rx="55" ry="8" fill="#0c101a" opacity=".6"/>
+<g stroke="#262633" stroke-width="1.5" stroke-linejoin="round">
+<path d="M72 123q-23-23-8-42l23-10 29 9 22 40-8 26-39 3Z" fill="url(#fur)"/>
+<ellipse cx="74" cy="138" rx="22" ry="21" fill="url(#dark)"/>
+<path d="m85 133-18 24 34-2 8-18m15-13 4 29 18-2-12-32" fill="url(#fur)"/>
+<path d="M88 85 67 36Q56 10 69 20l32 50m4 8 14-53q8-23 14-5l-9 61" fill="url(#fur)"/>
+<path d="M85 69 70 34m44 34 13-36" stroke="#9a6878" stroke-width="6" stroke-linecap="round"/>
+<path d="M90 74 68 58 52 57m24 7-7-21m5 19-20-18m63 30 20-21 13 3m-21 7 2-26m8 18 18-18" class="antler"/>
+<path d="m84 76 29-5 22 19-5 23-24 10-27-16Z" fill="url(#fur)"/>
+<path d="m86 88 13-3-6 10m25-8 8 3-6 4" fill="#272c37"/>
+<path d="m111 104 9-1-4 7m-13 6 11 1" fill="#8b6268"/>
+<path d="m88 111-15 5m16 1-15 7m45-10 15 5" class="etch"/>
+<path d="m79 97-6 4 8 11m38-18 8 4-5 10" fill="none" stroke="#e7c47c" stroke-width="4"/>
+<circle cx="65" cy="119" r="10" fill="#e8d8b7"/>
+</g>
+<path d="m24 97 4-8 4 8-4 8Zm144 0 4-8 4 8-4 8Z" fill="#d1b883"/>
+</svg>

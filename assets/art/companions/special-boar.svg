@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Mossbell Terrapin">
+<title>Mossbell Terrapin</title><defs>
+<linearGradient id="fur" x1=".1" y1="0" x2=".9" y2="1"><stop stop-color="#ede0bd"/><stop offset=".48" stop-color="#a6c58b"/><stop offset="1" stop-color="#4b8276"/></linearGradient>
+<linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a6c58b"/><stop offset="1" stop-color="#4b8276"/></linearGradient>
+<linearGradient id="dark" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4b8276"/><stop offset="1" stop-color="#242737"/></linearGradient>
+<radialGradient id="halo"><stop stop-color="#4b8276" stop-opacity=".4"/><stop offset="1" stop-color="#151923" stop-opacity="0"/></radialGradient>
+</defs><style>.etch{fill:none;stroke:#f2d7a0;stroke-width:1.4;stroke-linecap:round;opacity:.75}.antler{fill:none;stroke:#e3c48c;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style>
+<circle cx="100" cy="100" r="96" fill="url(#halo)"/><path d="M100 15 173 57v86l-73 42-73-42V57Z" fill="none" stroke="#a6c58b" stroke-opacity=".3"/>
+<circle cx="100" cy="100" r="70" fill="none" stroke="#d6bd85" stroke-opacity=".24" stroke-dasharray="1 8"/>
+<ellipse cx="100" cy="169" rx="55" ry="8" fill="#0c101a" opacity=".6"/>
+<g stroke="#262633" stroke-width="1.5" stroke-linejoin="round">
+<path d="m55 123-15 30 17 8 18-27m45-8 10 34 18-6-8-34" fill="url(#fur)"/>
+<path d="M40 121q-4-64 55-67 59-3 64 63l-26 22-62 1Z" fill="url(#dark)"/>
+<path d="M46 111q4-48 49-50 43-2 55 45l-21 22-55 1Z" fill="url(#accent)"/>
+<path d="m96 64-15 22 14 19 26-5 4-25m-43 11-28 10 17 26 24-17 14 26m12-31 23 9m-50-4 1 29" class="etch"/>
+<path d="m47 109 18 13 26 12 41-5 24-18" fill="none" stroke="#d2c789" stroke-width="5"/>
+<path d="m114 111 11-17 24 3 20 25-8 20-28 3-22-13Z" fill="url(#fur)"/>
+<path d="m129 113 10-5 8 8m8 4 6 0" fill="none" stroke="#152c2c" stroke-width="4"/>
+<path d="m134 143 4 9m-4 0h10l3 13h-18Z" fill="#ebca83"/>
+<circle cx="138" cy="166" r="3" fill="#c19b58"/>
+<path d="m62 75 2-21 9 8 10-20 8 18 13-10 3 16m13 3 9-15 4 22" fill="#8bb286"/>
+<path d="m73 54 3-14 6-3 7 12m17 7 1-16 9-2 5 20" fill="#d4d59c"/>
+<path d="m44 130-11 5 8 8" fill="url(#fur)"/>
+</g>
+<path d="m24 97 4-8 4 8-4 8Zm144 0 4-8 4 8-4 8Z" fill="#d1b883"/>
+</svg>

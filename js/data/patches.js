@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-15',title:'New bonds, stronger gems and a living model',changes:[
+    'All ten exclusive gem types now give twice their previous bonuses at every rank, including gems already owned or socketed. Regular gems, compatible slots and mystery-box odds keep their existing rules.',
+    'The seven mystery-box companions become Vesperglass Kirin, Mossbell Terrapin, Cindercoil Wyrmling, Prismveil Moth, Gilded Jackalope, Starwhisker Koi and Velvet Oracle. Each has an original portrait and story. Existing ownership, levels, ascensions and care are preserved.',
+    'Your equipped portrait is now a real 3D character with separately fitted equipment meshes, depth and lighting. Click the portrait to rotate the preview by dragging, arrow keys or buttons. Materials follow equipped gear tiers; rarity shine respects Reduced Motion.',
+    'Pet mystery-box outcome lists show each creature portrait. The 3D model works locally without external downloads and retains a rotatable fallback for devices without WebGL.'
+  ]},
   {date:'2026-10-15',title:'A clearer view of your journey',changes:[
     'The activity tracker is shorter, reserving less screen space while keeping progress, timers and Stop controls. Advancing on World uses inline progress again; the tracker follows you when you visit another page.',
     'The equipped portrait now uses one shaded character model with fitted armor, paired gloves and boots, and correctly held swords, bows and staves. Gear materials and rarity accents update with equipment; Reduced Motion still disables shine.',

@@ -17,9 +17,18 @@
       make('sovereign','Eclipse Sovereign',Object.fromEntries(focus.map(([stat,,value])=>[stat,value])),'#f3d18e',1500,'Sovereign',30)
     ];
   });
-  const names = ['Moonfang Wolf','Thorncrown Boar','Astral Golem','Sunfire Lynx','Stormcrown Bear','Voidweaver Spider','Eclipse Bat'];
+  const names = ['Vesperglass Kirin','Mossbell Terrapin','Cindercoil Wyrmling','Prismveil Moth','Gilded Jackalope','Starwhisker Koi','Velvet Oracle'];
+  const stories = [
+    'A dusk-born kirin whose glass antlers gather the last light. It charges beside those who refuse to yield.',
+    'A wandering sanctuary with a moss-grown shell. The bell beneath its chin rings when danger approaches.',
+    'A small ember dragon curled around an ancient iron core. Its patient vigilance hardens your resolve.',
+    'A silent moth with stained-glass wings. Its shifting patterns reveal the briefest opening in an enemy guard.',
+    'A fleet-footed jackalope crowned in gold. It waits for the perfect moment before striking with impossible force.',
+    'A celestial koi that swims through the air. Its comet-tail traces the rhythm of your next attack.',
+    'A masked night owl with a velvet mantle. It gathers stolen vitality beneath its watchful, violet eyes.'
+  ];
   D.specialCompanions = D.companions.map((pet,i)=>({...pet,id:'special-'+pet.id,base:pet.id,name:names[i],price:300,perLevel:pet.perLevel*2,special:true,
-    description:'A special companion with its own powerful bond. Same rarity milestones, feeding and upkeep.'}));
+    illustration:'assets/art/companions/special-'+pet.id+'.svg',description:stories[i]}));
   D.allCompanions = [...D.companions,...D.specialCompanions];
   D.emporiumBoxes = [
     {id:'outfit-box',name:'Outfit Mystery Box',kind:'outfit',price:75,duplicate:15},
@@ -41,10 +50,10 @@
   };
   D.legacyExclusiveGemSlots={};
   const unique = [
-    ['damagePct','Might',.003,'#ec94a0'],['defencePct','Bastion',.004,'#a7c8dc'],['healthPct','Vitality',.004,'#a9d698'],
-    ['speed','Haste',.002,'#91d9d3'],['penetration','Piercing',.0015,'#c69fe3'],['double','Echo',.0015,'#b7c0ed'],
-    ['dodge','Evasion',.0015,'#b4a8dd'],['reduction','Warding',.001,'#c5d7b6'],['resistance','Resolve',.002,'#dfc697'],
-    ['lifeSteal','Siphon',.0005,'#f08a9e']
+    ['damagePct','Might',.006,'#ec94a0'],['defencePct','Bastion',.008,'#a7c8dc'],['healthPct','Vitality',.008,'#a9d698'],
+    ['speed','Haste',.004,'#91d9d3'],['penetration','Piercing',.003,'#c69fe3'],['double','Echo',.003,'#b7c0ed'],
+    ['dodge','Evasion',.003,'#b4a8dd'],['reduction','Warding',.002,'#c5d7b6'],['resistance','Resolve',.004,'#dfc697'],
+    ['lifeSteal','Siphon',.001,'#f08a9e']
   ];
   unique.forEach(([stat,name,value,color])=>{
     const type=D.gems.length;D.gems.push({stat,name,value,color,boxOnly:true});

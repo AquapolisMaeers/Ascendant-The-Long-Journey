@@ -24,7 +24,7 @@
       (sovereign?'<path d="M50 20 46 6 60 14 70 2 80 14 94 6 90 20Z" fill="currentColor"/><circle cx="70" cy="70" r="55" fill="none" stroke="currentColor" stroke-dasharray="2 7"/>':'<path class="regalia-glyph" d="M'+(57+i%4*3)+' 18h18l-9 9Z"/>')+'</svg></span>';
   };
   const portrait=U.companionPortrait;
-  U.companionPortrait=entry=>entry?.special?'<span class="special-pet-art">'+portrait(entry)+'<b aria-hidden="true">\u2726</b></span>':portrait(entry);
+  U.companionPortrait=entry=>entry?.special?'<span class="special-pet-art" role="img" aria-label="'+U.e(entry.name)+'"><img class="special-pet-illustration" src="'+entry.illustration+'" alt="" decoding="async"><b aria-hidden="true">\u2726</b></span>':portrait(entry);
   const art=entry=>entry.special?U.companionPortrait(entry):U.regaliaArt(entry);
   const petStats=p=>'<p class="notes pet-rate">+'+U.statValue(p.stat,p.perLevel)+' '+D.labels[p.stat]+' per level</p>';
   const blocked=()=>{const c=G.character();return c.combat||c.activity||c.dungeon||c.pending.length||S.tutorial.active();};
@@ -41,7 +41,7 @@
     const rows=outcomes.filter(o=>!filters||(type==='all'||String(D.catalog[o.key].type)===type)&&(rank==='all'||String(D.catalog[o.key].rank)===rank));
     return filters+'<div class="box-odds" tabindex="0" aria-label="Box rewards and unmodified per-opening odds"><table class="data-table"><thead><tr><th>Possible reward</th><th>Chance</th></tr></thead><tbody>'+rows.map(o=>{
       const info=o.key?D.catalog[o.key]:null,gem=info?D.gems[info.type]:null;
-      return '<tr><td>'+U.e(o.entry?.name||(info?info.name:o.stone?'1 Ascendant Stone':U.price(o.coins)))+(info?.boxOnly?' <small class="exclusive-label">EXCLUSIVE</small>':'')+(gem?'<small class="box-gem-effect">+'+U.statValue(gem.stat,gem.value*info.rank)+' '+D.labels[gem.stat]+'</small>':'')+'</td><td>'+G.percent(o.weight/total,box.kind==='gem'?6:4)+'</td></tr>';
+      return '<tr><td>'+(o.entry?.special?'<span class="pet-outcome">'+U.companionPortrait(o.entry)+'<span>'+U.e(o.entry.name)+'</span></span>':U.e(o.entry?.name||(info?info.name:o.stone?'1 Ascendant Stone':U.price(o.coins))))+(info?.boxOnly?' <small class="exclusive-label">EXCLUSIVE</small>':'')+(gem?'<small class="box-gem-effect">+'+U.statValue(gem.stat,gem.value*info.rank)+' '+D.labels[gem.stat]+'</small>':'')+'</td><td>'+G.percent(o.weight/total,box.kind==='gem'?6:4)+'</td></tr>';
     }).join('')+'</tbody></table></div>';
   };
   U.emporiumResult=result=>{
