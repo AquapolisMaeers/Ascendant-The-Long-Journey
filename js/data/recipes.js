@@ -14,7 +14,7 @@
       tier,
       level,
       cost,
-      output: 'bar:' + tier,
+      output: 'bar:' + tier,category:'Materials',
       xp: D.config.skillXp * level * Object.values(cost).reduce((a, n) => a + n, 0)
     });
     for (let piece = 0; piece < 10; piece++) {
@@ -43,7 +43,7 @@
     for(const kind of ['leather','cloth']) {
       const cost=kind==='leather'?{['hide:'+tier]:3,['logs:'+tier]:1}:{['fiber:'+tier]:3};
       D.recipes.push({id:kind+':'+tier,name:D.resources[kind][tier],skill:'Smithing',tier,level,cost,
-        output:kind+':'+tier,category:'Leather & cloth',
+        output:kind+':'+tier,category:'Materials',
         xp:D.config.skillXp*level*Object.values(cost).reduce((sum,n)=>sum+n,0)});
     }
     D.recipes.push({

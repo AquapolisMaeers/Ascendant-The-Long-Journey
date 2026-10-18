@@ -1,6 +1,10 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-17',title:'Materials together and complete artwork',changes:[
+    'Crafting > Smithing > Materials combines bars, leather and cloth at every material level. All three use matching cards with aligned ingredient sections, quantity controls and full-width crafting buttons; phones show one card per row.',
+    'Auras and mounts now use individually measured picture boundaries, keeping neighbouring artwork out of equipped views and collections. Class armour, refined textiles and advanced gems use the same proportional fitting so full paintings, including robe hems, remain visible.'
+  ]},
   {date:'2026-10-17',title:'Farming follows the road',changes:[
     'Removed the Farming Grove and its direct-harvest shortcuts. Discover fibre crop patches with Advance, then Harvest them with Pruning Shears, like other gathering encounters. Existing crops, Farming XP and tools are preserved.',
     'Gathering always uses your chosen primary and secondary skills. Primary keeps 25% per Advance and secondary keeps 12.5%; the remaining three skills split 12.5% equally, about 4.17% each. Total gathering remains 50%, and Farming can be primary or secondary.'

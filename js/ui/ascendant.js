@@ -14,6 +14,14 @@
   U.paint = key => {
     const art = D.itemIllustrations[key];
     G.assert(art, 'Missing artwork for ' + key + '.');
+    if(art.frame) {
+      const [x,y,w,h]=art.frame,[width,height]=art.size,aspect=w/h;
+      const fitWidth=aspect>=1?90:90*aspect,fitHeight=aspect>=1?90/aspect:90;
+      const clip=art.clip?';clip-path:polygon('+art.clip.map(([px,py])=>px+'% '+py+'%').join(',')+')':'';
+      // A separate viewport contains exactly one measured sprite. Fit that
+      // viewport into the icon while preserving the painting's proportions.
+      return '<span class="item-art isolated-art" aria-hidden="true" data-art-key="'+U.e(key)+'"><span class="sprite-paint" style="--sprite-width:'+fitWidth+'%;--sprite-height:'+fitHeight+'%;--sprite-aspect:'+aspect+';background-image:url('+art.file+'?v='+art.version+');background-size:'+(100*width/w)+'% '+(100*height/h)+'%;background-position:'+(x/(width-w)*100)+'% '+(y/(height-h)*100)+'%'+clip+'"></span></span>';
+    }
     // Sample inside a single cell, inset by 1% on all four sides.
     const [x, y, w, h] = art.crop || [(art.index % art.columns + .01) / art.columns,
       (Math.floor(art.index / art.columns) + .01) / art.rows, .98 / art.columns, .98 / art.rows];

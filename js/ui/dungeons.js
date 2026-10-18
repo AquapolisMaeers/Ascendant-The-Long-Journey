@@ -64,12 +64,12 @@
   const crafting=U.screens.Crafting;
   U.screens.Crafting=()=>{
     const html=crafting();if(G.runtime.tab&&G.runtime.tab!=='Smithing')return html;
-    const category=G.runtime.smithingCategory;
+    const category=U.currentSmithingCategory();
     if(category!=='Armor') {
-      if(category!=='Leather & cloth')return html;
+      if(category!=='Materials')return html;
       const template=document.createElement('template');template.innerHTML=html;
       const tier=template.content.querySelector('#craft-tier');if(tier)tier.parentElement.firstChild.textContent='Material tier';
-      template.content.querySelector('.toolbar')?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">Cure hides with logs for ranger leather. Weave fibres harvested with Farming into mage fabric. Choose Armor to craft the finished pieces.</p>');
+      template.content.querySelector('.toolbar')?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">Refine ore into bars, cure hides with logs into ranger leather, or weave Farming fibres into mage cloth. These materials supply equipment recipes.</p>');
       return template.innerHTML;
     }
     const className=D.classes.includes(G.runtime.armorClass)?G.runtime.armorClass:G.character().class;
@@ -78,14 +78,14 @@
     toolbar?.querySelector('.smithing-filter')?.insertAdjacentHTML('afterend','<label>Armour class<select id="armor-class">'+D.classes.map(name=>'<option value="'+name+'" '+(name===className?'selected':'')+'>'+({Warrior:'Warrior · plate',Archer:'Ranger · leather',Mage:'Mage · cloth'}[name])+'</option>').join('')+'</select></label>');
     const tier=template.content.querySelector('#craft-tier');
     if(tier){tier.parentElement.firstChild.textContent='Material tier';for(const option of tier.options)option.textContent='Level '+D.tiers[+option.value];}
-    toolbar?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">'+(className==='Warrior'?'Plate uses regional bars and hides.':className==='Archer'?'Leather armour uses cured regional leather and wooden fittings. Cure hides under Leather & cloth.':'Cloth armour uses regional fabric and fibre. Harvest fibres with Farming, then weave fabric under Leather & cloth.')+'</p>');
+    toolbar?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">'+(className==='Warrior'?'Plate uses regional bars and hides.':className==='Archer'?'Leather armour uses cured regional leather and wooden fittings. Cure hides under Materials.':'Cloth armour uses regional fabric and fibre. Harvest fibres with Farming, then weave fabric under Materials.')+'</p>');
     return template.innerHTML;
   };
   const skills=U.screens.Skills;
-  U.screens.Skills=()=>skills().replace('<div class="grid-3 spacer skills-grid">','<p class="notes armour-material-help">Farming harvests textile fibres with Pruning Shears. Refine fibres into cloth and hides into leather under Crafting → Smithing → Leather & cloth.</p><div class="grid-3 spacer skills-grid">');
+  U.screens.Skills=()=>skills().replace('<div class="grid-3 spacer skills-grid">','<p class="notes armour-material-help">Farming harvests textile fibres with Pruning Shears. Refine fibres into cloth and hides into leather under Crafting → Smithing → Materials.</p><div class="grid-3 spacer skills-grid">');
   const summary=U.itemSummary;
   U.itemSummary=entry=>{
     const info=entry.kind==='stack'?D.catalog[entry.key]:null;
-    return info?.kind==='fiber'?'Harvested with Farming. Weave fabric under Smithing → Leather & cloth.':info?.kind==='leather'?'Cured from regional hides. Used to craft and upgrade ranger armour.':info?.kind==='cloth'?'Woven from regional fibres. Used to craft and upgrade mage armour.':summary(entry);
+    return info?.kind==='fiber'?'Harvested with Farming. Weave fabric under Smithing → Materials.':info?.kind==='leather'?'Cured from regional hides. Used to craft and upgrade ranger armour.':info?.kind==='cloth'?'Woven from regional fibres. Used to craft and upgrade mage armour.':summary(entry);
   };
 })(RPG,RPG.data,RPG.systems,RPG.ui);

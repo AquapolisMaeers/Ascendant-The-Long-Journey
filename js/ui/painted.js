@@ -6,6 +6,6 @@
   const summary=U.itemSummary;
   U.itemSummary=entry=>{
     const info=entry.kind==='stack'?D.catalog[entry.key]:null;
-    return info?.kind==='fiber'?'Find crop patches by Advancing in World. Requires Farming Level '+D.tiers[info.tier]+'. Use Pruning Shears to harvest crops. Weave fabric under Smithing → Leather & cloth.':summary(entry);
+    return info?.kind==='fiber'?'Find crop patches by Advancing in World. Requires Farming Level '+D.tiers[info.tier]+'. Use Pruning Shears to harvest crops. Weave fabric under Smithing → Materials.':summary(entry);
   };
 })(RPG,RPG.data,RPG.systems,RPG.ui);

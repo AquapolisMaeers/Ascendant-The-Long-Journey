@@ -40,7 +40,7 @@
     }
     if (info.category === 'Gems') return 'Facet into a typed Gem I';
     if (info.kind === 'fish') return 'Cook into ' + D.catalog['food:' + info.tier].name;
-    if (info.kind === 'bar') return 'Smith ' + D.tierNames[info.tier] + ' equipment';
+    if (info.kind === 'bar') return 'Refined from regional ore. Used to craft weapons, warrior armour and accessories.';
     if (info.kind === 'ore') return 'Refine through Smithing';
     if (info.kind === 'logs') return 'Used to craft and enhance weapons';
     if (info.kind === 'hide') return 'Used to craft and enhance armour';
