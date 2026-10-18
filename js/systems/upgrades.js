@@ -11,9 +11,8 @@
     quote(item, ascend = false) {
       if (item.kind === 'tool') {
         const r = item.rarity,
-          skillIndex = D.skills.indexOf(item.skill),
           tier = D.tierFor(D.toolLevels[Math.min(7, r + 1)]),
-          kind = skillIndex < 4 ? D.resourceKinds[skillIndex] : skillIndex === 4 ? 'bar' : skillIndex === 5 ? 'fish' : null;
+          kind = D.gatherResources[item.skill] || {Smithing:'bar',Cooking:'fish'}[item.skill];
         const cost = {
           stone: 1
         };

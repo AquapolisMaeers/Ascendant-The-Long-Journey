@@ -36,18 +36,19 @@
     if (a?.type === 'advance') return out + '<section class="panel encounter inline-advance"><div class="encounter-idle"><h2>Following the old road\u2026</h2><p>One encounter waits beyond the mist.</p><div class="travel-track"><i id="activity-bar" style="width:' + G.clamp(a.elapsed/a.duration*100,0,100) + '%"></i></div><small id="activity-time">' + ((a.duration-a.elapsed)/1000).toFixed(1) + ' seconds</small><strong id="activity-percent">' + Math.floor(a.elapsed/a.duration*100) + '%</strong></div></section>';
     if (a) return out;
     if (c.dungeon?.cleared) return out + '<section class="panel encounter"><div class="encounter-idle">' + U.icon('dungeon') + '<h2>Room cleared</h2><p>Prepare your equipment and provisions before continuing.</p>' + U.btn('Enter next room ' + U.icon('arrow'), 'nextRoom', '', 'primary advance-btn') + '</div></section>';
-    if (!e) return out + '<section class="panel encounter"><div class="encounter-idle">' + U.icon('World') + '<div class="eyebrow">BEYOND THE LANTERN LIGHT</div><h2 class="spacer">Take the next step.</h2><p>Travel deeper into ' + D.locations[c.location].name + '. Discover creatures, resources, and the unexpected.</p>' + U.btn('ADVANCE ' + U.icon('arrow'), 'advance', c.pending.length || (S.tutorial.active() && ![...D.skills.slice(0, 4), 'fight'].includes(S.tutorial.current().id)) ? 'disabled' : '', 'primary advance-btn') + '<div class="footer-note">4 SECOND JOURNEY &nbsp; · &nbsp; ONE DISCOVERY</div></div></section>';
+    if (!e) return out + '<section class="panel encounter"><div class="encounter-idle">' + U.icon('World') + '<div class="eyebrow">BEYOND THE LANTERN LIGHT</div><h2 class="spacer">Take the next step.</h2><p>Travel deeper into ' + D.locations[c.location].name + '. Discover creatures, resources, and the unexpected.</p>' + U.btn('ADVANCE ' + U.icon('arrow'), 'advance', c.pending.length || (S.tutorial.active() && ![...D.gatheringSkills, 'fight'].includes(S.tutorial.current().id)) ? 'disabled' : '', 'primary advance-btn') + '<div class="footer-note">4 SECOND JOURNEY &nbsp; · &nbsp; ONE DISCOVERY</div></div></section>';
     const fight = !!e.enemy,
-      gather = D.skills.slice(0, 4).includes(e.type),
+      gather = D.gatheringSkills.includes(e.type),
       loc = D.locations[c.location],
-      title = fight ? e.enemy.name : gather ? D.catalog[(e.resource || D.resourceKinds[D.skills.indexOf(e.type)]) + ':' + e.tier].name : e.type === 'dungeon' ? D.dungeons[loc.dungeon].name : e.type === 'fountain' ? 'Fountain of Youth' : 'The Spoils Chamber';
+      title = fight ? e.enemy.name : gather ? D.catalog[(e.resource || D.gatherResources[e.type]) + ':' + e.tier].name : e.type === 'dungeon' ? D.dungeons[loc.dungeon].name : e.type === 'fountain' ? 'Fountain of Youth' : 'The Spoils Chamber';
     const desc = fight ? 'Level ' + e.enemy.level + ' · ' + e.enemy.archetype : gather ? e.type + ' level ' + D.tiers[e.tier] + ' · 5 charges · 4 seconds per action' : e.type === 'dungeon' ? 'Five rooms. One formidable foe. Enter when you are prepared.' : e.type === 'fountain' ? 'Its ancient waters restore your health completely.' : 'A forgotten chest holds one creature loot roll.';
     const action = fight ? 'fight' : gather ? 'gather' : e.type === 'dungeon' ? 'enterDungeon' : 'roomEvent';
     return out + '<section class="panel encounter ' + e.type + '"><div class="encounter-content"><div class="encounter-emblem">' + U.icon(fight ? 'creature' : gather ? e.type : e.type === 'fountain' ? 'fountain' : 'dungeon') + '</div><div><span class="badge ' + (e.type === 'elite' || e.type === 'boss' ? 'elite' : '') + '">' + (e.type === 'regular' ? 'CREATURE' : e.type) + '</span><h2 class="encounter-title">' + title + '</h2><p class="notes">' + desc + '</p><div class="encounter-actions">' + U.btn(fight ? 'Fight' : gather ? ({
       Mining: 'Mine',
       Woodcutting: e.resource==='fiber'?'Forage':'Chop',
       Fishing: 'Fish',
-      Hunting: 'Hunt'
+      Hunting: 'Hunt',
+      Farming: 'Harvest'
     } [e.type]) : e.type === 'dungeon' ? 'Enter dungeon' : 'Interact', action, c.pending.length ? 'disabled' : '', 'primary') + (!c.dungeon ? U.btn('Move on', 'moveOn', '', 'quiet') : '') + '</div></div></div></section>';
   };
   U.preview = enemy => {

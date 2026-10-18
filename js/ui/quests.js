@@ -2,7 +2,7 @@
 (function(G,D,S,U) {
   const remaining=ms=>{const seconds=Math.max(0,Math.ceil(ms/1000));return Math.floor(seconds/60)+'m '+String(seconds%60).padStart(2,'0')+'s';};
   U.questName = q => q.kind==='kill' ? 'Defeat '+q.target+' '+(q.enemy?'× '+q.enemy:'creatures') :
-    ({Mining:'Mine ',Woodcutting:'Chop ',Fishing:'Catch ',Hunting:'Collect '}[q.kind])+q.target+' × '+D.catalog[D.resourceKinds[D.skills.indexOf(q.kind)]+':'+q.tier].name;
+    ({Mining:'Mine ',Woodcutting:'Chop ',Fishing:'Catch ',Hunting:'Collect ',Farming:'Harvest '}[q.kind])+q.target+' × '+D.catalog[D.gatherResources[q.kind]+':'+q.tier].name;
   U.screens.Quests = () => {
     const c=G.character(),location=S.quests.location(c),board=c.quests||[];
     return U.heading('WORK FOR THE ROAD','Quests','Three quest slots. Complete a task to earn regional rewards.',

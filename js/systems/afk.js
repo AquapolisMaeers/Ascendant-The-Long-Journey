@@ -84,7 +84,7 @@
         this.status = 'Opening a wayside chest.';
         S.world.openChest();
         return; // A revealed Mimic gets its own fresh odds check.
-      } else if (c.afk.gather && D.skills.slice(0, 4).includes(e.type) &&
+      } else if (c.afk.gather && D.gatheringSkills.includes(e.type) &&
           c.skills[e.type].level >= D.tiers[e.tier] && S.items.usableTool(c, e.type)) {
         this.status = 'Gathering ' + e.type.toLowerCase() + ' resources.';
         S.world.gather();

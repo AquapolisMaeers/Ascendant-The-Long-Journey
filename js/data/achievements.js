@@ -21,7 +21,7 @@
   [10, 50, 100].forEach(n => add('dungeons-' + n, n + ' dungeon completions', 'Dungeons', n, c => c.stats.dungeons));
   add('conqueror', 'Defeat all five bosses', 'Dungeons', 5, c => Object.keys(c.stats.bossKills).length, 'The Conqueror');
   D.skills.forEach(skill => [25, 50, 75, 100].forEach(n => add('skill-' + skill + '-' + n, skill + ' level ' + n, 'Skills', n, c => c.skills[skill].level)));
-  add('artisan', 'Master all seven skills', 'Skills', 7, c => D.skills.filter(s => c.skills[s].level === 100).length, 'Master Artisan');
+  add('artisan', 'Master all eight skills', 'Skills', D.skills.length, c => D.skills.filter(s => c.skills[s].level === 100).length, 'Master Artisan');
   [10, 25, 50, 75, 100].forEach(n => add('level-' + n, 'Character level ' + n, 'Journey', n, c => c.level, n === 100 ? 'The Legend' : null));
   ['bars', 'cooked', 'facets'].forEach(key => [100, 1000, 10000, 100000].forEach(n => add(key + '-' + n, n.toLocaleString() + ' ' + ({
     bars: 'bars smithed',

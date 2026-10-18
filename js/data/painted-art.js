@@ -2,6 +2,7 @@
 (function(D) {
   const version='painted-20261017';
   const register=(key,file,index,columns,rows,name)=>D.itemIllustrations[key]={file:'assets/art/painted/'+file+'.png',index,columns,rows,version,name};
+  register('tool:Farming','pruning-shears',0,1,1,'Pruning Shears');
   for(const [className,prefix] of [['Mage','mage'],['Archer','ranger']])for(const [slot,part] of ['head','body','legs','hands','feet'].entries())for(let tier=0;tier<17;tier++) {
     const piece=slot+3,name=(tier<12?D.armorTierName(className,tier):D.dungeons[tier-12].prefix)+' '+D.armorNames[className][slot];
     register('class-gear:'+className+':'+tier+':'+piece,prefix+'-'+part,tier,4,5,name);

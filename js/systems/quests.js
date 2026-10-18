@@ -8,7 +8,7 @@
     choices(c,location) {
       const loc=D.locations[location];
       return [{kind:'kill',enemy:null},...loc.regular.map(e=>({kind:'kill',enemy:e.name})),
-        ...D.skills.slice(0,4).filter(skill=>c.skills[skill].level>=loc.level).map(kind=>({kind,enemy:null}))];
+        ...D.gatheringSkills.filter(skill=>c.skills[skill].level>=loc.level).map(kind=>({kind,enemy:null}))];
     },
     create(c,slot,now,preferred=null) {
       const location=this.location(c), used=new Set((c.quests||[]).filter((q,i)=>q&&i!==slot&&q.location===location).map(q=>this.key(q)));
@@ -38,7 +38,7 @@
       return changed;
     },
     rewards(q) {
-      const loc=D.locations[q.location],kind=q.kind==='kill'?'bar':D.resourceKinds[D.skills.indexOf(q.kind)];
+      const loc=D.locations[q.location],kind=q.kind==='kill'?'bar':D.gatherResources[q.kind];
       return [{coins:Math.ceil((loc.coins[0]+loc.coins[1])/2)*3},{key:kind+':'+q.tier,quantity:q.kind==='kill'?2:5}];
     },
     add(c,predicate,amount,now=Date.now()) {
@@ -60,7 +60,7 @@
     },
     defeated(enemy,c=G.character()) { this.add(c,q=>q.kind==='kill'&&(!q.enemy||q.enemy===enemy.name),1); },
     gathered(skill,rewards,c=G.character()) {
-      const kind=D.resourceKinds[D.skills.indexOf(skill)];
+      const kind=D.gatherResources[skill];
       for(const r of rewards) if(r.key?.startsWith(kind+':'))
         this.add(c,q=>q.kind===skill&&r.key===kind+':'+q.tier,r.quantity||1);
     },
@@ -70,7 +70,7 @@
       if(!Array.isArray(c.quests)||c.quests.length!==D.questRules.slots) return false;
       const keys=new Set();
       return c.quests.every(q=>{
-        if(!q||!['kill',...D.skills.slice(0,4)].includes(q.kind)||!Number.isInteger(q.location)||!D.locations[q.location]||D.locations[q.location].level>c.level||
+        if(!q||!['kill',...D.gatheringSkills].includes(q.kind)||!Number.isInteger(q.location)||!D.locations[q.location]||D.locations[q.location].level>c.level||
           q.tier!==D.tierFor(D.locations[q.location].level)||q.target!==this.target(q)||!Number.isInteger(q.progress)||q.progress<0||q.progress>q.target||
           !Number.isSafeInteger(q.completedAt)||q.completedAt<0||!Number.isSafeInteger(q.readyAt)||q.readyAt<0||
           (q.completedAt?q.progress!==q.target||q.readyAt!==q.completedAt+D.questRules.cooldown:q.progress===q.target||q.readyAt!==0)||

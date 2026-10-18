@@ -14,10 +14,10 @@
       return;
     }
     if (c.tutorial) {
-      U.modal('Your seven skills', '<p>Mining supplies ore; Woodcutting supplies logs; Fishing supplies raw fish; Hunting supplies hides. Smithing refines ore into bars and makes equipment. Cooking produces healing food. Faceting turns uncut gems into Gem I, then fuses higher ranks.</p><p>Enhance your gear to develop prefixes. Treasure Chests can contain a Mimic. Rest at the campfire once every 30 minutes.</p>' + U.btn('Return to the world', 'closeModal', '', 'primary'));
+      U.modal('Your eight skills', '<p>Mining supplies ore; Woodcutting supplies logs; Fishing supplies raw fish; Hunting supplies hides; Farming harvests fibres with Pruning Shears. Smithing refines ore into bars and makes equipment. Cooking produces healing food. Faceting turns uncut gems into Gem I, then fuses higher ranks.</p><p>Enhance your gear to develop prefixes. Treasure Chests can contain a Mimic. Rest at the campfire once every 30 minutes.</p>' + U.btn('Return to the world', 'closeModal', '', 'primary'));
       return;
     }
-    U.modal('Learn by doing', '<div class="eyebrow">GUIDED FIRST STEPS</div><p>You begin with ' + D.config.startingBronze + ' Bronze. The guide starts with your free Level 1 perk, then covers all seven skills, your first weapon prefix, and a Level 1 fight.</p><p>Four Advances guarantee starter resources. You will cook Minnows, smelt Copper Ore, cut a gem, Enhance your weapon, and earn a Common Worn Plate.</p><div class="modal-actions">' + U.btn('Start required tutorial', 'tutorialStart', '', 'primary') + '</div>');
+    U.modal('Learn by doing', '<div class="eyebrow">GUIDED FIRST STEPS</div><p>You begin with ' + D.config.startingBronze + ' Bronze. The guide starts with your free Level 1 perk, then covers seven starter disciplines, your first weapon prefix, and a Level 1 fight.</p><p>Farming unlocks after the guide, with Flax Fibre at level 1. Four Advances guarantee starter resources. You will cook Minnows, smelt Copper Ore, cut a gem, Enhance your weapon, and earn a Common Worn Plate.</p><div class="modal-actions">' + U.btn('Start required tutorial', 'tutorialStart', '', 'primary') + '</div>');
   };
   U.guidePanel = () => {
     if (!S.tutorial.active()) return '';
@@ -26,7 +26,7 @@
     let label = 'ADVANCE',
       action = 'tutorialAdvance',
       attrs = '';
-    if (D.skills.slice(0, 4).includes(step.id) && c.encounter) {
+    if (D.gatheringSkills.includes(step.id) && c.encounter) {
       label = 'Gather ' + step.title + ' resources';
       action = 'tutorialGather';
     }

@@ -42,7 +42,7 @@
       if (!this.active()) return;
       const c = G.character(),
         step = this.current().id;
-      const allowed = action === 'advance' && (D.skills.slice(0, 4).includes(step) || step === 'fight') ||
+      const allowed = action === 'advance' && (D.gatheringSkills.includes(step) || step === 'fight') ||
         action === 'gather' && step === c.encounter?.type ||
         action === 'craft' && (step === id || step === 'facet' && id === 'facet:' + D.classes.indexOf(c.class) + ':0') ||
         action === 'enhance' && step === 'enhance' && id === c.guide.weaponId ||
@@ -53,7 +53,7 @@
       if (!this.active()) return false;
       const c = G.character(),
         step = this.current().id;
-      if (D.skills.slice(0, 4).includes(step)) c.encounter = {
+      if (D.gatheringSkills.includes(step)) c.encounter = {
         type: step,
         tier: 0,
         charges: D.config.nodeCharges,
@@ -100,7 +100,7 @@
     gathered(skill, rewards) {
       if (!this.active() || this.current().id !== skill) return;
       const c = G.character(),
-        key = D.resourceKinds[D.skills.indexOf(skill)] + ':0';
+        key = D.gatherResources[skill] + ':0';
       c.guide.gathered[skill] = (c.guide.gathered[skill] || 0) + rewards.filter(r => r.key === key).reduce((n, r) => n + r.quantity, 0);
     },
     nodeComplete(skill) {

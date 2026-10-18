@@ -1,6 +1,6 @@
 'use strict';
 (function(G) {
-  const skills = ['mining','woodcutting','fishing','hunting','smithing','cooking','faceting'];
+  const skills = ['mining','woodcutting','fishing','hunting','smithing','cooking','faceting','farming'];
   const scenes = [...skills, 'travel', 'combat', 'dungeon'];
   const effects = ['hit','crit','miss','loot','rare','enhance','ascend','socket','achievement','dungeon','boss','death','heal',
     ...skills, 'cast','sword','bow','magic','travel'];
@@ -50,7 +50,7 @@
       if (scene && audible && !this.loops.some(l => l.key === scene)) {
         // Keep at most an outgoing and an incoming soundscape.
         if (this.loops.length >= 2) this.loops.shift().media.pause();
-        const media = new Audio('assets/audio/ambience-' + scene + '.wav');
+        const media = new Audio('assets/audio/ambience-' + (scene==='farming'?'hunting':scene) + '.wav');
         media.loop = true;
         media.volume = 0;
         this.loops.push({key: scene, media, fade: 0});
@@ -83,7 +83,7 @@
       if (['hit','crit'].includes(kind) && event?.side === 'player') {
         kind = {Warrior:'sword', Archer:'bow', Mage:'magic'}[G.character()?.class] || kind;
       }
-      let file = kind;
+      let file = kind==='farming'?'faceting':kind;
       if (skills.includes(kind)) {
         // Separate from gameplay RNG; cycling prevents identical consecutive impacts.
         const variant = (this.variants[kind] || 0) % 3 + 1;

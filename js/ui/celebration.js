@@ -32,7 +32,7 @@
       const lands = D.locations.filter(l => l.level > r.from && l.level <= r.to);
       return [perks.length ? 'New perk milestone \u00b7 Character \u2192 Perks' : '', lands.length ? 'Region unlocked: ' + lands.at(-1).name : ''].filter(Boolean).join('. ') || 'Another step in your legend.';
     }
-    const tiers = D.skills.indexOf(r.skill) < 4 ? D.tiers.filter(n => n > r.from && n <= r.to).length : 0;
+    const tiers = D.gatheringSkills.includes(r.skill) ? D.tiers.filter(n => n > r.from && n <= r.to).length : 0;
     return tiers ? tiers + ' new resource tier' + (tiers === 1 ? '' : 's') + ' unlocked.' : 'Training milestone reached.';
   };
   const render = () => {

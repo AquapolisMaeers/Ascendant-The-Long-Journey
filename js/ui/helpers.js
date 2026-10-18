@@ -26,6 +26,7 @@
     Woodcutting: 'm5 22 9-19M13 4l8 2-4 8-8-4',
     Fishing: 'M5 21 15 3M15 3v12c0 7 7 6 6 1M7 17l-4-2',
     Hunting: 'M5 5h14v14H5zM5 5l14 14M19 5 5 19M2 12h20',
+    Farming: 'M10 13 4 3l8 6 8-6-6 10M10 13l-3 4m7-4 3 4M8 19a3 3 0 1 0-6 0 3 3 0 1 0 6 0M22 19a3 3 0 1 0-6 0 3 3 0 1 0 6 0M10 12h4',
     Smithing: 'M3 12h18l-6 5H8zM8 17v4h8v-4M9 2l5 3-2 4-5-3z',
     Cooking: 'M4 11h14v4a7 7 0 0 1-14 0zM18 12h5M8 3v4M13 2v5',
     Faceting: 'm12 2 9 7-9 13L3 9zM3 9h18M8 3l4 19 4-19',

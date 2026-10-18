@@ -124,8 +124,8 @@
           if (!e.enemy || typeof e.enemy.name !== 'string' || typeof e.enemy.archetype !== 'string' || !Number.isInteger(e.enemy.level) || !finite(e.enemy.level, 1, 109)) fail('enemy');
           for (const key of ['damage', 'health', 'defence', 'crit', 'critDamage', 'penetration', 'double', 'dodge', 'reduction', 'resistance', 'lifeSteal', 'interval'])
             if (!finite(e.enemy[key]) || key === 'interval' && e.enemy[key] < .5) fail('enemy stats');
-        } else if (D.skills.slice(0, 4).includes(e.type)) {
-          if (e.resource !== undefined && (e.type !== 'Woodcutting' || e.resource !== 'fiber')) fail('gathering resource');
+        } else if (D.gatheringSkills.includes(e.type)) {
+          if (e.resource !== undefined) fail('gathering resource');
           if (!Number.isInteger(e.tier) || !D.tiers[e.tier] || !Number.isInteger(e.charges) || !finite(e.charges, 1, 5)) fail('gathering node');
         } else if (e.type === 'treasure') {
           if (typeof e.mimic !== 'boolean' || !Number.isInteger(e.level) || !finite(e.level, 1, 100)) fail('treasure chest');
@@ -133,14 +133,13 @@
       }
       if (c.dungeon && (!Number.isInteger(c.dungeon.id) || !D.dungeons[c.dungeon.id] || !Number.isInteger(c.dungeon.room) || !finite(c.dungeon.room, 1, 5) || typeof c.dungeon.cleared !== 'boolean')) fail('dungeon');
       if (c.activity && (!['advance', 'gather', 'craft'].includes(c.activity.type) || !finite(c.activity.elapsed) || !finite(c.activity.duration, 1, 100000))) fail('activity');
-      if (c.activity?.type === 'gather' && (!c.encounter || !D.skills.slice(0, 4).includes(c.activity.skill) || !Number.isInteger(c.activity.tier) || !D.tiers[c.activity.tier])) fail('gather activity');
-      if(c.activity?.resource!==undefined && (c.activity.type!=='gather'||c.activity.skill!=='Woodcutting'||c.activity.resource!=='fiber'||c.encounter?.resource!=='fiber'||c.encounter.tier!==c.activity.tier)) fail('fibre activity');
-      if(c.encounter?.resource==='fiber'&&c.activity?.type==='gather'&&c.activity.resource!=='fiber') fail('fibre activity');
+      if (c.activity?.type === 'gather' && (!c.encounter || !D.gatheringSkills.includes(c.activity.skill) || c.activity.skill!==c.encounter.type || c.activity.tier!==c.encounter.tier || !Number.isInteger(c.activity.tier) || !D.tiers[c.activity.tier])) fail('gather activity');
+      if(c.activity?.resource!==undefined) fail('gathering resource');
       if (c.activity?.type === 'craft' && (!D.recipes.some(r => r.id === c.activity.recipe) || !Number.isInteger(c.activity.remaining) || !finite(c.activity.remaining, 1, 1000000))) fail('craft queue');
       if (!c.afk || c.afk.interval !== D.config.afkAdvanceMs || !finite(c.afk.chance,0,1) || !finite(c.afk.minHp,0,1) || c.afk.minutes !== undefined && ![15, 30, 60].includes(c.afk.minutes) || ['elites', 'gather', 'chests'].some(k => typeof c.afk[k] !== 'boolean')) fail('AFK settings');
       if (['normals','dungeons'].some(k => c.afk[k] !== undefined && typeof c.afk[k] !== 'boolean')) fail('AFK encounter filters');
       if (!finite(c.restReadyAt)) fail('rest cooldown');
-      if (c.skillPreferences !== undefined && (!c.skillPreferences || c.skillPreferences.mode!==undefined&&!['balanced','preferred'].includes(c.skillPreferences.mode) || !D.skills.slice(0, 4).includes(c.skillPreferences.primary) || !D.skills.slice(0, 4).includes(c.skillPreferences.secondary) || c.skillPreferences.primary === c.skillPreferences.secondary)) fail('skill preferences');
+      if (c.skillPreferences !== undefined && (!c.skillPreferences || c.skillPreferences.mode!==undefined&&!['balanced','preferred'].includes(c.skillPreferences.mode) || !D.gatheringSkills.includes(c.skillPreferences.primary) || !D.gatheringSkills.includes(c.skillPreferences.secondary) || c.skillPreferences.primary === c.skillPreferences.secondary)) fail('skill preferences');
       if (c.guide && (!Number.isInteger(c.guide.step) || !D.tutorial.steps[c.guide.step] || typeof c.guide.active !== 'boolean' || !c.guide.gathered)) fail('tutorial');
       if (c.activity?.rewards) {
         if (!Array.isArray(c.activity.rewards)) fail('activity rewards');
@@ -219,6 +218,23 @@
       let guard = 0;
       while (p?.saveVersion !== D.config.version && this.migrations[p?.saveVersion] && guard++ < 10) p = this.migrations[p.saveVersion](p);
       if(Array.isArray(p?.slots)) for(const c of p.slots.filter(Boolean)) {
+        // Farming is additive: all previous skill XP, tools and stored fibres stay.
+        if(c.skills&&c.tools&&!Object.hasOwn(c.skills,'Farming')&&!Object.hasOwn(c.tools,'Farming')) {
+          c.skills.Farming={level:1,xp:0};
+          c.tools.Farming=G.systems.items.createTool('Farming',0,true);
+        }
+        // Convert the old Woodcutting-only grove to a Farming crop. Already
+        // harvested rewards were delivered to inventory and are never removed.
+        if(c.encounter?.type==='Woodcutting'&&c.encounter.resource==='fiber') {
+          c.encounter.type='Farming';delete c.encounter.resource;
+          if(c.activity?.type==='gather'&&c.activity.skill==='Woodcutting'&&c.activity.resource==='fiber') {
+            if(c.skills?.Farming?.level>=D.tiers[c.activity.tier]) {
+              c.activity.skill='Farming';delete c.activity.resource;
+              c.activity.duration=D.config.actionMs/(1+G.systems.items.toolBonus(c,'Farming','Efficiency'));
+              c.activity.elapsed=Math.min(c.activity.elapsed,c.activity.duration-1);
+            } else c.activity=null;
+          }
+        }
         c.talents ??= {};
         // Old 25% was free. Keep paid higher tiers and remove only that free tier.
         if(c.provisionsVersion===undefined && Array.isArray(c.eatUnlocks)) {

@@ -148,8 +148,10 @@
     inputs: 3
   };
   D.roman = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
-  D.skills = ['Mining', 'Woodcutting', 'Fishing', 'Hunting', 'Smithing', 'Cooking', 'Faceting'];
-  D.tools = ['Pickaxe', 'Axe', 'Fishing Rod', 'Trap', 'Hammer', 'Frying Pan', 'Chisel'];
+  D.skills = ['Mining', 'Woodcutting', 'Fishing', 'Hunting', 'Smithing', 'Cooking', 'Faceting', 'Farming'];
+  D.tools = ['Pickaxe', 'Axe', 'Fishing Rod', 'Trap', 'Hammer', 'Frying Pan', 'Chisel', 'Pruning Shears'];
+  D.gatherResources = {Mining:'ore',Woodcutting:'logs',Fishing:'fish',Hunting:'hide',Farming:'fiber'};
+  D.gatheringSkills = Object.keys(D.gatherResources);
   // Nominal material tiers and sale values only; tools have no use/equip level gate.
   D.toolLevels = [1, 5, 10, 20, 40, 60, 80, 100];
   D.toolSellPrices = [50, 100, 250, 500, 1000, 2500, 5000, 10000];

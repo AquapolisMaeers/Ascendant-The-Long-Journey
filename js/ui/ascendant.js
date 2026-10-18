@@ -43,7 +43,7 @@
     let html = encounter();
     const e = G.character()?.encounter;
     if (e && !G.character().activity && !G.character().combat) {
-      const kind = e.resource || {Mining:'ore',Woodcutting:'logs',Fishing:'fish',Hunting:'hide'}[e.type];
+      const kind = D.gatherResources[e.type];
       const key = e.type === 'treasure' ? 'treasure' : kind ? kind + ':' + e.tier : null;
       if (key) html = html.replace(/(<div class="encounter-emblem">)<svg[\s\S]*?<\/svg>/, '$1' + U.paint(key));
     }
@@ -88,7 +88,7 @@
   const world = U.screens.World;
   U.screens.World = () => world().replace('<aside class="world-side">', '<aside class="world-side">' + U.afkPanel(true));
   const settings = U.screens.Settings;
-  U.audioSamples = () => '<details class="audio-samples spacer"><summary>Activity sound samples</summary><label class="spacer">Preview an activity<select id="audio-scene-preview">' + ['Mining','Fishing','Woodcutting','Hunting','Smithing','Cooking','Faceting','Travel','Combat','Dungeon'].map(n => '<option value="' + n.toLowerCase() + '">' + n + '</option>').join('') + '</select></label><div class="row spacer">' + U.btn('Play 6-second sample', 'audioPreview') + U.btn('Stop sample', 'audioPreviewStop', '', 'quiet') + '</div></details>';
+  U.audioSamples = () => '<details class="audio-samples spacer"><summary>Activity sound samples</summary><label class="spacer">Preview an activity<select id="audio-scene-preview">' + ['Mining','Fishing','Woodcutting','Hunting','Smithing','Cooking','Faceting','Farming','Travel','Combat','Dungeon'].map(n => '<option value="' + n.toLowerCase() + '">' + n + '</option>').join('') + '</select></label><div class="row spacer">' + U.btn('Play 6-second sample', 'audioPreview') + U.btn('Stop sample', 'audioPreviewStop', '', 'quiet') + '</div></details>';
   U.screens.Settings = () => settings().replace(/<\/div><\/div>$/, '</div>' + U.afkPanel() + '</div>');
   const shell = U.shell;
   U.shell = () => {

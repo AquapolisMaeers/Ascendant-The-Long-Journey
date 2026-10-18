@@ -6,7 +6,7 @@
   };
   U.guidePanel=()=>{
     if(!S.tutorial.active())return '';
-    const c=G.character(),step=S.tutorial.current(),world=G.runtime.page==='World',gather=D.skills.slice(0,4).includes(step.id);
+    const c=G.character(),step=S.tutorial.current(),world=G.runtime.page==='World',gather=D.gatheringSkills.includes(step.id);
     let label='Show directions',action='tutorialLesson';
     if(world&&(gather||step.id==='fight')) {
       label=c.encounter?(gather?'Gather '+step.title+' resources':'Fight Level 1 creature'):'ADVANCE';

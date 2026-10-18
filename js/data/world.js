@@ -138,12 +138,12 @@
     }
   };
   D.encounters = {
-    without: [42 - D.config.chestChance * 100, 8, 12.5, 12.5, 12.5, 12.5, 0, D.config.chestChance * 100],
-    with: [40 - D.config.chestChance * 100, 8, 12.5, 12.5, 12.5, 12.5, 2, D.config.chestChance * 100],
-    types: ['regular', 'elite', 'Mining', 'Woodcutting', 'Fishing', 'Hunting', 'dungeon', 'treasure']
+    without: [42 - D.config.chestChance * 100, 8, 10, 10, 10, 10, 10, 0, D.config.chestChance * 100],
+    with: [40 - D.config.chestChance * 100, 8, 10, 10, 10, 10, 10, 2, D.config.chestChance * 100],
+    types: ['regular', 'elite', 'Mining', 'Woodcutting', 'Fishing', 'Hunting', 'Farming', 'dungeon', 'treasure']
   };
   D.toolDrops = {
-    weights: [1, 1, 1, 1, 1, 1, 1]
+    weights: [1, 1, 1, 1, 1, 1, 1, 1]
   };
   D.loot = {
     regular: {

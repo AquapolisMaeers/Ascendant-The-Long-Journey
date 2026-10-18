@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-17',title:'Farming and Pruning Shears',changes:[
+    'Farming is the eighth skill, with its own level, XP and Pruning Shears. Every character receives free bound Common shears. Existing skills, tools and stored fibres are preserved.',
+    'Harvest Flax Fibre from Farming level 1, Nettle Fibre from level 5, and later crops at their material levels. Visit World > Farming Grove for repeatable harvesting, or discover crop patches through Advance. Woodcutting now produces lumber without a fibre bonus.',
+    'Farming supports tool drops and Ascension, all five tool prefixes, offline XP training, gathering preferences, AFK harvesting, regional quests, achievements and skill leaderboards. Balanced gathering divides its unchanged 50% encounter pool evenly among five skills.',
+    'Pruning Shears receive a painted illustration matching the original tools. Skills, crafting guidance, fibre descriptions and gathering controls now identify Farming as the textile source.'
+  ]},
   {date:'2026-10-17',title:'Painted equipment and clearer class paths',changes:[
     'Mage and ranger armour now uses painted item illustrations for all five slots, all twelve regular tiers and all five dungeon sets. Textile materials, advanced gems, mounts and auras follow the original painted style; outfit collections use their matching painted portraits.',
     'Reaver opens with Leeching cuts: every third successful attack deals 4% extra damage and restores 0.3% maximum health per rank. Berserker keeps Heavy blows for steady damage. Existing invested ranks carry over.',
