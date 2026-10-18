@@ -27,6 +27,16 @@
         length: max + 1
       }, (_, i) => Math.pow(divisor, i - max)));
     },
+    materialTiers(location) {
+      const first=D.locations[Math.max(0,location-2)].level,last=D.locations[location].max;
+      return D.tiers.map((level,tier)=>({level,tier})).filter(row=>row.level>=first&&row.level<=last).map(row=>row.tier);
+    },
+    materialTier(location, divisor = 2) {
+      const tiers=this.materialTiers(location);
+      if(location===0)return tiers[G.weighted(G.rng,[70,30])];
+      const max=tiers.at(-1);
+      return tiers[G.weighted(G.rng,tiers.map(tier=>Math.pow(divisor,tier-max)))];
+    },
     enemy(type, location, forcedLevel) {
       const loc = D.locations[location],
         boss = type === 'boss',
@@ -85,7 +95,7 @@
       };
       if (['regular', 'elite', 'boss'].includes(type)) e.enemy = this.enemy(type, c.location);
       else if (D.gatheringSkills.includes(type)) {
-        e.tier = this.tier(c.location, 2, true);
+        e.tier = this.materialTier(c.location);
         e.charges = D.config.nodeCharges;
       } else if (type === 'treasure') {
         e.level = c.level;
@@ -165,7 +175,7 @@
           quantity: (a.skill==='Farming'?2:1) * (1 + (G.rng() < S.items.toolBonus(c, a.skill, 'Yield') ? 1 : 0))
         }];
       if (a.tier < D.tiers.length - 1 && G.rng() < S.items.toolBonus(c, a.skill, 'Fortune')) rewards.push({
-        key: kind + ':' + (a.tier + 1),
+        key: kind + ':' + Math.min(a.tier + 1,this.materialTiers(c.location).at(-1)),
         quantity: 1
       });
       S.inventory.reward(rewards);
@@ -336,7 +346,7 @@
         }];
       for (const kind of D.resourceKinds)
         if (G.rng() < table.material) rewards.push({
-          key: kind + ':' + S.world.tier(location, table.divisor),
+          key: kind + ':' + S.world.materialTier(location, table.divisor),
           quantity: table.quantity
         });
       if (G.rng() < table.gem) {

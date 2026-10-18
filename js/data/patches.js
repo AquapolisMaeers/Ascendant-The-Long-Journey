@@ -1,6 +1,13 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-18',title:'Sensible materials and safe character imports',changes:[
+    'Every crafting recipe uses at most two material types. Grimoires use cloth pages and leather bindings; shields use metal and wood; daggers use metal and leather. Warrior plate uses cloth padding, ranger leather uses cloth lining, and mage robes use leather ties. Enhancement and Ascension follow these material choices.',
+    'Regular grimoires now use fabric names such as Linen and Moonweave. Level-5 metal armour, accessories, shields and daggers are named Tin rather than Leather. Existing item IDs, upgrades and stats are preserved.',
+    'Export character saves your selected adventurer. Back up all slots preserves the complete profile in a separate export option. Import lets you select a character from the file and choose an empty destination slot, or restore that same character in its existing slot. Other characters and local settings stay intact; occupied slots belonging to someone else cannot be overwritten.',
+    'Gathering and creature material rewards now draw from the current location and the previous two locations, weighted toward higher tiers. The Crossroads still offers both level-1 and level-5 resources. Gathering Fortune stays within the regional ceiling and gives an extra current-tier resource when the node is already at that ceiling.',
+    'Aura illustrations now blend into one uniform background, removing the darker rectangular backdrop inside the icon.'
+  ]},
   {date:'2026-10-18',title:'Secondaries, class identity and a harder road',changes:[
     'Creatures gain additional health, damage and defence after level 10, with a steeper climb after 20. Elites and bosses share the increases and retain their rank multipliers. A level gap greater than three also reduces the weaker fighter’s damage and strengthens the higher-level fighter; effective levels cap at 100. Victory estimates and AFK use the same rules.',
     'Warrior armour supports an all-round bruiser with health, defence and damage reduction. Ranger leather focuses on attack speed, penetration and dodge. Mage cloth focuses on critical chance, critical damage and resistance. These bonuses grow with item tier, rarity and enhancement.',

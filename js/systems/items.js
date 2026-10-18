@@ -45,9 +45,9 @@
     name(item) {
       if (item.kind === 'tool') return item.name;
       const d = item.boss !== null ? D.dungeons[item.boss] : null;
-      if (item.slot === 'Secondary') return (d ? d.prefix : D.tierNames[item.tier]) + ' ' + D.pieces[item.piece];
+      if (item.slot === 'Secondary') return (d ? d.prefix : D.secondaryTierName(item.piece,item.tier)) + ' ' + D.pieces[item.piece];
       if (item.armorClass && D.armorSlots.includes(item.slot)) return (d ? d.prefix : D.armorTierName(item.armorClass,item.tier)) + ' ' + D.armorNames[item.armorClass][D.armorSlots.indexOf(item.slot)];
-      return d ? (item.style !== null ? d.weapons[item.style] : d.prefix + ' ' + (item.slot === 'Helmet' ? 'Helm' : item.slot)) : (item.style !== null ? D.weapons[item.style][item.tier] : D.tierNames[item.tier] + ' ' + item.slot);
+      return d ? (item.style !== null ? d.weapons[item.style] : d.prefix + ' ' + (item.slot === 'Helmet' ? 'Helm' : item.slot)) : (item.style !== null ? D.weapons[item.style][item.tier] : D.metalTierName(item.tier) + ' ' + item.slot);
     },
     stats(item) {
       const mult = D.tiers[item.tier] * (item.boss !== null ? D.config.bossGear : 1) * D.rarityMult[item.rarity] * (1 + D.config.enhanceStat * item.enhance);

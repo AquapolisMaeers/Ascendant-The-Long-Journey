@@ -1,6 +1,9 @@
-.painted-regalia { overflow:hidden; border-radius:8px; background:#26221f; }
+.painted-regalia { overflow:hidden; border-radius:8px; background:#211e19; }
 .painted-regalia > .item-art { display:block; width:100%; height:100%; border-radius:inherit; }
 .item-art.isolated-art { position:relative; overflow:hidden; background-image:none; background-color:#211e19; }
+.painted-regalia.aura-art { isolation:isolate; background:#29251f; }
+.aura-art > .item-art.isolated-art { background:inherit; }
+.aura-art .sprite-paint { mix-blend-mode:lighten; }
 .sprite-paint { display:block; position:absolute; left:50%; top:50%; width:var(--sprite-width); height:var(--sprite-height); transform:translate(-50%,-50%); background-repeat:no-repeat; }
 @supports(container-type:size) { .item-art.isolated-art { container-type:size; }.sprite-paint { width:min(90cqw,calc(90cqh * var(--sprite-aspect))); height:min(90cqh,calc(90cqw / var(--sprite-aspect))); } }
 .material-recipes { grid-template-columns:repeat(3,minmax(0,1fr)); align-items:stretch; }

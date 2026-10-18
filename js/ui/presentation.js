@@ -43,7 +43,7 @@
     if (info.kind === 'bar') return 'Refined from regional ore. Used to craft weapons, warrior armour and accessories.';
     if (info.kind === 'ore') return 'Refine through Smithing';
     if (info.kind === 'logs') return 'Used to craft and enhance weapons';
-    if (info.kind === 'hide') return 'Used to craft and enhance armour';
+    if (info.kind === 'hide') return 'Cure into leather for armour, daggers and book bindings';
     if (item.key === 'stone') return 'Required for rarity Ascension';
     if (item.key === 'appearance') return 'Portraits are now freely customizable';
     return D.shop.find(entry => entry.id === item.key)?.description || '';

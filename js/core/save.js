@@ -361,22 +361,49 @@
         G.notify('Saved progress could not be loaded. Recovery copies are preserved. ' + error.message, 'error');
       }
     },
-    export () {
+    export (scope = 'profile') {
       G.assert(!G.character()?.combat && !G.character()?.dungeon, 'Export is unavailable during an active fight or dungeon.');
+      if(scope==='character') {
+        G.assert(G.character(),'Choose a character to export.');
+        const profile=G.clone(G.state);
+        profile.slots=profile.slots.map((character,slot)=>slot===profile.active?character:null);
+        return JSON.stringify(profile,null,2);
+      }
       return JSON.stringify(G.state, null, 2);
     },
-    import(text) {
+    prepareImport(text) {
+      G.assert(typeof text==='string'&&text.length<10000000,'Choose a save file smaller than 10 MB.');
+      const profile=this.migrate(JSON.parse(text));
+      G.assert(profile.slots.some(Boolean),'This save has no importable characters.');
+      return profile;
+    },
+    import(text, targetSlot = null, sourceSlot = null) {
       G.assert(!G.character()?.combat && !G.character()?.dungeon, 'Import is unavailable during an active fight or dungeon.');
-      G.assert(text.length < 10000000, 'Save file is too large.');
-      const p = this.migrate(JSON.parse(text));
-      G.assert(!p.slots.some(c => c?.combat || c?.dungeon), 'Manual saves cannot contain an active fight or dungeon.');
-      this.lastGoodText = null;
+      const p=this.prepareImport(text);
+      sourceSlot ??= p.slots[p.active]?p.active:p.slots.findIndex(Boolean);
+      const imported=p.slots[sourceSlot];
+      G.assert(Number.isInteger(sourceSlot)&&imported,'Choose a character from the save.');
+      G.assert(!imported.combat&&!imported.dungeon,'Finish this character’s fight or dungeon before exporting it.');
+      const existing=G.state.slots.findIndex(c=>c?.id===imported.id);
+      targetSlot ??= existing>=0?existing:G.state.slots.findIndex(c=>!c);
+      G.assert(Number.isInteger(targetSlot)&&targetSlot>=0&&targetSlot<D.config.slots,'Choose an available character slot.');
+      G.assert(!G.state.slots[targetSlot]||G.state.slots[targetSlot].id===imported.id,'That slot belongs to another character. Choose an empty slot.');
+      G.assert(existing<0||existing===targetSlot,'This character is already in slot '+(existing+1)+'. Choose that slot to restore it.');
+      const candidate=G.clone(G.state);
+      candidate.slots[targetSlot]=imported;
+      candidate.active=targetSlot;
+      validate(candidate);
       G.systems.afk?.stop('Save imported', false);
-      G.state = p;
+      // Preserve every other slot, local settings and the existing recovery copy.
+      G.state = candidate;
       G.runtime.loadFailure = false;
       G.runtime.needsResume = false;
+      G.runtime.selecting = false;
       G.runtime.page = 'World';
-      G.systems.offline.applyAll();
+      G.runtime.tab = '';
+      G.runtime.estimate = null;
+      const progress=G.systems.offline.apply(imported);
+      if(progress.levelsGained)G.systems.offline.record(progress);
       G.systems.tutorial?.ensure();
       this.write();
       G.emit('change');

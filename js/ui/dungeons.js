@@ -69,7 +69,7 @@
       if(category!=='Materials')return html;
       const template=document.createElement('template');template.innerHTML=html;
       const tier=template.content.querySelector('#craft-tier');if(tier)tier.parentElement.firstChild.textContent='Material tier';
-      template.content.querySelector('.toolbar')?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">Refine ore into bars, cure hides with logs into ranger leather, or weave Farming fibres into mage cloth. These materials supply equipment recipes.</p>');
+      template.content.querySelector('.toolbar')?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">Refine ore into bars, cure hides with logs into leather, or weave Farming fibres into cloth. Use cloth for robes, linings and book pages; leather for armour, grips and bindings.</p>');
       return template.innerHTML;
     }
     const className=D.classes.includes(G.runtime.armorClass)?G.runtime.armorClass:G.character().class;
@@ -78,7 +78,7 @@
     toolbar?.querySelector('.smithing-filter')?.insertAdjacentHTML('afterend','<label>Armour class<select id="armor-class">'+D.classes.map(name=>'<option value="'+name+'" '+(name===className?'selected':'')+'>'+({Warrior:'Warrior · plate',Archer:'Ranger · leather',Mage:'Mage · cloth'}[name])+'</option>').join('')+'</select></label>');
     const tier=template.content.querySelector('#craft-tier');
     if(tier){tier.parentElement.firstChild.textContent='Material tier';for(const option of tier.options)option.textContent='Level '+D.tiers[+option.value];}
-    toolbar?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">'+(className==='Warrior'?'Plate uses regional bars and hides.':className==='Archer'?'Leather armour uses cured regional leather and wooden fittings. Cure hides under Materials.':'Cloth armour uses regional fabric and fibre. Harvest fibres with Farming, then weave fabric under Materials.')+'</p>');
+    toolbar?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">'+(className==='Warrior'?'Plate uses regional bars with a cloth lining.':className==='Archer'?'Leather armour uses cured regional leather and a cloth lining. Refine both under Materials.':'Cloth armour uses regional fabric and leather ties. Harvest fibres with Farming, then refine cloth and leather under Materials.')+'</p>');
     return template.innerHTML;
   };
   const skills=U.screens.Skills;
@@ -86,6 +86,6 @@
   const summary=U.itemSummary;
   U.itemSummary=entry=>{
     const info=entry.kind==='stack'?D.catalog[entry.key]:null;
-    return info?.kind==='fiber'?'Harvested with Farming. Weave fabric under Smithing → Materials.':info?.kind==='leather'?'Cured from regional hides. Used to craft and upgrade ranger armour.':info?.kind==='cloth'?'Woven from regional fibres. Used to craft and upgrade mage armour.':summary(entry);
+    return info?.kind==='fiber'?'Harvested with Farming. Weave fabric under Smithing → Materials.':info?.kind==='leather'?'Cured regional leather for ranger armour, robe ties, dagger grips and book bindings.':info?.kind==='cloth'?'Woven regional cloth for mage armour, padded linings and book pages.':summary(entry);
   };
 })(RPG,RPG.data,RPG.systems,RPG.ui);

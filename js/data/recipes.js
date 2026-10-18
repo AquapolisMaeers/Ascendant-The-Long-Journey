@@ -21,7 +21,7 @@
       const slot = piece < 3 ? 'Weapon' : D.pieces[piece];
       const recipe = {
         id: 'gear:' + tier + ':' + piece,
-        name: piece < 3 ? D.weapons[piece][tier] : D.tierNames[tier] + ' ' + slot,
+        name: piece < 3 ? D.weapons[piece][tier] : D.metalTierName(tier) + ' ' + slot,
         skill: 'Smithing',
         tier,
         level,
@@ -42,7 +42,7 @@
     }
     for(let piece=10;piece<=12;piece++) {
       const cost=D.secondaryCost(tier,piece);
-      D.recipes.push({id:'gear:'+tier+':'+piece,name:D.tierNames[tier]+' '+D.pieces[piece],skill:'Smithing',category:'Secondaries',tier,level,piece,cost,
+      D.recipes.push({id:'gear:'+tier+':'+piece,name:D.secondaryTierName(piece,tier)+' '+D.pieces[piece],skill:'Smithing',category:'Secondaries',tier,level,piece,cost,
         xp:D.config.skillXp*level*Object.entries(cost).reduce((sum,[id,n])=>sum+n*D.materialWork(id.split(':')[0],tier),0)});
     }
     for(const kind of ['leather','cloth']) {

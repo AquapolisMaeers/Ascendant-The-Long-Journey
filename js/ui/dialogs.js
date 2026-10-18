@@ -20,12 +20,27 @@
     G.runtime.enhancePending = null;
     G.runtime.ascendPending = null;
     G.runtime.commandToolAccess = null;
+    G.runtime.importDraft = null;
     G.runtime.previousFocus?.focus();
     G.emit('dialog-closed');
   };
   U.confirm = (title, body, callback, danger = false, cancelAction = 'closeModal') => {
     G.runtime.confirmAction = callback;
     U.modal(title, body + '<div class="modal-actions">' + U.btn('Cancel', cancelAction, '', 'quiet') + U.btn('Confirm', 'confirm', '', '' + (danger ? 'danger' : 'gold-btn')) + '</div>');
+  };
+  U.importSlots=(text,sourceSlot=null)=>{
+    const profile=G.save.prepareImport(text);
+    sourceSlot ??= profile.slots[profile.active]?profile.active:profile.slots.findIndex(Boolean);
+    const source=profile.slots[sourceSlot];
+    G.assert(source,'Choose a saved character.');
+    const existing=G.state.slots.findIndex(c=>c?.id===source.id),firstEmpty=G.state.slots.findIndex(c=>!c);
+    const target=existing>=0?existing:firstEmpty,blocked=!!source.combat||!!source.dungeon||target<0;
+    G.runtime.importDraft={text,sourceSlot};
+    U.modal('Choose an import slot','<p>Select a character from the file, then its destination. Other characters and your settings are preserved.</p>'+
+      '<label class="spacer">Character in save<select id="import-source">'+profile.slots.map((c,i)=>c?'<option value="'+i+'" '+(i===sourceSlot?'selected':'')+'>'+U.e(c.name)+' - '+U.e(c.class)+' - Level '+c.level+'</option>':'').join('')+'</select></label>'+
+      '<label class="spacer">Destination slot<select id="import-target">'+G.state.slots.map((c,i)=>'<option value="'+i+'" '+(i===target?'selected ':'')+(c&&c.id!==source.id||existing>=0&&existing!==i?'disabled':'')+'>Slot '+(i+1)+' - '+(c?U.e(c.name)+(c.id===source.id?' (restore this character)':' (occupied)'):'Empty')+'</option>').join('')+'</select></label>'+
+      (blocked?'<p class="warning spacer">'+(source.combat||source.dungeon?'This character has a committed fight or dungeon. Finish it before creating a manual export.':'All three slots are occupied. Export a backup and free a slot before importing another character.')+'</p>':'<p class="notes spacer">'+(existing>=0?'This character is already saved here. Confirming restores its progress from the file.':'The selected empty slot will receive this character.')+'</p>')+
+      '<div class="modal-actions">'+U.btn('Cancel','closeModal','','quiet')+U.btn(existing>=0?'Review restoration':'Review import','importSlotConfirm',blocked?'disabled':'','gold-btn')+'</div>');
   };
   U.locations = () => U.modal('Choose a location', '<div class="stack location-options">' + D.locations.map(l => '<button class="slot" data-action="location" data-id="' + l.id + '" ' + (G.character().level < l.level ? 'disabled' : '') + '><span class="slot-number">' + l.level + '</span><div><strong>' + l.name + '</strong><small>Enemies ' + l.level + '–' + l.max + (l.dungeon !== null ? ' · ' + D.dungeons[l.dungeon].name : '') + '</small></div></button>').join('') + '</div>', true);
   D.modeDescriptions = {

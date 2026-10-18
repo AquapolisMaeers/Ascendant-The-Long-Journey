@@ -421,10 +421,13 @@
       G.assert(!G.character()?.dungeon, 'Manual saves are unavailable during a dungeon. Automatic safety persistence remains active.');
       if (G.save.write()) G.notify('Progress saved locally.', 'success');
     },
-    export () {
-      const text = G.save.export();
-      U.modal('Export save', '<p>Copy this versioned save or download a JSON backup.</p><textarea id="export-text" readonly aria-label="Exported save"></textarea><div class="modal-actions">' + U.btn('Download JSON', 'downloadSave', '', 'gold-btn') + '</div>');
+    export (el) {
+      const profile=el?.dataset.scope==='profile',text = G.save.export(profile?'profile':'character');
+      U.modal(profile?'Back up all characters':'Export character', '<p>'+(profile?'This backup includes all three character slots. Import lets you choose which character to restore.':'This file contains '+U.e(G.character().name)+'. On import, choose an empty slot or restore this character in its current slot.')+'</p><textarea id="export-text" readonly aria-label="Exported save"></textarea><div class="modal-actions">' + U.btn('Download JSON', 'downloadSave', '', 'gold-btn') + '</div>');
       document.getElementById('export-text').value = text;
+    },
+    exportProfile(el) {
+      actions.export({dataset:{scope:'profile'}});
     },
     downloadSave() {
       const text = value('export-text'),
@@ -439,12 +442,24 @@
     },
     import() {
       G.assert(!G.character()?.combat && !G.character()?.dungeon, 'Import is unavailable during combat or a dungeon.');
-      U.modal('Import save', '<p>Import replaces all three local slots after validation.</p><label>Choose a JSON file<input type="file" id="import-file" accept=".json,application/json"></label><label class="spacer">Or paste a save<textarea id="import-text" placeholder="Paste exported JSON here"></textarea></label><div class="modal-actions">' + U.btn('Validate & import', 'importConfirm', '', 'gold-btn') + '</div>');
+      U.modal('Import character', '<p>Choose a save file, then select a character and destination slot. Occupied slots belonging to other characters cannot be overwritten.</p><label>Choose a JSON file<input type="file" id="import-file" accept=".json,application/json"></label><label class="spacer">Or paste a save<textarea id="import-text" placeholder="Paste exported JSON here"></textarea></label><div class="modal-actions">' + U.btn('Review characters & slots', 'importConfirm', '', 'gold-btn') + '</div>');
     },
     importConfirm() {
       const text = value('import-text');
-      G.save.migrate(JSON.parse(text));
-      confirm('Replace all local characters?', '<p>The validated save replaces all three slots and settings.</p>', () => G.save.import(text), true);
+      U.importSlots(text);
+    },
+    importSlotConfirm() {
+      const draft=G.runtime.importDraft;
+      G.assert(draft,'Choose a save file first.');
+      const {text,sourceSlot}=draft,targetSlot=Number(value('import-target')),profile=G.save.prepareImport(text),source=profile.slots[sourceSlot],existing=G.state.slots[targetSlot];
+      G.assert(source&&Number.isInteger(targetSlot)&&targetSlot>=0&&targetSlot<3,'Choose a character and destination.');
+      G.assert(!existing||existing.id===source.id,'Choose an empty slot.');
+      const previous=existing?.id||null;
+      confirm((existing?'Restore ':'Import ')+U.e(source.name)+' in slot '+(targetSlot+1)+'?', '<p>'+U.e(source.class)+' - Level '+source.level+'. '+(existing?'Restore this character’s progress from the file.':'Add this character to the empty slot.')+' Your other characters and settings are preserved.</p>',()=>{
+        G.assert((G.state.slots[targetSlot]?.id||null)===previous,'The destination changed. Review the import again.');
+        G.save.import(text,targetSlot,sourceSlot);
+        G.notify(source.name+' imported into slot '+(targetSlot+1)+'.','success');
+      },!!existing);
     },
     reset() {
       confirm('Reset all three character slots?', '<p>This removes every local character and all progression. A second confirmation follows.</p>', () => U.modal('Final reset confirmation', '<p>Type RESET to erase all local game progress.</p><input id="reset-word" aria-label="Type RESET"><div class="modal-actions">' + U.btn('Erase all progress', 'resetFinal', '', 'danger') + '</div>'), true);
@@ -625,6 +640,7 @@
         U.render();
       }
       if (el.id === 'armor-class') { G.runtime.armorClass=el.value; U.render(); }
+      if (el.id === 'import-source') { G.assert(G.runtime.importDraft,'Choose a save file first.'); U.importSlots(G.runtime.importDraft.text,Number(el.value)); }
       if (el.id === 'craft-tier') {
         G.runtime.craftTier = +el.value;
         U.render();

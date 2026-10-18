@@ -38,10 +38,11 @@
         };
       if (item.slot === 'Weapon') cost['logs:' + item.tier] = D.enhance.weaponLogs[b];
       else if (!['Necklace', 'Ring'].includes(item.slot)) cost['hide:' + item.tier] = D.enhance.secondary[b];
-      if(D.armorSlots.includes(item.slot) && ['Archer','Mage'].includes(item.armorClass)) {
+      if(D.armorSlots.includes(item.slot)) {
         delete cost['bar:'+item.tier]; delete cost['hide:'+item.tier];
-        cost[(item.armorClass==='Archer'?'leather':'cloth')+':'+item.tier]=D.enhance.bars[b];
-        cost[(item.armorClass==='Archer'?'logs':'fiber')+':'+item.tier]=D.enhance.secondary[b];
+        const kinds=Object.keys(D.armorCost(item.slot,item.armorClass));
+        cost[kinds[0]+':'+item.tier]=D.enhance.bars[b];
+        cost[kinds[1]+':'+item.tier]=D.enhance.secondary[b];
       }
       if(item.slot==='Secondary') {
         for(const key of Object.keys(cost))delete cost[key];
