@@ -1,6 +1,18 @@
 'use strict';
 (function(G, D, S) {
   S.world = {
+    fibreTiers(c = G.character()) {
+      return D.tiers.map((level,tier)=>({level,tier})).filter(({level})=>level<=c.skills.Woodcutting.level&&level<=D.locations[c.location].max).map(({tier})=>tier);
+    },
+    forageFibre(tier) {
+      G.ensureProgress();const c=G.character();
+      G.assert(!S.tutorial.active(),'Finish the tutorial before visiting the Fibre Grove.');
+      G.assert(!c.dungeon&&!c.encounter,'Resolve your encounter and leave the dungeon before foraging.');
+      G.assert(Number.isInteger(tier)&&this.fibreTiers(c).includes(tier),'This fibre requires the matching Woodcutting level and an appropriate region.');
+      G.assert(S.items.usableTool(c,'Woodcutting'),'Skill level is too low to use this tool.');
+      c.encounter={type:'Woodcutting',tier,charges:D.config.nodeCharges,resource:'fiber'};
+      this.gather();
+    },
     preferences(c = G.character()) {
       return c.skillPreferences || {primary: 'Fishing', secondary: 'Mining'};
     },
@@ -152,6 +164,7 @@
         type: 'gather',
         skill: e.type,
         tier: e.tier,
+        ...(e.resource ? {resource:e.resource} : {}),
         elapsed: 0,
         duration: D.config.actionMs / (1 + S.items.toolBonus(c, e.type, 'Efficiency')),
         rewards: []
@@ -163,16 +176,16 @@
       const c = G.character(),
         a = c.activity,
         e = c.encounter,
-        kind = D.resourceKinds[D.skills.indexOf(a.skill)],
+        kind = a.resource || D.resourceKinds[D.skills.indexOf(a.skill)],
         rewards = [{
           key: kind + ':' + a.tier,
-          quantity: 1 + (G.rng() < S.items.toolBonus(c, a.skill, 'Yield') ? 1 : 0)
+          quantity: (a.resource==='fiber'?2:1) * (1 + (G.rng() < S.items.toolBonus(c, a.skill, 'Yield') ? 1 : 0))
         }];
       if (a.tier < D.tiers.length - 1 && G.rng() < S.items.toolBonus(c, a.skill, 'Fortune')) rewards.push({
         key: kind + ':' + (a.tier + 1),
         quantity: 1
       });
-      if(a.skill==='Woodcutting')rewards.push({key:'fiber:'+a.tier,quantity:rewards[0].quantity});
+      if(a.skill==='Woodcutting'&&!a.resource)rewards.push({key:'fiber:'+a.tier,quantity:rewards[0].quantity});
       S.inventory.reward(rewards);
       S.quests.gathered(a.skill, rewards, c);
       G.audio?.play(a.skill.toLowerCase());

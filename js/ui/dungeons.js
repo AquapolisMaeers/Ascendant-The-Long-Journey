@@ -77,7 +77,7 @@
     const toolbar=template.content.querySelector('.toolbar');
     toolbar?.querySelector('.smithing-filter')?.insertAdjacentHTML('afterend','<label>Armour class<select id="armor-class">'+D.classes.map(name=>'<option value="'+name+'" '+(name===className?'selected':'')+'>'+({Warrior:'Warrior · plate',Archer:'Ranger · leather',Mage:'Mage · cloth'}[name])+'</option>').join('')+'</select></label>');
     const tier=template.content.querySelector('#craft-tier');
-    if(tier){tier.parentElement.firstChild.textContent='Equipment tier';for(const option of tier.options)option.textContent='Lv '+D.tiers[+option.value]+' · '+D.armorTierName(className,+option.value);}
+    if(tier){tier.parentElement.firstChild.textContent='Material tier';for(const option of tier.options)option.textContent='Level '+D.tiers[+option.value];}
     toolbar?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">'+(className==='Warrior'?'Plate uses regional bars and hides.':className==='Archer'?'Leather armour uses cured regional leather and wooden fittings. Cure hides under Leather & cloth.':'Cloth armour uses regional fabric and fibre. Gather fibres with Woodcutting, then weave fabric under Leather & cloth.')+'</p>');
     return template.innerHTML;
   };

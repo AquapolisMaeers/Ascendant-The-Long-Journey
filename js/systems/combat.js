@@ -31,6 +31,7 @@
     if(extra && a.endlessVolley) damage *= 1.4;
     if(a.counterReady) { damage *= 1.75; a.counterReady=false; }
     if(a.feastReady) { damage *= 1.3; a.feastReady=false; }
+    if(a.reavingStrike && hitNumber%3===0) damage *= 1+a.reavingStrike;
     if (a.executioner && b.hp / b.health < D.perkConditional.executioner.threshold) damage *= 1 + D.perkConditional.executioner.damage;
     damage = Math.max(C.minimumHit, damage * (1 - mitigation(a, b)) * (1 - reduction(b)));
     b.received=(b.received||0)+1;
@@ -56,6 +57,7 @@
     if (a.relentless && a.hits % D.perkConditional.relentless.hits === 0)
       recover(a, a.health * D.perkConditional.relentless.heal, side, 'Relentless', events);
     if(a.feast && a.hits%4===0) { recover(a,a.health*.04,side,'Feast',events); a.feastReady=true; }
+    if(a.reavingHeal && a.hits%3===0) recover(a,a.health*a.reavingHeal,side,'Leeching cuts',events);
     secondWind(b, events, side === 'player' ? 'enemy' : 'player');
     if (b.hp > 0 && !extra && rng() < a.double) strike(f, a, b, side, events, true);
   }

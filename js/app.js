@@ -22,6 +22,8 @@
   window.addEventListener('rpg:dialog-closed', () => setTimeout(showOffline, 0));
   window.addEventListener('rpg:offline-progress', () => setTimeout(showOffline, 0));
   const actions = {
+    forageFibre() { S.world.forageFibre(+(document.getElementById('fibre-tier')?.value || 0)); },
+    openFibreGrove() { U.close(); G.runtime.page='World'; G.runtime.tab=''; G.runtime.fibreOpen=true; U.render(); document.getElementById('fibre-grove')?.scrollIntoView({block:'center',behavior:'smooth'}); },
     patchNotes() {
       U.modal('Patch notes', U.patchNotes(true));
     },
@@ -625,6 +627,7 @@
         G.runtime.smithingCategory = el.value;
         U.render();
       }
+      if (el.id === 'fibre-tier') { G.runtime.fibreTier=+el.value; U.render(); }
       if (el.id === 'armor-class') { G.runtime.armorClass=el.value; U.render(); }
       if (el.id === 'craft-tier') {
         G.runtime.craftTier = +el.value;

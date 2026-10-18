@@ -1,6 +1,13 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-17',title:'Painted equipment and clearer class paths',changes:[
+    'Mage and ranger armour now uses painted item illustrations for all five slots, all twelve regular tiers and all five dungeon sets. Textile materials, advanced gems, mounts and auras follow the original painted style; outfit collections use their matching painted portraits.',
+    'Reaver opens with Leeching cuts: every third successful attack deals 4% extra damage and restores 0.3% maximum health per rank. Berserker keeps Heavy blows for steady damage. Existing invested ranks carry over.',
+    'Talent paths share aligned rows and buttons, with shorter requirement text and a compact layout. Phones show one path at a time in a vertical list.',
+    'World adds a repeatable Fibre Grove: gather two fibres per Woodcutting action, with five charges per visit. Nettle Fibre is available at Woodcutting level 5 in the Crossroads. Normal Woodcutting still collects fibres alongside lumber. Crafting and Skills link to the grove.',
+    'Material tier selectors now use simple Level 1, Level 5 and subsequent level labels. Actual material names remain visible on recipes and items.'
+  ]},
   {date:'2026-10-17',title:'Disciplines, renewal and the depths',changes:[
     'Removed the extra talent path shortcut buttons. Reaver gains stronger damage, health, penetration and double attacks; Blood Siphon always grants lifesteal and doubles it below 60% HP. Feast now heals 4% maximum health every fourth successful attack and empowers the next hit by 30%.',
     'Smithing > Armor adds a class selector for all five Warrior, Ranger and Mage pieces. Rangers use cured leather and wooden fittings; mages use cloth and fibres. Cure hides and weave cloth under Leather & cloth. Woodcutting gathers same-tier fibres, also sold by regional suppliers. Enhancement and Ascension use each armour class’s materials.',

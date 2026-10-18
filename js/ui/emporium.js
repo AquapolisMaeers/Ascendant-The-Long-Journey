@@ -2,27 +2,7 @@
 (function(G,D,S,U) {
   const ac=n=>'<span class="ac-price"><span aria-hidden="true">\u2726</span> '+G.number(n)+' <small>AC</small></span>';
   U.regaliaStats = entry => '<dl class="regalia-stats">'+Object.entries(entry.stats).map(([key,n])=>'<div><dt>'+D.labels[key]+'</dt><dd>+'+U.statValue(key,n)+'</dd></div>').join('')+'</dl>';
-  U.regaliaArt = entry => {
-    const i=D.regalia.filter(r=>r.kind===entry.kind).indexOf(entry), aura=entry.kind==='aura', sovereign=entry.tier==='Sovereign';
-    const symbols=[
-      'M0-12 8-3 3 8 0 14-3 8-8-3Z','M-10-11H10V3L0 14-10 3Z','M0 13C-19-1-9-18 0-7 9-18 19-1 0 13Z',
-      'M-11 10 10-11M2-12H12V-2M-10-1V11H2','M-12-10H12L9 6 0 14-9 6Z','M0-14V14M-14 0H14M-9-9 9 9M-9 9 9-9',
-      'M-13 0 0-10 13 0 0 10ZM0-4V4','M-12 12 12-12M-12-5-5-12M5 12 12 5','M-14-7H9L2-13M-14 0H14M-14 7H9L2 13',
-      'M0-15 4-4 15 0 4 4 0 15-4 4-15 0-4-4Z','M-13 8 0-12 4-5-5 8ZM0 8 9-8 13-1 8 8Z',
-      'M10-12C-16-10-16 10 10 12-2 3-2-3 10-12Z','M-12-6 0-13 12-6 9 9 0 15-9 9ZM-7 0H7',
-      'M0-14 12 0 0 14-12 0ZM-5 0H5','M0-14C-25 12 25 12 0-14ZM-5 6H5'
-    ];
-    const emblem='<path d="'+(symbols[i]||'M-12 10 0-14 12 10 0 5Z')+'" transform="translate(70 '+(aura?'70':'62')+') scale('+(aura?'.8':'.55')+')" fill="none" stroke="#fff0c6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>';
-    return '<span class="regalia-art '+(aura?'aura-art':'outfit-art')+(entry.tier==='Sovereign'?' sovereign-art':'')+'" style="--regalia:'+entry.color+'" role="img" aria-label="'+U.e(entry.name)+'">'+
-      '<svg viewBox="0 0 140 140" aria-hidden="true"><path class="regalia-seal" d="M70 5 123 35v70l-53 30-53-30V35Z"/><path class="regalia-rays" d="M70 8v18M70 114v18M8 70h18M114 70h18M26 26l13 13M101 101l13 13M26 114l13-13M101 39l13-13"/>'+
-      (sovereign?'<path d="M38 44 5 24 14 62 6 88 31 81 15 113 49 97M102 44 135 24 126 62 134 88 109 81 125 113 91 97" fill="#3c263c" stroke="currentColor" stroke-width="2"/>':'')+
-      (aura?'<circle class="aura-orbit" cx="70" cy="70" r="43"/><path class="aura-crest" d="M70 28 96 60 82 83 70 112 58 83 44 60Z"/><path class="regalia-etch" d="m44 60 26 10 26-10M70 28v84M58 83l12-13 12 13"/><circle cx="70" cy="70" r="7" fill="currentColor"/>':
-        '<path class="outfit-cape" d="M42 31 20 117l30-8 20 18 20-18 30 8-22-86-19-9H61Z"/><path class="outfit-body" d="m43 32-14 19 18 16-3 35 26 13 26-13-3-35 18-16-14-19-18-10-9 13-9-13Z"/><path class="regalia-etch" d="m43 32 27 20 27-20M47 67l23 15 23-15M70 52v63M44 102l26-8 26 8"/><path class="regalia-jewel" d="m70 52 8 10-8 11-8-11Z"/>')+
-      emblem+(entry.id.endsWith(':tanky')?'<path d="M35 40 27 56 42 73M105 40 113 56 98 73" fill="none" stroke="currentColor" stroke-width="6"/>':'')+
-      (entry.id.endsWith(':aggressive')?'<path d="M25 116 53 88M115 116 87 88" fill="none" stroke="#f6d9bd" stroke-width="4"/>':'')+
-      (entry.id.endsWith(':utility')?'<path d="M39 39 70 90 101 39M58 93l-9 25M82 93l9 25" fill="none" stroke="#d7c4ef" stroke-width="2"/>':'')+
-      (sovereign?'<path d="M50 20 46 6 60 14 70 2 80 14 94 6 90 20Z" fill="currentColor"/><circle cx="70" cy="70" r="55" fill="none" stroke="currentColor" stroke-dasharray="2 7"/>':'<path class="regalia-glyph" d="M'+(57+i%4*3)+' 18h18l-9 9Z"/>')+'</svg></span>';
-  };
+  U.regaliaArt = entry => '<span class="regalia-art painted-regalia '+entry.kind+'-art" style="--regalia:'+entry.color+'" role="img" aria-label="'+U.e(entry.name)+'">'+U.paint('regalia:'+entry.id)+'</span>';
   const portrait=U.companionPortrait;
   U.companionPortrait=entry=>entry?.special?'<span class="special-pet-art" role="img" aria-label="'+U.e(entry.name)+'"><img class="special-pet-illustration" src="'+entry.illustration+'" alt="" decoding="async"><b aria-hidden="true">\u2726</b></span>':portrait(entry);
   const art=entry=>entry.special?U.companionPortrait(entry):U.regaliaArt(entry);

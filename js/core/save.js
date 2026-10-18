@@ -125,6 +125,7 @@
           for (const key of ['damage', 'health', 'defence', 'crit', 'critDamage', 'penetration', 'double', 'dodge', 'reduction', 'resistance', 'lifeSteal', 'interval'])
             if (!finite(e.enemy[key]) || key === 'interval' && e.enemy[key] < .5) fail('enemy stats');
         } else if (D.skills.slice(0, 4).includes(e.type)) {
+          if (e.resource !== undefined && (e.type !== 'Woodcutting' || e.resource !== 'fiber')) fail('gathering resource');
           if (!Number.isInteger(e.tier) || !D.tiers[e.tier] || !Number.isInteger(e.charges) || !finite(e.charges, 1, 5)) fail('gathering node');
         } else if (e.type === 'treasure') {
           if (typeof e.mimic !== 'boolean' || !Number.isInteger(e.level) || !finite(e.level, 1, 100)) fail('treasure chest');
@@ -133,6 +134,8 @@
       if (c.dungeon && (!Number.isInteger(c.dungeon.id) || !D.dungeons[c.dungeon.id] || !Number.isInteger(c.dungeon.room) || !finite(c.dungeon.room, 1, 5) || typeof c.dungeon.cleared !== 'boolean')) fail('dungeon');
       if (c.activity && (!['advance', 'gather', 'craft'].includes(c.activity.type) || !finite(c.activity.elapsed) || !finite(c.activity.duration, 1, 100000))) fail('activity');
       if (c.activity?.type === 'gather' && (!c.encounter || !D.skills.slice(0, 4).includes(c.activity.skill) || !Number.isInteger(c.activity.tier) || !D.tiers[c.activity.tier])) fail('gather activity');
+      if(c.activity?.resource!==undefined && (c.activity.type!=='gather'||c.activity.skill!=='Woodcutting'||c.activity.resource!=='fiber'||c.encounter?.resource!=='fiber'||c.encounter.tier!==c.activity.tier)) fail('fibre activity');
+      if(c.encounter?.resource==='fiber'&&c.activity?.type==='gather'&&c.activity.resource!=='fiber') fail('fibre activity');
       if (c.activity?.type === 'craft' && (!D.recipes.some(r => r.id === c.activity.recipe) || !Number.isInteger(c.activity.remaining) || !finite(c.activity.remaining, 1, 1000000))) fail('craft queue');
       if (!c.afk || c.afk.interval !== D.config.afkAdvanceMs || !finite(c.afk.chance,0,1) || !finite(c.afk.minHp,0,1) || c.afk.minutes !== undefined && ![15, 30, 60].includes(c.afk.minutes) || ['elites', 'gather', 'chests'].some(k => typeof c.afk[k] !== 'boolean')) fail('AFK settings');
       if (['normals','dungeons'].some(k => c.afk[k] !== undefined && typeof c.afk[k] !== 'boolean')) fail('AFK encounter filters');

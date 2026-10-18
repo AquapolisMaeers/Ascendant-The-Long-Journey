@@ -43,7 +43,7 @@
     let html = encounter();
     const e = G.character()?.encounter;
     if (e && !G.character().activity && !G.character().combat) {
-      const kind = {Mining:'ore',Woodcutting:'logs',Fishing:'fish',Hunting:'hide'}[e.type];
+      const kind = e.resource || {Mining:'ore',Woodcutting:'logs',Fishing:'fish',Hunting:'hide'}[e.type];
       const key = e.type === 'treasure' ? 'treasure' : kind ? kind + ':' + e.tier : null;
       if (key) html = html.replace(/(<div class="encounter-emblem">)<svg[\s\S]*?<\/svg>/, '$1' + U.paint(key));
     }

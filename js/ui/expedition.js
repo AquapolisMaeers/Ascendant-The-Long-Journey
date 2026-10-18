@@ -108,7 +108,7 @@
         done = a.type === 'craft' ? total - a.remaining : 0;
       ratio = a.type === 'craft' ? G.clamp((done + part) / total, 0, 1) : part;
       set('dock-kind', c.pending.length ? 'PAUSED \u00b7 BAG FULL' : (run ? 'AFK \u00b7 ' : '') + (recipe?.skill || a.skill || 'Travelling'));
-      set('dock-title', recipe?.name || (a.type === 'gather' ? D.catalog[D.resourceKinds[D.skills.indexOf(a.skill)] + ':' + a.tier].name : 'Discovering the road'));
+      set('dock-title', recipe?.name || (a.type === 'gather' ? D.catalog[(a.resource || D.resourceKinds[D.skills.indexOf(a.skill)]) + ':' + a.tier].name : 'Discovering the road'));
       set('dock-count', a.type === 'craft' ? done + ' / ' + total + ' actions \u00b7 ' + a.remaining + ' left' : a.type === 'gather' ? c.encounter.charges + ' node charges left \u00b7 current action' : 'One encounter ahead');
       const queue = (Math.max(0, (a.remaining || 1) - 1) * a.duration + Math.max(0, a.duration - a.elapsed));
       set('dock-time', seconds(a.elapsed) + ' / ' + seconds(a.duration) + (c.pending.length ? ' \u00b7 Paused' : a.type === 'craft' ? ' \u00b7 ~' + duration(queue) + ' left' : ' \u00b7 ' + seconds(a.duration - a.elapsed) + ' left'));

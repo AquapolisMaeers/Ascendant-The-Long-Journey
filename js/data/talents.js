@@ -15,7 +15,7 @@
         node('Iron wall',{defencePct:.018}), node('Measured defence',{reduction:.004}), node('Hold the line',{resistance:.008}),
         node('Retribution',{retribution:true},'Each guarded hit empowers your next attack by 75%.') ]},
       {id:'reaver', name:'Reaver', role:'Overwhelm durable enemies with relentless strikes and reliable stolen health.', nodes:[
-        node('Vital strikes',{damagePct:.014}), node('Blood siphon',{lifeSteal:.0025,siphon:.0025},'Always gain 0.25% lifesteal per rank, doubled below 60% health; subject to the lifesteal cap.'),
+        node('Leeching cuts',{reavingStrike:.04,reavingHeal:.003},'Every third successful attack deals 4% extra damage and restores 0.3% maximum health per rank.'), node('Blood siphon',{lifeSteal:.0025,siphon:.0025},'Always gain 0.25% lifesteal per rank, doubled below 60% health; subject to the lifesteal cap.'),
         node('Enduring flesh',{healthPct:.02}), node('Rending strikes',{penetration:.012}), node('Ravenous rhythm',{double:.012}),
         node('Feast',{feast:true},'Every fourth successful attack restores 4% maximum health and empowers your next successful attack by 30%.') ]}
     ],
