@@ -33,7 +33,7 @@
       panel.innerHTML = '<div class="phone-food-info"><strong>' + (food ? U.e(food.name) : 'No food assigned') + '</strong>' +
         '<small><span id="food-count">' + (c.food ? S.inventory.count(c.food) : 0) + '</span> left \u00b7 Auto-Eat ' + (c.eat ? G.percent(c.eat, 0) : 'off') + '</small></div>' +
         '<div class="phone-food-action"><span id="food-cooldown">Ready</span>' + U.btn(food ? 'Eat \u00b7 +' + food.healing + ' HP' : 'No food', 'eat', 'id="eat-button" ' + (!available ? 'disabled' : ''), 'primary') + '</div>' +
-        (!food ? '<small class="phone-food-hint">Assign cooked food in Provisions before a fight.</small>' : !available ? '<small class="phone-food-hint">No unlocked food available.</small>' : '') +
+        (!food ? '<small class="phone-food-hint">Assign cooked food in Journey &gt; Supplies before a fight.</small>' : !available ? '<small class="phone-food-hint">No unlocked food available.</small>' : '') +
         (S.afk.run ? U.btn('Stop AFK', 'afkStop', '', 'quiet small phone-combat-stop') : '');
       const log = template.content.querySelector('#combat-log');
       if (log) {

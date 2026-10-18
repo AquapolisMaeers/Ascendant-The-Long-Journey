@@ -1,8 +1,8 @@
 'use strict';
 (function(G,D,S,U) {
   U.tutorialDirections=step=>{
-    const route=step.route,phone=U.isPhone(),quick=['World','Inventory','Crafting','Shop'].includes(route.page);
-    return '<section class="tutorial-route spacer"><h3>How to get there</h3><ol><li>'+U.e(phone?(quick?'Tap '+route.page+' in the bottom navigation.':'Tap More in the bottom navigation, then choose '+route.page+'.'):'Click '+route.page+' in the left navigation.')+'</li>'+route.steps.map(text=>'<li>'+U.e(text)+'</li>').join('')+'</ol></section>';
+    const route=step.route,phone=U.isPhone(),quick={World:'Journey',Character:'Hero',Inventory:'Bag',Crafting:'Craft'}[route.page];
+    return '<section class="tutorial-route spacer"><h3>How to get there</h3><ol><li>'+U.e(phone?(quick?'Tap '+quick+' in the bottom navigation.':'Tap More in the bottom navigation, then choose '+route.page+'.'):'Click '+route.page+' in the left navigation.')+'</li>'+route.steps.map(text=>'<li>'+U.e(text)+'</li>').join('')+'</ol></section>';
   };
   U.guidePanel=()=>{
     if(!S.tutorial.active())return '';

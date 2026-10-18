@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-18',title:'A dedicated phone interface',changes:[
+    'Phones now have their own compact layout with rounded cards, a small location header and a prominent Campfire near the top of Journey. Rest still gives free full healing once every 30 minutes, with a clear cooldown and explanations when unavailable.',
+    'Explore holds encounters, victory estimates and region details. Supplies groups assigned food, Auto-Eat and paid inn healing. Auto holds active AFK controls and an offline training shortcut. Switching views preserves AFK advancing.',
+    'Bottom navigation now offers Journey, Hero, Bag, Craft and More. More groups every page by purpose and includes character slots. Journey always returns to Explore and the top of the page.',
+    'Combat food and off-page activity tracking share one bottom bar with navigation. The page reserves its measured height, including device safe areas. Gathering and crafting remain visible with Stop controls inside Explore. Desktop retains its existing layout.'
+  ]},
   {date:'2026-10-18',title:'Sensible materials and safe character imports',changes:[
     'Every crafting recipe uses at most two material types. Grimoires use cloth pages and leather bindings; shields use metal and wood; daggers use metal and leather. Warrior plate uses cloth padding, ranger leather uses cloth lining, and mage robes use leather ties. Enhancement and Ascension follow these material choices.',
     'Regular grimoires now use fabric names such as Linen and Moonweave. Level-5 metal armour, accessories, shields and daggers are named Tin rather than Leather. Existing item IDs, upgrades and stats are preserved.',

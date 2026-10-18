@@ -33,12 +33,14 @@
       if (destination === 'Marketplace') S.market.assert();
       if (document.querySelector('.phone-menu')) U.close();
       G.runtime.page = destination;
+      if(U.isPhone()&&destination==='World')G.runtime.mobileWorldView='explore';
       G.runtime.tab = '';
       G.runtime.search = '';
       U.render();
-      if (U.isPhone() && previous !== destination) window.scrollTo({top:0, behavior:'instant'});
+      if (U.isPhone() && (previous !== destination||destination==='World')) window.scrollTo({top:0, behavior:'instant'});
     },
     mobileMenu() { U.mobileMenu(); },
+    mobileWorldView(el) { U.mobileWorldView(el.dataset.view); },
     provisionsShop() { G.runtime.page='Shop'; G.runtime.shopSection='general'; G.runtime.tab='Character'; U.render(); },
     learnTalent(el) { U.confirmTalent(el.dataset.id); },
     resetTalents() {
@@ -573,7 +575,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'shopSection', 'appearanceOutfit', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'shopSection', 'appearanceOutfit', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'mobileWorldView', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
