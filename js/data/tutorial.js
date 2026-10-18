@@ -6,7 +6,7 @@
     steps: [{
       id: 'perk',
       title: 'Choose your first perk',
-      text: 'Open Character → Perks and choose your free Level 1 perk. Read all three choices: each is permanent and shapes your build.'
+      text: 'Open Character → Perks and choose your free Level 1 perk. Read all three choices: each shapes your build. A Tome of Renewal can refund your choices later.'
     }, {
       id: 'Fishing',
       title: 'Fishing',

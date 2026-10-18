@@ -9,9 +9,9 @@
     if (key === 'stone') return 10000;
     const data = D.catalog[key];
     if (!data) return 0;
-    if (data.kind === 'bar') {
+    if (['bar','leather','cloth'].includes(data.kind)) {
       const recipe = D.recipes.find(r => r.id === key);
-      return Object.entries(recipe.cost).reduce((n, [k, q]) => n + q * D.catalog[k].level, 0);
+      return Object.entries(recipe.cost).reduce((n, [k, q]) => n + q * this.stackValue(k), 0);
     }
     if (data.kind === 'food') return D.tiers[data.tier];
     return data.level;

@@ -1,6 +1,13 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-17',title:'Disciplines, renewal and the depths',changes:[
+    'Removed the extra talent path shortcut buttons. Reaver gains stronger damage, health, penetration and double attacks; Blood Siphon always grants lifesteal and doubles it below 60% HP. Feast now heals 4% maximum health every fourth successful attack and empowers the next hit by 30%.',
+    'Smithing > Armor adds a class selector for all five Warrior, Ranger and Mage pieces. Rangers use cured leather and wooden fittings; mages use cloth and fibres. Cure hides and weave cloth under Leather & cloth. Woodcutting gathers same-tier fibres, also sold by regional suppliers. Enhancement and Ascension use each armour class’s materials.',
+    'Shop > Utility offers the illustrated Tome of Renewal for 1 Gold and Crystal of Recollection for 50 Silver. Consume one to reset perks or talents respectively; the other system stays allocated. Reset from Character or the inventory item, with confirmation and no item spent on cancellation. Talent resets now require the crystal.',
+    'Gathering, Smithing and Cooking gain 10% more base XP. Faceting falls from 1,000 to 660 XP per effective level, including the corresponding lower offline base. Skill levels and previously earned XP are preserved.',
+    'All five dungeon bosses have their own formidable portraits. Each dungeon gains a unique painted backdrop, darker room panels, a suspenseful room summary and torchlight accents. Dungeon particles replace outdoor weather, and mobile healing remains above navigation.'
+  ]},
   {date:'2026-10-17',title:'Class paths and a more dangerous journey',changes:[
     'Character > Talents adds three paths per class: Berserker, Guardian and Reaver; Marksman, Skirmisher and Venom Hunter; Pyromancer, Frostbinder and Arcanist. Earn one point per combat level after Level 1, including past levels. Climb connected nodes and reset talents free between dungeon runs. Existing milestone perks are unchanged.',
     'Crossroads creatures retain their original stats. Health, damage, defence, penetration and critical resistance grow more strongly in later regions. Dungeon elites roll entry level +5–9 and bosses +7–9, including level 105–109 endgame foes.',

@@ -27,7 +27,7 @@
       enabled = false; canvas.hidden = true; return;
     }
     canvas.hidden = false; enabled = true;
-    const weather = G.runtime.page === 'World' ? U.weather() : 'clear';
+    const weather = G.runtime.page === 'World' ? G.character()?.dungeon ? 'dungeon' : U.weather() : 'clear';
     if (mode !== weather) {
       mode = weather;
       particles = Array.from({length:width < 700 ? weather === 'rain' ? 38 : 24 : weather === 'rain' ? 90 : 60}, () => seed());

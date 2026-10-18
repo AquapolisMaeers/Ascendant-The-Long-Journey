@@ -1,7 +1,6 @@
 .talent-intro { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:18px; }
 .talent-intro .notes { margin-top:8px; max-width:780px; }
 .talent-tree { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; align-items:start; }
-.talent-path-links { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px; }.talent-path-links a { display:grid; place-items:center; min-height:44px; padding:8px 16px; background:#272535; color:#f1dbad; border:1px solid #796879; border-radius:4px; text-decoration:none; }.talent-path { scroll-margin-top:calc(var(--phone-header-height,90px) + 15px); }
 .talent-path { --talent-accent:#d79177; min-width:0; padding:18px; background:linear-gradient(155deg,#302430,#171c28); border:1px solid #726071; border-top:3px solid var(--talent-accent); }
 .talent-path.path-1 { --talent-accent:#8bbfc9; }.talent-path.path-2 { --talent-accent:#ba9de2; }
 .talent-path > header { min-height:130px; text-align:center; }.talent-path header .icon { color:var(--talent-accent); width:32px; height:32px; }.talent-path header h2 { margin:8px 0; }.talent-path header p { color:#cfbecf; font-size:14px; }

@@ -39,6 +39,9 @@
     reset() {
       G.ensureIdle(); const c=G.character();
       G.assert(!c.dungeon,'Leave the dungeon before resetting talents.');
+      G.assert(!S.tutorial.active(),'Finish the tutorial before resetting talents.');
+      G.assert(this.spent(c)>0,'No spent talent points to reset.');
+      S.inventory.take('talent-reset',1,c);
       c.talents={}; c.hp=Math.min(c.hp,S.character.stats(c).health);
       G.runtime.estimate=null; G.commit();
     }

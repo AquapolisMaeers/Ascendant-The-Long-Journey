@@ -42,8 +42,11 @@
     provisionsShop() { G.runtime.page='Shop'; G.runtime.shopSection='general'; G.runtime.tab='Character'; U.render(); },
     learnTalent(el) { S.talents.learn(el.dataset.id); },
     resetTalents() {
-      confirm('Reset your talent tree?', '<p>Refund every talent point for free. Your milestone perks remain selected.</p>', () => S.talents.reset());
+      U.resetBuild('talent-reset');
     },
+    resetPerks() { U.resetBuild('perk-reset'); },
+    useReset(el) { U.resetBuild(el.dataset.key); },
+    utilityShop() { U.utilityShop(); },
     shopSection(el) { G.runtime.shopSection=el.dataset.section; G.runtime.page='Shop';G.runtime.tab='';U.render(); },
     tab(el) {
       G.runtime.tab = el.dataset.value;
@@ -261,7 +264,7 @@
     perk(el) {
       const level = +el.dataset.level,
         choice = +el.dataset.choice;
-      confirm('Choose this permanent perk?', '<p>' + D.perkNames[G.character().class][D.perkLevels.indexOf(level)][choice] + ': ' + D.perkDescriptions[D.perkLevels.indexOf(level)][choice] + '</p>', () => S.character.choose(level, choice));
+      confirm('Choose this perk?', '<p>' + D.perkNames[G.character().class][D.perkLevels.indexOf(level)][choice] + ': ' + D.perkDescriptions[D.perkLevels.indexOf(level)][choice] + '</p>', () => S.character.choose(level, choice));
     },
     item(el) {
       U.item(el.dataset.id);
@@ -622,6 +625,7 @@
         G.runtime.smithingCategory = el.value;
         U.render();
       }
+      if (el.id === 'armor-class') { G.runtime.armorClass=el.value; U.render(); }
       if (el.id === 'craft-tier') {
         G.runtime.craftTier = +el.value;
         U.render();

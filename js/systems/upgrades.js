@@ -39,6 +39,11 @@
         };
       if (item.slot === 'Weapon') cost['logs:' + item.tier] = D.enhance.weaponLogs[b];
       else if (!['Necklace', 'Ring'].includes(item.slot)) cost['hide:' + item.tier] = D.enhance.secondary[b];
+      if(D.armorSlots.includes(item.slot) && ['Archer','Mage'].includes(item.armorClass)) {
+        delete cost['bar:'+item.tier]; delete cost['hide:'+item.tier];
+        cost[(item.armorClass==='Archer'?'leather':'cloth')+':'+item.tier]=D.enhance.bars[b];
+        cost[(item.armorClass==='Archer'?'logs':'fiber')+':'+item.tier]=D.enhance.secondary[b];
+      }
       return {
         coins: D.coinUnits[item.tier] * D.enhance.coins[b],
         cost,

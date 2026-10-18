@@ -45,7 +45,7 @@
     name(item) {
       if (item.kind === 'tool') return item.name;
       const d = item.boss !== null ? D.dungeons[item.boss] : null;
-      if (item.armorClass && D.armorSlots.includes(item.slot)) return (d ? d.prefix : D.tierNames[item.tier]) + ' ' + D.armorNames[item.armorClass][D.armorSlots.indexOf(item.slot)];
+      if (item.armorClass && D.armorSlots.includes(item.slot)) return (d ? d.prefix : D.armorTierName(item.armorClass,item.tier)) + ' ' + D.armorNames[item.armorClass][D.armorSlots.indexOf(item.slot)];
       return d ? (item.style !== null ? d.weapons[item.style] : d.prefix + ' ' + (item.slot === 'Helmet' ? 'Helm' : item.slot)) : (item.style !== null ? D.weapons[item.style][item.tier] : D.tierNames[item.tier] + ' ' + item.slot);
     },
     stats(item) {
@@ -98,7 +98,7 @@
       };
     },
     recipe(item) {
-      return Object.fromEntries(Object.entries(D.equipmentRecipes[item.slot]).map(([k, n]) => [k + ':' + item.tier, n]));
+      return Object.fromEntries(Object.entries(D.armorCost(item.slot,item.armorClass)).map(([k, n]) => [k + ':' + item.tier, n]));
     },
     toolBonus(c, skill, key) {
       return (c.tools[skill].prefixes[key] || 0) * D.toolPrefixes[key];

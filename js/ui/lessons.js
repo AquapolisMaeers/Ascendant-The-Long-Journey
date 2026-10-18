@@ -17,7 +17,7 @@
   };
   U.craftControls=r=>{
     const c=G.character(),selected=G.runtime.craftQuantities?.[c.id]?.[r.id],max=Math.min(1000000,S.crafting.max(r)),busy=c.activity||c.combat||c.pending.length;
-    const verb=r.skill==='Cooking'?'Cook':r.skill==='Smithing'?'Smith':r.rank?'Fuse':'Cut';
+    const verb=r.skill==='Cooking'?'Cook':r.skill==='Smithing'?(r.output?.startsWith('cloth:')?'Weave':r.output?.startsWith('leather:')?'Cure':'Smith'):r.rank?'Fuse':'Cut';
     const locked=c.skills[r.skill].level<r.level||!S.items.usableTool(c,r.skill)||(r.skill==='Faceting'&&c.tools.Faceting.rarity<D.facet.chisel[r.rank]);
     return '<div class="recipe-actions"><div class="craft-quantities" role="group" aria-label="Select '+U.e(r.name)+' quantity">'+[1,5,10,'max'].map(n=>U.btn(String(n).toUpperCase(),'craftQuantity','data-id="'+r.id+'" data-quantity="'+n+'" aria-pressed="'+(selected===(n==='max'?max:n))+'" '+(busy||max<(n==='max'?1:n)?'disabled':''),'small quiet')).join('')+'</div>'+U.btn(verb+(selected?' ('+selected+')':''),'craft','data-id="'+r.id+'" '+(!selected||selected>max||busy||locked?'disabled':''),'primary craft-start')+'</div>';
   };

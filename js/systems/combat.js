@@ -30,6 +30,7 @@
     if(a.deepFreeze && b.hp/b.health<.5) damage *= 1.2;
     if(extra && a.endlessVolley) damage *= 1.4;
     if(a.counterReady) { damage *= 1.75; a.counterReady=false; }
+    if(a.feastReady) { damage *= 1.3; a.feastReady=false; }
     if (a.executioner && b.hp / b.health < D.perkConditional.executioner.threshold) damage *= 1 + D.perkConditional.executioner.damage;
     damage = Math.max(C.minimumHit, damage * (1 - mitigation(a, b)) * (1 - reduction(b)));
     b.received=(b.received||0)+1;
@@ -38,7 +39,7 @@
     const actual = Math.min(b.hp, damage);
     b.hp = Math.max(0, b.hp - actual);
     a.hits++;
-    const rawSteal = actual * Math.min(D.caps.lifeSteal,a.lifeSteal+(a.hp/a.health<.5?(a.siphon||0):0)), tenths = rawSteal * 10;
+    const rawSteal = actual * Math.min(D.caps.lifeSteal,a.lifeSteal+(a.hp/a.health<.6?(a.siphon||0):0)), tenths = rawSteal * 10;
     // Round positive gains up to a tenth, correcting only floating-point noise at exact tenths.
     const roundedSteal = rawSteal > 0 ? Math.max(1, Math.ceil(tenths - Number.EPSILON * Math.max(1, tenths) * 4)) / 10 : 0;
     const healing = Math.min(Math.max(0, a.health - a.hp), roundedSteal);
@@ -54,7 +55,7 @@
     });
     if (a.relentless && a.hits % D.perkConditional.relentless.hits === 0)
       recover(a, a.health * D.perkConditional.relentless.heal, side, 'Relentless', events);
-    if(a.feast && a.hits%6===0) recover(a,a.health*.03,side,'Feast',events);
+    if(a.feast && a.hits%4===0) { recover(a,a.health*.04,side,'Feast',events); a.feastReady=true; }
     secondWind(b, events, side === 'player' ? 'enemy' : 'player');
     if (b.hp > 0 && !extra && rng() < a.double) strike(f, a, b, side, events, true);
   }

@@ -30,10 +30,21 @@
         xp: D.config.skillXp * level * (D.equipmentRecipes[slot].bar * (5 + D.coal[tier]) + (D.equipmentRecipes[slot].logs || 0) + (D.equipmentRecipes[slot].hide || 0))
       };
       if(D.armorSlots.includes(slot)) {
-        for(const armorClass of D.classes) D.recipes.push({...recipe,
-          id:recipe.id+(armorClass==='Warrior'?'':':'+armorClass),armorClass,
-          name:D.tierNames[tier]+' '+D.armorNames[armorClass][D.armorSlots.indexOf(slot)]+' · '+armorClass});
+        for(const armorClass of D.classes) {
+          const materials=D.armorCost(slot,armorClass);
+          D.recipes.push({...recipe,
+            id:recipe.id+(armorClass==='Warrior'?'':':'+armorClass),armorClass,
+            cost:Object.fromEntries(Object.entries(materials).map(([kind,n])=>[kind+':'+tier,n])),
+            xp:D.config.skillXp*level*Object.entries(materials).reduce((sum,[kind,n])=>sum+n*D.materialWork(kind,tier),0),
+            name:D.armorTierName(armorClass,tier)+' '+D.armorNames[armorClass][D.armorSlots.indexOf(slot)]+' · '+armorClass});
+        }
       } else D.recipes.push(recipe);
+    }
+    for(const kind of ['leather','cloth']) {
+      const cost=kind==='leather'?{['hide:'+tier]:3,['logs:'+tier]:1}:{['fiber:'+tier]:3};
+      D.recipes.push({id:kind+':'+tier,name:D.resources[kind][tier],skill:'Smithing',tier,level,cost,
+        output:kind+':'+tier,category:'Leather & cloth',
+        xp:D.config.skillXp*level*Object.values(cost).reduce((sum,n)=>sum+n,0)});
     }
     D.recipes.push({
       id: 'cook:' + tier,

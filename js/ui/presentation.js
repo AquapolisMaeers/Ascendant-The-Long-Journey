@@ -79,7 +79,7 @@
     return '<div class="recipe-preview"><div class="eyebrow">COMMON +0 · DAMAGE, DEFENCE & HEALTH</div><dl class="preview-stats">' +
       Object.entries(stats).map(([key, val]) => '<div><dt>' + U.itemStatLabel(key, item) + '</dt><dd>' +
         U.statValue(key, val) + '</dd></div>').join('') + '</dl><small>Equip Lv ' + D.tiers[item.tier] +
-      (item.style === null ? '' : ' · ' + D.classes[item.style] + ' only') + '</small>' +
+      (item.armorClass ? ' · ' + item.armorClass + ' only' : item.style === null ? '' : ' · ' + D.classes[item.style] + ' only') + '</small>' +
       '<details class="compare-crafted"><summary>Compare full equipped stats</summary>'+comparison+'</details></div>';
   };
   U.upgradePreview = (item, ascend) => {

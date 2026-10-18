@@ -1,6 +1,15 @@
 'use strict';
 (function(G, D, S) {
   S.character = {
+    resetPerks() {
+      G.ensureIdle(); const c=G.character();
+      G.assert(!c.dungeon,'Leave the dungeon before resetting perks.');
+      G.assert(!S.tutorial.active(),'Finish the tutorial before resetting perks.');
+      G.assert(Object.keys(c.perks).length>0,'No selected perks to reset.');
+      S.inventory.take('perk-reset',1,c);
+      c.perks={}; c.hp=Math.min(c.hp,this.stats(c).health);
+      G.runtime.estimate=null; G.commit();
+    },
     customize(value) {
       const c = G.character();
       G.assert(c, 'Choose a character.');

@@ -22,9 +22,9 @@
     offlineHours: 8,
     offlineRate: .25,
     xpFactor: 500,
-    skillXp: 20,
+    skillXp: 22,
     cookingXp: 3,
-    facetingXp: 50,
+    facetingXp: 30,
     enhancementCap: 25,
     prefixSlots: 3,
     failIncrement: .01,
@@ -126,6 +126,18 @@
     price: 10000,
     category: 'Utility',
     description: 'Resets + level, prefixes and sockets. Extract or destroy gems first.'
+  }, {
+    id: 'perk-reset',
+    name: 'Tome of Renewal',
+    price: 10000,
+    category: 'Utility',
+    description: 'Consume to refund every chosen milestone perk. Choose new perks at your unlocked levels. Use while idle outside a dungeon.'
+  }, {
+    id: 'talent-reset',
+    name: 'Crystal of Recollection',
+    price: 5000,
+    category: 'Utility',
+    description: 'Consume to refund every spent talent point. Your earned points and milestone perks remain. Use while idle outside a dungeon.'
   }, {
     id: 'appearance',
     name: 'Appearance Token',

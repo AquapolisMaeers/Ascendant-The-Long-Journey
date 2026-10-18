@@ -172,6 +172,7 @@
         key: kind + ':' + (a.tier + 1),
         quantity: 1
       });
+      if(a.skill==='Woodcutting')rewards.push({key:'fiber:'+a.tier,quantity:rewards[0].quantity});
       S.inventory.reward(rewards);
       S.quests.gathered(a.skill, rewards, c);
       G.audio?.play(a.skill.toLowerCase());

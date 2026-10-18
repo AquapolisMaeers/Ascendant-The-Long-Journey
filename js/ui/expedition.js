@@ -42,14 +42,14 @@
     if (G.runtime.tab !== 'Perks') return character();
     const c = G.character(), chosen = D.perkLevels.filter(level => c.perks[level] !== undefined).length,
       ready = D.perkLevels.filter(level => c.level >= level && c.perks[level] === undefined).length;
-    return U.heading('SHAPE YOUR LEGEND', 'Your path to power', 'Each milestone offers three paths. Choose one permanent perk per milestone.', '<span class="badge">' + chosen + ' / 5 CHOSEN</span>') +
+    return U.heading('SHAPE YOUR LEGEND', 'Your path to power', 'Choose one perk per milestone. A Tome of Renewal from Shop → Utility refunds your choices.', '<span class="badge">' + chosen + ' / 5 CHOSEN</span>') +
       U.tabs(['Equipment', 'Stats', 'Perks', 'Talents', 'Outfits & Auras', 'Mounts'], 'Perks') + '<section class="perk-overview"><div><strong>' + c.class + ' disciplines</strong><p>Build around force, endurance or technique.</p></div>' +
-      '<span>' + (ready ? ready + ' choice' + (ready === 1 ? '' : 's') + ' available' : 'Your next milestone awaits') + '</span></section>' +
+      '<span>' + (ready ? ready + ' choice' + (ready === 1 ? '' : 's') + ' available' : 'Your next milestone awaits') + '</span>'+U.btn('Reset perks','resetPerks',!chosen||c.combat||c.activity||c.dungeon||S.tutorial.active()?'disabled':'','quiet small')+'</section>' +
       '<div class="perk-path">' + D.perkLevels.map((level, row) => {
         const selected = c.perks[level], locked = c.level < level;
-          return '<section class="perk-milestone ' + (locked ? 'locked' : selected === undefined ? 'available' : 'chosen') + '"><div class="perk-level"><span>MILESTONE ' + (row + 1) + '</span><strong>' + level + '</strong><small>' + (locked ? 'Locked' : selected === undefined ? 'Choose a path' : 'Path sealed') + '</small></div><div class="perk-options">' +
+          return '<section class="perk-milestone ' + (locked ? 'locked' : selected === undefined ? 'available' : 'chosen') + '"><div class="perk-level"><span>MILESTONE ' + (row + 1) + '</span><strong>' + level + '</strong><small>' + (locked ? 'Locked' : selected === undefined ? 'Choose a path' : 'Chosen') + '</small></div><div class="perk-options">' +
           D.perkNames[c.class][row].map((name, choice) => '<button class="perk-path-card ' + ['offensive', 'defensive', 'utility'][choice] + (selected === choice ? ' selected' : '') + '" data-action="perk" data-level="' + level + '" data-choice="' + choice + '" ' + (locked || selected !== undefined ? 'disabled' : '') + '>' +
-            '<div class="perk-card-label">' + U.icon(['Weapon', 'Plate', 'Skills'][choice]) + '<span>' + ['Offence', 'Defence', 'Utility'][choice] + '</span><small>' + (selected === choice ? '✓ CHOSEN' : locked ? 'LEVEL ' + level : selected !== undefined ? 'UNCHOSEN' : 'PERMANENT') + '</small></div>' +
+            '<div class="perk-card-label">' + U.icon(['Weapon', 'Plate', 'Skills'][choice]) + '<span>' + ['Offence', 'Defence', 'Utility'][choice] + '</span><small>' + (selected === choice ? '✓ CHOSEN' : locked ? 'LEVEL ' + level : selected !== undefined ? 'UNCHOSEN' : 'CHOOSE ONE') + '</small></div>' +
             '<strong>' + U.e(name) + '</strong><p>' + D.perkDescriptions[row][choice] + '</p></button>').join('') + '</div></section>';
       }).join('') + '</div>';
   };
@@ -79,6 +79,7 @@
     if (recipe) {
       G.runtime.craftTier = recipe.tier;
       if (recipe.skill === 'Smithing') G.runtime.smithingCategory = U.smithingCategory(recipe);
+      if (recipe.armorClass) G.runtime.armorClass = recipe.armorClass;
       if (recipe.skill === 'Faceting') G.runtime.gemFilter = recipe.type;
     }
     U.render();

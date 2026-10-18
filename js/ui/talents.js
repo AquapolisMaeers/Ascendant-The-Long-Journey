@@ -7,8 +7,8 @@
     return U.heading('SHAPE YOUR CLASS',c.class+' talent tree','Earn one point per combat level after Level 1. Complete each node to climb its path; mix paths to shape your build.',
       '<span class="badge">'+S.talents.available(c)+' POINTS AVAILABLE</span>')+
       U.tabs(['Equipment','Stats','Perks','Talents','Outfits & Auras','Mounts'],'Talents')+
-      '<section class="panel talent-intro"><div><h3>'+S.talents.spent(c)+' / '+(c.level-1)+' points spent</h3><p class="notes">Existing characters receive every earned point. Reset talents free between adventures to try another build. Milestone perks stay separate.</p></div>'+
-      U.btn('Reset talents','resetTalents',!idle||c.dungeon||!S.talents.spent(c)?'disabled':'','quiet')+'</section><nav class="talent-path-links" aria-label="Jump to talent path">'+D.talents[c.class].map(path=>'<a href="#talent-'+path.id+'">'+path.name+'</a>').join('')+'</nav><div class="talent-tree">'+D.talents[c.class].map((path,pathIndex)=>
+      '<section class="panel talent-intro"><div><h3>'+S.talents.spent(c)+' / '+(c.level-1)+' points spent</h3><p class="notes">Earned points include your past levels. Reset with a Crystal of Recollection from Shop → Utility. Milestone perks stay separate.</p></div>'+
+      U.btn('Reset talents','resetTalents',!idle||c.dungeon||!S.talents.spent(c)?'disabled':'','quiet')+'</section><div class="talent-tree">'+D.talents[c.class].map((path,pathIndex)=>
         '<section id="talent-'+path.id+'" class="talent-path path-'+pathIndex+'"><header>'+U.icon(c.class)+'<h2>'+path.name+'</h2><p>'+path.role+'</p></header>'+path.nodes.map((node,index)=>{
           const id=path.id+':'+index,rank=c.talents?.[id]||0,max=D.talentRanks[index],ready=idle&&S.talents.canLearn(c,id);
           const effects=node.description || Object.entries(node.effects).map(([key,value])=>'+'+U.statValue(key,value)+' '+D.labels[key].replace(/ %$/,'')+' per rank.').join(' ');
