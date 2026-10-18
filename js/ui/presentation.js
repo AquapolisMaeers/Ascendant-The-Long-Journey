@@ -24,11 +24,11 @@
     D.primary[item.style] + ' Damage' : D.labels[key];
   const gearFor = r => ({
     kind:'gear', tier:r.tier, piece:r.piece, slot:r.piece < 3 ? 'Weapon' : D.pieces[r.piece],
-    style:r.piece < 3 ? r.piece : null, rarity:0, boss:null, enhance:0, prefixes:{}, gems:[]
+    style:r.piece < 3 ? r.piece : null, armorClass:r.armorClass, rarity:0, boss:null, enhance:0, prefixes:{}, gems:[]
   });
   U.itemSummary = item => {
     if (item.kind === 'gear') return Object.entries(S.items.stats(item)).map(([key, value]) =>
-      U.itemStatLabel(key, item) + ' ' + G.number(value, 4)).join(' · ');
+      U.itemStatLabel(key, item) + ' ' + U.statValue(key, value)).join(' · ');
     if (item.kind === 'tool') return Object.entries(item.prefixes).map(([key, rank]) =>
       key + ' +' + G.percent(rank * D.toolPrefixes[key], 2)).join(' · ') || 'Ascend to gain work bonuses';
     const info = D.catalog[item.key];
@@ -67,8 +67,8 @@
     if (recipe.piece === undefined) return U.effectPreview({kind:'stack', key:recipe.output});
     const item = gearFor(recipe), c = G.character(), equipped = c.equipment[item.slot], stats = S.items.stats(item);
     const before = S.character.stats(c), after = S.character.stats({...c, equipment:{...c.equipment,[item.slot]:item}});
-    const comparison = item.style !== null && item.style !== D.classes.indexOf(c.class) ?
-      '<p class="notes">This weapon requires '+D.classes[item.style]+'. Compare equipment for your class to preview your build.</p>' :
+    const comparison = item.armorClass && item.armorClass !== c.class || item.style !== null && item.style !== D.classes.indexOf(c.class) ?
+      '<p class="notes">This equipment requires '+(item.armorClass || D.classes[item.style])+'. Compare equipment for your class to preview your build.</p>' :
       '<p class="notes">Replacing '+(equipped?U.e(U.itemName(equipped)):'an empty '+item.slot+' slot')+' with this Common +0 piece.</p>'+
       '<table class="data-table crafted-comparison"><thead><tr><th>Final stat</th><th>Now</th><th>With craft</th><th>Change</th></tr></thead><tbody>'+
       Object.keys(D.labels).filter(key=>!key.endsWith('Pct')).map(key=>{

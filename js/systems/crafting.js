@@ -81,7 +81,7 @@
       if (success) {
         const yieldCount = 1 + (G.rng() < S.items.toolBonus(c, r.skill, 'Yield') ? 1 : 0);
         if (r.piece !== undefined)
-          for (let i = 0; i < yieldCount; i++) rewards.push(S.items.create(r.tier, r.piece));
+          for (let i = 0; i < yieldCount; i++) rewards.push(S.items.create(r.tier, r.piece, 0, null, r.armorClass));
         else rewards.push({
           key: r.output,
           quantity: yieldCount

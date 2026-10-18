@@ -139,10 +139,19 @@
     category: 'Character',
     description: 'Choose a new character name.'
   }, {
+    id: 'eat25',
+    name: 'Auto-Eat 25%',
+    price: 2500,
+    level: 10,
+    threshold: .25,
+    category: 'Character',
+    description: 'Permanently unlock automatic eating at 25% HP. Select it in Provisions; manual eating is always available.'
+  }, {
     id: 'eat50',
     name: 'Auto-Eat 50%',
     price: 50000,
     level: 50,
+    threshold: .5,
     category: 'Character',
     description: 'Permanent 50% HP threshold.'
   }, {
@@ -150,6 +159,7 @@
     name: 'Auto-Eat 75%',
     price: 250000,
     level: 75,
+    threshold: .75,
     category: 'Character',
     description: 'Permanent 75% HP threshold.'
   }];

@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-17',title:'Class paths and a more dangerous journey',changes:[
+    'Character > Talents adds three paths per class: Berserker, Guardian and Reaver; Marksman, Skirmisher and Venom Hunter; Pyromancer, Frostbinder and Arcanist. Earn one point per combat level after Level 1, including past levels. Climb connected nodes and reset talents free between dungeon runs. Existing milestone perks are unchanged.',
+    'Crossroads creatures retain their original stats. Health, damage, defence, penetration and critical resistance grow more strongly in later regions. Dungeon elites roll entry level +5–9 and bosses +7–9, including level 105–109 endgame foes.',
+    'Gear and tool rarity rolls now use 0.1% Ascendant for normal creatures, 0.2% for elites and 0.5% for bosses. Other high rarities are reduced too. These are rarity chances after a gear or tool drop succeeds.',
+    'Every helmet, body, legs, gloves and boots drop rolls equally between Warrior, Archer and Mage armour after the existing slot roll. Warriors gain sturdy plate, archers gain nimble leather and mages gain offensive robes. Smithing offers your class variants. Existing armour becomes its owner’s class and retains upgrades, gems, rarity and locks.',
+    'Auto-Eat 25% is sold under Shop > Character from level 10 for 25 Silver. The old free 25% unlock is removed; paid 50% and 75% upgrades remain. Tutorial meals are assigned for manual eating.',
+    'Phone Provisions opens above the encounter. Combat Eat controls sit outside the World painting layers so they remain tappable above navigation. Sidebar navigation is slightly larger.'
+  ]},
   {date:'2026-10-16',title:'A steadier fight on the phone',changes:[
     'Faceting groups all 17 gem types. The ten advanced types now fuse three matching gems into the next rank, II–V. Their starting gems still come from mystery boxes.',
     'Phones keep Eat, food counts and cooldowns above navigation, with larger health bars and an expandable combat log. Food setup moves beside the encounter.',

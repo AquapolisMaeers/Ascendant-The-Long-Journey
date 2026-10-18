@@ -56,6 +56,15 @@
     damagePerLevel: 1.4,
     defencePerLevel: 1
   };
+  // Crossroads stays unchanged. Later regions demand current-tier equipment.
+  D.enemyScaling = location => ({
+    health: 1 + .12 * location + .008 * location * location,
+    damage: 1 + .06 * location + .003 * location * location,
+    defence: 1 + .08 * location + .004 * location * location,
+    penetration: location * .012,
+    resistance: location * .01
+  });
+  D.dungeonLevels = {regular: [0, 4], elite: [5, 9], boss: [7, 9]};
   D.boss = {
     health: 7,
     damage: 2.5,
@@ -147,7 +156,7 @@
       divisor: 2,
       coins: 1,
       xp: 100,
-      rarities: [50, 25, 12, 6, 3.5, 2, 1, .5]
+      rarities: [65, 23, 8, 2.5, .9, .35, .15, .1]
     },
     elite: {
       material: .3,
@@ -159,7 +168,7 @@
       divisor: 3,
       coins: 2,
       xp: 300,
-      rarities: [35, 25, 18, 10, 6, 3.5, 1.75, .75]
+      rarities: [55, 27, 11, 4.5, 1.5, .55, .25, .2]
     },
     boss: {
       material: .6,
@@ -171,7 +180,7 @@
       divisor: 5,
       coins: 10,
       xp: 2000,
-      rarities: [20, 22, 20, 15, 10, 7, 4, 2]
+      rarities: [40, 30, 17, 8, 3, 1, .5, .5]
     }
   };
   D.gemDrops = [

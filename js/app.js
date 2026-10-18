@@ -39,6 +39,11 @@
       if (U.isPhone() && previous !== destination) window.scrollTo({top:0, behavior:'instant'});
     },
     mobileMenu() { U.mobileMenu(); },
+    provisionsShop() { G.runtime.page='Shop'; G.runtime.shopSection='general'; G.runtime.tab='Character'; U.render(); },
+    learnTalent(el) { S.talents.learn(el.dataset.id); },
+    resetTalents() {
+      confirm('Reset your talent tree?', '<p>Refund every talent point for free. Your milestone perks remain selected.</p>', () => S.talents.reset());
+    },
     shopSection(el) { G.runtime.shopSection=el.dataset.section; G.runtime.page='Shop';G.runtime.tab='';U.render(); },
     tab(el) {
       G.runtime.tab = el.dataset.value;
@@ -498,6 +503,7 @@
         if (D.locations[c.location].level > c.level) c.location = 0;
         for (const level of Object.keys(c.perks))
           if (+level > c.level) delete c.perks[level];
+        if (!S.talents.valid(c)) c.talents = {};
         c.hp = S.character.stats(c).health;
       }
       if (command === 'skill') {

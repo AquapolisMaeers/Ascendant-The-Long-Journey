@@ -21,7 +21,7 @@
   .phone-combat-log { margin-top:8px; border-top:1px solid #756077; }
   .phone-combat-log > summary { min-height:44px; padding:12px 2px; font-size:14px; color:#d8c6df; cursor:pointer; }
   .combat-view .phone-combat-log .combat-log { max-height:160px; font-size:13px; line-height:1.5; margin:0; padding:0 0 6px; border:0; }
-  .world-screen .phone-combat-food { position:fixed; z-index:55; bottom:calc(var(--phone-nav-space) + 8px); left:10px; right:10px; margin:0; padding:12px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 12px; align-items:center; background:#202231fa; border:1px solid #b68b82; border-top:3px solid #d5b579; box-shadow:0 -5px 22px #07091499; }
+  .phone-combat-food { position:fixed; z-index:55; bottom:calc(var(--phone-nav-space) + 8px); left:10px; right:10px; margin:0; padding:12px; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 12px; align-items:center; background:#202231fa; border:1px solid #b68b82; border-top:3px solid #d5b579; box-shadow:0 -5px 22px #07091499; }
   .phone-food-info { min-width:0; display:grid; gap:5px; }
   .phone-food-info strong { font-size:15px; line-height:1.2; overflow-wrap:anywhere; }
   .phone-food-info small,.phone-food-hint { font-size:12px; color:#d4c7db; }
@@ -49,6 +49,6 @@
   .combat-view .fighter > .character-portrait,.combat-view .fighter > .portrait-art { grid-row:1 / span 3; width:40px; height:40px; margin:0; }
   .combat-view .fighter h3 { min-height:0; font-size:17px; margin:0; }
   .combat-view .fighter :is(.bar,.fight-meta) { grid-column:2; }
-  .world-screen .phone-combat-food { padding:8px 12px; }
+  .phone-combat-food { padding:8px 12px; }
   .phone-food-action { display:flex; align-items:center; gap:12px; }
 }

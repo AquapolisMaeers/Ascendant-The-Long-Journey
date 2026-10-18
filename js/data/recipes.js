@@ -19,7 +19,7 @@
     });
     for (let piece = 0; piece < 10; piece++) {
       const slot = piece < 3 ? 'Weapon' : D.pieces[piece];
-      D.recipes.push({
+      const recipe = {
         id: 'gear:' + tier + ':' + piece,
         name: piece < 3 ? D.weapons[piece][tier] : D.tierNames[tier] + ' ' + slot,
         skill: 'Smithing',
@@ -28,7 +28,12 @@
         piece,
         cost: Object.fromEntries(Object.entries(D.equipmentRecipes[slot]).map(([k, n]) => [k + ':' + tier, n])),
         xp: D.config.skillXp * level * (D.equipmentRecipes[slot].bar * (5 + D.coal[tier]) + (D.equipmentRecipes[slot].logs || 0) + (D.equipmentRecipes[slot].hide || 0))
-      });
+      };
+      if(D.armorSlots.includes(slot)) {
+        for(const armorClass of D.classes) D.recipes.push({...recipe,
+          id:recipe.id+(armorClass==='Warrior'?'':':'+armorClass),armorClass,
+          name:D.tierNames[tier]+' '+D.armorNames[armorClass][D.armorSlots.indexOf(slot)]+' · '+armorClass});
+      } else D.recipes.push(recipe);
     }
     D.recipes.push({
       id: 'cook:' + tier,

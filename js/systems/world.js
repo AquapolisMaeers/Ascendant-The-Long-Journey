@@ -34,7 +34,7 @@
     enemy(type, location, forcedLevel) {
       const loc = D.locations[location],
         boss = type === 'boss',
-        level = forcedLevel || (boss ? D.dungeons[loc.dungeon].level : G.int(G.rng, loc.level, loc.max));
+        level = forcedLevel || (boss ? G.int(G.rng, ...D.dungeonLevels.boss.map(n => D.dungeons[loc.dungeon].level + n)) : G.int(G.rng, loc.level, loc.max));
       const row = boss ? {
         name: D.dungeons[loc.dungeon].boss,
         archetype: 'Dungeon Boss'
@@ -57,9 +57,14 @@
         resistance: 0,
         lifeSteal: 0
       };
+      const scaling = D.enemyScaling(location);
+      for (const key of ['health', 'damage', 'defence']) e[key] *= scaling[key];
+      e.penetration = scaling.penetration;
+      e.resistance = scaling.resistance;
       if (boss) {
         for (const key of ['health', 'damage', 'defence']) e[key] *= D.boss[key];
-        for (const key of ['penetration', 'crit', 'critDamage']) e[key] = D.boss[key];
+        e.penetration += D.boss.penetration;
+        for (const key of ['crit', 'critDamage']) e[key] = D.boss[key];
         e.boss = loc.dungeon;
       } else {
         for (const label of row.archetype.split('/')) {
@@ -217,9 +222,9 @@
         Object.assign(enemy, {
           name: 'Mimic',
           archetype: 'Mimic · Balanced',
-          health: D.enemyBase.health + D.enemyBase.healthPerLevel * e.level,
-          damage: D.enemyBase.damage + D.enemyBase.damagePerLevel * e.level,
-          defence: e.level,
+          health: (D.enemyBase.health + D.enemyBase.healthPerLevel * e.level) * D.enemyScaling(c.location).health,
+          damage: (D.enemyBase.damage + D.enemyBase.damagePerLevel * e.level) * D.enemyScaling(c.location).damage,
+          defence: e.level * D.enemyScaling(c.location).defence,
           crit: D.config.baseCrit,
           critDamage: D.config.baseCritDamage,
           speed: 0,
@@ -264,7 +269,7 @@
         const type = r < 3 ? 'regular' : r === 4 ? 'elite' : 'boss';
         c.encounter = {
           type,
-          enemy: S.world.enemy(type, c.location)
+          enemy: S.world.enemy(type, c.location, G.int(G.rng, ...D.dungeonLevels[type].map(n => D.dungeons[c.dungeon.id].level + n)))
         };
       }
       G.runtime.estimate = null;
@@ -344,7 +349,9 @@
         const tier = S.world.tier(location, table.divisor),
           piece = G.int(G.rng, 0, 9),
           rarity = G.weighted(G.rng, table.rarities);
-        const item = S.items.create(tier, piece, rarity, type === 'boss' ? loc.dungeon : null);
+        // Keep the existing piece roll; only armour makes a second class draw.
+        const armorClass = D.armorSlots.includes(D.pieces[piece]) ? D.classes[G.weighted(G.rng, D.armorWeights)] : undefined;
+        const item = S.items.create(tier, piece, rarity, type === 'boss' ? loc.dungeon : null, armorClass);
         rewards.push(item);
         if (type === 'boss') {
           const c = G.character();

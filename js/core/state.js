@@ -52,6 +52,8 @@
       skills: {},
       tools: {},
       perks: {},
+      talents: {},
+      provisionsVersion: 1,
       achievements: {},
       title: '',
       stats: {
@@ -78,7 +80,7 @@
       },
       food: null,
       eat: 0,
-      eatUnlocks: [0, .25],
+      eatUnlocks: [0],
       foodReady: 0,
       peaceFoodReady: 0,
       facetFails: {},

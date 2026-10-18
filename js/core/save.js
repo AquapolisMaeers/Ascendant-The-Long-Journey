@@ -33,6 +33,7 @@
     }
     if (i.kind !== 'gear' || !Number.isInteger(i.tier) || !D.tiers[i.tier] || !Number.isInteger(i.piece) || !D.pieces[i.piece] || !Number.isInteger(i.rarity) || !D.rarity[i.rarity] || !Number.isInteger(i.enhance) || !finite(i.enhance, 0, 25)) fail('equipment');
     if (i.slot !== (i.piece < 3 ? 'Weapon' : D.pieces[i.piece]) || i.style !== (i.piece < 3 ? i.piece : null) || !(i.boss === null || Number.isInteger(i.boss) && D.dungeons[i.boss])) fail('equipment identity');
+    if (i.armorClass !== undefined && (!D.classes.includes(i.armorClass) || !D.armorSlots.includes(i.slot))) fail('armour class');
     if (!i.prefixes || Object.keys(i.prefixes).length > G.systems.items.prefixSlots(i) || Object.entries(i.prefixes).some(([k, v]) => !D.prefixPools[i.slot].includes(k) || !finite(v))) fail('prefixes');
     if (!Array.isArray(i.gems) || i.gems.length > G.systems.items.sockets(i) || i.gems.some(k => k !== null && (!D.catalog[k] || D.catalog[k].category !== 'Gems' || !D.catalog[k].rank || !D.gemAllowed[i.slot].includes(D.catalog[k].type)))) fail('sockets');
     if (!finite(i.enhanceFail, 0, 1) || !finite(i.ascendFail, 0, 1)) fail('fail protection');
@@ -114,11 +115,13 @@
         if (!s || !Number.isInteger(s.level) || !finite(s.level, 1, 100) || !finite(s.xp) || !t || t.kind !== 'tool' || t.skill !== skill || !Number.isInteger(t.rarity) || !D.rarity[t.rarity] || !t.prefixes || Object.entries(t.prefixes).some(([k, v]) => !Object.hasOwn(D.toolPrefixes, k) || !Number.isInteger(v) || !finite(v, 1, 8))) fail('skill or tool');
       }
       if (Object.entries(c.perks).some(([k, v]) => !D.perkLevels.includes(+k) || +k > c.level || ![0, 1, 2].includes(v))) fail('perk choice');
+      if (!G.systems.talents.valid(c)) fail('talent allocation');
+      if (c.provisionsVersion !== undefined && c.provisionsVersion !== 1) fail('provisions version');
       if (!(c.offline === null || D.skills.includes(c.offline)) || !finite(c.lastSeen) || !Array.isArray(c.eatUnlocks) || c.eatUnlocks.some(v => ![0, .25, .5, .75].includes(v)) || !c.eatUnlocks.includes(c.eat) || c.food !== null && !D.catalog[c.food]?.healing) fail('food or offline selection');
       if (c.encounter) {
         const e = c.encounter;
         if (['regular', 'elite', 'boss'].includes(e.type)) {
-          if (!e.enemy || typeof e.enemy.name !== 'string' || typeof e.enemy.archetype !== 'string' || !Number.isInteger(e.enemy.level) || !finite(e.enemy.level, 1, 100)) fail('enemy');
+          if (!e.enemy || typeof e.enemy.name !== 'string' || typeof e.enemy.archetype !== 'string' || !Number.isInteger(e.enemy.level) || !finite(e.enemy.level, 1, 109)) fail('enemy');
           for (const key of ['damage', 'health', 'defence', 'crit', 'critDamage', 'penetration', 'double', 'dodge', 'reduction', 'resistance', 'lifeSteal', 'interval'])
             if (!finite(e.enemy[key]) || key === 'interval' && e.enemy[key] < .5) fail('enemy stats');
         } else if (D.skills.slice(0, 4).includes(e.type)) {
@@ -213,6 +216,17 @@
       let guard = 0;
       while (p?.saveVersion !== D.config.version && this.migrations[p?.saveVersion] && guard++ < 10) p = this.migrations[p.saveVersion](p);
       if(Array.isArray(p?.slots)) for(const c of p.slots.filter(Boolean)) {
+        c.talents ??= {};
+        // Old 25% was free. Keep paid higher tiers and remove only that free tier.
+        if(c.provisionsVersion===undefined && Array.isArray(c.eatUnlocks)) {
+          c.eatUnlocks=c.eatUnlocks.filter(n=>n!==.25);
+          if(c.eat===.25)c.eat=0;
+          if(c.combat?.food?.threshold===.25)c.combat.food.threshold=0;
+          c.provisionsVersion=1;
+        }
+        // Existing armour becomes its owner's class with all investments intact.
+        for(const item of [...Object.values(c.equipment||{}),...(c.inventory||[]),...(c.pending||[]),...(c.listings||[]).map(l=>l?.item),...(c.activity?.rewards||[])])
+          if(item?.kind==='gear' && D.armorSlots.includes(item.slot) && item.armorClass===undefined)item.armorClass=c.class;
         if(c.afk&&[8000,12000,16000].includes(c.afk.interval))c.afk.interval=D.config.afkAdvanceMs;
         if(c.gemSocketRules !== undefined || !Array.isArray(c.inventory) || !Array.isArray(c.pending) || !c.equipment || !Array.isArray(c.listings)) continue;
         for(const item of [...Object.values(c.equipment),...c.inventory,...c.pending,...c.listings.map(l=>l?.item)]) {

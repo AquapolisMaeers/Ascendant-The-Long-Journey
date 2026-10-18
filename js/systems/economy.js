@@ -7,7 +7,7 @@
         item = D.shop.find(i => i.id === id);
       G.assert(item, 'Unknown shop item.');
       G.assert(c.level >= (item.level || 1), 'Requires character level ' + item.level + '.');
-      const threshold = id === 'eat50' ? .5 : id === 'eat75' ? .75 : null;
+      const threshold = item.threshold ?? null;
       G.assert(threshold === null || !c.eatUnlocks.includes(threshold), 'Already unlocked.');
       G.assert(Number.isSafeInteger(quantity) && quantity > 0 && quantity <= 1000000, 'Choose a valid purchase quantity.');
       G.assert(item.category === 'Materials' || quantity === 1, 'Buy this upgrade one at a time.');

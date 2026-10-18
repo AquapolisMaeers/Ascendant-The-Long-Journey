@@ -14,7 +14,11 @@
     const html = shell();
     if (!G.character() || G.runtime.selecting || G.runtime.loadFailure) return html;
     const primary = ['World','Inventory','Crafting','Shop'];
-    return html + '<nav class="phone-nav" aria-label="Quick navigation">' + primary.map(page => '<button type="button" data-action="navigate" data-value="' + page + '" ' + (G.runtime.page === page ? 'class="active" aria-current="page"' : '') + '>' + U.icon(page) + '<span>' + page + '</span></button>').join('') + '<button type="button" data-action="mobileMenu" aria-haspopup="dialog" aria-expanded="' + !!document.querySelector('.phone-menu') + '" aria-label="More pages" ' + (!primary.includes(G.runtime.page) ? 'class="active"' : '') + '>' + U.icon('Menu') + '<span>More</span></button></nav>';
+    const template=document.createElement('template'); template.innerHTML=html;
+    // Fixed controls must live outside World's isolated painting/stacking context.
+    const food=template.content.querySelector('.phone-combat-food');
+    if(food)template.content.append(food);
+    return template.innerHTML + '<nav class="phone-nav" aria-label="Quick navigation">' + primary.map(page => '<button type="button" data-action="navigate" data-value="' + page + '" ' + (G.runtime.page === page ? 'class="active" aria-current="page"' : '') + '>' + U.icon(page) + '<span>' + page + '</span></button>').join('') + '<button type="button" data-action="mobileMenu" aria-haspopup="dialog" aria-expanded="' + !!document.querySelector('.phone-menu') + '" aria-label="More pages" ' + (!primary.includes(G.runtime.page) ? 'class="active"' : '') + '>' + U.icon('Menu') + '<span>More</span></button></nav>';
   };
   const world = U.screens.World;
   U.screens.World = () => {
@@ -41,12 +45,13 @@
     const travel = template.content.querySelector('[data-action="locations"]');
     if (travel) { travel.innerHTML = U.icon('World') + '<span>Travel</span>'; travel.setAttribute('aria-label', 'Change location'); }
     const loc = D.locations[G.character().location];
-    const foodPanel = template.content.querySelector('.food-panel'), preview = template.content.querySelector('.preview');
-    if (preview && foodPanel) {
+    const foodPanel = template.content.querySelector('.food-panel');
+    if (foodPanel) {
       const details = document.createElement('details'); details.className = 'phone-fold phone-food-setup';
+      details.open = true;
       details.dataset.section = 'food-setup';
       details.innerHTML = '<summary>' + U.icon('food') + '<span>Food & Auto-Eat</span><small>' + (food && available ? available + ' READY' : 'NO FOOD READY') + '</small></summary>';
-      preview.before(details); details.append(foodPanel);
+      template.content.querySelector('.world-main').prepend(details); details.append(foodPanel);
     }
     for (const [selector, icon, label, state] of [
       ['.inn-panel','fountain','Wayside inn','PAID HEALING'],

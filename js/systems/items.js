@@ -1,7 +1,7 @@
 'use strict';
 (function(G, D, S) {
   S.items = {
-    create(tier, piece, rarity = 0, boss = null) {
+    create(tier, piece, rarity = 0, boss = null, armorClass = G.character()?.class || 'Warrior') {
       const style = piece < 3 ? piece : null,
         slot = piece < 3 ? 'Weapon' : D.pieces[piece];
       return {
@@ -11,6 +11,7 @@
         piece,
         slot,
         style,
+        ...(D.armorSlots.includes(slot) ? {armorClass} : {}),
         rarity,
         boss,
         enhance: 0,
@@ -44,11 +45,20 @@
     name(item) {
       if (item.kind === 'tool') return item.name;
       const d = item.boss !== null ? D.dungeons[item.boss] : null;
+      if (item.armorClass && D.armorSlots.includes(item.slot)) return (d ? d.prefix : D.tierNames[item.tier]) + ' ' + D.armorNames[item.armorClass][D.armorSlots.indexOf(item.slot)];
       return d ? (item.style !== null ? d.weapons[item.style] : d.prefix + ' ' + (item.slot === 'Helmet' ? 'Helm' : item.slot)) : (item.style !== null ? D.weapons[item.style][item.tier] : D.tierNames[item.tier] + ' ' + item.slot);
     },
     stats(item) {
       const mult = D.tiers[item.tier] * (item.boss !== null ? D.config.bossGear : 1) * D.rarityMult[item.rarity] * (1 + D.config.enhanceStat * item.enhance);
-      return Object.fromEntries(Object.entries(D.itemStats[item.slot]).map(([key, value]) => [key, value * mult]));
+      const stats = Object.fromEntries(Object.entries(D.itemStats[item.slot]).map(([key, value]) => [key, value * mult]));
+      if (item.armorClass) {
+        const factors = {Warrior:[1.2,1.15],Archer:[.8,.95],Mage:[.65,.9]}[item.armorClass];
+        if(stats.defence) stats.defence *= factors[0];
+        if(stats.health) stats.health *= factors[1];
+        if(item.armorClass==='Archer') { stats.speed=.008; stats.crit=.006; }
+        if(item.armorClass==='Mage') { stats.damage=(stats.damage||0)+.03*mult; stats.penetration=.008; }
+      }
+      return stats;
     },
     sockets(item) {
       return D.sockets[item.boss !== null ? 'boss' : 'regular'].filter(n => n <= item.enhance).length;
@@ -184,6 +194,7 @@
       }
       G.assert(c.level >= D.tiers[item.tier], 'Character level is too low.');
       G.assert(item.style === null || item.style === D.classes.indexOf(c.class), 'Wrong weapon class.');
+      G.assert(!item.armorClass || item.armorClass === c.class, 'This armour is for ' + item.armorClass + '.');
       const old = c.equipment[item.slot];
       c.inventory.splice(c.inventory.indexOf(item), 1);
       if (old) c.inventory.push(old);

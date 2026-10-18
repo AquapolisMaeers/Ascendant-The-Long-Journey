@@ -114,7 +114,7 @@
         c.guide.cooked += rewards.filter(r => r.key === 'food:0').reduce((n, r) => n + r.quantity, 0);
         if (c.guide.cooked >= 5) {
           c.food = 'food:0';
-          c.eat = .25;
+          c.eat = 0;
           this.advanceStep();
         }
       } else if (step === recipe.id && recipe.id === 'bar:0') this.advanceStep();

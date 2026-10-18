@@ -18,14 +18,27 @@
       });
       return;
     }
-    const critical = rng() < crit(a, b);
+    const hitNumber = a.hits + 1;
+    const critical = rng() < crit(a, b) || a.perfectShot && hitNumber % 3 === 0;
     let damage = a.damage * (critical ? 1 + a.critDamage : 1);
+    if(a.fury) damage *= 1+a.fury*(1-a.hp/a.health)*(a.unchained && a.hp/a.health<.4?2:1);
+    if(a.ignite) damage *= 1+a.ignite*Math.min(5,a.hits);
+    if(a.venom) damage *= 1+a.venom*Math.min(a.deathblossom?10:5,a.hits);
+    if(a.arcaneBurst && hitNumber % (a.torrent?3:4)===0) damage *= 1+a.arcaneBurst;
+    if(a.aimedShot && hitNumber % 3===0) damage *= 1+a.aimedShot;
+    if(a.firestorm && hitNumber % 5===0) damage *= 1.5;
+    if(a.deepFreeze && b.hp/b.health<.5) damage *= 1.2;
+    if(extra && a.endlessVolley) damage *= 1.4;
+    if(a.counterReady) { damage *= 1.75; a.counterReady=false; }
     if (a.executioner && b.hp / b.health < D.perkConditional.executioner.threshold) damage *= 1 + D.perkConditional.executioner.damage;
     damage = Math.max(C.minimumHit, damage * (1 - mitigation(a, b)) * (1 - reduction(b)));
+    b.received=(b.received||0)+1;
+    const guarded=b.guard && b.received%4===0;
+    if(guarded) { damage=Math.max(C.minimumHit,damage*(1-b.guard)); if(b.retribution)b.counterReady=true; }
     const actual = Math.min(b.hp, damage);
     b.hp = Math.max(0, b.hp - actual);
     a.hits++;
-    const rawSteal = actual * a.lifeSteal, tenths = rawSteal * 10;
+    const rawSteal = actual * Math.min(D.caps.lifeSteal,a.lifeSteal+(a.hp/a.health<.5?(a.siphon||0):0)), tenths = rawSteal * 10;
     // Round positive gains up to a tenth, correcting only floating-point noise at exact tenths.
     const roundedSteal = rawSteal > 0 ? Math.max(1, Math.ceil(tenths - Number.EPSILON * Math.max(1, tenths) * 4)) / 10 : 0;
     const healing = Math.min(Math.max(0, a.health - a.hp), roundedSteal);
@@ -36,10 +49,12 @@
       critical,
       healing,
       extra,
+      guarded,
       mitigated: damage < a.damage
     });
     if (a.relentless && a.hits % D.perkConditional.relentless.hits === 0)
       recover(a, a.health * D.perkConditional.relentless.heal, side, 'Relentless', events);
+    if(a.feast && a.hits%6===0) recover(a,a.health*.03,side,'Feast',events);
     secondWind(b, events, side === 'player' ? 'enemy' : 'player');
     if (b.hp > 0 && !extra && rng() < a.double) strike(f, a, b, side, events, true);
   }
@@ -99,6 +114,7 @@
         wind: false
       };
       const food = D.catalog[c.food];
+      if(player.chill) foe.interval *= 1+player.chill*(player.deepFreeze?2:1);
       return {
         player,
         enemy: foe,
@@ -110,7 +126,7 @@
           key: c.food,
           count: c.food ? S.inventory.available(c.food, c) : 0,
           heal: food?.healing || 0,
-          threshold: c.eat,
+          threshold: c.eatUnlocks.includes(c.eat) ? c.eat : 0,
           ready: Math.max(0, (c.foodReady - Date.now()) / 1000),
           used: 0
         },
@@ -182,7 +198,7 @@
         G.runtime.log.unshift(e.food ? 'You eat and recover ' + G.number(e.healing, 2) + ' HP.' :
           e.recovery ? who + ' recover ' + G.number(e.healing, 2) + ' HP (' + e.source + ').' :
           e.miss ? who + ' miss.' : who + ' deal ' + G.number(e.damage, 1) + (e.critical ? ' critical' : '') +
-          ' damage' + (e.extra ? ' (double strike)' : '') + '.' +
+          ' damage' + (e.extra ? ' (double strike)' : '') + (e.guarded ? ' (guarded)' : '') + '.' +
           (e.healing > 0 ? ' ' + who + ' recover ' + G.number(e.healing, 2) + ' HP (Lifesteal).' : ''));
         G.emit('strike', e);
       }

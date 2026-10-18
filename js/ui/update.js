@@ -53,7 +53,7 @@
     if (['preferences', 'offline', 'afk', 'recovery', 'prefixes', 'ready'].includes(step.id)) {
       label = step.id === 'ready' ? 'Complete tutorial' : 'Open lesson'; action = 'tutorialLesson';
     }
-    return '<section class="panel guide-panel" aria-label="Tutorial lesson"><div class="row between"><span class="eyebrow">REQUIRED TUTORIAL ' + (c.guide.step + 1) + ' / ' + D.tutorial.steps.length + '</span></div><h3>' + step.title + '</h3><p class="notes">' + step.text + '</p><div class="row spacer">' + U.btn(label, action, (c.activity || c.combat || c.pending.length ? 'disabled' : ''), 'gold-btn') + (step.id === 'fight' ? '<small class="muted">Your food is assigned at 25% Auto-Eat.</small>' : '') + '</div></section>';
+    return '<section class="panel guide-panel" aria-label="Tutorial lesson"><div class="row between"><span class="eyebrow">REQUIRED TUTORIAL ' + (c.guide.step + 1) + ' / ' + D.tutorial.steps.length + '</span></div><h3>' + step.title + '</h3><p class="notes">' + step.text + '</p><div class="row spacer">' + U.btn(label, action, (c.activity || c.combat || c.pending.length ? 'disabled' : ''), 'gold-btn') + (step.id === 'fight' ? '<small class="muted">Your food is assigned. Tap Eat to heal; Auto-Eat is sold at level 10.</small>' : '') + '</div></section>';
   };
   U.restPanel = () => {
     const c = G.character(),
