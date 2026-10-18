@@ -218,6 +218,8 @@
       let guard = 0;
       while (p?.saveVersion !== D.config.version && this.migrations[p?.saveVersion] && guard++ < 10) p = this.migrations[p.saveVersion](p);
       if(Array.isArray(p?.slots)) for(const c of p.slots.filter(Boolean)) {
+        // Preserve chosen skills while moving every profile to primary/secondary odds.
+        if(c.skillPreferences&&['balanced','preferred',undefined].includes(c.skillPreferences.mode))c.skillPreferences.mode='preferred';
         // Farming is additive: all previous skill XP, tools and stored fibres stay.
         if(c.skills&&c.tools&&!Object.hasOwn(c.skills,'Farming')&&!Object.hasOwn(c.tools,'Farming')) {
           c.skills.Farming={level:1,xp:0};

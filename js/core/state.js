@@ -85,7 +85,7 @@
       peaceFoodReady: 0,
       facetFails: {},
       offline: null,
-      skillPreferences: {mode:'balanced',primary: 'Fishing', secondary: 'Mining'},
+      skillPreferences: {mode:'preferred',primary: 'Fishing', secondary: 'Mining'},
       lastSeen: Date.now(),
       listings: [],
       encounter: null,

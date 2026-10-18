@@ -1,24 +1,8 @@
 'use strict';
 (function(G, D, S) {
   S.world = {
-    fibreTiers(c = G.character()) {
-      return D.tiers.map((level,tier)=>({level,tier})).filter(({level})=>level<=c.skills.Farming.level&&level<=D.locations[c.location].max).map(({tier})=>tier);
-    },
-    forageFibre(tier) {
-      G.ensureProgress();const c=G.character();
-      G.assert(!S.tutorial.active(),'Finish the tutorial before visiting the Farming Grove.');
-      G.assert(!c.dungeon&&!c.encounter,'Resolve your encounter and leave the dungeon before foraging.');
-      G.assert(Number.isInteger(tier)&&this.fibreTiers(c).includes(tier),'This crop requires the matching Farming level and an appropriate region.');
-      G.assert(S.items.usableTool(c,'Farming'),'Skill level is too low to use Pruning Shears.');
-      c.encounter={type:'Farming',tier,charges:D.config.nodeCharges};
-      this.gather();
-    },
     preferences(c = G.character()) {
       return c.skillPreferences || {primary: 'Fishing', secondary: 'Mining'};
-    },
-    setPreferenceMode(mode) {
-      G.assert(['balanced','preferred'].includes(mode),'Choose Balanced or Preferred gathering.');
-      G.character().skillPreferences={...this.preferences(),mode};G.commit();
     },
     setPreference(rank, skill) {
       G.assert(['primary', 'secondary'].includes(rank) && D.gatheringSkills.includes(skill), 'Choose a gathering skill.');
@@ -34,7 +18,7 @@
         skills = D.gatheringSkills, p = this.preferences(c),
         total = D.encounters.types.reduce((sum, type, i) => sum + (skills.includes(type) ? weights[i] : 0), 0);
       return weights.map((weight, i) => skills.includes(D.encounters.types[i]) ? total *
-        (p.mode==='balanced'?1/skills.length:(D.encounters.types[i] === p.primary ? 4 : D.encounters.types[i] === p.secondary ? 2 : 1)/(skills.length+4)) : weight);
+        (D.encounters.types[i] === p.primary ? .5 : D.encounters.types[i] === p.secondary ? .25 : .25/(skills.length-2)) : weight);
     },
     tier(location, divisor = 2, starter = false) {
       if (location === 0 && starter) return G.weighted(G.rng, [70, 30]);

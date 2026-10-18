@@ -3,10 +3,10 @@
   U.toolPrefixHelp = () => '<details class="prefix-handbook spacer"><summary>Tool prefixes — what each one does</summary><dl>' +
     Object.entries(D.toolPrefixDescriptions).map(([name, text]) => '<dt>' + name + '</dt><dd>' + text + '</dd>').join('') + '</dl></details>';
   U.skillPreferences = (prefix = '') => {
-    const c=G.character(),p=S.world.preferences(c),balanced=p.mode==='balanced',weights=S.world.encounterWeights(c),total=weights.reduce((a,b)=>a+b,0);
-    return '<section class="panel skill-preferences spacer"><div class="panel-head"><h3>Your gathering path</h3><span class="badge">50% GATHERING</span></div><p class="notes">Balanced gives all five gathering skills equal odds. Preferred uses your primary and secondary choices. Changing mode is free.</p><label class="spacer">Skill preference<select id="preference-'+prefix+'mode" data-preference-mode="true"><option value="balanced" '+(balanced?'selected':'')+'>Balanced</option><option value="preferred" '+(!balanced?'selected':'')+'>Preferred skills</option></select></label>'+
-      (balanced?'':'<div class="grid-2 spacer">'+['primary','secondary'].map(rank=>'<label>'+(rank==='primary'?'Primary preference':'Secondary preference')+'<select data-preference="'+rank+'">'+D.gatheringSkills.map(skill=>'<option '+(p[rank]===skill?'selected':'')+'>'+skill+'</option>').join('')+'</select></label>').join('')+'</div>')+
-      '<div class="preference-odds spacer">'+D.gatheringSkills.map(skill=>'<span><strong>'+skill+'</strong> '+G.percent(weights[D.encounters.types.indexOf(skill)]/total,2)+'</span>').join('')+'</div><p class="notes spacer">Chances per Advance. Total gathering chance, other encounters and resource rewards stay the same.</p></section>';
+    const c=G.character(),p=S.world.preferences(c),weights=S.world.encounterWeights(c),total=weights.reduce((a,b)=>a+b,0);
+    return '<section class="panel skill-preferences spacer"><div class="panel-head"><h3>Your gathering path</h3><span class="badge">50% GATHERING</span></div><p class="notes">Choose your primary and secondary skills. Primary gets 25% per Advance, secondary gets 12.5%, and the other three share the remaining 12.5% equally.</p>'+
+      '<div class="grid-2 spacer">'+['primary','secondary'].map(rank=>'<label>'+(rank==='primary'?'Primary preference':'Secondary preference')+'<select id="preference-'+prefix+rank+'" data-preference="'+rank+'">'+D.gatheringSkills.map(skill=>'<option '+(p[rank]===skill?'selected':'')+'>'+skill+'</option>').join('')+'</select></label>').join('')+'</div>'+
+      '<div class="preference-odds spacer">'+D.gatheringSkills.map(skill=>'<span><strong>'+skill+'</strong> '+G.percent(weights[D.encounters.types.indexOf(skill)]/total,2)+'</span>').join('')+'</div><p class="notes spacer">Chances per Advance. Find Farming crop patches on the road, then harvest with Pruning Shears.</p></section>';
   };
   U.lesson = (intro = false) => {
     const step=S.tutorial.current();if(!step)return;

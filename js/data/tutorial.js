@@ -49,7 +49,7 @@
       text: 'The tutorial creature always drops a Common Worn Plate and 50 extra Bronze. Equip the Plate to reduce incoming damage. Next, learn how to plan your gathering, train away from the keyboard and recover between battles.'
     }, {
       id: 'preferences', title: 'Choose your gathering path',
-      text: 'Choose Balanced for equal odds across all five gathering skills, or Preferred for primary and secondary choices. Total gathering chance remains 50%. This changes which nodes you find, not their rewards. Tutorial nodes are guaranteed for the starter lessons.'
+      text: 'Choose a primary and secondary gathering skill. Primary gets 25% per Advance, secondary gets 12.5%, and the other three share the remaining 12.5% equally. This changes which nodes you find, not their rewards. Tutorial nodes are guaranteed for the starter lessons.'
     }, {
       id: 'offline', title: 'AFK skilling: progress while away',
       text: 'Choose an AFK skilling discipline under Skills → Offline training. When you return, it earns up to eight hours of XP only: gathering 25%, Smithing/Cooking 12.5%, Faceting 1.875% of base active XP. Knowledge applies. No ingredients are spent and no items or coins are produced. Choose a skill now or leave it at None.'
@@ -64,7 +64,7 @@
       text: 'Tool prefixes improve different parts of a skill. Efficiency speeds active work; Yield can add an item; Fortune can find next-tier resources; Knowledge increases XP; Conservation can save charges or ingredients. Find exact per-rank effects in Skills and every tool detail. Ascension develops tool prefixes. Choose upgrades to support the kind of progress you want.'
     }, {
       id: 'ready', title: 'Your journey begins here',
-      text: 'You have prepared food, made a bar, cut a gem, improved your weapon and equipped armour. You also know how to guide gathering odds, train away from the keyboard and recover. Complete training to unlock quests, Farming and the open road. Visit the Farming Grove with your Pruning Shears to harvest Flax Fibre at Farming level 1. Your health will be fully restored.'
+      text: 'You have prepared food, made a bar, cut a gem, improved your weapon and equipped armour. You also know how to guide gathering odds, train away from the keyboard and recover. Complete training to unlock quests, Farming and the open road. Advance to discover Farming crop patches, then harvest Flax Fibre with your Pruning Shears at Farming level 1. Your health will be fully restored.'
     }]
   };
   const routes={
@@ -79,7 +79,7 @@
     enhance:{page:'Character',tab:'Equipment',steps:['Select Equipment and click your equipped weapon.','In its item window, press Enhance. Review the materials, cost and success chance, then confirm. This lesson improves your weapon before combat.']},
     fight:{page:'World',steps:['Your cooked food has been assigned in Provisions. Tap Eat when hurt. Buy Auto-Eat 25% from Shop at level 10.','Press Advance. Read the Level 1 creature preview, then press Fight. Your new prefix and food help prepare you for this encounter.']},
     equip:{page:'Inventory',tab:'Equipment',steps:['Select Equipment in Inventory and click the Common Worn Plate from the tutorial battle.','Press Equip in its item window. Armor reduces incoming damage on your next journey.']},
-    preferences:{page:'Skills',steps:['Find Your gathering path near the top of Skills.','Choose Balanced for equal gathering odds, or Preferred skills for primary and secondary choices. The combined gathering chance remains 50%.']},
+    preferences:{page:'Skills',steps:['Find Your gathering path near the top of Skills.','Choose primary and secondary skills from the five gathering skills. The other three share the remaining gathering chance equally.']},
     offline:{page:'Skills',steps:['Find Offline training beside Your gathering path near the top of Skills. On a phone, scroll below the preference panel.','Use AFK skilling to choose the skill that earns XP while away. You can leave it at None. No materials or coins are produced or consumed.']},
     afk:{page:'Settings',steps:['Find the AFK advancing panel. Every Advance takes 8 seconds.','Type your minimum estimated win chance and low-health stopping point as percentages from 0 to 100. Set the encounter filters before starting a real session.','AFK advancing needs the game visible and can spend coins after the first 15 minutes. Review the regional fee.']},
     recovery:{page:'World',steps:['Find Wayside campfire and Wayside inn beside the encounter. On a phone, tap their headings to expand the controls.','The campfire is free once every 30 minutes. The inn has a displayed price and no cooldown. Food is managed in Provisions.']},
@@ -87,5 +87,5 @@
     ready:{page:'World',steps:['Review your health, food and wallet.','Open this final lesson and choose Complete tutorial when you are ready for the open road.']}
   };
   D.tutorial.steps.forEach(step=>step.route=routes[step.id]);
-  D.tutorial.steps.find(s=>s.id==='preferences').text='Balanced gives Mining, Woodcutting, Fishing, Hunting and Farming equal 10% chances per Advance. Preferred skills use about 22.22% primary, 11.11% secondary and 5.56% for each other gathering skill. Farming harvests fibres with Pruning Shears after the tutorial.';
+  D.tutorial.steps.find(s=>s.id==='preferences').text='Choose any of the five gathering skills as primary and secondary. Primary gets 25% per Advance; secondary gets 12.5%; each of the other three gets about 4.17%. Farming crop patches appear through Advance and use Pruning Shears after the tutorial.';
 })(RPG.data);

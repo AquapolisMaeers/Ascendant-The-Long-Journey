@@ -1,6 +1,10 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-17',title:'Farming follows the road',changes:[
+    'Removed the Farming Grove and its direct-harvest shortcuts. Discover fibre crop patches with Advance, then Harvest them with Pruning Shears, like other gathering encounters. Existing crops, Farming XP and tools are preserved.',
+    'Gathering always uses your chosen primary and secondary skills. Primary keeps 25% per Advance and secondary keeps 12.5%; the remaining three skills split 12.5% equally, about 4.17% each. Total gathering remains 50%, and Farming can be primary or secondary.'
+  ]},
   {date:'2026-10-17',title:'Farming and Pruning Shears',changes:[
     'Farming is the eighth skill, with its own level, XP and Pruning Shears. Every character receives free bound Common shears. Existing skills, tools and stored fibres are preserved.',
     'Harvest Flax Fibre from Farming level 1, Nettle Fibre from level 5, and later crops at their material levels. Visit World > Farming Grove for repeatable harvesting, or discover crop patches through Advance. Woodcutting now produces lumber without a fibre bonus.',
