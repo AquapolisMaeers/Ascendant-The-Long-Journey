@@ -49,4 +49,16 @@
   [1, 10, 100, 1000, 10000].forEach(n => add('quests-' + n, 'Quests completed · ' + n.toLocaleString(), 'Quests', n, c => c.questCompletions ?? 0));
   add('companion-first', 'Adopt your first companion', 'Companions', 1, c => +!!c.companion);
   [5, 10, 15, 20].forEach(n => add('companion-level-' + n, 'Companion level ' + n, 'Companions', n, c => c.companion?.level ?? 0));
+  // Additive milestones keep earned legacy achievements and launch requirements.
+  [5,10].forEach(n=>add('farming-level-'+n,'Farming level '+n,'Skills',n,c=>c.skills.Farming.level));
+  [1,100,1000,10000].forEach(n=>add('harvest-'+n,'Harvest '+n.toLocaleString()+' fibres','Farming',n,c=>c.stats.harvested||0));
+  [1,100,1000].forEach(n=>add('textiles-'+n,'Refine '+n.toLocaleString()+' leather or cloth','Crafting',n,c=>c.stats.textiles||0));
+  [1,10,100].forEach(n=>add('secondary-craft-'+n,'Smith '+n+' secondaries','Crafting',n,c=>c.stats.secondaries||0));
+  add('secondary-equipped','Equip a class secondary','Equipment',1,c=>+!!c.equipment.Secondary);
+  add('equipped-nine','Equip all nine slots','Equipment',9,c=>Object.values(c.equipment).filter(Boolean).length);
+  add('full25-nine','Equip nine +25 items','Equipment',9,c=>Object.values(c.equipment).filter(i=>i?.enhance===25).length);
+  add('ascendant-nine','Nine Ascendant +25 items','Equipment',9,c=>Object.values(c.equipment).filter(i=>i?.enhance===25&&i.rarity===7).length);
+  [1,10,46,99].forEach(n=>add('talents-'+n,'Invest '+n+' talent points','Talents',n,c=>Object.values(c.talents||{}).reduce((sum,rank)=>sum+rank,0)));
+  add('talent-path','Master a complete talent path','Talents',1,c=>+D.talents[c.class].some(path=>path.nodes.every((_,index)=>c.talents?.[path.id+':'+index]===D.talentRanks[index])));
+  D.dungeons.forEach(d=>add('collection-expanded-'+d.id,d.prefix+' complete arsenal (23 pieces)','Dungeons',23,c=>(c.stats.bossDrops[d.id]||[]).length));
 })(RPG.data);

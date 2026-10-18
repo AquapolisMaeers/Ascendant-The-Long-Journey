@@ -40,7 +40,7 @@
     },
     mobileMenu() { U.mobileMenu(); },
     provisionsShop() { G.runtime.page='Shop'; G.runtime.shopSection='general'; G.runtime.tab='Character'; U.render(); },
-    learnTalent(el) { S.talents.learn(el.dataset.id); },
+    learnTalent(el) { U.confirmTalent(el.dataset.id); },
     resetTalents() {
       U.resetBuild('talent-reset');
     },

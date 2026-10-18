@@ -56,14 +56,17 @@
     damagePerLevel: 1.4,
     defencePerLevel: 1
   };
-  // Crossroads stays unchanged. Later regions demand current-tier equipment.
-  D.enemyScaling = location => ({
-    health: 1 + .12 * location + .008 * location * location,
-    damage: 1 + .06 * location + .003 * location * location,
-    defence: 1 + .08 * location + .004 * location * location,
+  // Fixed creature levels drive difficulty, independent of the player's loadout.
+  // Preserve levels 1-9; add two progression ramps, then taper the late ramp.
+  D.enemyScaling = (location, level = D.locations[location].level) => {
+    const early=Math.max(0,Math.min(level,19)-9),mid=Math.max(0,Math.min(level,30)-19),late=Math.max(0,level-30);
+    return {
+    health: (1 + .12 * location + .008 * location * location) * (1+.035*early+.035*mid+.002*late),
+    damage: (1 + .06 * location + .003 * location * location) * (1+.02*early+.018*mid+.0008*late),
+    defence: (1 + .08 * location + .004 * location * location) * (1+.02*early+.015*mid+.0008*late),
     penetration: location * .012,
     resistance: location * .01
-  });
+  }; };
   D.dungeonLevels = {regular: [0, 4], elite: [5, 9], boss: [7, 9]};
   D.boss = {
     health: 7,

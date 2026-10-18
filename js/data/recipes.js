@@ -40,6 +40,11 @@
         }
       } else D.recipes.push(recipe);
     }
+    for(let piece=10;piece<=12;piece++) {
+      const cost=D.secondaryCost(tier,piece);
+      D.recipes.push({id:'gear:'+tier+':'+piece,name:D.tierNames[tier]+' '+D.pieces[piece],skill:'Smithing',category:'Secondaries',tier,level,piece,cost,
+        xp:D.config.skillXp*level*Object.entries(cost).reduce((sum,[id,n])=>sum+n*D.materialWork(id.split(':')[0],tier),0)});
+    }
     for(const kind of ['leather','cloth']) {
       const cost=kind==='leather'?{['hide:'+tier]:3,['logs:'+tier]:1}:{['fiber:'+tier]:3};
       D.recipes.push({id:kind+':'+tier,name:D.resources[kind][tier],skill:'Smithing',tier,level,cost,

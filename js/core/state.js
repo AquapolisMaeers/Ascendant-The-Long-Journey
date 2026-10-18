@@ -53,6 +53,7 @@
       tools: {},
       perks: {},
       talents: {},
+      creatureBalanceVersion: 1,
       provisionsVersion: 1,
       achievements: {},
       title: '',

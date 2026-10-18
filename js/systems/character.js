@@ -40,12 +40,13 @@
       };
       const add = (key, val) => s[key] = typeof val === 'boolean' ? val : (s[key] || 0) + val;
       for (const item of Object.values(c.equipment).filter(Boolean)) {
+        const power = item.slot === 'Secondary' ? D.secondaryPower : 1;
         Object.entries(S.items.stats(item)).forEach(([k, v]) => add(k, v));
-        Object.entries(item.prefixes).forEach(([k, v]) => add(k, v));
+        Object.entries(item.prefixes).forEach(([k, v]) => add(k, v * power));
         item.gems.filter(Boolean).forEach(id => {
           const gem = D.catalog[id],
             def = D.gems[gem.type];
-          if (def.style === undefined || def.style === D.classes.indexOf(c.class)) add(def.stat, def.value * gem.rank);
+          if (def.style === undefined || def.style === D.classes.indexOf(c.class)) add(def.stat, def.value * gem.rank * power);
         });
       }
       for (const [level, choice] of Object.entries(c.perks)) {

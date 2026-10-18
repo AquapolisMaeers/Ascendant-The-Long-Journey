@@ -32,7 +32,7 @@
       return;
     }
     if (i.kind !== 'gear' || !Number.isInteger(i.tier) || !D.tiers[i.tier] || !Number.isInteger(i.piece) || !D.pieces[i.piece] || !Number.isInteger(i.rarity) || !D.rarity[i.rarity] || !Number.isInteger(i.enhance) || !finite(i.enhance, 0, 25)) fail('equipment');
-    if (i.slot !== (i.piece < 3 ? 'Weapon' : D.pieces[i.piece]) || i.style !== (i.piece < 3 ? i.piece : null) || !(i.boss === null || Number.isInteger(i.boss) && D.dungeons[i.boss])) fail('equipment identity');
+    if (i.slot !== D.pieceSlot(i.piece) || i.style !== (i.piece < 3 ? i.piece : null) || !(i.boss === null || Number.isInteger(i.boss) && D.dungeons[i.boss])) fail('equipment identity');
     if (i.armorClass !== undefined && (!D.classes.includes(i.armorClass) || !D.armorSlots.includes(i.slot))) fail('armour class');
     if (!i.prefixes || Object.keys(i.prefixes).length > G.systems.items.prefixSlots(i) || Object.entries(i.prefixes).some(([k, v]) => !D.prefixPools[i.slot].includes(k) || !finite(v))) fail('prefixes');
     if (!Array.isArray(i.gems) || i.gems.length > G.systems.items.sockets(i) || i.gems.some(k => k !== null && (!D.catalog[k] || D.catalog[k].category !== 'Gems' || !D.catalog[k].rank || !D.gemAllowed[i.slot].includes(D.catalog[k].type)))) fail('sockets');
@@ -97,6 +97,7 @@
       if (c.xp >= D.xpNext(c.level) || c.level === 100 && c.xp !== 0) fail('unresolved character XP');
       for (const key of ['advance', 'regular', 'elite', 'boss', 'dungeons', 'bars', 'cooked', 'facets', 'enhancements', 'maxEnhance', 'socketed', 'listing', 'sale', 'purchase', 'damage', 'deaths'])
         if (!finite(c.stats[key])) fail('statistics');
+      for(const key of ['harvested','textiles','secondaries'])if(c.stats[key]!==undefined && (!Number.isSafeInteger(c.stats[key])||c.stats[key]<0))fail('craft and harvest statistics');
       for (const key of ['ascensions', 'gemCreated'])
         if (!Array.isArray(c.stats[key])) fail('achievement records');
       if (!c.stats.bossKills || !c.stats.bossDrops || typeof c.title !== 'string') fail('boss or title records');
@@ -108,6 +109,7 @@
       for (const item of [...c.inventory, ...c.pending, ...Object.values(c.equipment).filter(Boolean), ...c.listings.map(l => l.item)]) validateItem(item, ids);
       for (const slot of D.slots)
         if (!(slot in c.equipment) || c.equipment[slot] && c.equipment[slot].slot !== slot) fail('equipped slot');
+      if(c.equipment.Secondary && D.secondaryClass(c.equipment.Secondary.piece)!==c.class) fail('secondary class');
       for (const skill of D.skills) {
         const t = c.tools[skill],
           s = c.skills[skill];
@@ -152,6 +154,7 @@
       }
       if (c.combat) {
         const f = c.combat;
+        for(const actor of [f.player,f.enemy])if(actor?.levelDamage!==undefined&&!finite(actor.levelDamage,1/3.5,3.5))fail('combat level modifier');
         if (!f.player || !f.enemy || !finite(f.time) || !finite(f.player.hp) || !finite(f.enemy.hp) || !finite(f.nextPlayer) || !finite(f.nextEnemy) || !finite(f.seed)) fail('combat state');
         for (const actor of [f.player, f.enemy])
           for (const key of ['level', 'damage', 'health', 'defence', 'crit', 'critDamage', 'penetration', 'double', 'dodge', 'reduction', 'resistance', 'lifeSteal', 'interval', 'hits'])
@@ -238,6 +241,18 @@
           }
         }
         c.talents ??= {};
+        if(c.equipment && !Object.hasOwn(c.equipment,'Secondary')) c.equipment.Secondary=null;
+        if(c.creatureBalanceVersion===undefined) {
+          // Refresh uncommitted previews once. A fight already in progress keeps
+          // its actors and random state so its committed outcome cannot change.
+          const enemy=c.encounter?.enemy,loc=c.location;
+          if(enemy&&!c.combat&&D.locations[loc]&&['regular','elite','boss'].includes(enemy.type)) {
+            const scale=D.enemyScaling(loc,enemy.level,enemy.type);
+            const old={health:1+.12*loc+.008*loc*loc,damage:1+.06*loc+.003*loc*loc,defence:1+.08*loc+.004*loc*loc};
+            for(const key of ['health','damage','defence'])enemy[key]*=scale[key]/old[key];
+          }
+          c.creatureBalanceVersion=1;
+        }
         // Old 25% was free. Keep paid higher tiers and remove only that free tier.
         if(c.provisionsVersion===undefined && Array.isArray(c.eatUnlocks)) {
           c.eatUnlocks=c.eatUnlocks.filter(n=>n!==.25);

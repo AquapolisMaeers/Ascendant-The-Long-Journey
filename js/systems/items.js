@@ -3,7 +3,7 @@
   S.items = {
     create(tier, piece, rarity = 0, boss = null, armorClass = G.character()?.class || 'Warrior') {
       const style = piece < 3 ? piece : null,
-        slot = piece < 3 ? 'Weapon' : D.pieces[piece];
+        slot = D.pieceSlot(piece);
       return {
         id: G.uid(),
         kind: 'gear',
@@ -45,18 +45,27 @@
     name(item) {
       if (item.kind === 'tool') return item.name;
       const d = item.boss !== null ? D.dungeons[item.boss] : null;
+      if (item.slot === 'Secondary') return (d ? d.prefix : D.tierNames[item.tier]) + ' ' + D.pieces[item.piece];
       if (item.armorClass && D.armorSlots.includes(item.slot)) return (d ? d.prefix : D.armorTierName(item.armorClass,item.tier)) + ' ' + D.armorNames[item.armorClass][D.armorSlots.indexOf(item.slot)];
       return d ? (item.style !== null ? d.weapons[item.style] : d.prefix + ' ' + (item.slot === 'Helmet' ? 'Helm' : item.slot)) : (item.style !== null ? D.weapons[item.style][item.tier] : D.tierNames[item.tier] + ' ' + item.slot);
     },
     stats(item) {
       const mult = D.tiers[item.tier] * (item.boss !== null ? D.config.bossGear : 1) * D.rarityMult[item.rarity] * (1 + D.config.enhanceStat * item.enhance);
+      const growth = Math.sqrt(mult / 100);
+      if(item.slot === 'Secondary') {
+        const base = [{defence:.3,health:.5,damage:.06},{damage:.16},{damage:.18}][item.piece-10];
+        const stats = Object.fromEntries(Object.entries(base).map(([key,value])=>[key,value*mult]));
+        Object.assign(stats,[{reduction:.025*growth},{speed:.04*growth,penetration:.025*growth,dodge:.02*growth},{crit:.025*growth,critDamage:.08*growth,resistance:.04*growth}][item.piece-10]);
+        return stats;
+      }
       const stats = Object.fromEntries(Object.entries(D.itemStats[item.slot]).map(([key, value]) => [key, value * mult]));
       if (item.armorClass) {
         const factors = {Warrior:[1.2,1.15],Archer:[.8,.95],Mage:[.65,.9]}[item.armorClass];
         if(stats.defence) stats.defence *= factors[0];
         if(stats.health) stats.health *= factors[1];
-        if(item.armorClass==='Archer') { stats.speed=.008; stats.crit=.006; }
-        if(item.armorClass==='Mage') { stats.damage=(stats.damage||0)+.03*mult; stats.penetration=.008; }
+        if(item.armorClass==='Warrior') stats.reduction=.01*growth;
+        if(item.armorClass==='Archer') { stats.speed=.035*growth; stats.penetration=.025*growth; stats.dodge=.018*growth; }
+        if(item.armorClass==='Mage') { stats.crit=.045*growth; stats.critDamage=.14*growth; stats.resistance=.06*growth; }
       }
       return stats;
     },
@@ -98,6 +107,7 @@
       };
     },
     recipe(item) {
+      if(item.slot==='Secondary') return D.secondaryCost(item.tier,item.piece);
       return Object.fromEntries(Object.entries(D.armorCost(item.slot,item.armorClass)).map(([k, n]) => [k + ':' + item.tier, n]));
     },
     toolBonus(c, skill, key) {
@@ -194,6 +204,7 @@
       }
       G.assert(c.level >= D.tiers[item.tier], 'Character level is too low.');
       G.assert(item.style === null || item.style === D.classes.indexOf(c.class), 'Wrong weapon class.');
+      G.assert(item.slot !== 'Secondary' || D.secondaryClass(item.piece) === c.class, 'Wrong secondary class.');
       G.assert(!item.armorClass || item.armorClass === c.class, 'This armour is for ' + item.armorClass + '.');
       const old = c.equipment[item.slot];
       c.inventory.splice(c.inventory.indexOf(item), 1);

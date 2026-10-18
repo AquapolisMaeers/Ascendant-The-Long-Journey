@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-18',title:'Secondaries, class identity and a harder road',changes:[
+    'Creatures gain additional health, damage and defence after level 10, with a steeper climb after 20. Elites and bosses share the increases and retain their rank multipliers. A level gap greater than three also reduces the weaker fighter’s damage and strengthens the higher-level fighter; effective levels cap at 100. Victory estimates and AFK use the same rules.',
+    'Warrior armour supports an all-round bruiser with health, defence and damage reduction. Ranger leather focuses on attack speed, penetration and dodge. Mage cloth focuses on critical chance, critical damage and resistance. These bonuses grow with item tier, rarity and enhancement.',
+    'A ninth equipment slot holds Warrior shields, Ranger small daggers or Mage grimoires. All twelve regular tiers can be smithed under Secondaries. Every boss can drop its own three secondaries alongside all class armour and main hands. Gear drop rates stay the same; only the weighted piece pool expands.',
+    'Secondaries have lower inherent stats than main hands, and their prefixes and gems contribute 45% strength. Enhance, Ascend, socket, extract and sell them as usual. The old Obsidian-tier Spellbook becomes an Obsidian Staff with all upgrades preserved.',
+    'Talent buttons now say Review and open a confirmation with the talent name, rank change and remaining points. Only Spend 1 talent point spends it, followed by a visible success message.',
+    'Equipment recipes use matching aligned cards across all armour classes and secondaries. Added achievements cover fibre harvests, textiles, secondary crafting, nine-slot sets, talent investment and all 23 unique pieces from each boss. Existing earned achievements remain.'
+  ]},
   {date:'2026-10-17',title:'Materials together and complete artwork',changes:[
     'Crafting > Smithing > Materials combines bars, leather and cloth at every material level. All three use matching cards with aligned ingredient sections, quantity controls and full-width crafting buttons; phones show one card per row.',
     'Auras and mounts now use individually measured picture boundaries, keeping neighbouring artwork out of equipped views and collections. Class armour, refined textiles and advanced gems use the same proportional fitting so full paintings, including robe hems, remain visible.'

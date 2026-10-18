@@ -14,4 +14,5 @@
     return className==='Archer'?{leather:base.bar,logs:Math.ceil(base.bar/3)}:{cloth:base.bar,fiber:Math.ceil(base.bar/2)};
   };
   D.materialWork=(kind,tier)=>kind==='bar'?5+D.coal[tier]:kind==='leather'?4:kind==='cloth'?3:1;
+  D.secondaryCost=(tier,piece)=>Object.fromEntries(Object.entries(piece===10?{bar:7,logs:10,hide:6}:piece===11?{bar:6,leather:3}:{bar:2,cloth:6,logs:5}).map(([kind,n])=>[kind+':'+tier,n]));
 })(RPG.data);

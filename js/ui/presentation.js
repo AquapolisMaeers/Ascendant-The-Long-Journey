@@ -23,7 +23,7 @@
   U.itemStatLabel = (key, item) => key === 'damage' && item?.style !== null && item?.style !== undefined ?
     D.primary[item.style] + ' Damage' : D.labels[key];
   const gearFor = r => ({
-    kind:'gear', tier:r.tier, piece:r.piece, slot:r.piece < 3 ? 'Weapon' : D.pieces[r.piece],
+    kind:'gear', tier:r.tier, piece:r.piece, slot:D.pieceSlot(r.piece),
     style:r.piece < 3 ? r.piece : null, armorClass:r.armorClass, rarity:0, boss:null, enhance:0, prefixes:{}, gems:[]
   });
   U.itemSummary = item => {
@@ -67,8 +67,9 @@
     if (recipe.piece === undefined) return U.effectPreview({kind:'stack', key:recipe.output});
     const item = gearFor(recipe), c = G.character(), equipped = c.equipment[item.slot], stats = S.items.stats(item);
     const before = S.character.stats(c), after = S.character.stats({...c, equipment:{...c.equipment,[item.slot]:item}});
-    const comparison = item.armorClass && item.armorClass !== c.class || item.style !== null && item.style !== D.classes.indexOf(c.class) ?
-      '<p class="notes">This equipment requires '+(item.armorClass || D.classes[item.style])+'. Compare equipment for your class to preview your build.</p>' :
+    const requiredClass = D.secondaryClass(item.piece) || item.armorClass || (item.style!==null ? D.classes[item.style] : null);
+    const comparison = requiredClass && requiredClass !== c.class ?
+      '<p class="notes">This equipment requires '+requiredClass+'. Compare equipment for your class to preview your build.</p>' :
       '<p class="notes">Replacing '+(equipped?U.e(U.itemName(equipped)):'an empty '+item.slot+' slot')+' with this Common +0 piece.</p>'+
       '<table class="data-table crafted-comparison"><thead><tr><th>Final stat</th><th>Now</th><th>With craft</th><th>Change</th></tr></thead><tbody>'+
       Object.keys(D.labels).filter(key=>!key.endsWith('Pct')).map(key=>{
@@ -76,10 +77,11 @@
         return '<tr><td>'+D.labels[key]+'</td><td>'+U.statValue(key,before[key])+'</td><td>'+U.statValue(key,after[key])+'</td><td class="'+
           (changed?delta>0?'good':'bad':'')+'">'+(changed?(delta>0?'+':'')+U.statValue(key,delta):'—')+'</td></tr>';
       }).join('')+'</tbody></table><small>Includes equipped prefixes, gems, perks, companion bonuses and effective caps. The new craft starts without prefixes or gems.</small>';
-    return '<div class="recipe-preview"><div class="eyebrow">COMMON +0 · DAMAGE, DEFENCE & HEALTH</div><dl class="preview-stats">' +
+    return '<div class="recipe-preview"><div class="eyebrow">COMMON +0 · EQUIPMENT STATS</div><dl class="preview-stats">' +
       Object.entries(stats).map(([key, val]) => '<div><dt>' + U.itemStatLabel(key, item) + '</dt><dd>' +
         U.statValue(key, val) + '</dd></div>').join('') + '</dl><small>Equip Lv ' + D.tiers[item.tier] +
-      (item.armorClass ? ' · ' + item.armorClass + ' only' : item.style === null ? '' : ' · ' + D.classes[item.style] + ' only') + '</small>' +
+      (requiredClass ? ' · ' + requiredClass + ' only' : '') + '</small>' +
+      (item.slot==='Secondary'?'<small>Off-hand · prefixes & gems at 45% strength</small>':'')+
       '<details class="compare-crafted"><summary>Compare full equipped stats</summary>'+comparison+'</details></div>';
   };
   U.upgradePreview = (item, ascend) => {

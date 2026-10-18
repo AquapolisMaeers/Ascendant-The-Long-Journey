@@ -43,6 +43,10 @@
         cost[(item.armorClass==='Archer'?'leather':'cloth')+':'+item.tier]=D.enhance.bars[b];
         cost[(item.armorClass==='Archer'?'logs':'fiber')+':'+item.tier]=D.enhance.secondary[b];
       }
+      if(item.slot==='Secondary') {
+        for(const key of Object.keys(cost))delete cost[key];
+        for(const [key,n] of Object.entries(S.items.recipe(item)))cost[key]=Math.max(1,Math.ceil(n*(b+1)/5));
+      }
       return {
         coins: D.coinUnits[item.tier] * D.enhance.coins[b],
         cost,

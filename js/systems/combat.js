@@ -1,6 +1,15 @@
 'use strict';
 (function(G, D, S) {
   const C = D.config;
+  // Three levels of grace, then a meaningful level disadvantage. The same
+  // rule applies to both actors. Dungeon levels above the player cap retain
+  // their higher base stats without an unavoidable extra level-gap penalty.
+  const levelFactor=(a,b)=>{
+    if(Math.max(a.level,b.level)<10)return 1;
+    const difference=Math.min(C.levelCap,a.level)-Math.min(C.levelCap,b.level),gap=Math.max(0,Math.abs(difference)-3);
+    const factor=Math.min(3.5,1+.3*gap+.15*gap*gap);
+    return difference>=0?factor:1/factor;
+  };
   const hit = (a, b) => G.clamp(1 + C.hitLevel * (a.level - b.level) - b.dodge, C.minHitChance, 1);
   const crit = (a, b) => G.clamp(a.crit - b.resistance, 0, D.caps.crit);
   const mitigation = (a, b) => {
@@ -20,7 +29,7 @@
     }
     const hitNumber = a.hits + 1;
     const critical = rng() < crit(a, b) || a.perfectShot && hitNumber % 3 === 0;
-    let damage = a.damage * (critical ? 1 + a.critDamage : 1);
+    let damage = a.damage * (a.levelDamage ?? 1) * (critical ? 1 + a.critDamage : 1);
     if(a.fury) damage *= 1+a.fury*(1-a.hp/a.health)*(a.unchained && a.hp/a.health<.4?2:1);
     if(a.ignite) damage *= 1+a.ignite*Math.min(5,a.hits);
     if(a.venom) damage *= 1+a.venom*Math.min(a.deathblossom?10:5,a.hits);
@@ -95,13 +104,14 @@
     if (f.food.threshold > 0 && f.player.hp / f.player.health <= f.food.threshold) eat(f, events);
   }
   S.kernel = {
+    levelFactor,
     hit,
     crit,
     mitigation,
     reduction,
     eat,
     average(a, b) {
-      return hit(a, b) * Math.max(C.minimumHit, a.damage * (1 + crit(a, b) * a.critDamage) * (1 - mitigation(a, b)) * (1 - reduction(b))) * (1 + hit(a, b) * a.double);
+      return hit(a, b) * Math.max(C.minimumHit, a.damage * (a.levelDamage ?? levelFactor(a,b)) * (1 + crit(a, b) * a.critDamage) * (1 - mitigation(a, b)) * (1 - reduction(b))) * (1 + hit(a, b) * a.double);
     },
     create(c, enemy, seed) {
       const player = {
@@ -117,6 +127,10 @@
         wind: false
       };
       const food = D.catalog[c.food];
+      // Snapshot the level factors. Legacy saved fights omit them and continue
+      // at their previously committed damage, while new fights use this rule.
+      player.levelDamage=levelFactor(player,foe);
+      foe.levelDamage=levelFactor(foe,player);
       if(player.chill) foe.interval *= 1+player.chill*(player.deepFreeze?2:1);
       return {
         player,

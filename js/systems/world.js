@@ -53,7 +53,7 @@
         resistance: 0,
         lifeSteal: 0
       };
-      const scaling = D.enemyScaling(location);
+      const scaling = D.enemyScaling(location, level);
       for (const key of ['health', 'damage', 'defence']) e[key] *= scaling[key];
       e.penetration = scaling.penetration;
       e.resistance = scaling.resistance;
@@ -170,6 +170,7 @@
       });
       S.inventory.reward(rewards);
       S.quests.gathered(a.skill, rewards, c);
+      if(a.skill==='Farming')c.stats.harvested=(c.stats.harvested||0)+rewards.reduce((sum,r)=>sum+r.quantity,0);
       G.audio?.play(a.skill.toLowerCase());
       a.rewards = S.loot.merge(a.rewards || [], rewards);
       S.tutorial?.gathered(a.skill, rewards);
@@ -218,9 +219,9 @@
         Object.assign(enemy, {
           name: 'Mimic',
           archetype: 'Mimic · Balanced',
-          health: (D.enemyBase.health + D.enemyBase.healthPerLevel * e.level) * D.enemyScaling(c.location).health,
-          damage: (D.enemyBase.damage + D.enemyBase.damagePerLevel * e.level) * D.enemyScaling(c.location).damage,
-          defence: e.level * D.enemyScaling(c.location).defence,
+          health: (D.enemyBase.health + D.enemyBase.healthPerLevel * e.level) * D.enemyScaling(c.location, e.level).health,
+          damage: (D.enemyBase.damage + D.enemyBase.damagePerLevel * e.level) * D.enemyScaling(c.location, e.level).damage,
+          defence: e.level * D.enemyScaling(c.location, e.level).defence,
           crit: D.config.baseCrit,
           critDamage: D.config.baseCritDamage,
           speed: 0,
@@ -343,15 +344,16 @@
       }
       if (G.rng() < table.gear) {
         const tier = S.world.tier(location, table.divisor),
-          piece = G.int(G.rng, 0, 9),
+          piece = G.weighted(G.rng, D.gearWeights),
           rarity = G.weighted(G.rng, table.rarities);
-        // Keep the existing piece roll; only armour makes a second class draw.
+        // The gear gate is unchanged; select a piece and then its armour class.
         const armorClass = D.armorSlots.includes(D.pieces[piece]) ? D.classes[G.weighted(G.rng, D.armorWeights)] : undefined;
         const item = S.items.create(tier, piece, rarity, type === 'boss' ? loc.dungeon : null, armorClass);
         rewards.push(item);
         if (type === 'boss') {
           const c = G.character();
-          c.stats.bossDrops[loc.dungeon] = [...new Set([...(c.stats.bossDrops[loc.dungeon] || []), piece])];
+          const identity = item.armorClass && item.armorClass !== 'Warrior' ? piece + ':' + item.armorClass : piece;
+          c.stats.bossDrops[loc.dungeon] = [...new Set([...(c.stats.bossDrops[loc.dungeon] || []), identity])];
         }
       }
       if (G.rng() < table.tool) rewards.push(S.items.dropTool(D.skills[G.weighted(G.rng, D.toolDrops.weights)], G.weighted(G.rng, table.rarities)));

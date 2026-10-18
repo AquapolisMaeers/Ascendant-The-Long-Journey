@@ -1,11 +1,17 @@
 'use strict';
 (function(D) {
   D.slots = ['Weapon', 'Helmet', 'Plate', 'Greaves', 'Gloves', 'Boots', 'Necklace', 'Ring'];
-  D.pieces = ['Melee Weapon', 'Ranged Weapon', 'Magic Weapon', ...D.slots.slice(1)];
+  D.pieces = ['Melee Weapon', 'Ranged Weapon', 'Magic Weapon', ...D.slots.slice(1), 'Shield', 'Dagger', 'Grimoire'];
+  D.slots.push('Secondary');
+  D.pieceSlot = piece => piece < 3 ? 'Weapon' : piece >= 10 ? 'Secondary' : D.pieces[piece];
+  D.secondaryClass = piece => piece >= 10 ? D.classes[piece - 10] : null;
+  D.gearWeights = [1,1,1,1,1,1,1,1,1,1,.65,.65,.65];
+  D.secondaryPower = .45; // Prefixes and socketed gems also have reduced strength.
+  D.classRoles = {Warrior:'All-round bruiser: health, defence and steady damage. Shields add staying power.',Archer:'Ranger: attack speed, penetration and dodge. Small blades support rapid attacks.',Mage:'Critical chance, critical damage and resistance. Grimoires support spell bursts.'};
   D.weapons = [
     ['Worn Sword', 'Shortsword', 'Longsword', 'Battleaxe', 'Greataxe', 'Warhammer', 'Greatsword', 'Halberd', 'Maul', 'Glaive', 'Zweihander', 'Greatblade'],
     ['Worn Bow', 'Shortbow', 'Longbow', 'Recurve Bow', 'Composite Bow', 'Warbow', 'Crossbow', 'Heavy Crossbow', 'Greatbow', 'Arbalest', 'Siege Bow', 'Grandbow'],
-    ['Worn Wand', 'Oak Wand', 'Staff', 'Runed Staff', 'Battlestaff', 'Warstaff', 'Scepter', 'Spellbook', 'Crystal Staff', 'Arcane Scepter', 'Grand Staff', 'Archstaff']
+    ['Worn Wand', 'Oak Wand', 'Staff', 'Runed Staff', 'Battlestaff', 'Warstaff', 'Scepter', 'Obsidian Staff', 'Crystal Staff', 'Arcane Scepter', 'Grand Staff', 'Archstaff']
   ];
   D.itemStats = {
     Weapon: {
@@ -89,6 +95,7 @@
     lifeSteal: [.0005, .002]
   };
   D.prefixPools = {
+    Secondary: ['damage','defence','health','crit','critDamage','speed','penetration','dodge','resistance'],
     Weapon: ['damage', 'damagePct', 'crit', 'critDamage', 'speed', 'penetration', 'double'],
     Helmet: ['defence', 'defencePct', 'health', 'healthPct', 'resistance'],
     Plate: ['defence', 'defencePct', 'health', 'healthPct', 'reduction'],
@@ -131,6 +138,7 @@
     value: .02
   }];
   D.gemAllowed = {
+    Secondary: [0,1,2,3,4,5,6],
     Weapon: [0, 1, 2, 5, 6],
     Gloves: [0, 1, 2, 5, 6],
     Helmet: [3, 4],

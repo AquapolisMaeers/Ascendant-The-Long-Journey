@@ -99,6 +99,8 @@
           c.stats.gemCreated = [...new Set([...c.stats.gemCreated, r.rank + 1])];
         }
         if (r.id.startsWith('bar:')) c.stats.bars += yieldCount;
+        if (r.category==='Secondaries') c.stats.secondaries=(c.stats.secondaries||0)+yieldCount;
+        if (['cloth','leather'].includes(r.output?.split(':')[0])) c.stats.textiles=(c.stats.textiles||0)+yieldCount;
         if (r.skill === 'Cooking') c.stats.cooked += yieldCount;
         S.inventory.reward(rewards);
         G.runtime.recent = rewards;
