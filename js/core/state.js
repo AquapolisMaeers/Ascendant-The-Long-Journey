@@ -82,6 +82,7 @@
       food: null,
       eat: 0,
       eatUnlocks: [0],
+      batchEatUnlocks: [],
       foodReady: 0,
       peaceFoodReady: 0,
       facetFails: {},

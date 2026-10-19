@@ -239,8 +239,8 @@
     stopActivity() {
       S.world.stop();
     },
-    eat() {
-      S.combat.manualEat();
+    eat(el) {
+      S.combat.manualEat(Number(el?.dataset.quantity||1));
     },
     locations() {
       U.locations();
@@ -313,6 +313,8 @@
     gemGuideBack(el) { if(S.items.find(el.dataset.id))U.item(el.dataset.id);else U.close(); },
     portraitEquipment() { U.close(); G.runtime.page='Character'; G.runtime.tab='Equipment'; U.render(); if(U.isPhone())window.scrollTo(0,0); },
     emporiumOpen(el) { U.emporiumOpen(el.dataset.id); },
+    openInventoryBox(el) { U.openInventoryBox(el.dataset.id); },
+    viewMysteryBoxes() { U.close();G.runtime.page='Inventory';G.runtime.tab='Mystery Boxes';U.render(); },
     equipRegalia(el) { S.emporium.equip(el.dataset.id); U.close(); },
     unequipRegalia(el) { S.emporium.unequip(el.dataset.kind); },
     equipPet(el) { S.emporium.equipPet(el.dataset.id); U.close(); },

@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'Presents, practical meals and a fuller journey',changes:[
+    'Outfit, Aura, Mount and Pet Mystery Boxes now arrive as sealed inventory items. Find them under Inventory > Mystery Boxes, then Open present to reveal a permanent collection reward. Unopened boxes may be listed on the Marketplace in eligible modes. Prices, opening odds and duplicate AC refunds stay the same; opening never charges a second purchase price.',
+    'Shop > Character adds permanent Eat 5 (level 10, 25 Silver) and Eat 10 (level 20, 1 Gold) upgrades. Outside combat, consume up to that many assigned meals at once, stopping at full health or available food. Locked meals stay protected. Combat keeps single meals and its shared 10-second cooldown.',
+    'Equipment rolls give equal weight to all 23 variants: three main hands, fifteen class armour pieces, two accessories and three secondaries. Every boss supports the complete pool. Gear drop chances remain 2% regular, 5% elite and 12.5% boss, with unchanged rarity odds.',
+    'Exchange now accepts Farming fibres in either direction at the existing same-tier 10-for-1 rate. Regional quests can request elites, textiles, secondaries, cooking and successful faceting alongside gathering. Purchases and reward materials never advance those tasks.',
+    'New achievements cover opened presents, wearing outfit/aura/mount together and nine boss items with all 45 sockets filled. Local rankings add harvesting, textiles, secondaries, collections, boss arsenals and opened presents; companion ranking includes the stable.',
+    'Mount paintings now blend into one uniform background matching auras. Existing painted item artwork and compact controls carry through the box and meal interfaces. Elite coin rewards were verified: twice the regional regular roll, never below a regular payout in the same region.'
+  ]},
   {date:'2026-10-18',title:'A dedicated phone interface',changes:[
     'Phones now have their own compact layout with rounded cards, a small location header and a prominent Campfire near the top of Journey. Rest still gives free full healing once every 30 minutes, with a clear cooldown and explanations when unavailable.',
     'Explore holds encounters, victory estimates and region details. Supplies groups assigned food, Auto-Eat and paid inn healing. Auto holds active AFK controls and an offline training shortcut. Switching views preserves AFK advancing.',

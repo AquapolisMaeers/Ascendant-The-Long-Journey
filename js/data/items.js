@@ -5,7 +5,8 @@
   D.slots.push('Secondary');
   D.pieceSlot = piece => piece < 3 ? 'Weapon' : piece >= 10 ? 'Secondary' : D.pieces[piece];
   D.secondaryClass = piece => piece >= 10 ? D.classes[piece - 10] : null;
-  D.gearWeights = [1,1,1,1,1,1,1,1,1,1,.65,.65,.65];
+  // Armour has three class variants; each of the 23 distinct items gets equal weight.
+  D.gearWeights = [1,1,1,3,3,3,3,3,1,1,1,1,1];
   D.secondaryPower = .45; // Prefixes and socketed gems also have reduced strength.
   D.classRoles = {Warrior:'All-round bruiser: health, defence and steady damage. Shields add staying power.',Archer:'Ranger: attack speed, penetration and dodge. Small blades support rapid attacks.',Mage:'Critical chance, critical damage and resistance. Grimoires support spell bursts.'};
   D.weapons = [

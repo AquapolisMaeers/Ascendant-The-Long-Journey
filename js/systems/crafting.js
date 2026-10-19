@@ -103,6 +103,7 @@
         if (['cloth','leather'].includes(r.output?.split(':')[0])) c.stats.textiles=(c.stats.textiles||0)+yieldCount;
         if (r.skill === 'Cooking') c.stats.cooked += yieldCount;
         S.inventory.reward(rewards);
+        S.quests.crafted(r,rewards,c);
         G.runtime.recent = rewards;
       } else G.notify('Fusion failed. Exactly one gem broke; the other two remain. +1 percentage point fail protection.', 'warning');
       if (r.skill === 'Faceting') c.stats.facets++;

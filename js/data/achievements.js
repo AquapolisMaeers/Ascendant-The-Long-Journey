@@ -61,4 +61,8 @@
   [1,10,46,99].forEach(n=>add('talents-'+n,'Invest '+n+' talent points','Talents',n,c=>Object.values(c.talents||{}).reduce((sum,rank)=>sum+rank,0)));
   add('talent-path','Master a complete talent path','Talents',1,c=>+D.talents[c.class].some(path=>path.nodes.every((_,index)=>c.talents?.[path.id+':'+index]===D.talentRanks[index])));
   D.dungeons.forEach(d=>add('collection-expanded-'+d.id,d.prefix+' complete arsenal (23 pieces)','Dungeons',23,c=>(c.stats.bossDrops[d.id]||[]).length));
+  [1,10,100].forEach(n=>add('presents-'+n,'Open '+n+' mystery presents','Collections',n,c=>c.stats.boxesOpened||0));
+  add('regalia-trio','Outfit, aura and mount','Collections',3,c=>['outfit','aura','mount'].filter(kind=>c.regalia?.[kind]).length);
+  add('boss-sockets-nine','Nine boss items, every socket filled','Gems',45,c=>Object.values(c.equipment).filter(i=>i?.boss!=null&&i.enhance===25).reduce((n,i)=>n+i.gems.filter(Boolean).length,0));
+  add('gem-extreme-nine','Forty-five simultaneous Gem V','Gems',45,c=>Object.values(c.equipment).filter(i=>i?.boss!=null&&i.enhance===25).reduce((n,i)=>n+i.gems.filter(k=>k&&D.catalog[k].rank===5).length,0));
 })(RPG.data);

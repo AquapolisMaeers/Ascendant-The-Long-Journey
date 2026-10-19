@@ -40,10 +40,16 @@
     {id:'outfit-box',name:'Outfit Mystery Box',kind:'outfit',price:75,duplicate:15},
     {id:'aura-box',name:'Aura Mystery Box',kind:'aura',price:75,duplicate:15},
     {id:'mount-box',name:'Mount Mystery Box',kind:'mount',price:75,duplicate:15},
-    {id:'pet-box',name:'Special Pet Mystery Box',kind:'pet',price:100,duplicate:25},
+    {id:'pet-box',name:'Pet Mystery Box',kind:'pet',price:100,duplicate:25},
     {id:'stone-box',name:'Ascendant Stone Box',kind:'stone',price:5,duplicate:0},
     {id:'gem-box',name:'Gem Mystery Box',kind:'gem',price:25,duplicate:0}
   ];
+  D.emporiumBoxes.forEach(box=>{
+    box.sealed=['outfit','aura','mount','pet'].includes(box.kind);
+    if(!box.sealed)return;
+    D.catalog[box.id]={id:box.id,name:box.name,category:'Mystery Boxes',level:1,rarity:3,box:box.id};
+    D.itemIllustrations[box.id]={...D.itemIllustrations.treasure,name:box.name};
+  });
   D.regularGemCount = D.gems.length;
   D.gemDescriptions={
     damage:'Adds flat damage to each successful attack. Attack, Ranged and Magic gems match your weapon class.',

@@ -1,9 +1,17 @@
 .painted-regalia { overflow:hidden; border-radius:8px; background:#211e19; }
+.sealed-box-art { position:relative; display:inline-grid; place-items:center; width:112px; height:112px; flex-shrink:0; }
+.sealed-box-art > .item-art { display:block; width:100%; height:100%; }
+.sealed-box-art > b, .mystery-art .sealed-box-art > b { position:absolute; right:0; bottom:0; padding:4px 8px; border:1px solid #d8b57c; border-radius:4px; background:#7a3040; color:#ffebc5; font:700 13px/1.2 var(--body); transform:none; }
+.sealed-box-art.box-aura > b { background:#4d4270; }.sealed-box-art.box-mount > b { background:#3e5747; }.sealed-box-art.box-pet > b { background:#665039; }
+.item-card .sealed-box-art { width:64px; height:64px; }.item-card .sealed-box-art > b { font-size:10px; padding:2px 4px; }
+.provision-actions { flex-wrap:wrap; }
+@media(prefers-reduced-motion:no-preference) { .emporium-result { animation:present-reveal .45s ease-out; } }
+@keyframes present-reveal { from { opacity:0; transform:translateY(12px) scale(.96); } to { opacity:1; transform:none; } }
 .painted-regalia > .item-art { display:block; width:100%; height:100%; border-radius:inherit; }
 .item-art.isolated-art { position:relative; overflow:hidden; background-image:none; background-color:#211e19; }
-.painted-regalia.aura-art { isolation:isolate; background:#29251f; }
-.aura-art > .item-art.isolated-art { background:inherit; }
-.aura-art .sprite-paint { mix-blend-mode:lighten; }
+.painted-regalia.aura-art, .painted-regalia.mount-art { isolation:isolate; background:#29251f; }
+.aura-art > .item-art.isolated-art, .mount-art > .item-art.isolated-art { background:inherit; }
+.aura-art .sprite-paint, .mount-art .sprite-paint { mix-blend-mode:lighten; }
 .sprite-paint { display:block; position:absolute; left:50%; top:50%; width:var(--sprite-width); height:var(--sprite-height); transform:translate(-50%,-50%); background-repeat:no-repeat; }
 @supports(container-type:size) { .item-art.isolated-art { container-type:size; }.sprite-paint { width:min(90cqw,calc(90cqh * var(--sprite-aspect))); height:min(90cqh,calc(90cqw / var(--sprite-aspect))); } }
 .material-recipes { grid-template-columns:repeat(3,minmax(0,1fr)); align-items:stretch; }

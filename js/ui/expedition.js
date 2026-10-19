@@ -1,6 +1,6 @@
 'use strict';
 (function(G, D, S, U) {
-  U.sellCategoryNames = ['All', 'Equipment', 'Tools', 'Materials', 'Gems', 'Food', 'Stones', 'Utility'];
+  U.sellCategoryNames = ['All', 'Equipment', 'Tools', 'Materials', 'Gems', 'Food', 'Stones', 'Mystery Boxes', 'Utility'];
   U.saleCategory = item => item.kind === 'gear' ? 'Equipment' : item.kind === 'tool' ? 'Tools' : item.key === 'stone' ? 'Stones' : D.catalog[item.key].category;
   U.sellCategories = (items, current) => '<nav class="sell-categories spacer" aria-label="Sale categories">' +
     U.sellCategoryNames.map(name => U.btn(name + ' <span>' + items.filter(i => name === 'All' || U.saleCategory(i) === name).length + '</span>', 'sellCategory',

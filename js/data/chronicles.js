@@ -1,5 +1,6 @@
 'use strict';
 (function(D) {
+  const bestCompanion=c=>[c.companion,...Object.values(c.petStable||{})].filter(Boolean).sort((a,b)=>b.level-a.level||b.xp-a.xp)[0];
   D.config.offlineFacetingMultiplier = .075;
   D.companions = [
     {id:'wolf', name:'Lantern Wolf', portrait:4, price:500, stat:'damagePct', perLevel:.005, description:'A loyal hunter. +0.5% Primary Damage per level.'},
@@ -40,6 +41,12 @@
     {id:'elite', name:'Elite Creatures Defeated', group:'Journey', metric:c=>c.stats.elite},
     {id:'dungeons', name:'Dungeons Conquered', group:'Journey', metric:c=>c.stats.dungeons},
     {id:'quests', name:'Most Quests Completed', group:'Journey', metric:c=>c.questCompletions ?? 0},
-    {id:'companion', name:'Highest Companion Level', group:'Journey', metric:c=>c.companion?.level ?? 0, tie:c=>c.companion?.xp ?? 0}
+    {id:'companion', name:'Highest Companion Level', group:'Journey', metric:c=>bestCompanion(c)?.level||0, tie:c=>bestCompanion(c)?.xp||0},
+    {id:'harvested',name:'Fibres Harvested',group:'Skills',metric:c=>c.stats.harvested||0},
+    {id:'textiles',name:'Leather & Cloth Refined',group:'Skills',metric:c=>c.stats.textiles||0},
+    {id:'secondaries',name:'Secondaries Crafted',group:'Skills',metric:c=>c.stats.secondaries||0},
+    {id:'collections',name:'Regalia & Special Pets Collected',group:'Journey',metric:c=>(c.regalia?.owned.length||0)+(c.specialPets?.length||0)},
+    {id:'boss-collection',name:'Unique Boss Equipment Drops',group:'Journey',metric:c=>Object.values(c.stats.bossDrops||{}).reduce((n,pieces)=>n+pieces.length,0)},
+    {id:'boxes-opened',name:'Mystery Presents Opened',group:'Journey',metric:c=>c.stats.boxesOpened||0}
   ];
 })(RPG.data);

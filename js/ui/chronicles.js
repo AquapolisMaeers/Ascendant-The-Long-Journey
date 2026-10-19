@@ -45,7 +45,7 @@
     const id=G.runtime.leaderboard||D.leaderboards.find(b=>group==='All'||b.group===group).id;
     const current=D.leaderboards.find(b=>b.id===id&&(group==='All'||b.group===group))||D.leaderboards.find(b=>group==='All'||b.group===group);
     const rows=S.leaderboards.rows(current.id);
-    return U.heading('LOCAL CHRONICLES','Leaderboards','Rank your saved characters in this browser. Eighteen pursuits, one long journey.')+
+    return U.heading('LOCAL CHRONICLES','Leaderboards','Rank your saved characters across combat, crafts and collections in this browser.')+
       U.tabs(['All','Combat','Skills','Journey'],group)+
       '<section class="panel"><label>Ranking category<select id="leaderboard-category">'+
       D.leaderboards.filter(b=>group==='All'||b.group===group).map(b=>'<option value="'+b.id+'" '+(b.id===current.id?'selected':'')+'>'+b.name+'</option>').join('')+

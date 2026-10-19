@@ -151,6 +151,22 @@
     category: 'Character',
     description: 'Choose a new character name.'
   }, {
+    id: 'eat5',
+    name: 'Eat 5',
+    price: 2500,
+    level: 10,
+    batch: 5,
+    category: 'Character',
+    description: 'Permanently unlock Eat 5 outside combat. Uses up to five assigned meals, stopping at full HP.'
+  }, {
+    id: 'eat10',
+    name: 'Eat 10',
+    price: 10000,
+    level: 20,
+    batch: 10,
+    category: 'Character',
+    description: 'Permanently unlock Eat 10 outside combat. Uses up to ten assigned meals, stopping at full HP.'
+  }, {
     id: 'eat25',
     name: 'Auto-Eat 25%',
     price: 2500,

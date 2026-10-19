@@ -252,8 +252,11 @@
       if (c.combat) return Math.max(0, c.combat.food.ready - c.combat.time);
       return Math.max(0, ((c.peaceFoodReady || 0) - Date.now()) / 1000);
     },
-    manualEat() {
+    manualEat(quantity=1) {
       const c = G.character();
+      G.assert([1,5,10].includes(quantity),'Choose Eat, Eat 5 or Eat 10.');
+      G.assert(quantity===1||!c.combat,'Eat one meal at a time during combat.');
+      G.assert(quantity===1||(c.batchEatUnlocks||[]).includes(quantity),'Purchase this eating upgrade in Shop > Character first.');
       if (c.combat) {
         const f = c.combat,
           events = [];
@@ -266,8 +269,12 @@
         G.assert(c.food, 'Select food first.');
         G.assert(c.hp < S.character.stats(c).health, 'Already at full HP.');
         G.assert(this.foodCooldown(c) === 0, 'Food cooldown is active.');
-        S.inventory.take(c.food, 1, c);
-        c.hp = Math.min(S.character.stats(c).health, c.hp + D.catalog[c.food].healing);
+        const health=S.character.stats(c).health,healing=D.catalog[c.food].healing;
+        G.assert(healing>0,'Select cooked food first.');
+        const count=Math.min(quantity,S.inventory.available(c.food,c),Math.ceil((health-c.hp)/healing));
+        G.assert(count>0,'No unlocked food available.');
+        S.inventory.take(c.food, count, c);
+        c.hp = Math.min(health, c.hp + healing*count);
         c.peaceFoodReady = Date.now() + C.peaceFoodSeconds * 1000;
         G.audio?.play('heal');
       }

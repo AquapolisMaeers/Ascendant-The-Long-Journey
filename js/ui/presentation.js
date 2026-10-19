@@ -32,6 +32,7 @@
     if (item.kind === 'tool') return Object.entries(item.prefixes).map(([key, rank]) =>
       key + ' +' + G.percent(rank * D.toolPrefixes[key], 2)).join(' · ') || 'Ascend to gain work bonuses';
     const info = D.catalog[item.key];
+    if(info.box)return 'A sealed present. Open for a permanent collection reward, or trade the unopened box on the Marketplace.';
     if (info.healing) return 'Restores ' + G.number(info.healing) + ' HP';
     if (info.rank > 0) {
       const gem = D.gems[info.type];

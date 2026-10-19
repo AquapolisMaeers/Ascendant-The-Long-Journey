@@ -16,7 +16,15 @@
     owned(entry,c=G.character()) { return entry.special?c.specialPets.includes(entry.id):c.regalia.owned.includes(entry.id); },
     pay(c,amount) { G.assert(Number.isSafeInteger(amount)&&amount>0&&c.ascendantCoins>=amount,'Not enough Ascendant Coins.'); c.ascendantCoins-=amount; },
     buy(id) {
-      G.assert(false,'Outfits, auras, mounts and special pets are found in their mystery boxes.');
+      idle();const c=G.character(),box=D.emporiumBoxes.find(b=>b.id===id&&b.sealed);
+      G.assert(box,'Choose a sealed mystery box.');
+      const stack=c.inventory.find(i=>i.kind==='stack'&&i.key===id);
+      G.assert(stack||c.inventory.length<c.capacity,'Free one inventory slot before buying a mystery box.');
+      G.assert(!stack||Number.isSafeInteger(stack.quantity+1),'This box stack is full.');
+      this.pay(c,box.price);
+      S.inventory.reward([{key:id,quantity:1}],c);
+      G.notify(box.name+' added to Inventory > Mystery Boxes. Open it or list it on the Marketplace.','success');
+      G.commit();return box;
     },
     equip(id) {
       idle();const c=G.character(),entry=D.regalia.find(r=>r.id===id);this.normalize(c);
@@ -40,6 +48,7 @@
     },
     open(id) {
       idle();const c=G.character(),box=D.emporiumBoxes.find(b=>b.id===id);this.normalize(c);G.assert(box,'Choose an available box.');
+      if(box.sealed)G.assert(S.inventory.available(id,c)>0,'You need an unlocked '+box.name+' in your inventory.');
       if(box.kind==='gem') {
         // A guaranteed free slot covers every possible roll. Never charge, roll or discard a paid reward on overflow.
         const rows=this.outcomes(box);
@@ -52,9 +61,11 @@
         G.assert(!stack||stack.quantity<1e15,'This stone stack is full.');
         G.assert(c.coins<=1e15-1500,'Make room in your coin balance before opening a stone box.');
       }
-      G.assert(c.ascendantCoins>=box.price,'Not enough Ascendant Coins.');
+      if(!box.sealed)G.assert(c.ascendantCoins>=box.price,'Not enough Ascendant Coins.');
       const outcomes=this.outcomes(box), result=outcomes[G.weighted(G.rng,outcomes.map(o=>o.weight))];
-      this.pay(c,box.price);
+      if(box.sealed){
+        S.inventory.take(id,1,c);c.stats.boxesOpened=(c.stats.boxesOpened||0)+1;
+      }else this.pay(c,box.price);
       if(result.entry) {
         const duplicate=this.owned(result.entry,c);
         if(duplicate)c.ascendantCoins+=box.duplicate;

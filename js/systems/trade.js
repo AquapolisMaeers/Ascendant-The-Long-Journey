@@ -2,7 +2,7 @@
 (function(G,D,S) {
   S.exchange={
     quote(from,to,tier,quantity,c=G.character()) {
-      G.assert(D.resourceKinds.includes(from)&&D.resourceKinds.includes(to)&&from!==to,'Choose two different raw material types.');
+      G.assert(D.exchangeKinds.includes(from)&&D.exchangeKinds.includes(to)&&from!==to,'Choose two different raw material types.');
       G.assert(Number.isInteger(tier)&&D.tiers[tier]!==undefined,'Choose a valid material tier.');
       G.assert(Number.isSafeInteger(quantity)&&quantity>0&&quantity<=1000000,'Choose a whole quantity from 1 to 1,000,000.');
       const input=from+':'+tier,output=to+':'+tier,cost=quantity*10;

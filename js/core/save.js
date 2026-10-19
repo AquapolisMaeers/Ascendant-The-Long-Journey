@@ -89,6 +89,7 @@
       }
       if (c.weather !== undefined && !['auto', 'clear', 'rain', 'wind'].includes(c.weather)) fail('weather');
       if (c.peaceFoodReady !== undefined && !finite(c.peaceFoodReady)) fail('peace food cooldown');
+      if(c.batchEatUnlocks!==undefined&&!idsValid(c.batchEatUnlocks,[5,10]))fail('batch eating unlocks');
       if (!G.systems.quests.valid(c)) fail('quests');
       if (!Number.isInteger(c.seed) || !finite(c.seed, 1, 4294967295) || !finite(c.foodReady) || !c.facetFails || Object.entries(c.facetFails).some(([k, v]) => ![0, 1, 2, 3, 4].includes(+k) || !finite(v, 0, 1))) fail('random state or counters');
       if (typeof c.id !== 'string' || typeof c.name !== 'string' || c.name.length < 2 || c.name.length > 24 || !D.classes.includes(c.class) || !D.modes.includes(c.mode)) fail('character identity');
@@ -97,7 +98,7 @@
       if (c.xp >= D.xpNext(c.level) || c.level === 100 && c.xp !== 0) fail('unresolved character XP');
       for (const key of ['advance', 'regular', 'elite', 'boss', 'dungeons', 'bars', 'cooked', 'facets', 'enhancements', 'maxEnhance', 'socketed', 'listing', 'sale', 'purchase', 'damage', 'deaths'])
         if (!finite(c.stats[key])) fail('statistics');
-      for(const key of ['harvested','textiles','secondaries'])if(c.stats[key]!==undefined && (!Number.isSafeInteger(c.stats[key])||c.stats[key]<0))fail('craft and harvest statistics');
+      for(const key of ['harvested','textiles','secondaries','boxesOpened'])if(c.stats[key]!==undefined && (!Number.isSafeInteger(c.stats[key])||c.stats[key]<0))fail('craft and harvest statistics');
       for (const key of ['ascensions', 'gemCreated'])
         if (!Array.isArray(c.stats[key])) fail('achievement records');
       if (!c.stats.bossKills || !c.stats.bossDrops || typeof c.title !== 'string') fail('boss or title records');

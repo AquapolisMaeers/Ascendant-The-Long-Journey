@@ -1,7 +1,8 @@
 'use strict';
 (function(D) {
   D.shopTabs=['Utility','Materials','Exchange','Character','Storage','Sell'];
-  D.materialKinds={ore:'Ore',logs:'Lumber',fish:'Raw fish',hide:'Hides'};
+  D.exchangeKinds=[...D.resourceKinds,'fiber'];
+  D.materialKinds={ore:'Ore',logs:'Lumber',fish:'Raw fish',hide:'Hides',fiber:'Fibres'};
   D.shop=D.shop.filter(entry=>entry.category!=='Materials');
   D.tiers.forEach((level,tier)=>{
     const region=D.locations.findIndex(location=>location.max>=level),unlock=D.locations[region].level;

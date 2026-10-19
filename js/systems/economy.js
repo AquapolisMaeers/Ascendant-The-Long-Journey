@@ -8,6 +8,7 @@
       G.assert(item, 'Unknown shop item.');
       G.assert(c.level >= (item.level || 1), 'Requires character level ' + item.level + '.');
       const threshold = item.threshold ?? null;
+      G.assert(!item.batch||!(c.batchEatUnlocks||[]).includes(item.batch),'Already unlocked.');
       G.assert(threshold === null || !c.eatUnlocks.includes(threshold), 'Already unlocked.');
       G.assert(Number.isSafeInteger(quantity) && quantity > 0 && quantity <= 1000000, 'Choose a valid purchase quantity.');
       G.assert(item.category === 'Materials' || quantity === 1, 'Buy this upgrade one at a time.');
@@ -15,9 +16,10 @@
       const stack = c.inventory.find(i => i.kind === 'stack' && i.key === id);
       G.assert(!stack || Number.isSafeInteger(stack.quantity + quantity), 'This stack cannot hold more units.');
       G.assert(Number.isSafeInteger(total) && c.coins >= total, 'Insufficient coins.');
-      G.assert(threshold !== null || stack || c.inventory.length < c.capacity, 'Inventory full.');
+      G.assert(threshold !== null || item.batch || stack || c.inventory.length < c.capacity, 'Inventory full.');
       c.coins -= total;
-      if (threshold) c.eatUnlocks.push(threshold);
+      if (item.batch) (c.batchEatUnlocks??=[]).push(item.batch);
+      else if (threshold) c.eatUnlocks.push(threshold);
       else S.inventory.reward([{
         key: id,
         quantity
