@@ -1,6 +1,6 @@
 'use strict';
 (function(D) {
-  D.guildRules={version:2,members:50,perkCap:10,perkStep:.0025,reignBonus:.02,weekMs:7*86400000,warParticipation:200,warWinner:1000};
+  D.guildRules={version:3,members:50,perkCap:10,perkStep:.0025,reignBonus:.02,weekMs:7*86400000,warParticipation:200,warWinner:1000,levelCap:100,levelXp:500,taskXp:10,upgradeXp:5};
   D.guildRoles=[
     {id:'Leader',rank:4,description:'Manage all ranks, transfer leadership, buy upgrades and open Reckoning.'},
     {id:'Co-Leader',rank:3,description:'Manage lower ranks, buy upgrades and open Reckoning.'},
@@ -24,12 +24,12 @@
     {id:'bulwark',name:'Hold the Line',stat:'reduction',description:'Damage reduction',step:.0005,group:'Survival',icon:'Secondary',coins:200000,points:200}
   ];
   D.guildTasks=[
-    {id:'creatures',name:'Keep the roads safe',description:'Defeat creatures',target:1000,points:40,icon:'Weapon'},
-    {id:'elites',name:'Hunt the dangerous',description:'Defeat elite creatures',target:100,points:60,icon:'creature'},
-    {id:'gather',name:'Stock the workshops',description:'Gather materials from resource encounters',target:5000,points:40,icon:'Materials'},
-    {id:'craft',name:'Work the forges',description:'Complete successful crafts',target:1000,points:40,icon:'Crafting'},
-    {id:'quests',name:'Lend a helping hand',description:'Complete quests',target:50,points:60,icon:'Quests'},
-    {id:'dungeons',name:'Conquer the depths',description:'Complete dungeons',target:25,points:80,icon:'dungeon'}
+    {id:'creatures',name:'Keep the roads safe',description:'Defeat creatures',target:2000,points:40,icon:'Weapon'},
+    {id:'elites',name:'Hunt the dangerous',description:'Defeat elite creatures',target:200,points:60,icon:'creature'},
+    {id:'gather',name:'Stock the workshops',description:'Gather materials from resource encounters',target:10000,points:40,icon:'Materials'},
+    {id:'craft',name:'Work the forges',description:'Complete successful crafts',target:2000,points:40,icon:'Crafting'},
+    {id:'quests',name:'Lend a helping hand',description:'Complete quests',target:100,points:60,icon:'Quests'},
+    {id:'dungeons',name:'Conquer the depths',description:'Complete dungeons',target:50,points:80,icon:'dungeon'}
   ];
   D.chatChannels=['Location','World','Guild','Friends'];
 })(RPG.data);

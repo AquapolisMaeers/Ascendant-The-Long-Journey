@@ -138,6 +138,7 @@
   S.leaderboards = {
     rows(id) {
       const board=D.leaderboards.find(b=>b.id===id);G.assert(board,'Unknown leaderboard.');
+      if(board.entity==='guild')return S.guilds.rankings(id);
       return G.state.slots.filter(Boolean).map(c=>({character:c,value:board.metric(c),tie:board.tie?.(c)||0}))
         .sort((a,b)=>b.value-a.value||b.tie-a.tie||a.character.name.localeCompare(b.character.name)||a.character.id.localeCompare(b.character.id));
     }

@@ -45,6 +45,7 @@
     const id=G.runtime.leaderboard||D.leaderboards.find(b=>group==='All'||b.group===group).id;
     const current=D.leaderboards.find(b=>b.id===id&&(group==='All'||b.group===group))||D.leaderboards.find(b=>group==='All'||b.group===group);
     const rows=S.leaderboards.rows(current.id);
+    if(current.entity==='guild')return U.heading('LOCAL CHRONICLES','Leaderboards','Guild records from saved adventurers in this browser.')+U.tabs(['All',...D.leaderboardGroups],group)+U.guildRankings(current.id,true,group);
     return U.heading('LOCAL CHRONICLES','Leaderboards','Combat, skill levels, your journey and the Colosseum — organized by pursuit.')+
       U.tabs(['All',...D.leaderboardGroups],group)+
       '<section class="panel"><label>Ranking category<select id="leaderboard-category">'+

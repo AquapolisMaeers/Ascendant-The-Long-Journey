@@ -18,6 +18,11 @@
     if(className==='Mage')return {cloth:main,bar:support,leather:support};
     return {bar:main,leather:support,cloth:support};
   };
-  D.materialWork=(kind,tier)=>kind==='bar'?5+D.coal[tier]:kind==='leather'?5:kind==='cloth'?3:1;
+  D.refiningRatio=3;
+  D.refiningCost=(kind,tier)=>{
+    if(kind==='bar')return {['ore:'+(tier===3?2:tier)]:D.refiningRatio-D.coal[tier],...(D.coal[tier]?{'ore:3':D.coal[tier]}:{})};
+    return {[(kind==='leather'?'hide':'fiber')+':'+tier]:D.refiningRatio};
+  };
+  D.materialWork=kind=>['bar','leather','cloth'].includes(kind)?D.refiningRatio:1;
   D.secondaryCost=(tier,piece)=>Object.fromEntries(Object.entries(piece===10?{bar:7,logs:10,leather:3}:piece===11?{bar:6,leather:3,cloth:2}:{cloth:6,leather:4,bar:2}).map(([kind,n])=>[kind+':'+tier,n]));
 })(RPG.data);

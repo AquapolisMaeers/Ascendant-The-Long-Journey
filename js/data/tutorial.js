@@ -14,7 +14,7 @@
     }, {
       id: 'Mining',
       title: 'Mining',
-      text: 'Advance to a guaranteed Copper Ore node. Mine all five charges; five ore makes one Copper Bar.'
+      text: 'Advance to a guaranteed Copper Ore node. Mine all five charges; three ore makes one Copper Bar, leaving two ore for later.'
     }, {
       id: 'Woodcutting',
       title: 'Woodcutting',
@@ -70,7 +70,7 @@
   const routes={
     perk:{page:'Character',tab:'Perks',steps:['Select the Perks tab inside Character.','Read the three Level 1 choices, choose one and confirm it. A health perk increases your current health as well as your maximum.']},
     Fishing:{page:'World',steps:['Press Advance and wait for the journey to finish.','At the Minnow spot, press Fish. Empty all five charges to gather ingredients for healing food.']},
-    Mining:{page:'World',steps:['Press Advance to discover the Copper Ore node.','Press Mine and collect all five charges. Five ore will become one bar for your first weapon upgrade.']},
+    Mining:{page:'World',steps:['Press Advance to discover the Copper Ore node.','Press Mine and collect all five charges. Three ore becomes one bar for your first weapon upgrade; keep the other two.']},
     Woodcutting:{page:'World',steps:['Press Advance to find Pine Logs.','Press Chop and empty all five charges. Logs are part of the weapon Enhancement recipe.']},
     Hunting:{page:'World',steps:['Press Advance to find the Rabbit Pelt encounter.','Press Hunt and empty all five charges. Hides will later supply armor recipes.']},
     'cook:0':{page:'Crafting',tab:'Cooking',steps:['Select Cooking, then choose the Level 1 Minnow fish species.','On Cooked Minnow, select 5, then press Cook. Selecting a number only sets the quantity.','Cooking turns your raw fish into healing food for your first battle.']},

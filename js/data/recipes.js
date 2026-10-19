@@ -3,10 +3,7 @@
   D.recipes = [];
   for (let tier = 0; tier < D.tiers.length; tier++) {
     const level = D.tiers[tier],
-      cost = {
-        ['ore:' + (tier === 3 ? 2 : tier)]: 5
-      };
-    if (D.coal[tier]) cost['ore:3'] = D.coal[tier];
+      cost = D.refiningCost('bar',tier);
     D.recipes.push({
       id: 'bar:' + tier,
       name: D.resources.bar[tier],
@@ -27,7 +24,7 @@
         level,
         piece,
         cost: Object.fromEntries(Object.entries(D.equipmentRecipes[slot]).map(([k, n]) => [k + ':' + tier, n])),
-        xp: D.config.skillXp * level * (D.equipmentRecipes[slot].bar * (5 + D.coal[tier]) + (D.equipmentRecipes[slot].logs || 0) + (D.equipmentRecipes[slot].hide || 0))
+        xp: D.config.skillXp * level * Object.entries(D.equipmentRecipes[slot]).reduce((sum,[kind,n])=>sum+n*D.materialWork(kind,tier),0)
       };
       if(D.armorSlots.includes(slot)) {
         for(const armorClass of D.classes) {
@@ -46,8 +43,7 @@
         xp:D.config.skillXp*level*Object.entries(cost).reduce((sum,[id,n])=>sum+n*D.materialWork(id.split(':')[0],tier),0)});
     }
     for(const kind of ['leather','cloth']) {
-      // Hides, bark/smoke and oil rendered from fish make supple, weatherproof leather.
-      const cost=kind==='leather'?{['hide:'+tier]:3,['logs:'+tier]:1,['fish:'+tier]:1}:{['fiber:'+tier]:3};
+      const cost=D.refiningCost(kind,tier);
       D.recipes.push({id:kind+':'+tier,name:D.resources[kind][tier],skill:'Smithing',tier,level,cost,
         output:kind+':'+tier,category:'Materials',
         xp:D.config.skillXp*level*Object.values(cost).reduce((sum,n)=>sum+n,0)});

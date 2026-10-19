@@ -1,6 +1,19 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'Consistent refining and fish-free gear materials',changes:[
+    'Bars, leather and cloth now use the same 3:1 base refining ratio at every material tier. Copper, tin and iron bars use three matching ore. Steel and higher alloys use two metal ore plus one coal, within the same three-input total.',
+    'Leather now uses three matching hides only; its fish-oil and lumber ingredients are removed. Cloth remains three matching fibres per piece. Three Moonflax Fibre makes one Moonweave. All classes keep their metal, leather and cloth armour requirements; fish supports meals rather than the gear material chain.',
+    'Smithing XP follows the revised raw-input counts for materials, weapons, armour, accessories and secondaries. Vendor values follow actual recipe ingredients. Copper Bar grants 66 base XP. Gear Enhancement and Ascension use the same fish-free material chains.',
+    'The tutorial now explains that three of its five mined ore make a Copper Bar, leaving two for later. Crafting descriptions show the shared ratio and alloy recipe. Existing inventory, equipment, saves and crafting queues are preserved; upcoming crafts use the new costs.'
+  ]},
+  {date:'2026-10-19',title:'Guild levels, a calmer hall and new milestones',changes:[
+    'Weekly guild targets double again. A full 50-player roster needs 100,000 creature victories, 10,000 elites, 500,000 gathered materials, 100,000 successful crafts, 5,000 quests and 2,500 dungeons. Smaller rosters scale down. Current completed tasks remain complete; unfinished progress carries forward.',
+    'Guilds now gain permanent Guild XP from completing tasks and purchasing perk ranks. Levels run from 1 to 100. Tasks award fixed XP regardless of roster size; upgrades award five times their GP cost. Donations earn no XP, and spending treasury coins never reduces level. Existing paid perk ranks and known task completions receive migration credit.',
+    'Guild pages now use a compact header with level progress and balances. Phones use one page selector. Overview shows active benefits; upgrade cards use aligned compact rows. Rules, pricing details and role information stay in expandable sections.',
+    'Guild Level and Richest Guild rankings appear under Guild → Rankings and Leaderboards → Guilds. Level ties use lifetime Guild XP; richest counts current bank coins. Saved copies of one guild appear once. Shared rankings await hosting.',
+    '71 additional achievements cover guild membership, tasks, levels, perk ranks and donations; Colosseum victories and leagues; companion stable training; deeper cosmetic/pet collections; mystery presents; provisions; gathering, crafting and marketplace activity. Existing achievements, rewards and launch Completionist requirements are preserved. Farming milestones now have a reachable category.'
+  ]},
   {date:'2026-10-19',title:'The Day of Reckoning and a stronger guild hall',changes:[
     'Weekly tasks now require 1,000 creature victories, 100 elites, 5,000 gathered materials, 1,000 successful crafts, 50 quests and 25 dungeons per member in the weekly roster. A full guild scales to 50,000 creatures and 250,000 gathered materials. Existing Guild Points, bank balances and completed tasks are preserved.',
     'Guild upgrades expand to twelve perks. Critical chance, critical damage, attack speed, penetration, double attack, dodge, critical resistance, life steal and damage reduction join the original damage, health and defence perks. Offence and Survival filters keep the cards organized; each perk shows its own cap and squared upgrade price.',

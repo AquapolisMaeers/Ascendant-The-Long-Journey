@@ -65,7 +65,7 @@
   };
   U.screens.Achievements = () => {
     const c = G.character(),
-      names = ['All', 'Journey', 'Quests', 'Companions', 'Collections', 'Dungeons', 'Skills', 'Crafting', 'Equipment', 'Gems', 'Marketplace', 'Prestige'],
+      names = ['All', 'Journey', 'Quests', 'Guilds', 'Colosseum', 'Companions', 'Collections', 'Provisions', 'Farming', 'Dungeons', 'Skills', 'Crafting', 'Equipment', 'Gems', 'Marketplace', 'Prestige'],
       current = tab(names),
       ach = D.achievements.filter(a => (current === 'All' || a.group === current) && (!c.mode.includes('Ironman') || a.group !== 'Marketplace'));
     const pages = Math.max(1, Math.ceil(ach.length / 8)), page = G.runtime.achievementGroup === current ? G.clamp(G.runtime.achievementPage || 0, 0, pages - 1) : 0;

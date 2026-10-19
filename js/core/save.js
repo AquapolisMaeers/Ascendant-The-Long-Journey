@@ -102,6 +102,7 @@
       for (const key of ['advance', 'regular', 'elite', 'boss', 'dungeons', 'bars', 'cooked', 'facets', 'enhancements', 'maxEnhance', 'socketed', 'listing', 'sale', 'purchase', 'damage', 'deaths'])
         if (!finite(c.stats[key])) fail('statistics');
       for(const key of ['harvested','textiles','secondaries','boxesOpened'])if(c.stats[key]!==undefined && (!Number.isSafeInteger(c.stats[key])||c.stats[key]<0))fail('craft and harvest statistics');
+      if(c.stats.guildDonated!==undefined&&(!Number.isSafeInteger(c.stats.guildDonated)||!finite(c.stats.guildDonated)))fail('guild donation statistics');
       for (const key of ['ascensions', 'gemCreated'])
         if (!Array.isArray(c.stats[key])) fail('achievement records');
       if (!c.stats.bossKills || !c.stats.bossDrops || typeof c.title !== 'string') fail('boss or title records');

@@ -187,7 +187,7 @@
   };
   D.resourceKinds = ['ore', 'logs', 'fish', 'hide'];
   D.healing = [5, 10, 15, 25, 40, 50, 65, 75, 90, 100, 115, 125];
-  D.coal = [0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5];
+  D.coal = [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   D.catalog = {
     stone: {
       id: 'stone',
