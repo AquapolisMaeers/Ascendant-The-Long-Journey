@@ -69,7 +69,7 @@
       if(category!=='Materials')return html;
       const template=document.createElement('template');template.innerHTML=html;
       const tier=template.content.querySelector('#craft-tier');if(tier)tier.parentElement.firstChild.textContent='Material tier';
-      template.content.querySelector('.toolbar')?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">Refine ore into bars, cure hides with logs into leather, or weave Farming fibres into cloth. Use cloth for robes, linings and book pages; leather for armour, grips and bindings.</p>');
+      template.content.querySelector('.toolbar')?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">Refine ore into bars, cure hides with wood smoke and fish oil into leather, or weave Farming fibres into cloth. Every class uses all three: metal fittings, leather straps and cloth padding.</p>');
       return template.innerHTML;
     }
     const className=D.classes.includes(G.runtime.armorClass)?G.runtime.armorClass:G.character().class;
@@ -78,7 +78,7 @@
     toolbar?.querySelector('.smithing-filter')?.insertAdjacentHTML('afterend','<label>Armour class<select id="armor-class">'+D.classes.map(name=>'<option value="'+name+'" '+(name===className?'selected':'')+'>'+({Warrior:'Warrior · plate',Archer:'Ranger · leather',Mage:'Mage · cloth'}[name])+'</option>').join('')+'</select></label>');
     const tier=template.content.querySelector('#craft-tier');
     if(tier){tier.parentElement.firstChild.textContent='Material tier';for(const option of tier.options)option.textContent='Level '+D.tiers[+option.value];}
-    toolbar?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">'+(className==='Warrior'?'Plate uses regional bars with a cloth lining.':className==='Archer'?'Leather armour uses cured regional leather and a cloth lining. Refine both under Materials.':'Cloth armour uses regional fabric and leather ties. Harvest fibres with Farming, then refine cloth and leather under Materials.')+'</p>');
+    toolbar?.insertAdjacentHTML('afterend','<p class="notes armour-material-help">'+(className==='Warrior'?'Metal plate, leather fastening straps and cloth padding.':className==='Archer'?'Leather panels, metal rivets and a cloth lining.':'Woven robes, metal clasps and leather ties.')+' Refine all three under Materials. Every class draws on Mining, Hunting, Woodcutting, Fishing and Farming.</p>');
     return template.innerHTML;
   };
   const skills=U.screens.Skills;

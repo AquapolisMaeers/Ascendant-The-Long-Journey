@@ -1,6 +1,13 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'A guild hall, fairer materials and clearer phone loot',changes:[
+    'Phone loot is now scrollable, tappable and bounded between the header and bottom controls. Notifications stack below it; its eight-second display extends while reading or scrolling.',
+    'Every class armour recipe now combines bars, leather and cloth. Warriors use leather straps and cloth padding; Rangers use metal rivets and cloth lining; Mages use metal clasps and leather ties. Leather curing also uses fish oil, so every class draws on all five gathering skills. Secondaries, Enhancement and Ascension follow the matching materials.',
+    'Community groups Guild, Chat, Friends and Ignore. Chat includes Location, World, Guild and Friends channels, with session drafts. Friends saves contacts; Ignore saves blocked names. Message delivery, verified friendships and shared guild membership await hosting.',
+    'Found a local guild after the tutorial, with a 50-member limit. Earn Guild Points from six weekly active-play tasks, donate coins into the bank and buy leader-managed perks. Each of three stat perks grants 0.25% per rank, capped at 2.5%; prices scale with rank squared, starting at 100 Guild Points and 10 Gold.',
+    'Guild War previews a weekly rated-victory competition and temporary champion cosmetics with a 2% reign bonus. Hosting must verify matches, award war Guild Points and assign each weekly champion; this edition does not simulate winners or activate reign bonuses.'
+  ]},
   {date:'2026-10-19',title:'Higher arena stakes and points on the line',changes:[
     'Ascendant entry rises to 10 Gold per fighter, with a same-league winner payout of 16 Gold from the combined 20 Gold pool. Earlier entries now scale through 50 Bronze, 2.5 Silver, 10 Silver, 25 Silver, 1 Gold, 2.5 Gold and 5 Gold. League point thresholds are unchanged.',
     'A win starts at +5 League Points, with +1 for a higher-level opponent and +1 for an opponent with more points; lower level or fewer points each subtract 1. Equal comparisons add nothing. Awards range from +3 to +7. The loser loses the winning award, stopping at zero; defeats can move a fighter into a lower league.',

@@ -762,6 +762,14 @@
     if (time) time.textContent = new Date(G.state.savedAt).toLocaleTimeString();
   });
   let lootTimer;
+  const lootPopup=document.getElementById('loot-popup');
+  const dismissLootLater=()=>{
+    clearTimeout(lootTimer);
+    lootTimer=setTimeout(()=>{
+      if(document.querySelector('.modal')||document.hidden||lootPopup.matches(':hover, :focus-within'))dismissLootLater();
+      else lootPopup.hidden=true;
+    },U.isPhone()?8000:D.config.lootMs);
+  };
   window.addEventListener('rpg:loot', ({
     detail
   }) => {
@@ -769,10 +777,13 @@
     const highlight = detail.rewards.filter(r => r.kind === 'gear' || r.kind === 'tool').reduce((best, r) => !best || r.rarity > best.rarity ? r : best, null);
     el.innerHTML = (highlight && highlight.rarity >= 2 ? '<span class="loot-rarity eyebrow">' + D.rarity[highlight.rarity] + (highlight.kind === 'tool' ? ' tool' : ' gear') + ' found</span>' : '') + '<strong>' + U.e(detail.label) + '</strong><p>' + detail.rewards.map(U.rewardText).join('<br>') + '</p><small>Automatically collected · click to dismiss</small>';
     el.hidden = false;
-    clearTimeout(lootTimer);
-    lootTimer = setTimeout(() => el.hidden = true, D.config.lootMs);
+    el.scrollTop=0;
+    dismissLootLater();
   });
   document.getElementById('loot-popup').onclick = () => document.getElementById('loot-popup').hidden = true;
+  lootPopup.addEventListener('scroll',dismissLootLater,{passive:true});
+  lootPopup.addEventListener('pointerleave',dismissLootLater);
+  lootPopup.addEventListener('blur',dismissLootLater);
   window.addEventListener('rpg:strike', ({
     detail: e
   }) => {

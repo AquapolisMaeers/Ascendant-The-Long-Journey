@@ -44,6 +44,8 @@
       quests: null,
       questCompletions: 0,
       colosseum: {points:0,victories:0,defeats:0},
+      guild: null,
+      community: {friends:[],ignored:[]},
       seed: G.seed(),
       location: 0,
       inventory: [],

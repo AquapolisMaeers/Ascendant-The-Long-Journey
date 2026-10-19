@@ -56,6 +56,7 @@
       Object.entries(S.talents?.effects(c) || {}).forEach(([key, value]) => add(key, value));
       Object.entries(S.companions?.bonus(c) || {}).forEach(([key, value]) => add(key, value));
       Object.entries(S.emporium?.bonus(c) || {}).forEach(([key, value]) => add(key, value));
+      Object.entries(S.guilds?.bonus(c) || {}).forEach(([key, value]) => add(key, value));
       for (const stat of ['damage', 'defence', 'health']) s[stat] *= 1 + s[stat + 'Pct'];
       s.raw = {
         ...s

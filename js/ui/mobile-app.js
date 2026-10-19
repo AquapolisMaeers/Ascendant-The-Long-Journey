@@ -44,7 +44,7 @@
   };
   U.mobileMenu=()=>{
     if(!U.isPhone()||!G.character()||G.runtime.selecting)return;
-    const c=G.character(),groups=[['Adventure',['World','Quests']],['Your adventurer',['Character','Inventory','Skills','Crafting','Companions']],['Trade',['Shop',...(S.market.allowed()?['Marketplace']:[])]],['Community',['Guild','Colosseum']],['Records & settings',['Achievements','Leaderboards','Settings']]];
+    const c=G.character(),groups=[['Adventure',['World','Quests']],['Your adventurer',['Character','Inventory','Skills','Crafting','Companions']],['Trade',['Shop',...(S.market.allowed()?['Marketplace']:[])]],['Community',['Community','Colosseum']],['Records & settings',['Achievements','Leaderboards','Settings']]];
     document.querySelector('.phone-nav [data-action="mobileMenu"]')?.setAttribute('aria-expanded','true');
     U.modal('Your journey','<div class="phone-menu"><div class="phone-menu-profile">'+U.characterPortrait(c.class,c.appearance)+'<div><strong>'+U.e(c.name)+'</strong><small>Level '+c.level+' / '+c.class+' / '+c.mode+'</small></div></div>'+groups.map(([name,pages])=>'<section class="mobile-menu-group"><h3>'+name+'</h3><nav class="phone-menu-grid" aria-label="'+name+'">'+pages.map(page=>'<button type="button" data-action="navigate" data-value="'+page+'" '+(G.runtime.page===page?'class="active" aria-current="page"':'')+'>'+U.icon(page)+'<span>'+page+'</span></button>').join('')+'</nav></section>').join('')+'<div class="phone-menu-foot">'+U.btn('Character slots','slots','','quiet')+'<span>LOCAL SAVE / '+U.e(G.save.status)+'</span></div></div>');
   };
@@ -78,6 +78,13 @@
     for(const {target} of entries)if(target.id==='mobile-bottom')document.body.style.setProperty('--mobile-bottom-height',Math.ceil(target.getBoundingClientRect().height)+'px');
   });
   let watched;
+  const loot=document.getElementById('loot-popup');
+  const measureLoot=()=>{
+    document.body.classList.toggle('has-phone-loot',!loot.hidden);
+    document.body.style.setProperty('--phone-loot-height',Math.ceil(loot.getBoundingClientRect().height)+'px');
+  };
+  new ResizeObserver(measureLoot).observe(loot);
+  new MutationObserver(measureLoot).observe(loot,{attributes:true,attributeFilter:['hidden']});
   window.addEventListener('rpg:rendered',()=>{
     const footer=document.getElementById('mobile-bottom');
     if(footer!==watched){observer.disconnect();if(footer)observer.observe(footer);watched=footer;}

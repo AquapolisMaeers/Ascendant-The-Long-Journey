@@ -92,6 +92,8 @@
       if(c.batchEatUnlocks!==undefined&&!idsValid(c.batchEatUnlocks,[5,10]))fail('batch eating unlocks');
       if (!G.systems.quests.valid(c)) fail('quests');
       if(!G.systems.colosseum.valid(c.colosseum))fail('Colosseum record');
+      if(!G.systems.guilds.valid(c.guild,c))fail('guild');
+      if(!G.systems.community.valid(c.community))fail('community lists');
       if (!Number.isInteger(c.seed) || !finite(c.seed, 1, 4294967295) || !finite(c.foodReady) || !c.facetFails || Object.entries(c.facetFails).some(([k, v]) => ![0, 1, 2, 3, 4].includes(+k) || !finite(v, 0, 1))) fail('random state or counters');
       if (typeof c.id !== 'string' || typeof c.name !== 'string' || c.name.length < 2 || c.name.length > 24 || !D.classes.includes(c.class) || !D.modes.includes(c.mode)) fail('character identity');
       if (!Number.isInteger(c.level) || !finite(c.level, 1, 100) || !finite(c.xp) || !finite(c.hp) || !Number.isSafeInteger(c.coins) || !finite(c.coins) || !Number.isInteger(c.capacity) || c.capacity < 50 || c.capacity > 160 || c.capacity % 10 || !Number.isInteger(c.location) || !D.locations[c.location] || D.locations[c.location].level > c.level) fail('character progression');

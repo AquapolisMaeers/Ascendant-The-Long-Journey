@@ -291,6 +291,8 @@
         return;
       }
       c.stats[encounter.type]++;
+      S.guilds.progress(c,'creatures');
+      if(encounter.type==='elite')S.guilds.progress(c,'elites');
       S.quests.defeated(encounter.enemy, c);
       S.companions.gain(c, D.companionRules.victoryXp * encounter.enemy.level);
       const levelUps = S.xp.add(c, D.loot[encounter.type].xp * encounter.enemy.level);
@@ -303,6 +305,7 @@
       if (encounter.type === 'boss') {
         c.stats.bossKills[encounter.enemy.boss] = true;
         c.stats.dungeons++;
+        S.guilds.progress(c,'dungeons');
         c.dungeon = null;
       }
       const rewards = S.loot.roll(encounter.type, encounter.enemy.level, c.location, encounter.enemy.name === 'Mimic');

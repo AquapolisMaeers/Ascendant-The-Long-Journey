@@ -13,10 +13,11 @@
   D.armorCost=(slot,className)=>{
     const base=D.equipmentRecipes[slot];
     if(!D.armorSlots.includes(slot))return {...base};
-    if(className==='Archer')return {leather:base.bar,cloth:Math.ceil(base.bar/3)};
-    if(className==='Mage')return {cloth:base.bar,leather:Math.ceil(base.bar/2)};
-    return {bar:base.bar,cloth:Math.ceil(base.hide/3)};
+    const main=base.bar, support=Math.ceil(main/3);
+    if(className==='Archer')return {leather:main,bar:support,cloth:support};
+    if(className==='Mage')return {cloth:main,bar:support,leather:support};
+    return {bar:main,leather:support,cloth:support};
   };
-  D.materialWork=(kind,tier)=>kind==='bar'?5+D.coal[tier]:kind==='leather'?4:kind==='cloth'?3:1;
-  D.secondaryCost=(tier,piece)=>Object.fromEntries(Object.entries(piece===10?{bar:7,logs:10}:piece===11?{bar:6,leather:3}:{cloth:6,leather:4}).map(([kind,n])=>[kind+':'+tier,n]));
+  D.materialWork=(kind,tier)=>kind==='bar'?5+D.coal[tier]:kind==='leather'?5:kind==='cloth'?3:1;
+  D.secondaryCost=(tier,piece)=>Object.fromEntries(Object.entries(piece===10?{bar:7,logs:10,leather:3}:piece===11?{bar:6,leather:3,cloth:2}:{cloth:6,leather:4,bar:2}).map(([kind,n])=>[kind+':'+tier,n]));
 })(RPG.data);

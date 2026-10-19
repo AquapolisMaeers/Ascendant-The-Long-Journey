@@ -42,7 +42,7 @@
         delete cost['bar:'+item.tier]; delete cost['hide:'+item.tier];
         const kinds=Object.keys(D.armorCost(item.slot,item.armorClass));
         cost[kinds[0]+':'+item.tier]=D.enhance.bars[b];
-        cost[kinds[1]+':'+item.tier]=D.enhance.secondary[b];
+        for(const kind of kinds.slice(1))cost[kind+':'+item.tier]=Math.max(1,Math.ceil(D.enhance.secondary[b]/2));
       }
       if(item.slot==='Secondary') {
         for(const key of Object.keys(cost))delete cost[key];

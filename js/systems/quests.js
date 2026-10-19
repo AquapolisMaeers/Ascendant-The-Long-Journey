@@ -58,6 +58,7 @@
         if(q.progress===q.target) {
           // Mark completion before delivering rewards so repeated checks cannot repay it.
           q.completedAt=now;q.readyAt=now+D.questRules.cooldown;c.questCompletions++;
+          S.guilds.progress(c,'quests',1,now);
           const rewards=this.rewards(q);S.inventory.reward(rewards,c);
           if(c===G.character()) {
             G.notify('Quest complete in '+D.locations[q.location].name+'. Rewards collected; a new quest arrives in 30 minutes.','success');

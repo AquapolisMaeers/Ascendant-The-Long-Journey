@@ -46,7 +46,8 @@
         xp:D.config.skillXp*level*Object.entries(cost).reduce((sum,[id,n])=>sum+n*D.materialWork(id.split(':')[0],tier),0)});
     }
     for(const kind of ['leather','cloth']) {
-      const cost=kind==='leather'?{['hide:'+tier]:3,['logs:'+tier]:1}:{['fiber:'+tier]:3};
+      // Hides, bark/smoke and oil rendered from fish make supple, weatherproof leather.
+      const cost=kind==='leather'?{['hide:'+tier]:3,['logs:'+tier]:1,['fish:'+tier]:1}:{['fiber:'+tier]:3};
       D.recipes.push({id:kind+':'+tier,name:D.resources[kind][tier],skill:'Smithing',tier,level,cost,
         output:kind+':'+tier,category:'Materials',
         xp:D.config.skillXp*level*Object.values(cost).reduce((sum,n)=>sum+n,0)});

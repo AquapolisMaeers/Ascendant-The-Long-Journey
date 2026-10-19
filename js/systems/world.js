@@ -180,6 +180,7 @@
       });
       S.inventory.reward(rewards);
       S.quests.gathered(a.skill, rewards, c);
+      S.guilds.progress(c,'gather',rewards.reduce((sum,reward)=>sum+reward.quantity,0));
       if(a.skill==='Farming')c.stats.harvested=(c.stats.harvested||0)+rewards.reduce((sum,r)=>sum+r.quantity,0);
       G.audio?.play(a.skill.toLowerCase());
       a.rewards = S.loot.merge(a.rewards || [], rewards);
