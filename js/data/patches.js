@@ -1,6 +1,13 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'The Day of Reckoning and a stronger guild hall',changes:[
+    'Weekly tasks now require 1,000 creature victories, 100 elites, 5,000 gathered materials, 1,000 successful crafts, 50 quests and 25 dungeons per member in the weekly roster. A full guild scales to 50,000 creatures and 250,000 gathered materials. Existing Guild Points, bank balances and completed tasks are preserved.',
+    'Guild upgrades expand to twelve perks. Critical chance, critical damage, attack speed, penetration, double attack, dodge, critical resistance, life steal and damage reduction join the original damage, health and defence perks. Offence and Survival filters keep the cards organized; each perk shows its own cap and squared upgrade price.',
+    'Guilds gain Leader, Co-Leader, Officer, Veteran and Member roles. Leaders and Co-Leaders buy upgrades and open Reckoning sessions. Leaders control leadership transfer and Co-Leader appointments. Management actions cannot change equal or higher ranks.',
+    'Guild War becomes the Day of Reckoning: face Azhkar, the Worldbreaker. On Sundays, a Leader or Co-Leader opens one shared, continuous hour for their guild. The roster locks at opening; everyone joins the same clock. Player damage, damage share, hits and total guild damage form a contribution report.',
+    'The highest total guild damage after Reckoning day wins the following week’s temporary champion cosmetics and 2% damage, health and defence bonus. Participation awards 200 GP for positive verified damage; the winner gains an extra 1,000 GP. Shared sessions, verified damage and crowning await hosting; local previews never fabricate a fight or reign.'
+  ]},
   {date:'2026-10-19',title:'A guild hall, fairer materials and clearer phone loot',changes:[
     'Phone loot is now scrollable, tappable and bounded between the header and bottom controls. Notifications stack below it; its eight-second display extends while reading or scrolling.',
     'Every class armour recipe now combines bars, leather and cloth. Warriors use leather straps and cloth padding; Rangers use metal rivets and cloth lining; Mages use metal clasps and leather ties. Leather curing also uses fish oil, so every class draws on all five gathering skills. Secondaries, Enhancement and Ascension follow the matching materials.',
