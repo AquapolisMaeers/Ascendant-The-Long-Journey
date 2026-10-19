@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'Ordered leaderboards and the Colosseum leagues',changes:[
+    'Leaderboards now keeps the requested combat stats, every skill as a level, wealth, creature/elite victories, dungeon and quest completions, advances, companion level and mystery boxes opened. The dropdown groups Combat, alphabetized Skill levels, Journey and Colosseum. Extra craft/collection rankings are removed from the menu.',
+    'Colosseum gains Arena, Leagues and Rankings tabs. Eight leagues follow all rarities, from Common to Ascendant. Ascendant begins at 100,000 League Points and remains uncapped. Promotion thresholds and league-coloured entry/prize cards are shown under Leagues.',
+    'Prepared PvP rules award +5 League Points per win, reduced to +3 against a lower-level player or increased to +7 against a higher-level player. Losses preserve points. League Points serve as the matchmaking rating; automatic pairing starts within 100 points and never offers an opponent picker.',
+    'Prepared entry fees range from 50 Bronze per fighter in Common to 1 Gold in Ascendant. The winner receives 80% of both entries combined: 80 Bronze in a same-league Common match, or 1 Gold 60 Silver in Ascendant. Cross-league matches use both fighters’ own fees.',
+    'Prepared arena combat starts both fighters at full arena health, disables Auto-Eat for both and permits manual single meals on a 10-second cooldown. League Points and Colosseum Victories appear in both the main leaderboards and the arena Rankings tab.',
+    'The game still has no connected arena host. Battle stays disabled until real shared matchmaking and settlement are connected. Viewing the arena never charges entry fees, consumes food or creates artificial opponents.'
+  ]},
   {date:'2026-10-19',title:'A tidier trading hall and new horizons',changes:[
     'Provisions always orders purchased controls as Eat food, x5, x10, even when Eat 10 was bought first. Unlock prices, healing and food cooldowns stay the same.',
     'All six shop box types now have their own painted chest: crimson wardrobe coffer, violet arcane casket, green stable trunk, teal companion coffer, blue gem chest and charcoal Ascendant reliquary. Matching paintings appear in shop offers, purchase dialogs, inventory and marketplace rows.',

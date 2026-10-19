@@ -41,14 +41,14 @@
       '<div class="cosmetic-slot">'+U.icon('gem')+'<strong>Aura</strong><span class="badge">Coming soon</span></div></div></section>':html;
   };
   U.screens.Leaderboards=()=>{
-    const group=['All','Combat','Skills','Journey'].includes(G.runtime.tab)?G.runtime.tab:'All';
+    const group=['All',...D.leaderboardGroups].includes(G.runtime.tab)?G.runtime.tab:'All';
     const id=G.runtime.leaderboard||D.leaderboards.find(b=>group==='All'||b.group===group).id;
     const current=D.leaderboards.find(b=>b.id===id&&(group==='All'||b.group===group))||D.leaderboards.find(b=>group==='All'||b.group===group);
     const rows=S.leaderboards.rows(current.id);
-    return U.heading('LOCAL CHRONICLES','Leaderboards','Rank your saved characters across combat, crafts and collections in this browser.')+
-      U.tabs(['All','Combat','Skills','Journey'],group)+
+    return U.heading('LOCAL CHRONICLES','Leaderboards','Combat, skill levels, your journey and the Colosseum — organized by pursuit.')+
+      U.tabs(['All',...D.leaderboardGroups],group)+
       '<section class="panel"><label>Ranking category<select id="leaderboard-category">'+
-      D.leaderboards.filter(b=>group==='All'||b.group===group).map(b=>'<option value="'+b.id+'" '+(b.id===current.id?'selected':'')+'>'+b.name+'</option>').join('')+
+      D.leaderboardGroups.filter(name=>group==='All'||name===group).map(name=>'<optgroup label="'+(name==='Skills'?'Skill levels':name)+'">'+D.leaderboards.filter(b=>b.group===name).map(b=>'<option value="'+b.id+'" '+(b.id===current.id?'selected':'')+'>'+b.name+'</option>').join('')+'</optgroup>').join('')+
       '</select></label><p class="notes spacer">Local characters only. Level ties use XP within that level. Creatures Defeated includes regular, elite and boss victories.</p>'+
       '<table class="data-table leaderboard-table spacer"><thead><tr><th>Rank / character</th><th>'+current.name+'</th></tr></thead><tbody>'+
       rows.map((row,i)=>'<tr class="'+(row.character.id===G.character().id?'your-ranking':'')+'"><td><div class="leaderboard-character">'+

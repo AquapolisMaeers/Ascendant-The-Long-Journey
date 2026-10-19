@@ -414,6 +414,8 @@
     marketClear() { U.marketClear(); },
     marketPage(el) { U.marketPage(Number(el.dataset.page)); },
     marketQuantity(el) { U.marketQuantity(el.dataset.quantity); },
+    arenaBattle() { S.colosseum.battle(); },
+    arenaRanking(el) { G.runtime.arenaRanking=el.dataset.id;U.render(); },
     listConfirm() {
       G.assert(G.character().id===G.runtime.listOwner,'Your character changed. Review the listing again.');
       S.market.list(G.runtime.listItem, Number(value('listing-quantity')), Number(value('listing-price')));
@@ -578,7 +580,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'shopSection', 'appearanceOutfit', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'marketClear', 'marketPage', 'marketQuantity', 'trainingDialog', 'activityView', 'mobileMenu', 'mobileWorldView', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'shopSection', 'appearanceOutfit', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'marketClear', 'marketPage', 'marketQuantity', 'arenaRanking', 'trainingDialog', 'activityView', 'mobileMenu', 'mobileWorldView', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');

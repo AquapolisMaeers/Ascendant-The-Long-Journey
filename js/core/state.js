@@ -43,6 +43,7 @@
       gemSocketRules: 1,
       quests: null,
       questCompletions: 0,
+      colosseum: {points:0,victories:0,defeats:0},
       seed: G.seed(),
       location: 0,
       inventory: [],

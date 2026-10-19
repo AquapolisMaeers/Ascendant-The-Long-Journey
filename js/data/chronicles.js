@@ -31,22 +31,20 @@
   D.ascendantCurrency = {perCombatLevel:2, achievement:5, prestige:50, milestones:{10:10,25:25,50:50,75:75,100:100}};
   D.leaderboards = [
     {id:'damage', name:'Primary Damage', group:'Combat', metric:c=>RPG.systems.character.stats(c).damage},
-    {id:'defence', name:'Defence', group:'Combat', metric:c=>RPG.systems.character.stats(c).defence},
-    {id:'health', name:'Max Health', group:'Combat', metric:c=>RPG.systems.character.stats(c).health},
+    {id:'defence', name:'Defense', group:'Combat', metric:c=>RPG.systems.character.stats(c).defence},
+    {id:'health', name:'Health', group:'Combat', metric:c=>RPG.systems.character.stats(c).health},
     {id:'level', name:'Combat Level', group:'Combat', metric:c=>c.level, tie:c=>c.xp},
-    ...D.skills.map(skill=>({id:skill, name:skill+' Level', group:'Skills', metric:c=>c.skills[skill].level, tie:c=>c.skills[skill].xp})),
+    ...[...D.skills].sort((a,b)=>a.localeCompare(b)).map(skill=>({id:skill, name:skill+' Level', group:'Skills', metric:c=>c.skills[skill].level, tie:c=>c.skills[skill].xp})),
     {id:'coins', name:'Richest Player', group:'Journey', metric:c=>c.coins},
-    {id:'advance', name:'Most Advances', group:'Journey', metric:c=>c.stats.advance},
     {id:'creatures', name:'Creatures Defeated', group:'Journey', metric:c=>c.stats.regular+c.stats.elite+c.stats.boss},
     {id:'elite', name:'Elite Creatures Defeated', group:'Journey', metric:c=>c.stats.elite},
-    {id:'dungeons', name:'Dungeons Conquered', group:'Journey', metric:c=>c.stats.dungeons},
-    {id:'quests', name:'Most Quests Completed', group:'Journey', metric:c=>c.questCompletions ?? 0},
+    {id:'dungeons', name:'Dungeons Completed', group:'Journey', metric:c=>c.stats.dungeons},
+    {id:'quests', name:'Quests Completed', group:'Journey', metric:c=>c.questCompletions ?? 0},
+    {id:'advance', name:'Most Advances', group:'Journey', metric:c=>c.stats.advance},
     {id:'companion', name:'Highest Companion Level', group:'Journey', metric:c=>bestCompanion(c)?.level||0, tie:c=>bestCompanion(c)?.xp||0},
-    {id:'harvested',name:'Fibres Harvested',group:'Skills',metric:c=>c.stats.harvested||0},
-    {id:'textiles',name:'Leather & Cloth Refined',group:'Skills',metric:c=>c.stats.textiles||0},
-    {id:'secondaries',name:'Secondaries Crafted',group:'Skills',metric:c=>c.stats.secondaries||0},
-    {id:'collections',name:'Regalia & Special Pets Collected',group:'Journey',metric:c=>(c.regalia?.owned.length||0)+(c.specialPets?.length||0)},
-    {id:'boss-collection',name:'Unique Boss Equipment Drops',group:'Journey',metric:c=>Object.values(c.stats.bossDrops||{}).reduce((n,pieces)=>n+pieces.length,0)},
-    {id:'boxes-opened',name:'Mystery Presents Opened',group:'Journey',metric:c=>c.stats.boxesOpened||0}
+    {id:'boxes-opened',name:'Mystery Boxes Opened',group:'Journey',metric:c=>c.stats.boxesOpened||0},
+    {id:'colosseum-victories',name:'Colosseum Victories',group:'Colosseum',metric:c=>c.colosseum?.victories||0},
+    {id:'league-points',name:'League Points',group:'Colosseum',metric:c=>c.colosseum?.points||0}
   ];
+  D.leaderboardGroups=['Combat','Skills','Journey','Colosseum'];
 })(RPG.data);
