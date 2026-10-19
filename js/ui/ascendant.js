@@ -14,6 +14,7 @@
   U.paint = key => {
     const art = D.itemIllustrations[key];
     G.assert(art, 'Missing artwork for ' + key + '.');
+    if(art.standalone)return '<span class="item-art standalone-art" aria-hidden="true" data-art-key="'+U.e(key)+'"><img src="'+art.file+'?v='+art.version+'" alt="" decoding="async"></span>';
     if(art.frame) {
       const [x,y,w,h]=art.frame,[width,height]=art.size,aspect=w/h;
       const fitWidth=aspect>=1?90:90*aspect,fitHeight=aspect>=1?90/aspect:90;

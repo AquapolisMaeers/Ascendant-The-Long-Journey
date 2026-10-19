@@ -1,8 +1,15 @@
 .painted-regalia { overflow:hidden; border-radius:8px; background:#211e19; }
 .sealed-box-art { position:relative; display:inline-grid; place-items:center; width:112px; height:112px; flex-shrink:0; }
 .sealed-box-art > .item-art { display:block; width:100%; height:100%; }
+.item-art.standalone-art { background:none; overflow:hidden; }
+.standalone-art > img { display:block; width:100%; height:100%; object-fit:contain; }
+.mystery-art .sealed-box-art { width:156px; height:156px; }
+.mystery-art .sealed-box-art .item-art { width:100%; height:100%; }
+.box-offer .mystery-art { height:156px; margin-bottom:10px; }
 .sealed-box-art > b, .mystery-art .sealed-box-art > b { position:absolute; right:0; bottom:0; padding:4px 8px; border:1px solid #d8b57c; border-radius:4px; background:#7a3040; color:#ffebc5; font:700 13px/1.2 var(--body); transform:none; }
 .sealed-box-art.box-aura > b { background:#4d4270; }.sealed-box-art.box-mount > b { background:#3e5747; }.sealed-box-art.box-pet > b { background:#665039; }
+.sealed-box-art.box-gem > b { background:#2d566e; }.sealed-box-art.box-stone > b { background:#725335; }
+.box-offer:has(.box-outfit) { border-top:2px solid #b66978; }.box-offer:has(.box-aura) { border-top:2px solid #9d81bb; }.box-offer:has(.box-mount) { border-top:2px solid #7d9b79; }.box-offer:has(.box-pet) { border-top:2px solid #b59b63; }.box-offer:has(.box-gem) { border-top:2px solid #70adbc; }.box-offer:has(.box-stone) { border-top:2px solid #bb965b; }
 .item-card .sealed-box-art { width:64px; height:64px; }.item-card .sealed-box-art > b { font-size:10px; padding:2px 4px; }
 .provision-actions { flex-wrap:wrap; }
 @media(prefers-reduced-motion:no-preference) { .emporium-result { animation:present-reveal .45s ease-out; } }

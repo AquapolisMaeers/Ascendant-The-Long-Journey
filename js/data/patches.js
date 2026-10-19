@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'A tidier trading hall and new horizons',changes:[
+    'Provisions always orders purchased controls as Eat food, x5, x10, even when Eat 10 was bought first. Unlock prices, healing and food cooldowns stay the same.',
+    'All six shop box types now have their own painted chest: crimson wardrobe coffer, violet arcane casket, green stable trunk, teal companion coffer, blue gem chest and charcoal Ascendant reliquary. Matching paintings appear in shop offers, purchase dialogs, inventory and marketplace rows.',
+    'Marketplace Sell now uses aligned item rows, name search, category and sort controls, and eight items per page. Only eligible items appear. The listing dialog shows available stock, quantity shortcuts, the upfront fee and possible sale proceeds. My Listings separates active offers from items ready to retrieve; Browse keeps additional filters in a compact disclosure.',
+    'Guild and Colosseum are now destinations in desktop navigation and the phone Community menu. Both are coming-soon previews. Guild details and MMR-based PvP matchmaking will be defined in a future update; creation and matchmaking actions remain unavailable.'
+  ]},
   {date:'2026-10-19',title:'Presents, practical meals and a fuller journey',changes:[
     'Outfit, Aura, Mount and Pet Mystery Boxes now arrive as sealed inventory items. Find them under Inventory > Mystery Boxes, then Open present to reveal a permanent collection reward. Unopened boxes may be listed on the Marketplace in eligible modes. Prices, opening odds and duplicate AC refunds stay the same; opening never charges a second purchase price.',
     'Shop > Character adds permanent Eat 5 (level 10, 25 Silver) and Eat 10 (level 20, 1 Gold) upgrades. Outside combat, consume up to that many assigned meals at once, stopping at full health or available food. Locked meals stay protected. Combat keeps single meals and its shared 10-second cooldown.',

@@ -45,10 +45,10 @@
     {id:'gem-box',name:'Gem Mystery Box',kind:'gem',price:25,duplicate:0}
   ];
   D.emporiumBoxes.forEach(box=>{
+    D.itemIllustrations[box.id]={file:'assets/art/painted/mystery-'+box.kind+'.png',standalone:true,version:'boxes-20261019',name:box.name};
     box.sealed=['outfit','aura','mount','pet'].includes(box.kind);
     if(!box.sealed)return;
     D.catalog[box.id]={id:box.id,name:box.name,category:'Mystery Boxes',level:1,rarity:3,box:box.id};
-    D.itemIllustrations[box.id]={...D.itemIllustrations.treasure,name:box.name};
   });
   D.regularGemCount = D.gems.length;
   D.gemDescriptions={

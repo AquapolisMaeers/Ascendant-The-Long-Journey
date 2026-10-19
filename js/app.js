@@ -409,12 +409,13 @@
       U.close();
     },
     listForm(el) {
-      S.market.assert();
-      G.runtime.listItem = el.dataset.id;
-      const item = S.items.find(el.dataset.id);
-      U.modal('Create a local listing', '<p>' + U.e(U.itemName(item)) + '. No online buyers exist in this build.</p><div class="field-grid"><label>Quantity<input id="listing-quantity" type="number" min="1" max="' + (item.quantity || 1) + '" value="1"></label><label>Total asking price (Bronze)<input id="listing-price" type="number" min="1" value="100"></label></div><p>1% listing fee, rounded up to a whole Bronze, is charged immediately and is not refunded.</p><div class="modal-actions">' + U.btn('Create listing', 'listConfirm', '', 'gold-btn') + '</div>');
+      U.marketListForm(el.dataset.id);
     },
+    marketClear() { U.marketClear(); },
+    marketPage(el) { U.marketPage(Number(el.dataset.page)); },
+    marketQuantity(el) { U.marketQuantity(el.dataset.quantity); },
     listConfirm() {
+      G.assert(G.character().id===G.runtime.listOwner,'Your character changed. Review the listing again.');
       S.market.list(G.runtime.listItem, Number(value('listing-quantity')), Number(value('listing-price')));
       U.close();
     },
@@ -577,7 +578,7 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'shopSection', 'appearanceOutfit', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'trainingDialog', 'activityView', 'mobileMenu', 'mobileWorldView', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      if (!['navigate', 'tab', 'shopSection', 'appearanceOutfit', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'marketClear', 'marketPage', 'marketQuantity', 'trainingDialog', 'activityView', 'mobileMenu', 'mobileWorldView', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');

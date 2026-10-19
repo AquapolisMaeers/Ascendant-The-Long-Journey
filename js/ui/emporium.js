@@ -8,7 +8,7 @@
   const art=entry=>entry.special?U.companionPortrait(entry):U.regaliaArt(entry);
   const petStats=p=>'<p class="notes pet-rate">'+Object.entries(S.companions.rates(p)).map(([stat,rate])=>'+'+U.companionStatValue(stat,rate)+' '+D.labels[stat]+' per level').join('<br>')+'</p>';
   const blocked=()=>{const c=G.character();return c.combat||c.activity||c.dungeon||c.pending.length||S.tutorial.active();};
-  U.mysteryBoxArt=box=>'<span class="sealed-box-art box-'+box.kind+'">'+U.paint(box.id)+'<b>'+({outfit:'Outfit',aura:'Aura',mount:'Mount',pet:'Pet'}[box.kind])+'</b></span>';
+  U.mysteryBoxArt=box=>'<span class="sealed-box-art box-'+box.kind+'">'+U.paint(box.id)+'<b>'+({outfit:'Outfit',aura:'Aura',mount:'Mount',pet:'Pet',gem:'Gem',stone:'Stone'}[box.kind])+'</b></span>';
   const itemArt=U.itemArt;
   U.itemArt=item=>D.catalog[item.key]?.box?U.mysteryBoxArt(D.emporiumBoxes.find(b=>b.id===item.key)):itemArt(item);
   const item=U.item;
@@ -57,7 +57,7 @@
       });
       return;
     }
-    U.confirm('Open '+box.name+'?', '<div class="box-quote">'+U.icon('Inventory')+'<div><h3>One random reward</h3>'+ac(box.price)+'</div></div><p class="notes spacer">Each opening is an independent roll. '+(box.kind==='gem'?'Regular types: 90%; exclusive types: 10%. Ranks I / II / III / IV / V: 60% / 25% / 10% / 4.5% / 0.5%. Gems stack; no duplicate refund.':box.duplicate?'Duplicates return '+box.duplicate+' AC; existing collection items and pet progress are preserved.':'A stone has exactly 1 chance in 100; normal coins fill the other 99 outcomes.')+'</p>'+U.boxOdds(box),()=>{
+    U.confirm('Open '+box.name+'?', '<div class="box-quote">'+U.mysteryBoxArt(box)+'<div><h3>One random reward</h3>'+ac(box.price)+'</div></div><p class="notes spacer">Each opening is an independent roll. '+(box.kind==='gem'?'Regular types: 90%; exclusive types: 10%. Ranks I / II / III / IV / V: 60% / 25% / 10% / 4.5% / 0.5%. Gems stack; no duplicate refund.':box.duplicate?'Duplicates return '+box.duplicate+' AC; existing collection items and pet progress are preserved.':'A stone has exactly 1 chance in 100; normal coins fill the other 99 outcomes.')+'</p>'+U.boxOdds(box),()=>{
       G.assert(c===G.character(),'Character changed. Review your purchase again.');U.emporiumResult(S.emporium.open(id));
     });
     if(c.ascendantCoins<box.price)document.querySelector('[data-action="confirm"]').disabled=true;
@@ -69,7 +69,7 @@
     return U.heading('THE ASCENDANT EMPORIUM','Fortune favours the journey.','Mystery boxes, permanent collections, and a chance at the extraordinary.',ac(c.ascendantCoins))+
       U.tabs(D.emporiumCategories.map(e=>e.name),category.name)+
       '<section class="emporium-intro"><div><h3>'+category.name+'</h3><p class="notes">'+category.description+'</p></div>'+'<div class="row">'+(box.kind==='gem'?U.btn('Gem guide','gemGuide','','quiet small'):'')+U.btn('How to earn coins','ascendantHelp','','quiet small')+'</div></section>'+
-      '<div class="box-layout"><section class="panel box-offer"><div class="mystery-art">'+(box.sealed?U.mysteryBoxArt(box):U.paint(box.kind==='gem'?'gem:6:5':'treasure')+'<b>?</b>')+'</div><h2>'+box.name+'</h2><p class="notes spacer">'+summary+'</p><div class="regalia-purchase">'+ac(box.price)+U.btn(box.sealed?'Purchase box':'Review & open','emporiumOpen','data-id="'+box.id+'" '+(blocked()||c.ascendantCoins<box.price?'disabled':''),'gold-btn')+'</div><p class="notes spacer">'+(box.sealed?'Sealed boxes go to Inventory > Mystery Boxes. Open them there or list them on the Marketplace.':'Find unlocked regalia under Character and companions in the stable.')+'</p></section><section class="panel"><h3>Every possible outcome</h3>'+U.boxOdds(box,true)+'</section></div>';
+      '<div class="box-layout"><section class="panel box-offer"><div class="mystery-art">'+U.mysteryBoxArt(box)+'</div><h2>'+box.name+'</h2><p class="notes spacer">'+summary+'</p><div class="regalia-purchase">'+ac(box.price)+U.btn(box.sealed?'Purchase box':'Review & open','emporiumOpen','data-id="'+box.id+'" '+(blocked()||c.ascendantCoins<box.price?'disabled':''),'gold-btn')+'</div><p class="notes spacer">'+(box.sealed?'Sealed boxes go to Inventory > Mystery Boxes. Open them there or list them on the Marketplace.':'Find unlocked regalia under Character and companions in the stable.')+'</p></section><section class="panel"><h3>Every possible outcome</h3>'+U.boxOdds(box,true)+'</section></div>';
   };
   U.ascendantHelp=()=>U.modal('Earn Ascendant Coins','<p class="notes">Combat levels after Level 1 award 2 AC each. Achievements award 5 AC, or 50 AC when they grant a title. Each reward is claimed once per character.</p><div class="spacer">'+Object.entries(D.ascendantCurrency.milestones).map(([level,n])=>'<div class="meta-row"><span>Combat level '+level+'</span>'+ac(n)+'</div>').join('')+'</div>'+U.btn('Continue','closeModal','','gold-btn spacer'));
   const character=U.screens.Character;
