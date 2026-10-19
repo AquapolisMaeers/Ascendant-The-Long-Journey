@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'Higher arena stakes and points on the line',changes:[
+    'Ascendant entry rises to 10 Gold per fighter, with a same-league winner payout of 16 Gold from the combined 20 Gold pool. Earlier entries now scale through 50 Bronze, 2.5 Silver, 10 Silver, 25 Silver, 1 Gold, 2.5 Gold and 5 Gold. League point thresholds are unchanged.',
+    'A win starts at +5 League Points, with +1 for a higher-level opponent and +1 for an opponent with more points; lower level or fewer points each subtract 1. Equal comparisons add nothing. Awards range from +3 to +7. The loser loses the winning award, stopping at zero; defeats can move a fighter into a lower league.',
+    'Matchmaking starts within 1,000 points and scales with rating to 5,000 points at Ascendant. Both fighters must fit each other’s window. Eligible opponents with closer combat levels are prioritized, then closer points; exact ties are random. A wide level gap is still allowed when the queue is sparse.',
+    'Arena cards, prize previews and rules now show the revised fees, point formula and deductions. Battle still waits for a connected online host; manual eating and the 80% prize-pool share stay the same.'
+  ]},
   {date:'2026-10-19',title:'Ordered leaderboards and the Colosseum leagues',changes:[
     'Leaderboards now keeps the requested combat stats, every skill as a level, wealth, creature/elite victories, dungeon and quest completions, advances, companion level and mystery boxes opened. The dropdown groups Combat, alphabetized Skill levels, Journey and Colosseum. Extra craft/collection rankings are removed from the menu.',
     'Colosseum gains Arena, Leagues and Rankings tabs. Eight leagues follow all rarities, from Common to Ascendant. Ascendant begins at 100,000 League Points and remains uncapped. Promotion thresholds and league-coloured entry/prize cards are shown under Leagues.',

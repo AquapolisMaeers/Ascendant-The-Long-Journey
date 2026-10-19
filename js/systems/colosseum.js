@@ -12,10 +12,16 @@
       G.assert(whole(points),'League Points must be a non-negative whole number.');
       return D.leagues.findLast(league=>points>=league.minimum);
     },
-    range(points) { this.league(points);return {minimum:Math.max(0,points-D.colosseum.matchRange),maximum:Math.min(Number.MAX_SAFE_INTEGER,points+D.colosseum.matchRange)}; },
-    winPoints(winnerLevel,loserLevel) {
-      checkLevel(winnerLevel);checkLevel(loserLevel);
-      return D.colosseum.winPoints+Math.sign(loserLevel-winnerLevel)*D.colosseum.levelAdjustment;
+    matchWindow(points) {
+      this.league(points);
+      const scaled=Math.floor(points*D.colosseum.matchRangeFraction/D.colosseum.matchRangeStep)*D.colosseum.matchRangeStep;
+      return Math.min(D.colosseum.maxMatchRange,Math.max(D.colosseum.matchRange,scaled));
+    },
+    range(points) { const window=this.matchWindow(points);return {minimum:Math.max(0,points-window),maximum:Math.min(Number.MAX_SAFE_INTEGER,points+window),window}; },
+    winPoints(winner,loser) {
+      checkLevel(winner.level);checkLevel(loser.level);
+      const won=this.record(winner).points,lost=this.record(loser).points;this.league(won);this.league(lost);
+      return D.colosseum.winPoints+Math.sign(loser.level-winner.level)*D.colosseum.levelAdjustment+Math.sign(lost-won)*D.colosseum.pointAdjustment;
     },
     quote(a,b=a) {
       const own=this.league(this.record(a).points),other=this.league(this.record(b).points),pool=own.entry+other.entry;
@@ -25,13 +31,20 @@
     canMatch(a,b) {
       if(!a||!b||typeof a.id!=='string'||typeof b.id!=='string'||a.id===b.id||a.accountId&&a.accountId===b.accountId)return false;
       const left=this.record(a).points,right=this.record(b).points;
-      return whole(left)&&whole(right)&&Math.abs(left-right)<=D.colosseum.matchRange;
+      return whole(left)&&whole(right)&&Math.abs(left-right)<=Math.min(this.matchWindow(left),this.matchWindow(right));
     },
     selectOpponent(player,queue,random) {
       G.assert(typeof random==='function','Matchmaking requires its own random source.');
-      const candidates=queue.filter(other=>other.online===true&&other.ready===true&&this.canMatch(player,other)&&Number.isSafeInteger(other.coins)&&other.coins>=this.quote(other).entry);
+      checkLevel(player.level);
+      const candidates=queue.filter(other=>other.online===true&&other.ready===true&&Number.isInteger(other.level)&&other.level>=1&&other.level<=D.config.levelCap&&this.canMatch(player,other)&&Number.isSafeInteger(other.coins)&&other.coins>=this.quote(other).entry);
       if(!Number.isSafeInteger(player.coins)||player.coins<this.quote(player).entry)return null;
-      return candidates.length?G.pick(random,candidates):null;
+      let nearestLevel=Infinity,nearestPoints=Infinity,closest=[];
+      for(const candidate of candidates){
+        const levels=Math.abs(candidate.level-player.level),points=Math.abs(this.record(candidate).points-this.record(player).points);
+        if(levels<nearestLevel||levels===nearestLevel&&points<nearestPoints){nearestLevel=levels;nearestPoints=points;closest=[candidate];}
+        else if(levels===nearestLevel&&points===nearestPoints)closest.push(candidate);
+      }
+      return closest.length?G.pick(random,closest):null;
     },
     // A pure settlement plan. This does not award local points or move coins.
     settlement(a,b,winnerId) {
@@ -39,11 +52,11 @@
       G.assert(winnerId===a.id||winnerId===b.id,'The winner must be a participant.');
       const quote=this.quote(a,b);
       G.assert(whole(a.coins)&&whole(b.coins)&&a.coins>=quote.entry&&b.coins>=quote.otherEntry,'Both fighters must afford their locked entry fees.');
-      const winner=winnerId===a.id?a:b,loser=winner===a?b:a,gained=this.winPoints(winner.level,loser.level);
+      const winner=winnerId===a.id?a:b,loser=winner===a?b:a,gained=this.winPoints(winner,loser),lost=Math.min(gained,this.record(loser).points);
       G.assert(Number.isSafeInteger(this.record(winner).points+gained),'League Point total is too large to store safely.');
       const awards=[a,b].map((fighter,index)=>({id:fighter.id,entry:index===0?quote.entry:quote.otherEntry,
         coinDelta:(fighter.id===winnerId?quote.prize:0)-(index===0?quote.entry:quote.otherEntry),
-        points:fighter.id===winnerId?gained:0,victories:fighter.id===winnerId?1:0,defeats:fighter.id===winnerId?0:1}));
+        points:fighter.id===winnerId?gained:-lost,victories:fighter.id===winnerId?1:0,defeats:fighter.id===winnerId?0:1}));
       G.assert(awards.every((award,index)=>whole([a,b][index].coins+award.coinDelta)&&[a,b][index].coins+award.coinDelta<=1e15),'A coin balance cannot hold this payout.');
       return {...quote,winnerId,awards};
     },
