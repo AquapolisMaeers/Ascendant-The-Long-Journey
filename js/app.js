@@ -69,14 +69,13 @@
       G.state.active = slot;
       G.runtime.selecting = false;
       S.tutorial.ensure();
-      const result = S.offline.apply(G.character());
+      S.offline.applyAll();
       G.runtime.page = 'World';
       G.runtime.tab = '';
       G.runtime.recent = [];
       G.runtime.estimate = null;
       U.close();
       G.commit();
-      S.offline.record(result);
       showOffline();
     },
     create(el) {
@@ -148,6 +147,7 @@
       G.runtime.selecting = false;
       G.state.slots[f.slot] = G.newCharacter(f.name, f.class, f.mode, f.appearance);
       G.state.active = f.slot;
+      S.offline.applyAll();
       G.runtime.page = 'World';
       G.runtime.loadFailure = false;
       U.close();
@@ -869,10 +869,10 @@
       G.save.write();
     } else {
       last = performance.now();
-      if (G.character()) {
-        const r = S.offline.apply(G.character());
-        if (r.levelsGained) S.offline.record(r);
-        else if (r.xp > 0) G.notify('Offline ' + r.skill + ': +' + G.number(r.xp) + ' XP.');
+      if (G.state.slots.some(Boolean)) {
+        const results = S.offline.applyAll(Date.now(), {report:false});
+        if (results.some(result => result.levelsGained)) results.forEach(result => S.offline.record(result));
+        else results.forEach(result => G.notify(result.name + ' · Offline ' + result.skill + ': +' + G.number(result.xp) + ' XP.'));
         G.commit();
         showOffline();
       }

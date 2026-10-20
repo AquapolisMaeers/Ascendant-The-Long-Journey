@@ -1,6 +1,11 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'AFK training for every character slot',changes:[
+    'Returning to an open game tab now awards offline skill XP to every saved character, rather than only the selected character. Switching or creating characters also settles training for the other slots. Choose an AFK skill separately for each character.',
+    'Every slot uses its own elapsed time, selected skill and Knowledge tool bonus, with the existing eight-hour cap and XP rates. Unplayed characters continue accruing training while you play another character. Training grants XP only; it does not run combat or generate materials, items or coins.',
+    'Welcome-back reports include every trained character and preserve pending results behind existing dialogs. Short returns show named XP notices. Repeated returns and character switches do not award the same offline time twice.'
+  ]},
   {date:'2026-10-19',title:'Aura portraits, companion naming and fairer guild goals',changes:[
     'Weekly guild goals are now 1,000 creatures, 200 elites, 5,000 materials, 1,000 successful Smithing actions, 50 quests and 50 dungeons per member. Task cards show the per-member amount and the current weekly roster. Future Cooking and Faceting actions no longer count as forges; existing recorded progress is retained.',
     'Existing guild saves preserve claimed rewards, XP, ranks and balances. Current-week work that already reaches a lowered target completes once and receives the normal reward. Expired task lists reset without retroactive payouts.',

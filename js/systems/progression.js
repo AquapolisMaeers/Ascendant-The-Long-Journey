@@ -75,9 +75,10 @@
       } else rows.push(result);
       G.emit('offline-progress');
     },
-    applyAll() {
-      G.runtime.offline = G.state.slots.filter(Boolean).map(c => this.apply(c)).filter(r => r.xp > 0);
-      if (G.runtime.offline.length) G.emit('offline-progress');
+    applyAll(now = Date.now(), {report = true} = {}) {
+      const results = G.state.slots.filter(Boolean).map(c => this.apply(c, now)).filter(r => r.xp > 0);
+      if (report) results.forEach(result => this.record(result));
+      return results;
     },
     resume() {
       for (const c of G.state.slots.filter(Boolean)) {
