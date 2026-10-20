@@ -6,7 +6,7 @@
     },
     chance(recipe, c = G.character()) {
       if (recipe.skill !== 'Faceting' || recipe.rank === 0) return 1;
-      return Math.min(1, D.facet.chance[recipe.rank] + Math.max(0, c.tools.Faceting.rarity - D.facet.chisel[recipe.rank]) * D.facet.extraRarity + (c.facetFails[recipe.rank] || 0));
+      return Math.min(1, D.facet.chance[recipe.rank] + Math.max(0, c.tools.Faceting.rarity - D.facet.chisel[recipe.rank]) * D.facet.extraRarity + (c.facetFails[recipe.rank] || 0) + (S.skilling.effects(c).fusionChance||0));
     },
     max(recipe) {
       return Math.min(...Object.entries(recipe.cost).map(([k, n]) => Math.floor(S.inventory.available(k) / n)));

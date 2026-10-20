@@ -72,7 +72,7 @@
     }
   };
   const reward = U.rewardText;
-  U.rewardText = r => '<span class="reward-art' + (r.kind === 'gear' || r.kind === 'tool' ? ' rarity-' + r.rarity : '') + '">' + (r.coins ? U.paint('coins') : U.itemArt(r.kind ? r : {kind: 'stack', key: r.key})) + '<span>' + reward(r) + '</span></span>';
+  U.rewardText = r => '<span class="reward-art' + (r.kind === 'gear' || r.kind === 'tool' ? ' rarity-' + r.rarity : r.key === 'stone' ? ' rarity-7 ascendant-stone-reward' : '') + '">' + (r.coins ? U.paint('coins') : U.itemArt(r.kind ? r : {kind: 'stack', key: r.key})) + '<span>' + reward(r) + '</span></span>';
   U.afkPanel = (compact = false) => {
     const c = G.character(), a = c.afk, running = S.afk.run?.id === c.id;
     if (compact) return '<section class="panel afk-panel"><div class="panel-head"><h3>AFK advancing</h3><span class="badge">' + (running ? 'ACTIVE' : 'STOPPED') + '</span></div><div class="afk-summary"><span>' + a.interval / 1000 + 's travel</span><span>' + G.percent(a.chance, 2) + ' minimum odds</span></div><p class="notes afk-price">15 minutes free · then ' + U.price(S.afk.minuteRate(c)) + '/min</p><p id="afk-status" class="afk-status" role="status">' + U.e(S.afk.status) + '</p><div class="row">' + (running ? U.btn('Stop AFK', 'afkStop', '', 'danger') : U.btn('Start AFK', 'afkStart', c.combat || c.activity || c.pending.length || c.dungeon || S.tutorial.active() ? 'disabled' : '', 'gold-btn')) + U.btn('Configure', 'navigate', 'data-value="Settings"', 'small quiet') + '</div><small id="afk-timer" class="muted">' + U.afkTimer() + '</small></section>';

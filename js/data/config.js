@@ -137,7 +137,7 @@
     name: 'Crystal of Recollection',
     price: 5000,
     category: 'Utility',
-    description: 'Consume to refund every spent talent point. Your earned points and milestone perks remain. Use while idle outside a dungeon.'
+    description: 'Consume to refund either your combat talent tree or your skilling tree. Choose which tree to reset; the other stays allocated. Use while idle outside a dungeon.'
   }, {
     id: 'appearance',
     name: 'Appearance Token',

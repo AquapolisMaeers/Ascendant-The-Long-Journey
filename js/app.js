@@ -48,6 +48,8 @@
     mobileWorldView(el) { U.mobileWorldView(el.dataset.view); },
     provisionsShop() { G.runtime.page='Shop'; G.runtime.shopSection='general'; G.runtime.tab='Character'; U.render(); },
     learnTalent(el) { U.confirmTalent(el.dataset.id); },
+    learnSkilling(el) { U.confirmSkilling(el.dataset.id); },
+    resetSkilling() { U.resetSkilling(); },
     resetTalents() {
       U.resetBuild('talent-reset');
     },
@@ -780,8 +782,8 @@
     detail
   }) => {
     const el = document.getElementById('loot-popup');
-    const highlight = detail.rewards.filter(r => r.kind === 'gear' || r.kind === 'tool').reduce((best, r) => !best || r.rarity > best.rarity ? r : best, null);
-    el.innerHTML = (highlight && highlight.rarity >= 2 ? '<span class="loot-rarity eyebrow">' + D.rarity[highlight.rarity] + (highlight.kind === 'tool' ? ' tool' : ' gear') + ' found</span>' : '') + '<strong>' + U.e(detail.label) + '</strong><p>' + detail.rewards.map(U.rewardText).join('<br>') + '</p><small>Automatically collected · click to dismiss</small>';
+    const highlight = detail.rewards.map(r => r.key === 'stone' ? {...r,kind:'stone',rarity:7} : r).filter(r => ['gear','tool','stone'].includes(r.kind)).reduce((best, r) => !best || r.rarity > best.rarity ? r : best, null);
+    el.innerHTML = (highlight && highlight.rarity >= 2 ? '<span class="loot-rarity eyebrow">' + D.rarity[highlight.rarity] + (highlight.kind === 'tool' ? ' tool' : highlight.kind === 'stone' ? ' material' : ' gear') + ' found</span>' : '') + '<strong>' + U.e(detail.label) + '</strong><p>' + detail.rewards.map(U.rewardText).join('<br>') + '</p><small>Automatically collected · click to dismiss</small>';
     el.hidden = false;
     el.scrollTop=0;
     dismissLootLater();

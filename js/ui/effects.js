@@ -47,7 +47,7 @@
   window.addEventListener('rpg:loot', ({
     detail
   }) => {
-    const rarity = Math.max(-1, ...detail.rewards.filter(r => r.kind === 'gear' || r.kind === 'tool').map(r => r.rarity));
+    const rarity = Math.max(-1, ...detail.rewards.map(r => r.kind === 'gear' || r.kind === 'tool' ? r.rarity : r.key === 'stone' ? 7 : -1));
     const el = document.getElementById('loot-popup');
     el.className = 'loot-popup' + (rarity >= 0 ? ' rarity-' + rarity : '') + (rarity >= 2 ? ' rare-reveal' : '');
     if (rarity >= 4) G.audio.play('rare');

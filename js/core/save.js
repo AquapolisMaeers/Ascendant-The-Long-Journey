@@ -123,6 +123,7 @@
       }
       if (Object.entries(c.perks).some(([k, v]) => !D.perkLevels.includes(+k) || +k > c.level || ![0, 1, 2].includes(v))) fail('perk choice');
       if (!G.systems.talents.valid(c)) fail('talent allocation');
+      if (!G.systems.skilling.valid(c)) fail('skilling allocation');
       if (c.provisionsVersion !== undefined && c.provisionsVersion !== 1) fail('provisions version');
       if (!(c.offline === null || D.skills.includes(c.offline)) || !finite(c.lastSeen) || !Array.isArray(c.eatUnlocks) || c.eatUnlocks.some(v => ![0, .25, .5, .75].includes(v)) || !c.eatUnlocks.includes(c.eat) || c.food !== null && !D.catalog[c.food]?.healing) fail('food or offline selection');
       if (c.encounter) {
@@ -247,6 +248,7 @@
           }
         }
         c.talents ??= {};
+        if(c.skilling===undefined)c.skilling={};
         if(c.equipment && !Object.hasOwn(c.equipment,'Secondary')) c.equipment.Secondary=null;
         if(c.creatureBalanceVersion===undefined) {
           // Refresh uncommitted previews once. A fight already in progress keeps

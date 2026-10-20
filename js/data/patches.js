@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-20',title:'Connected skilling paths and Ascendant Stone reveals',changes:[
+    'Skills now has Disciplines and Skilling Tree tabs. Fieldwork connects to Harvesting, Crafting and Mastery, with nineteen nodes in total. Earn one skilling point per ten combined skill levels gained across all eight disciplines. Past levels count, and all skills at level 100 provide the 79 points needed to complete the tree.',
+    'Learned ranks improve actual gathering and crafting speed, skill XP, double harvests and output, resource-node preservation, ingredient conservation, next-tier gathering bonuses, gem-fusion success and offline training. Crafting cards and gathering previews show the improved rates. Existing tool bonuses stack; regional resource limits, fusion failure protection and the eight-hour offline cap remain in force.',
+    'Review a node before confirming a point. Crystal of Recollection can refund either combat talents or skilling points, one tree per crystal. Each character keeps its own points, allocation and offline claims. Existing saves retain XP and receive credit for their earned skill levels.',
+    'Ascendant Stones now appear inside their own Ascendant-coloured reward frame and give the loot popup an Ascendant material reveal, even when no rare equipment drops. This changes presentation only; stone drop rates, quantities and inventory behavior stay the same.'
+  ]},
   {date:'2026-10-19',title:'A different horizon in every region',changes:[
     'All eleven locations now have distinct painted backdrops. The Crossroads keeps its existing landscape; ten new scenes follow the forests, battlefields, highlands, fortress walls, arcane pools, volcanic ground, dragon bones, starry peaks, ancient roots and imperial ruins described by each region.',
     'Travelling updates the desktop World background and Current Location card together. Phone region headers show the same local landscape with more room for the artwork and dark shading behind the title. Regional art also follows the selected character and returns with their saved location.',

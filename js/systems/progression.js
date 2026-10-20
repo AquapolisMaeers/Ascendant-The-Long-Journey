@@ -46,7 +46,7 @@
       if (c.offline && seconds >= 1) {
         const skill = c.offline,
           rate = this.rate(c, skill);
-        earned = rate * seconds * D.config.offlineRate * (1 + S.items.toolBonus(c, skill, 'Knowledge'));
+        earned = rate * seconds * D.config.offlineRate * (1 + S.items.toolBonus(c, skill, 'Knowledge') + (S.skilling.effects(c).offlineKnowledge||0));
         S.xp.add(c.skills[skill], earned, {silent:true});
       }
       c.lastSeen = now;

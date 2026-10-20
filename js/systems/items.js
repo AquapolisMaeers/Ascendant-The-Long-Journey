@@ -111,7 +111,7 @@
       return Object.fromEntries(Object.entries(D.armorCost(item.slot,item.armorClass)).map(([k, n]) => [k + ':' + item.tier, n]));
     },
     toolBonus(c, skill, key) {
-      return (c.tools[skill].prefixes[key] || 0) * D.toolPrefixes[key];
+      return (c.tools[skill].prefixes[key] || 0) * D.toolPrefixes[key] + (S.skilling?.toolBonus(c,skill,key)||0);
     },
     usableTool(c, skill) {
       return c.tools[skill]?.kind === 'tool' && c.tools[skill].skill === skill;
