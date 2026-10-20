@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-20',title:'Stronger Fieldwork, Blood Appetite and clearer training',changes:[
+    'Fieldwork now grants 2.5% skill XP per rank for its first four points, reaching 10%. The bonus applies to active and offline training, including already learned ranks.',
+    'The gathering tutorial now includes working primary and secondary selectors inside its lesson. Skills lessons point to Disciplines, offline training can be chosen inside its lesson, and the guide explains the Skilling Tree and its separate points.',
+    'Berserker Blood Appetite now grants 0.5% lifesteal per rank, reaching 5% at ten ranks at any health. Blood Siphon keeps its 0.25% per rank, doubled below 60% health. The shared lifesteal cap still applies.',
+    'Shop selling cards now fill matching inner rectangles, with consistent sizing for short and long item descriptions.'
+  ]},
   {date:'2026-10-20',title:'Connected skilling paths and Ascendant Stone reveals',changes:[
     'Skills now has Disciplines and Skilling Tree tabs. Fieldwork connects to Harvesting, Crafting and Mastery, with nineteen nodes in total. Earn one skilling point per ten combined skill levels gained across all eight disciplines. Past levels count, and all skills at level 100 provide the 79 points needed to complete the tree.',
     'Learned ranks improve actual gathering and crafting speed, skill XP, double harvests and output, resource-node preservation, ingredient conservation, next-tier gathering bonuses, gem-fusion success and offline training. Crafting cards and gathering previews show the improved rates. Existing tool bonuses stack; regional resource limits, fusion failure protection and the eight-hour offline cap remain in force.',

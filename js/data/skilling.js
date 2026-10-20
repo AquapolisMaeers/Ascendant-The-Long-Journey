@@ -4,7 +4,7 @@
   const ranks=[5,5,5,5,4,1];
   const path=(id,name,icon,role,rows)=>({id,name,icon,role,nodes:rows.map((row,index)=>({...node(id+':'+index,row[0],ranks[index],row[1],row[2]),requires:index?id+':'+(index-1):'foundation'}))});
   D.skilling={levelsPerPoint:10,
-    root:node('foundation','Fieldwork',4,{allKnowledge:.01},'+1% skill XP per rank. Applies to active and offline skill training.'),
+    root:node('foundation','Fieldwork',4,{allKnowledge:.025},'+2.5% skill XP per rank, up to +10% at four ranks. Applies to active and offline skill training.'),
     paths:[
       path('harvesting','Harvesting','Farming','Gather more, work faster and make resource nodes last.',[
         ['Harvesting rhythm',{gatherEfficiency:.02},'+2% gathering speed per rank across all five gathering skills.'],

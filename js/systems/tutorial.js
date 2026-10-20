@@ -7,6 +7,11 @@
     current(c = G.character()) {
       return this.active(c) ? D.tutorial.steps[c.guide.step] : null;
     },
+    onRoute() {
+      const route = this.current()?.route;
+      const tab = G.runtime.tab || (G.runtime.page === 'Skills' ? 'Disciplines' : '');
+      return !!route && G.runtime.page === route.page && (!route.tab || tab === route.tab);
+    },
     ensure() {
       const c = G.character();
       if (c && !c.tutorial && !this.active(c) && !c.combat && !c.activity && !c.dungeon) this.start();
@@ -145,7 +150,7 @@
     acknowledge() {
       const id = this.current()?.id;
       G.assert(['preferences', 'offline', 'afk', 'recovery', 'prefixes', 'ready'].includes(id), 'Complete the current practical lesson first.');
-      G.assert(G.runtime.page===this.current().route.page,'Follow the directions to '+this.current().route.page+' before completing this lesson.');
+      G.assert(this.onRoute(),'Follow the directions to '+this.current().route.page+(this.current().route.tab?' / '+this.current().route.tab:'')+' before completing this lesson.');
       if (id === 'ready') this.finish();
       else { this.advanceStep(); G.commit(); }
     },

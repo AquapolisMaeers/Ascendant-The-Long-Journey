@@ -45,9 +45,10 @@
 .trade-preview > div:last-child { min-width:0; }.trade-preview small { display:block; text-transform:uppercase; letter-spacing:1px; color:#cbbacb; font-size:9px; }
 .trade-preview strong { display:block; font:700 24px/1.15 var(--display); color:#fff1d9; overflow-wrap:anywhere; margin:5px 0; }.trade-preview span:not(.item-art):not(.shop-upgrade-icon) { color:#f3ce89; font-size:12px; }
 .storage-heading { display:flex; align-items:center; gap:14px; }.storage-heading > .signal-icon { width:58px; height:58px; background:#3a2c45; color:#d3b7ef; }.storage-heading .eyebrow { margin-bottom:4px; }
-.sell-grid .recipe { padding:14px; }.sell-grid .item-card { display:grid; grid-template-columns:76px minmax(0,1fr); gap:3px 12px; text-align:left; min-height:130px; padding:12px 10px; background:linear-gradient(125deg,#25202f,#151b27); }
+.sell-grid { grid-auto-rows:1fr; }
+.sell-grid .recipe { display:grid; grid-template-rows:minmax(130px,1fr) auto; padding:14px; }.sell-grid .item-card { display:grid; width:100%; min-width:0; grid-template-columns:76px minmax(0,1fr); gap:3px 12px; text-align:left; min-height:130px; padding:12px 10px; background:linear-gradient(125deg,#25202f,#151b27); }
 .sell-grid .item-card > .item-art { width:70px; height:70px; margin:0; grid-column:1; grid-row:1 / span 3; align-self:center; }
-.sell-grid .item-card > .name,.sell-grid .item-card > small,.sell-grid .item-card > .item-summary { grid-column:2; min-width:0; margin:0; }
+.sell-grid .item-card > .name,.sell-grid .item-card > small,.sell-grid .item-card > .item-summary { grid-column:2; min-width:0; margin:0; overflow-wrap:anywhere; }
 .sell-grid .item-card > .name { padding-right:20px; align-self:end; }.sell-grid .item-card > small { font-size:9px; }.sell-grid .item-summary { font-size:10px; line-height:1.35; }
 .signal-icon { display:grid; place-items:center; width:42px; height:42px; background:#2d3f45; color:#a6d9d5; border:1px solid #9bc6c344; flex-shrink:0; }
 .signal-icon > .icon { width:25px; height:25px; }

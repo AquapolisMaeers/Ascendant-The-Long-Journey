@@ -8,7 +8,7 @@
     Warrior: [
       {id:'berserker', name:'Berserker', role:'Trade safety for damage as your health falls.', nodes:[
         node('Heavy blows',{damagePct:.012}), node('Rising fury',{fury:.03},'Up to +3% damage per rank as health falls.'),
-        node('Cruel edge',{critDamage:.012}), node('Reckless tempo',{speed:.008}), node('Blood appetite',{lifeSteal:.0015}),
+        node('Cruel edge',{critDamage:.012}), node('Reckless tempo',{speed:.008}), node('Blood appetite',{lifeSteal:.005},'Always gain 0.5% lifesteal per rank, up to 5% at ten ranks; subject to the lifesteal cap.'),
         node('Unchained',{unchained:true},'Fury is doubled below 40% health.') ]},
       {id:'guardian', name:'Guardian', role:'Absorb punishment and answer with powerful counters.', nodes:[
         node('Stalwart',{healthPct:.018}), node('Shield discipline',{guard:.025},'Every fourth incoming hit deals 2.5% less damage per rank.'),

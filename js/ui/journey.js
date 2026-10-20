@@ -10,10 +10,12 @@
   };
   U.lesson = (intro = false) => {
     const step=S.tutorial.current();if(!step)return;
-    const reading=['preferences','offline','afk','recovery','prefixes','ready'].includes(step.id),here=G.runtime.page===step.route.page;
+    const reading=['preferences','offline','afk','recovery','prefixes','ready'].includes(step.id),here=S.tutorial.onRoute();
     const body='<div class="eyebrow">TUTORIAL / LESSON '+(G.character().guide.step+1)+' OF '+D.tutorial.steps.length+'</div>'+
       (intro?'<h3 class="spacer">Welcome to your guided first steps</h3><p class="spacer">Follow the training panel on each screen. Use the navigation to find each lesson yourself; the instructions explain the route and why it matters.</p>':'')+
       '<p class="spacer">'+step.text+'</p>'+U.tutorialDirections(step)+
+      (here&&step.id==='preferences'?U.skillPreferences('lesson-'):'')+
+      (here&&step.id==='offline'?U.offlineTraining('lesson-offline-select'):'')+
       (step.id==='prefixes'?U.toolPrefixHelp():'')+
       '<div class="modal-actions">'+(reading&&here?U.btn(step.id==='ready'?'Complete tutorial & set out':'Understood / next lesson','tutorialAcknowledge','','primary'):U.btn('Close & follow directions','closeModal','','primary'))+'</div>';
     U.modal(intro?'Your tutorial starts here':step.title,body);
