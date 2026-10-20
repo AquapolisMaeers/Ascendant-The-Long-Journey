@@ -9,15 +9,20 @@
     if (S.items.find(id)) U.item(id);
     else U.close();
   };
-  const resumeSelection = () => {
-    if (!G.runtime.needsResume) return;
-    S.offline.resume();
-    G.runtime.needsResume = false;
+  const clearCharacterNotices = () => {
+    G.runtime.log = [];
+    document.getElementById('toasts').replaceChildren();
+    document.getElementById('floating').replaceChildren();
+    document.getElementById('loot-popup').hidden = true;
+    document.getElementById('prefix-popup').hidden = true;
+    U.levelups.clear();
   };
   const showOffline = () => {
     if (!G.runtime.offline?.length || G.runtime.selecting || document.querySelector('.modal')) return;
-    U.offlineReport(G.runtime.offline);
-    G.runtime.offline = [];
+    const id = G.character()?.id, rows = G.runtime.offline.filter(row => row.characterId === id);
+    if (!rows.length) return;
+    G.runtime.offline = G.runtime.offline.filter(row => row.characterId !== id);
+    U.offlineReport(rows);
   };
   window.addEventListener('rpg:dialog-closed', () => setTimeout(showOffline, 0));
   window.addEventListener('rpg:offline-progress', () => setTimeout(showOffline, 0));
@@ -64,12 +69,13 @@
       const slot = Number(el.dataset.slot);
       G.assert(G.state.slots[slot], 'Choose an occupied character slot.');
       G.assert(G.runtime.selecting && slot === G.state.active || !current?.combat && !current?.dungeon && !current?.activity, 'Finish the current activity or dungeon first.');
-      resumeSelection();
       if (current && !G.runtime.selecting) current.lastSeen = Date.now();
       G.state.active = slot;
       G.runtime.selecting = false;
+      G.runtime.needsResume = false;
+      clearCharacterNotices();
       S.tutorial.ensure();
-      S.offline.applyAll();
+      S.offline.resume();
       G.runtime.page = 'World';
       G.runtime.tab = '';
       G.runtime.recent = [];
@@ -142,12 +148,12 @@
       G.assert(f.modeConfirmed, 'Confirm your game mode before beginning.');
       G.assert(f.mode !== 'Hardcore' || document.getElementById('hardcore-confirm').checked, 'Acknowledge permanent Hardcore death before creating this character.');
       G.assert(!G.state.slots[f.slot], 'This character slot is occupied.');
-      resumeSelection();
       if (G.character() && !G.runtime.selecting) G.character().lastSeen = Date.now();
       G.runtime.selecting = false;
+      G.runtime.needsResume = false;
       G.state.slots[f.slot] = G.newCharacter(f.name, f.class, f.mode, f.appearance);
       G.state.active = f.slot;
-      S.offline.applyAll();
+      clearCharacterNotices();
       G.runtime.page = 'World';
       G.runtime.loadFailure = false;
       U.close();
@@ -869,10 +875,10 @@
       G.save.write();
     } else {
       last = performance.now();
-      if (G.state.slots.some(Boolean)) {
-        const results = S.offline.applyAll(Date.now(), {report:false});
-        if (results.some(result => result.levelsGained)) results.forEach(result => S.offline.record(result));
-        else results.forEach(result => G.notify(result.name + ' · Offline ' + result.skill + ': +' + G.number(result.xp) + ' XP.'));
+      if (G.character()) {
+        const result = S.offline.apply(G.character());
+        if (result.levelsGained) S.offline.record(result);
+        else if (result.xp > 0) G.notify('Offline ' + result.skill + ': +' + G.number(result.xp) + ' XP.');
         G.commit();
         showOffline();
       }

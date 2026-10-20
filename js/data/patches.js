@@ -1,6 +1,11 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'Independent character progress and offline claims',changes:[
+    'Each character now claims its own AFK training only when you open that slot or return to its active tab. Opening, switching or creating a character leaves all unopened characters and their offline timestamps untouched. This replaces the previous all-slot crediting behaviour.',
+    'Offline reports and short XP notices belong only to the open character. Switching clears the outgoing character\'s notices, loot popups and combat log. Pending reports remain attached to their own character and cannot appear on another slot.',
+    'Every character retains its selected AFK skill, Knowledge bonus, earned XP and eight-hour cap. Claiming advances only that character\'s timestamp; switching back or reloading cannot award the same offline interval again. Other characters can claim their own saved training when opened.'
+  ]},
   {date:'2026-10-19',title:'AFK training for every character slot',changes:[
     'Returning to an open game tab now awards offline skill XP to every saved character, rather than only the selected character. Switching or creating characters also settles training for the other slots. Choose an AFK skill separately for each character.',
     'Every slot uses its own elapsed time, selected skill and Knowledge tool bonus, with the existing eight-hour cap and XP rates. Unplayed characters continue accruing training while you play another character. Training grants XP only; it does not run combat or generate materials, items or coins.',

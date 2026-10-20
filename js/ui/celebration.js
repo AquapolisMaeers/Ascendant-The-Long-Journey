@@ -1,6 +1,8 @@
 'use strict';
 (function(G, D, S, U) {
   U.offlineReport = rows => {
+    rows = rows.filter(row => row.characterId === G.character()?.id);
+    if (!rows.length) return;
     U.modal('While you were away', '<div class="offline-welcome"><span class="signal-icon">' + U.icon('clock') + '</span><div><div class="eyebrow">WELCOME BACK</div><h3>Your training kept moving.</h3><p class="notes">Offline skilling \u00b7 XP only \u00b7 up to 8 hours</p></div></div><div class="offline-results">' + rows.map(r => {
       const level = r.toLevel ?? 1, gained = r.levelsGained || 0;
       return '<section class="offline-result ' + (gained ? 'leveled' : '') + '" data-character="' + U.e(r.characterId || '') + '"><div class="offline-result-title"><span class="signal-icon">' + U.icon(r.skill) + '</span><div><strong>' + U.e(r.name) + '</strong><small>' + U.e(r.skill) + ' training</small></div><span class="offline-xp">+' + G.number(r.xp) + ' XP</span></div>' +

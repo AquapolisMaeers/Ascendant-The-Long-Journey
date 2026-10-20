@@ -75,27 +75,21 @@
       } else rows.push(result);
       G.emit('offline-progress');
     },
-    applyAll(now = Date.now(), {report = true} = {}) {
-      const results = G.state.slots.filter(Boolean).map(c => this.apply(c, now)).filter(r => r.xp > 0);
-      if (report) results.forEach(result => this.record(result));
-      return results;
-    },
-    resume() {
-      for (const c of G.state.slots.filter(Boolean)) {
-        S.companions.sync(c);
-        S.quests.sync(c);
-        if (c.dungeon) {
-          if (c.combat) c.dungeon.interrupted = true;
-          else {
-            c.dungeon = null;
-            c.encounter = null;
-          }
-        }
-        if (c.activity?.type === 'advance') {
-          c.activity = null;
+    resume(c = G.character()) {
+      if (!c) return;
+      S.companions.sync(c);
+      S.quests.sync(c);
+      if (c.dungeon) {
+        if (c.combat) c.dungeon.interrupted = true;
+        else {
+          c.dungeon = null;
+          c.encounter = null;
         }
       }
-      this.applyAll();
+      if (c.activity?.type === 'advance') c.activity = null;
+      const result = this.apply(c);
+      this.record(result);
+      return result;
     }
   };
 })(RPG, RPG.data, RPG.systems);
