@@ -1,6 +1,11 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'A different horizon in every region',changes:[
+    'All eleven locations now have distinct painted backdrops. The Crossroads keeps its existing landscape; ten new scenes follow the forests, battlefields, highlands, fortress walls, arcane pools, volcanic ground, dragon bones, starry peaks, ancient roots and imperial ruins described by each region.',
+    'Travelling updates the desktop World background and Current Location card together. Phone region headers show the same local landscape with more room for the artwork and dark shading behind the title. Regional art also follows the selected character and returns with their saved location.',
+    'The old colour-shifted shared landscape is removed. Existing dungeon paintings still take over inside their respective dungeons. Travel costs, level gates, encounters, weather and saved progress are unchanged.'
+  ]},
   {date:'2026-10-19',title:'Independent character progress and offline claims',changes:[
     'Each character now claims its own AFK training only when you open that slot or return to its active tab. Opening, switching or creating a character leaves all unopened characters and their offline timestamps untouched. This replaces the previous all-slot crediting behaviour.',
     'Offline reports and short XP notices belong only to the open character. Switching clears the outgoing character\'s notices, loot popups and combat log. Pending reports remain attached to their own character and cannot appear on another slot.',

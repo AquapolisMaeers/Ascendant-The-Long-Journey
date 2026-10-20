@@ -1,0 +1,99 @@
+{
+  "date": "2026-10-19",
+  "tool": "Built-in image_gen.imagegen",
+  "reference": "assets/art/wayside.png",
+  "existingCrossroads": "assets/art/wayside.png",
+  "export": "WebP quality 88, original dimensions retained; no content alterations",
+  "images": [
+    {
+      "id": "ironwood",
+      "file": "assets/art/locations/ironwood.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-461b6dc6-ec02-4d8d-bd57-fbec793140c4.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided existing game painting ONLY as a reference for detailed hand-painted fantasy environment rendering, textured natural materials, atmospheric depth and art quality; replace its entire location and composition. New location: IRONWOOD VALE, a deep ancient forest with massive iron-dark twisted trees, dense moss and ferns, wet stone trail disappearing into cool mist, silvery spider silk between the ancient trunks, secluded and dangerous, muted emerald and slate-blue palette with faint shafts of cloudy light. Ground-level cinematic landscape, no characters or creatures, no text, no UI, no border. Rich midtone detail, subtle light and dark separation, not black, not cartoon, no modern objects. Clear recognizable forest silhouettes across the landscape and central mobile crop; landscape aspect about 3:2 or 16:9. Deliver the image and save its local file so it can be installed into the game.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 530068
+    },
+    {
+      "id": "steelmarch",
+      "file": "assets/art/locations/steelmarch.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-61f4a4bb-e09b-4ca3-84af-14be745f4353.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided painting ONLY as reference for detailed hand-painted fantasy rendering, textured materials and atmospheric depth. Replace its entire location and composition. Rich readable midtones and layered silhouettes across the landscape and central mobile crop. Ground-level cinematic landscape about 3:2. No characters, creatures, text, UI, border, cartoon or modern objects. New location: STEELMARCH: a windswept abandoned medieval battlefield, rusted spearheads and torn muted crimson military standards, broken siege wheels and shattered stone trenches among brown grass, smoky overcast copper-grey sky, low ruined watchtower far on horizon, broad muddy road. Desolate iron and weathered ochre palette.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 397644
+    },
+    {
+      "id": "stonebreak",
+      "file": "assets/art/locations/stonebreak.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-ca9df6f5-063e-4c81-974f-015e40703873.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided painting ONLY as reference for detailed hand-painted fantasy rendering, textured materials and atmospheric depth. Replace its entire location and composition. Rich readable midtones and layered silhouettes across the landscape and central mobile crop. Ground-level cinematic landscape about 3:2. No characters, creatures, text, UI, border, cartoon or modern objects. New location: STONEBREAK HIGHLANDS: wild broken mountainous ridgelines, huge craggy slate-grey boulders, high heather moor and sheer granite cliffs, a narrow winding stone trail across an exposed pass, cold swirling mist and pale blue storm light. No castles or forests; austere wide mountain wilderness.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 475138
+    },
+    {
+      "id": "bastion-reach",
+      "file": "assets/art/locations/bastion-reach.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-40740646-5316-4e7b-a15f-c9e23dfeaa23.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided painting ONLY as reference for detailed hand-painted fantasy rendering, textured materials and atmospheric depth. Replace its entire location and composition. Rich readable midtones and layered silhouettes across the landscape and central mobile crop. Ground-level cinematic landscape about 3:2. No characters, creatures, text, UI, border, cartoon or modern objects. New location: BASTION REACH: exterior approach to an enormous ruined black-stone medieval fortress with massive battlements and a broken arched gate, deserted defensive causeway and siege scars, rain-dark masonry, dim warm torchlight behind arrow slits, forbidding charcoal-blue storm clouds. Architecture dominating the landscape, far more militaristic than a village.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 440654
+    },
+    {
+      "id": "runefall",
+      "file": "assets/art/locations/runefall.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-37d893e3-cf4c-4d26-a1f1-7f9b10eebe6f.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided painting ONLY as reference for detailed hand-painted fantasy rendering, textured materials and atmospheric depth. Replace its entire location and composition. Rich readable midtones and layered silhouettes across the landscape and central mobile crop. Ground-level cinematic landscape about 3:2. No characters, creatures, text, UI, border, cartoon or modern objects. New location: RUNEFALL BASIN: a flooded basin of ancient rune-carved standing stones, broken marble arches and half-submerged terraces mirrored in still dark water, levitating rune fragments emitting restrained cyan and violet light above a shallow pool, low silver mist, saturated twilight teal palette. Strong recognizable arcane water landscape, no legible symbols or writing.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 458148
+    },
+    {
+      "id": "obsidian",
+      "file": "assets/art/locations/obsidian.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-6ac85475-2709-408e-b4ea-0e97e7b66e31.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided painting ONLY as reference for detailed hand-painted fantasy rendering, textured materials and atmospheric depth. Replace its entire location and composition. Rich readable midtones and layered silhouettes across the landscape and central mobile crop. Ground-level cinematic landscape about 3:2. No characters, creatures, text, UI, border, cartoon or modern objects. New location: OBSIDIAN HOLLOW: a rugged volcanic hollow of jagged glass-black obsidian spires and basalt shelves, red-orange lava fissures beneath the ground, a distant smoking crater under an ashen smoky sky, faint embers and blackened paths. Dramatic charcoal and deep ember-orange palette, no castle or trees.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 442548
+    },
+    {
+      "id": "wyrmbone",
+      "file": "assets/art/locations/wyrmbone.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-1f1ea8a9-b1b8-4d78-ac33-fd336aac8035.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided painting ONLY as reference for detailed hand-painted fantasy rendering, textured materials and atmospheric depth. Replace its entire location and composition. Rich readable midtones and layered silhouettes across the landscape and central mobile crop. Ground-level cinematic landscape about 3:2. No characters, creatures, text, UI, border, cartoon or modern objects. New location: WYRMBONE WASTES: immense bleached ribs and skulls of ancient dead dragons arching over a barren wind-swept desert, rippled pale dust and cracked badlands, a winding path between ribcages toward eroded stone mesas, dusty cream, muted amber and bone-white palette, dry hazy sun. No living dragons, green fields, mountains, castle or lava.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 490084
+    },
+    {
+      "id": "starfall",
+      "file": "assets/art/locations/starfall.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-9d822ea4-9563-4ae6-b53f-8b9b135b316d.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided painting ONLY as reference for detailed hand-painted fantasy rendering, textured materials and atmospheric depth. Replace its entire location and composition. Rich readable midtones and layered silhouettes across the landscape and central mobile crop. Ground-level cinematic landscape about 3:2. No characters, creatures, text, UI, border, cartoon or modern objects. New location: STARFALL PEAKS: high snowy mountain ridges under a vast deep-indigo night sky, a luminous broken meteor embedded in a distant ridge, scattered pale blue astral crystals and fallen star fragments among snowy rock, subtle aurora, brilliantly star-filled sky and a silver moon, midnight sapphire and icy silver palette. Exterior wilderness, no floating cathedral or interior dungeon, no castle.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 528142
+    },
+    {
+      "id": "elderwild",
+      "file": "assets/art/locations/elderwild.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-b729ced5-3c90-41a4-bd43-c9c929ca36a4.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided painting ONLY as reference for detailed hand-painted fantasy rendering, textured materials and atmospheric depth. Replace its entire location and composition. Rich readable midtones and layered silhouettes across the landscape and central mobile crop. Ground-level cinematic landscape about 3:2. No characters, creatures, text, UI, border, cartoon or modern objects. New location: ELDERWILD: an impossibly ancient primeval forest, colossal broad living tree trunks and tangled exposed roots enclosing a quiet glade, lush deep emerald foliage, glowing turquoise fungi and small firefly lights, a natural root arch over a shallow spring, soft green filtered light. Magical untouched living wilderness, distinctly different from a normal dark forest: enormous roots and luminous growth dominate. No buildings, cobwebs or castles.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 661304
+    },
+    {
+      "id": "ancient-dominion",
+      "file": "assets/art/locations/ancient-dominion.webp",
+      "original": "C:\\Users\\Nick\\.codex\\generated_images\\01a15479-6e12-7982-a9b1-6ce9b4e3f124\\exec-7fd61e0b-892a-4247-82b6-6c92c42b2634.png",
+      "prompt": "Create one NEW wide landscape environment painting for the medieval fantasy RPG Ascendant. Use the provided painting ONLY as reference for detailed hand-painted fantasy rendering, textured materials and atmospheric depth. Replace its entire location and composition. Rich readable midtones and layered silhouettes across the landscape and central mobile crop. Ground-level cinematic landscape about 3:2. No characters, creatures, text, UI, border, cartoon or modern objects. New location: THE ANCIENT DOMINION: exterior of a monumental ruined imperial realm beyond a shattered ceremonial gate, black marble road and broken gold-inlaid stone columns leading toward an immense fractured gothic palace crowned with a faint purple rift in an overcast sky, fallen statues and empty terraces, imperial desolation at the edge of the world. Slate-black, antique gold and restrained violet palette; far grander and more mystical than a military fortress. No characters, letters or writing.",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 516226
+    }
+  ]
+}

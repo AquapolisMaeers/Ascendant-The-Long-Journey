@@ -4,6 +4,7 @@
   D.afkMinuteRates = [10,20,40,75,125,200,350,500,750,1000,1500];
   D.travelStepPrices = [20,40,75,125,200,350,500,750,1000,1500,2500];
   D.locationWeather = ['clear','rain','wind','wind','rain','rain','clear','wind','wind','rain','wind'];
+  const locationScenes = ['crossroads','ironwood','steelmarch','stonebreak','bastion-reach','runefall','obsidian','wyrmbone','starfall','elderwild','ancient-dominion'];
   const rows = [
     ['Weathered Crossroads', 1, 9, 'Old roads meet beneath a pale moon. Beyond the lantern light, something watches.', 'Wolf|Highwayman|Wild Boar', 'Aggressive|Balanced Melee|Tanky', 'Dire Wolf|Brigand Captain', 'Aggressive/Crit|Balanced', 15, 25],
     ['Ironwood Vale', 10, 19, 'Iron-dark branches swallow the trail. Silk glints between the ancient trunks.', 'Black Bear|Ironwood Spider|Outlaw Archer', 'Tanky|Fast/Crit|Ranged', 'Ironhide Bear|Ironfang Spider', 'Heavy Tank|Fast/High Damage', 30, 50],
@@ -23,6 +24,8 @@
     level: r[1],
     max: r[2],
     description: r[3],
+    backdrop: id === 0 ? 'assets/art/wayside.png' : 'assets/art/locations/' + locationScenes[id] + '.webp',
+    backdropPosition: 'center 50%',
     regular: r[4].split('|').map((name, i) => ({
       name,
       archetype: r[5].split('|')[i]

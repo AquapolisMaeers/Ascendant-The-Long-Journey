@@ -21,7 +21,7 @@
   .mobile-app .page-heading { border:0; padding-bottom:0; margin-bottom:14px; }
   .mobile-app .page-heading h1 { font-style:normal; font-size:30px; line-height:1.1; }
   .mobile-app .page-heading p { color:#aebccc; }
-  .mobile-app .mobile-region { min-height:94px; padding:14px; display:flex; align-items:center; gap:12px; border:1px solid #56616c; border-radius:14px; margin:0 0 14px; background:linear-gradient(100deg,#111e2df2,#182332b3),url('../assets/art/wayside.png') center 54% / cover; }
+  .mobile-app .mobile-region { min-height:144px; padding:14px; display:flex; align-items:center; gap:12px; border:1px solid #56616c; border-radius:14px; margin:0 0 14px; background-color:#17212d; background-image:linear-gradient(100deg,#0c1422e8,#101a2855 70%,#101a281a),var(--location-backdrop); background-position:center,var(--location-focus,center); background-size:cover; }
   .mobile-app .dungeon-view .mobile-region { background-image:linear-gradient(100deg,#151a2bf0,#19203499),var(--dungeon-backdrop); }
   .mobile-region .eyebrow { display:block; color:#d9bb88; font-size:9px; letter-spacing:1.4px; }
   .mobile-region.page-heading h1 { font-size:25px; margin:5px 0; }

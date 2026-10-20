@@ -88,7 +88,10 @@
   position:relative;
   overflow:hidden;
   min-height:342px;
-  background:#1a2329 url('../assets/backgrounds/crossroads.svg') center/cover;
+  background-color:#1a2329;
+  background-image:var(--location-backdrop);
+  background-position:var(--location-focus,center);
+  background-size:cover;
   border:1px solid #354149;
   border-radius:5px
 }

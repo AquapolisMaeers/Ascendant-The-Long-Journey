@@ -122,7 +122,16 @@
     if (content) {
       content.dataset.page = G.runtime.page;
       content.dataset.tab = G.runtime.tab || '';
-      if (G.runtime.page === 'World') content.style.setProperty('--location-hue', (G.character().location * 7) + 'deg');
+      if (G.runtime.page === 'World') {
+        const location = D.locations[G.character().location];
+        content.dataset.location = location.id;
+        content.style.setProperty('--location-backdrop', 'url("' + new URL(location.backdrop, document.baseURI).href + '")');
+        content.style.setProperty('--location-focus', location.backdropPosition);
+      } else {
+        delete content.dataset.location;
+        content.style.removeProperty('--location-backdrop');
+        content.style.removeProperty('--location-focus');
+      }
     }
     if (focused) document.getElementById(focused)?.focus();
     U.applySettings();
