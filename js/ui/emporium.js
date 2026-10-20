@@ -8,7 +8,7 @@
   const art=entry=>entry.special?U.companionPortrait(entry):U.regaliaArt(entry);
   const petStats=p=>'<p class="notes pet-rate">'+Object.entries(S.companions.rates(p)).map(([stat,rate])=>'+'+U.companionStatValue(stat,rate)+' '+D.labels[stat]+' per level').join('<br>')+'</p>';
   const blocked=()=>{const c=G.character();return c.combat||c.activity||c.dungeon||c.pending.length||S.tutorial.active();};
-  U.mysteryBoxArt=box=>'<span class="sealed-box-art box-'+box.kind+'">'+U.paint(box.id)+'<b>'+({outfit:'Outfit',aura:'Aura',mount:'Mount',pet:'Pet',gem:'Gem',stone:'Stone'}[box.kind])+'</b></span>';
+  U.mysteryBoxArt=box=>'<span class="sealed-box-art box-'+box.kind+'">'+U.paint(box.id)+'<b>'+({outfit:'Outfit',aura:'Aura',mount:'Mount',pet:'Companion',gem:'Gem',stone:'Stone'}[box.kind])+'</b></span>';
   const itemArt=U.itemArt;
   U.itemArt=item=>D.catalog[item.key]?.box?U.mysteryBoxArt(D.emporiumBoxes.find(b=>b.id===item.key)):itemArt(item);
   const item=U.item;
@@ -44,7 +44,7 @@
     const entry=result.entry;
     U.modal(result.duplicate?'Already in your collection':entry?'A new chapter in your collection':result.key?'A gem for your journey':result.stone?'An Ascendant Stone!':'Coins for the road',
       '<div class="emporium-result">'+(entry?art(entry):result.key?U.itemArt({kind:'stack',key:result.key}):U.paint(result.stone?'stone':'coins'))+'<h3>'+U.e(entry?.name||(result.key?D.catalog[result.key].name:result.stone?'1 Ascendant Stone':U.price(result.coins)))+'</h3>'+
-      (entry?.special?petStats(entry):'')+(result.duplicate?'<p class="notes">You already own this reward. Returned '+ac(result.refund)+'. Your existing item or pet is preserved.</p>':entry?'<p class="notes">Added to your permanent collection. Equip it whenever you are ready.</p>':result.key?U.effectPreview({kind:'stack',key:result.key})+'<p class="notes">Added to your inventory.</p>':'<p class="notes">Added to your '+(result.stone?'inventory':'wallet')+'.</p>')+'</div><div class="modal-actions">'+U.btn('Continue','closeModal','','quiet')+
+      (entry?.special?petStats(entry):'')+(result.duplicate?'<p class="notes">You already own this reward. Returned '+ac(result.refund)+'. Your existing item or companion is preserved.</p>':entry?'<p class="notes">Added to your permanent collection. Equip it whenever you are ready.</p>':result.key?U.effectPreview({kind:'stack',key:result.key})+'<p class="notes">Added to your inventory.</p>':'<p class="notes">Added to your '+(result.stone?'inventory':'wallet')+'.</p>')+'</div><div class="modal-actions">'+U.btn('Continue','closeModal','','quiet')+
       (entry&&!result.duplicate?U.btn('Equip now',entry.special?'equipPet':'equipRegalia','data-id="'+entry.id+'"','gold-btn'):'')+'</div>');
   };
   U.emporiumOpen=id=>{
@@ -57,7 +57,7 @@
       });
       return;
     }
-    U.confirm('Open '+box.name+'?', '<div class="box-quote">'+U.mysteryBoxArt(box)+'<div><h3>One random reward</h3>'+ac(box.price)+'</div></div><p class="notes spacer">Each opening is an independent roll. '+(box.kind==='gem'?'Regular types: 90%; exclusive types: 10%. Ranks I / II / III / IV / V: 60% / 25% / 10% / 4.5% / 0.5%. Gems stack; no duplicate refund.':box.duplicate?'Duplicates return '+box.duplicate+' AC; existing collection items and pet progress are preserved.':'A stone has exactly 1 chance in 100; normal coins fill the other 99 outcomes.')+'</p>'+U.boxOdds(box),()=>{
+    U.confirm('Open '+box.name+'?', '<div class="box-quote">'+U.mysteryBoxArt(box)+'<div><h3>One random reward</h3>'+ac(box.price)+'</div></div><p class="notes spacer">Each opening is an independent roll. '+(box.kind==='gem'?'Regular types: 90%; exclusive types: 10%. Ranks I / II / III / IV / V: 60% / 25% / 10% / 4.5% / 0.5%. Gems stack; no duplicate refund.':box.duplicate?'Duplicates return '+box.duplicate+' AC; existing collection items and companion progress are preserved.':'A stone has exactly 1 chance in 100; normal coins fill the other 99 outcomes.')+'</p>'+U.boxOdds(box),()=>{
       G.assert(c===G.character(),'Character changed. Review your purchase again.');U.emporiumResult(S.emporium.open(id));
     });
     if(c.ascendantCoins<box.price)document.querySelector('[data-action="confirm"]').disabled=true;

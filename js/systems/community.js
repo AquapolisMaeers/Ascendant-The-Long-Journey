@@ -44,29 +44,37 @@
       return guild;
     },
     migrate(guild,c){
-      if(!guild||![undefined,2].includes(guild.version))return;
-      G.assert(this.valid(guild,c,guild.version===2?2:true),'Invalid save: legacy guild');
+      if(!guild||![undefined,2,3].includes(guild.version))return;
+      const previous=guild.version;
+      G.assert(this.valid(guild,c,previous===undefined?true:previous),'Invalid save: legacy guild');
       if(guild.version===undefined){
         for(const perk of D.guildPerks)guild.perks[perk.id]??=0;
         for(const member of guild.members)member.role=member.id===guild.leader?'Leader':'Member';
       }
       const upgradeXp=D.guildPerks.reduce((sum,perk)=>{const n=guild.perks[perk.id];return sum+perk.points*n*(n+1)*(2*n+1)/6*D.guildRules.upgradeXp;},0);
       const taskXp=guild.tasks.claimed.reduce((sum,id)=>sum+D.guildTasks.find(task=>task.id===id).points*D.guildRules.taskXp,0);
-      guild.progress={xp:upgradeXp+taskXp,totalTasks:guild.tasks.claimed.length};
-      guild.updatedAt=Math.max(guild.createdAt,c.lastSeen||0);
+      if(previous!==3){guild.progress={xp:upgradeXp+taskXp,totalTasks:guild.tasks.claimed.length};guild.updatedAt=Math.max(guild.createdAt,c.lastSeen||0);}
       if(c.stats&&c.stats.guildDonated===undefined){
         const unique=guild.members.filter(member=>member.name===c.name).length===1;
         c.stats.guildDonated=unique?Math.min(1e15,guild.ledger.filter(entry=>entry.kind==='donation'&&entry.by===c.name).reduce((sum,entry)=>sum+entry.coins,0)):0;
       }
-      for(const task of D.guildTasks)if(guild.tasks.claimed.includes(task.id))guild.tasks.progress[task.id]=task.target*guild.tasks.members;
+      if(guild.tasks.week<this.week())guild.tasks=this.freshTasks(Date.now(),guild.members.length);
+      for(const task of D.guildTasks){
+        const target=task.target*guild.tasks.members,claimed=guild.tasks.claimed.includes(task.id);
+        guild.tasks.progress[task.id]=claimed?target:Math.min(target,guild.tasks.progress[task.id]);
+        if(!claimed&&guild.tasks.progress[task.id]===target){
+          guild.tasks.claimed.push(task.id);guild.points=Math.min(1e9,guild.points+task.points*guild.tasks.members);
+          guild.progress.totalTasks=Math.min(1e9,guild.progress.totalTasks+1);this.grantXp(guild,task.points*D.guildRules.taskXp);
+        }
+      }
       guild.version=D.guildRules.version;
     },
     valid(guild,c,legacy=false){
       if(guild===undefined||guild===null)return true;
-      const first=legacy===true,perks=first?D.guildPerks.slice(0,3):D.guildPerks;
+      const first=legacy===true,hasProgress=!first&&legacy!==2,perks=first?D.guildPerks.slice(0,3):D.guildPerks;
       if(!object(guild)||typeof guild.id!=='string'||!guild.id.length||guild.id.length>80||!handle(guild.name)||typeof guild.leader!=='string'||first&&guild.leader!==c.id||!whole(guild.createdAt)||
-        (first?guild.version!==undefined:guild.version!==(legacy===2?2:D.guildRules.version))||
-        !legacy&&(!whole(guild.updatedAt)||guild.updatedAt<guild.createdAt||!object(guild.progress)||!whole(guild.progress.xp,1e12)||!whole(guild.progress.totalTasks,1e9))||
+        (first?guild.version!==undefined:guild.version!==([2,3].includes(legacy)?legacy:D.guildRules.version))||
+        hasProgress&&(!whole(guild.updatedAt)||guild.updatedAt<guild.createdAt||!object(guild.progress)||!whole(guild.progress.xp,1e12)||!whole(guild.progress.totalTasks,1e9))||
         !whole(guild.bank)||!whole(guild.points,1e9)||!Array.isArray(guild.members)||!guild.members.length||guild.members.length>D.guildRules.members||
         new Set(guild.members.map(member=>member?.id)).size!==guild.members.length||
         !guild.members.every(member=>object(member)&&typeof member.id==='string'&&member.id.length>0&&member.id.length<=80&&handle(member.name))||
@@ -78,7 +86,7 @@
       if(!object(t)||!whole(t.week)||t.week!==this.week(t.week)||!Number.isInteger(t.members)||t.members<1||t.members>D.guildRules.members||
         !object(t.progress)||Object.keys(t.progress).length!==D.guildTasks.length||!Array.isArray(t.claimed)||new Set(t.claimed).size!==t.claimed.length||
         !t.claimed.every(id=>D.guildTasks.some(task=>task.id===id))||
-        !D.guildTasks.every((task,index)=>{const target=(first?[100,15,300,50,10,5][index]:legacy===2?[1000,100,5000,1000,50,25][index]:task.target)*t.members;return whole(t.progress[task.id],target)&&t.claimed.includes(task.id)===(t.progress[task.id]===target);})||!legacy&&guild.progress.totalTasks<t.claimed.length)return false;
+        !D.guildTasks.every((task,index)=>{const target=(first?[100,15,300,50,10,5][index]:legacy===2?[1000,100,5000,1000,50,25][index]:legacy===3?[2000,200,10000,2000,100,50][index]:task.target)*t.members;return whole(t.progress[task.id],target)&&t.claimed.includes(task.id)===(t.progress[task.id]===target);})||hasProgress&&guild.progress.totalTasks<t.claimed.length)return false;
       return Array.isArray(guild.ledger)&&guild.ledger.length<=40&&guild.ledger.every(entry=>object(entry)&&['donation','upgrade'].includes(entry.kind)&&whole(entry.at)&&whole(entry.coins)&&whole(entry.points,1e9)&&handle(entry.by)&&typeof entry.note==='string'&&entry.note.length<=80);
     },
     create(name){

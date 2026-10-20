@@ -21,8 +21,8 @@
     {name:'Auras',icon:'gem',preview:'Aura collection',description:'Surround your adventurer with an aura. Base auras will have no Enhancement or Ascension.'},
     {name:'Outfit Mystery Boxes',icon:'Inventory',preview:'Outfit Mystery Box',description:'Discover an outfit from a future collection. Contents and odds: TBD.'},
     {name:'Aura Mystery Boxes',icon:'gem',preview:'Aura Mystery Box',description:'Discover a future aura. Contents and odds: TBD.'},
-    {name:'Special Pets',icon:'Companions',description:'Companions with stronger bonuses and the same feeding and upkeep. Planned previews below; availability and stats may change.'},
-    {name:'Pet Mystery Boxes',icon:'Companions',preview:'Pet Mystery Box',description:'Meet a future special companion. Contents and odds: TBD.'},
+    {name:'Special Companions',icon:'Companions',description:'Companions with stronger bonuses and the same feeding and upkeep. Planned previews below; availability and stats may change.'},
+    {name:'Companion Mystery Boxes',icon:'Companions',preview:'Companion Mystery Box',description:'Meet a future special companion. Contents and odds: TBD.'},
     {name:'Ascendant Stone Boxes',icon:'gem',preview:'Ascendant Stone Box',description:'A future supply of stones for rarity Ascension. Quantity and price: TBD.'}
   ];
   D.companionRules = {levelCap:20, xpFactor:100, hungerPerHour:10, starvationPerHour:10, actionXp:10, victoryXp:25, revivePerLevel:100};

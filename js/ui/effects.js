@@ -1,5 +1,10 @@
 'use strict';
 (function(G) {
+  G.ui.combatEffectsVisible=()=>G.runtime.page==='World'&&!G.runtime.selecting&&!document.hidden&&!document.querySelector('.modal')&&!!document.getElementById('player-fighter')&&!!document.getElementById('enemy-fighter');
+  const clearCombatFloats=()=>{if(!G.ui.combatEffectsVisible()||!G.state.settings.damage)document.getElementById('floating').replaceChildren();};
+  window.addEventListener('rpg:rendered',clearCombatFloats);
+  window.addEventListener('rpg:dialog-opened',clearCombatFloats);
+  document.addEventListener('visibilitychange',clearCombatFloats);
   const reduced = () => G.state.settings.reduced || matchMedia('(prefers-reduced-motion: reduce)').matches;
   let pending = null;
   window.addEventListener('rpg:effect', ({
@@ -22,7 +27,7 @@
   window.addEventListener('rpg:strike', ({
     detail: e
   }) => {
-    if (reduced()) return;
+    if (reduced()||!G.ui.combatEffectsVisible()) return;
     const attacker = document.getElementById(e.side + '-fighter'),
       defender = document.getElementById((e.side === 'player' ? 'enemy' : 'player') + '-fighter');
     if (attacker && !e.food && !e.recovery) attacker.animate([{

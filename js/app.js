@@ -788,21 +788,17 @@
     detail: e
   }) => {
     G.audio.play(e.food || e.recovery ? 'heal' : e.miss ? 'miss' : e.critical ? 'crit' : 'hit', e);
-    if (!G.state.settings.damage) return;
+    if (!G.state.settings.damage||!U.combatEffectsVisible()) return;
     const show = healing => {
+      const fighter=document.getElementById((healing?e.side:e.side==='player'?'enemy':'player')+'-fighter'),box=fighter?.getBoundingClientRect();
+      if(!box||box.width<=0||box.height<=0||box.bottom<=0||box.top>=innerHeight)return;
       const el = document.createElement('span');
       el.className = 'damage-float ' + e.side + (!healing && e.critical ? ' critical' : '') + (healing ? ' heal' : '');
       el.textContent = healing ? '+' + G.number(e.healing, 2) + ' HP' : e.miss ? 'MISS' : G.number(e.damage, 1);
-      if (healing) {
-        const fighter = document.getElementById(e.side + '-fighter');
-        if (fighter) {
-          const box = fighter.getBoundingClientRect();
-          el.style.left = (box.left + box.width / 2) + 'px';
-          const existing = document.querySelectorAll('.damage-float.' + e.side + '.heal').length;
-          el.style.top = (box.bottom - 25 - existing * 28) + 'px';
-          el.style.transform = 'translateX(-50%)';
-        }
-      }
+      el.style.left=(box.left+box.width/2)+'px';
+      const existing=document.querySelectorAll('.damage-float.'+e.side+(healing?'.heal':':not(.heal)')).length;
+      el.style.top=Math.max(18,Math.min(innerHeight-25,(healing?box.bottom-25:box.top+box.height/2)-existing*28))+'px';
+      el.style.transform='translateX(-50%)';
       document.getElementById('floating').append(el);
       setTimeout(() => el.remove(), 1100);
     };

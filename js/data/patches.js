@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-19',title:'Aura portraits, companion naming and fairer guild goals',changes:[
+    'Weekly guild goals are now 1,000 creatures, 200 elites, 5,000 materials, 1,000 successful Smithing actions, 50 quests and 50 dungeons per member. Task cards show the per-member amount and the current weekly roster. Future Cooking and Faceting actions no longer count as forges; existing recorded progress is retained.',
+    'Existing guild saves preserve claimed rewards, XP, ranks and balances. Current-week work that already reaches a lowered target completes once and receives the normal reward. Expired task lists reset without retroactive payouts.',
+    'Equipped auras now sit behind citizen and outfit portraits using their existing paintings. Backdrops appear in the topbar, character selection, avatar preview, combat, level-up cards, phone menu and player rankings. Unequipping removes the backdrop immediately.',
+    'Pet Mystery Box is now Companion Mystery Box throughout the shop, inventory, present dialogs and marketplace. Companion terminology also applies to collection descriptions. Existing box IDs, owned companions, prices, artwork and opening odds are preserved.',
+    'Warrior plate now adds critical resistance and life steal alongside damage reduction. Shields receive the same three bonus types. Existing melee gear gains these inherent bonuses automatically, with the same tier, rarity, boss and Enhancement scaling as other class bonuses.',
+    'Combat damage, misses and healing numbers appear only over a visible World fight. Leaving combat view, opening a dialog or disabling damage numbers clears existing effects. Battles continue normally while you browse other pages.'
+  ]},
   {date:'2026-10-19',title:'Consistent refining and fish-free gear materials',changes:[
     'Bars, leather and cloth now use the same 3:1 base refining ratio at every material tier. Copper, tin and iron bars use three matching ore. Steel and higher alloys use two metal ore plus one coal, within the same three-input total.',
     'Leather now uses three matching hides only; its fish-oil and lumber ingredients are removed. Cloth remains three matching fibres per piece. Three Moonflax Fibre makes one Moonweave. All classes keep their metal, leather and cloth armour requirements; fish supports meals rather than the gear material chain.',

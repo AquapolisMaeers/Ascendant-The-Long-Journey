@@ -53,7 +53,7 @@
       '</select></label><p class="notes spacer">Local characters only. Level ties use XP within that level. Creatures Defeated includes regular, elite and boss victories.</p>'+
       '<table class="data-table leaderboard-table spacer"><thead><tr><th>Rank / character</th><th>'+current.name+'</th></tr></thead><tbody>'+
       rows.map((row,i)=>'<tr class="'+(row.character.id===G.character().id?'your-ranking':'')+'"><td><div class="leaderboard-character">'+
-        '<span class="rank-number">'+(i+1)+'</span>'+U.characterPortrait(row.character.class,row.character.appearance)+
+        '<span class="rank-number">'+(i+1)+'</span>'+U.profilePortrait(row.character)+
         '<div><strong>'+U.e(row.character.name)+'</strong><small>'+row.character.class+' · '+row.character.mode+(row.character.debugUsed?' · Developer tools used':'')+'</small></div></div></td>'+
         '<td>'+ (current.id==='coins'?G.money(row.value):G.number(row.value,['damage','defence','health'].includes(current.id)?2:0))+
         (current.tie?'<small>'+G.number(row.tie)+' XP</small>':'')+'</td></tr>').join('')+
@@ -93,7 +93,7 @@
       '<span class="badge">'+G.number(c.ascendantCoins||0)+' ASCENDANT COINS</span>')+
       U.tabs(categories.map(entry=>entry.name),category.name)+
       '<div class="grid-2"><section class="panel"><div class="panel-head"><h2>'+category.name+'</h2><span class="badge">Coming soon</span></div><p class="notes spacer">'+category.description+'</p>'+
-      (category.name==='Special Pets'?'<div class="stack spacer">'+D.specialCompanions.map(p=>'<div class="cosmetic-slot">'+U.companionPortrait(p)+'<div><strong>'+p.name+'</strong><small>'+p.description+'</small></div></div>').join(''):
+      (category.name==='Special Companions'?'<div class="stack spacer">'+D.specialCompanions.map(p=>'<div class="cosmetic-slot">'+U.companionPortrait(p)+'<div><strong>'+p.name+'</strong><small>'+p.description+'</small></div></div>').join(''):
       '<div class="cosmetic-slot spacer">'+U.icon(category.icon)+'<strong>'+category.preview+'</strong><span class="badge">TBD</span></div>')+
       '<p class="notes spacer">Inventory, prices and mystery-box contents are still being prepared.</p>'+
       '<p class="notes spacer">Purchasing Ascendant Coins with real money is not available.</p></section><section class="panel"><h3>Earn your coins</h3>'+

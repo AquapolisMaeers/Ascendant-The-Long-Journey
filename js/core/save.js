@@ -64,12 +64,12 @@
           (!c.regalia.owned.includes(c.regalia[kind]) || !D.regalia.some(r=>r.id===c.regalia[kind]&&r.kind===kind))) fail('equipped regalia');
       }
       if (c.appearance.outfit !== undefined && (!c.regalia?.owned.includes(c.appearance.outfit) || c.regalia.outfit!==c.appearance.outfit || !D.regalia.some(r=>r.id===c.appearance.outfit&&r.kind==='outfit'))) fail('outfit portrait');
-      if (c.specialPets !== undefined && !idsValid(c.specialPets,D.specialCompanions.map(p=>p.id))) fail('special pet collection');
+      if (c.specialPets !== undefined && !idsValid(c.specialPets,D.specialCompanions.map(p=>p.id))) fail('special companion collection');
       if (c.petStable !== undefined) {
-        if (!record(c.petStable) || Object.keys(c.petStable).length>D.allCompanions.length) fail('pet stable');
+        if (!record(c.petStable) || Object.keys(c.petStable).length>D.allCompanions.length) fail('companion stable');
         for (const [type,pet] of Object.entries(c.petStable)) {
           validatePet(pet);
-          if (type!==pet.type || c.companion?.type===type || type.startsWith('special-')&&!c.specialPets?.includes(type)) fail('pet stable ownership');
+          if (type!==pet.type || c.companion?.type===type || type.startsWith('special-')&&!c.specialPets?.includes(type)) fail('companion stable ownership');
         }
       }
       if (c.ascendantCoins !== undefined && (!Number.isSafeInteger(c.ascendantCoins) || !finite(c.ascendantCoins))) fail('Ascendant Coins');
@@ -85,7 +85,7 @@
       }
       if (c.companion !== undefined && c.companion !== null) {
         validatePet(c.companion);
-        if (c.companion.type.startsWith('special-')&&!c.specialPets?.includes(c.companion.type)) fail('active pet ownership');
+        if (c.companion.type.startsWith('special-')&&!c.specialPets?.includes(c.companion.type)) fail('active companion ownership');
       }
       if (c.weather !== undefined && !['auto', 'clear', 'rain', 'wind'].includes(c.weather)) fail('weather');
       if (c.peaceFoodReady !== undefined && !finite(c.peaceFoodReady)) fail('peace food cooldown');

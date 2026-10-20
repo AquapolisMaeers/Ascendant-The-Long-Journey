@@ -40,7 +40,7 @@
     {id:'outfit-box',name:'Outfit Mystery Box',kind:'outfit',price:75,duplicate:15},
     {id:'aura-box',name:'Aura Mystery Box',kind:'aura',price:75,duplicate:15},
     {id:'mount-box',name:'Mount Mystery Box',kind:'mount',price:75,duplicate:15},
-    {id:'pet-box',name:'Pet Mystery Box',kind:'pet',price:100,duplicate:25},
+    {id:'pet-box',name:'Companion Mystery Box',kind:'pet',price:100,duplicate:25},
     {id:'stone-box',name:'Ascendant Stone Box',kind:'stone',price:5,duplicate:0},
     {id:'gem-box',name:'Gem Mystery Box',kind:'gem',price:25,duplicate:0}
   ];
@@ -97,7 +97,7 @@
     {name:'Outfit Mystery Boxes',box:'outfit-box',description:'All 19 outfits. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
     {name:'Aura Mystery Boxes',box:'aura-box',description:'All 19 auras. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
     {name:'Mount Mystery Boxes',box:'mount-box',description:'All 19 mounts. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%. Equip one mount for its combat bonuses.'},
-    {name:'Pet Mystery Boxes',box:'pet-box',description:'Seven special companions at equal odds. Every companion starts Common and grows with you.'},
+    {name:'Companion Mystery Boxes',box:'pet-box',description:'Seven special companions at equal odds. Every companion starts Common and grows with you.'},
     {name:'Gem Mystery Boxes',box:'gem-box',description:'All 17 gem types, ranks I\u2013V. Regular types: 90%; exclusive stat types: 10%. Rank V: 0.5% overall.'},
     {name:'Ascendant Stone Boxes',box:'stone-box',description:'1%: one Ascendant Stone. Otherwise: normal coins. Every outcome is shown before opening.'}
   ];

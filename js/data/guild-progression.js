@@ -21,7 +21,7 @@
   [2,4,6].forEach(n=>add('companion-rarity-'+n,'Raise a '+D.rarity[n]+' companion','Companions',n,c=>Math.max(0,...companions(c).map(p=>p.ascensions||0))));
   for(const kind of ['outfit','aura','mount'])for(const n of [3,10,15].filter(n=>n<=D.regalia.filter(entry=>entry.kind===kind).length))
     add('collection-'+kind+'-'+n,'Collect '+n+' '+kind+(n===1?'':'s'),'Collections',n,c=>(c.regalia?.owned||[]).filter(id=>D.regalia.some(entry=>entry.id===id&&entry.kind===kind)).length);
-  [3,5].filter(n=>n<=D.specialCompanions.length).forEach(n=>add('special-pets-'+n,'Collect '+n+' special pets','Collections',n,c=>c.specialPets?.length||0));
+  [3,5].filter(n=>n<=D.specialCompanions.length).forEach(n=>add('special-pets-'+n,'Collect '+n+' special companions','Collections',n,c=>c.specialPets?.length||0));
   milestones('presents','Mystery presents opened','Collections',[1000,10000],c=>c.stats.boxesOpened||0);
   milestones('textiles','Leather or cloth refined','Crafting',[10000,100000],c=>c.stats.textiles||0);
   milestones('secondary-craft','Secondaries smithed','Crafting',[1000,10000],c=>c.stats.secondaries||0);

@@ -37,7 +37,7 @@
   };
   const render = () => {
     U.patch(popup, '<div class="levelup-head"><span>GROWTH, EARNED.</span><button type="button" class="levelup-dismiss" aria-label="Dismiss level gains">\u00d7</button></div><div class="levelup-list">' + rows.map(r => {
-      const c = G.character(), icon = r.kind === 'character' ? U.characterPortrait(c.class, c.appearance) : r.kind === 'companion' ? U.companionPortrait(D.allCompanions.find(d => d.id === r.companionType)) : U.icon(r.skill);
+      const c = G.character(), icon = r.kind === 'character' ? U.profilePortrait(c) : r.kind === 'companion' ? U.companionPortrait(D.allCompanions.find(d => d.id === r.companionType)) : U.icon(r.skill);
       return '<section class="levelup-entry ' + r.kind + '"><span class="levelup-emblem">' + icon + '</span><div><small>' + (r.kind === 'character' ? 'ADVENTURER LEVEL UP' : r.kind === 'companion' ? 'COMPANION LEVEL UP' : 'SKILL LEVEL UP') + '</small><h3>' + U.e(r.kind === 'character' ? r.characterName : r.kind === 'companion' ? r.companionName : r.skill) + '</h3><p>' + U.e(note(r)) + '</p></div><div class="levelup-numbers"><strong>' + r.from + '<span>\u2192</span>' + r.to + '</strong><small>+' + (r.to - r.from) + ' level' + (r.to - r.from === 1 ? '' : 's') + '</small></div></section>';
     }).join('') + '</div>');
     popup.hidden = false;

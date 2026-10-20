@@ -104,7 +104,7 @@
         if (r.skill === 'Cooking') c.stats.cooked += yieldCount;
         S.inventory.reward(rewards);
         S.quests.crafted(r,rewards,c);
-        S.guilds.progress(c,'craft');
+        if(r.skill==='Smithing')S.guilds.progress(c,'craft');
         G.runtime.recent = rewards;
       } else G.notify('Fusion failed. Exactly one gem broke; the other two remain. +1 percentage point fail protection.', 'warning');
       if (r.skill === 'Faceting') c.stats.facets++;
