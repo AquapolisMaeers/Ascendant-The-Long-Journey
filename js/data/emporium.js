@@ -36,13 +36,17 @@
   ];
   const specialBonuses=[
     {damagePct:.01,penetration:.0005}, {healthPct:.01,reduction:.0005}, {defencePct:.01,healthPct:.002},
-    {crit:.005,critDamage:.01}, {damagePct:.01,critDamage:.02}, {speed:.005,lifeSteal:.001}, {dodge:.001,resistance:.001}
+    {crit:.005,critDamage:.01}, {damagePct:.01,critDamage:.02}, {speed:.005,lifeSteal:.002}, {dodge:.001,resistance:.001}
   ];
   D.specialCompanions = D.companions.map((pet,i)=>{
     const bonusesPerLevel=specialBonuses[i],[stat,perLevel]=Object.entries(bonusesPerLevel)[0];
     return {...pet,id:'special-'+pet.id,base:pet.id,name:names[i],price:300,stat,perLevel,special:true,bonusesPerLevel,
       illustration:'assets/art/companions/special-'+pet.id+'-painted.webp',description:stories[i]};
   });
+  D.specialCompanions.push({id:'special-quillroot',name:'Quillroot Sprite',price:300,stat:'skillXp',perLevel:.002,special:true,
+    bonusesPerLevel:{skillXp:.002,skillSpeed:.002},
+    illustration:'assets/art/companions/special-quillroot-painted.png',
+    description:'A woodland scholar with a well-worn field journal. Its patient guidance sharpens your craft and quickens your hands.'});
   D.allCompanions = [...D.companions,...D.specialCompanions];
   D.emporiumBoxes = [
     {id:'outfit-box',name:'Outfit Mystery Box',kind:'outfit',price:75,duplicate:15},
@@ -105,7 +109,7 @@
     {name:'Outfit Mystery Boxes',box:'outfit-box',description:'All 20 outfits, including Wayfarer Vestments (+5% Skilling XP). Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
     {name:'Aura Mystery Boxes',box:'aura-box',description:'All 20 auras, including Wayfarer Aura (+5% Skilling XP). Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
     {name:'Mount Mystery Boxes',box:'mount-box',description:'All 20 mounts, including Wayfarer Packhorse (+5% Skilling XP). Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%. Equip one mount for its bonuses.'},
-    {name:'Companion Mystery Boxes',box:'pet-box',description:'Seven special companions at equal odds. Every companion starts Common and grows with you.'},
+    {name:'Companion Mystery Boxes',box:'pet-box',description:'Eight special companions at equal odds, including Quillroot Sprite (+0.2% Skilling XP and action speed per level). Every companion starts Common and grows with you.'},
     {name:'Gem Mystery Boxes',box:'gem-box',description:'All 17 gem types, ranks I\u2013V. Regular types: 90%; exclusive stat types: 10%. Rank V: 0.5% overall.'},
     {name:'Ascendant Stone Boxes',box:'stone-box',description:'1%: one Ascendant Stone. Otherwise: normal coins. Every outcome is shown before opening.'}
   ];
@@ -115,6 +119,6 @@
   [60,100,160].forEach(n=>add('storage-'+n,'Inventory capacity '+n,'Journey',n,c=>c.capacity));
   for(const kind of D.regaliaKinds) [1,5,19,20].forEach(n=>add('collection-'+kind+'-'+n,'Collect '+n+' '+kind+'s','Collections',n,c=>(c.regalia?.owned||[]).filter(id=>D.regalia.some(r=>r.id===id&&r.kind===kind)).length,n===19?({outfit:'The Wardrobe',aura:'Radiant Soul',mount:'Keeper of the Reins'}[kind]):null));
   add('regalia-pair','Dress for your legend','Collections',2,c=>+!!c.regalia?.outfit + +!!c.regalia?.aura);
-  [1,7].forEach(n=>add('special-pets-'+n,'Befriend '+n+' special companion'+(n===1?'':'s'),'Companions',n,c=>(c.specialPets||[]).length));
+  [1,7,8].forEach(n=>add('special-pets-'+n,'Befriend '+n+' special companion'+(n===1?'':'s'),'Companions',n,c=>(c.specialPets||[]).length));
   add('sovereign-pair','An eclipse, complete','Collections',2,c=>['outfit:sovereign','aura:sovereign'].filter(id=>c.regalia?.owned.includes(id)).length,'Eclipse Sovereign');
 })(RPG.data);

@@ -38,6 +38,7 @@
       idle();const c=G.character();this.normalize(c);
       G.assert(D.allCompanions.some(p=>p.id===type)&&(c.specialPets.includes(type)||Object.hasOwn(c.petStable,type)),'This companion is not in your stable.');
       G.assert(c.companion?.type!==type,'This companion is already travelling with you.');
+      S.skilling.settle(c);
       if(c.companion){ S.companions.sync(c); c.petStable[c.companion.type]=G.clone(c.companion); }
       c.companion=c.petStable[type]||freshPet(type);delete c.petStable[type];S.companions.sync(c);this.changed(c);
     },
@@ -83,6 +84,7 @@
   S.companions.release=()=>{
     const c=G.character();
     G.ensureIdle();G.assert(c.companion,'No companion is equipped.');
+    S.skilling.settle(c);
     S.companions.sync(c);c.petStable[c.companion.type]=G.clone(c.companion);c.companion=null;S.emporium.changed(c);
   };
 })(RPG,RPG.data,RPG.systems);

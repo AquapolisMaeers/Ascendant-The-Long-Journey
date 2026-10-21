@@ -194,7 +194,7 @@
         c.encounter = null;
         S.loot.present(a.rewards, 'Gathering complete');
         S.tutorial?.nodeComplete(a.skill);
-      }
+      } else a.duration=D.config.actionMs/(1+S.items.toolBonus(c,a.skill,'Efficiency'));
       G.commit();
     },
     tick(ms) {

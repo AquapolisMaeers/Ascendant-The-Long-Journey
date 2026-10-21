@@ -44,8 +44,9 @@
         node('Endless volley',{endlessVolley:true},'Follow-up double attacks deal 40% extra damage.') ]},
       {id:'venom', name:'Venom Hunter', role:'Stack venom with repeated hits to overwhelm durable enemies.', nodes:[
         node('Toxic arrows',{damagePct:.01}), node('Venom coating',{venom:.006},'Each previous hit adds 0.6% damage per rank, up to five venom stacks.'),
-        node('Hunter\'s vitality',{healthPct:.015}), node('Siphoning venom',{lifeSteal:.005}), node('Predator rhythm',{speed:.008}),
-        node('Deathblossom',{deathblossom:true},'Venom can stack ten times instead of five.') ]}
+        node('Crippling venom',{venomSlow:.001},'Each venom stack reduces the opponent\'s Attack Speed by 0.1% per rank, up to five stacks.'), node('Siphoning venom',{lifeSteal:.005}),
+        node('Predator rhythm',{venomSpeed:.001},'Each venom stack grants 0.1% Attack Speed per rank, up to five stacks.'),
+        node('Deathblossom',{deathblossom:true},'Raises the shared venom stack limit from five to ten for Venom Coating, Crippling Venom and Predator Rhythm.') ]}
     ]
   };
   D.armorSlots = ['Helmet','Plate','Greaves','Gloves','Boots'];

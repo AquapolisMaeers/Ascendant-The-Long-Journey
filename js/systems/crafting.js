@@ -116,6 +116,7 @@
       if (lesson && lesson !== S.tutorial?.current()?.id) a.remaining = 1;
       a.remaining--;
       const full = a.remaining > 0 && !this.hasRoom(r, c);
+      if(a.remaining>0&&!full)a.duration=D.config.actionMs/(1+S.items.toolBonus(c,r.skill,'Efficiency'));
       if (a.remaining <= 0 || full) {
         c.activity = null;
         S.loot.present(a.rewards, full ? 'Crafting stopped: inventory full' : 'Crafting complete');

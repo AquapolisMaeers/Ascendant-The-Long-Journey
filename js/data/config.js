@@ -72,7 +72,8 @@
     reduction: 'Damage Reduction',
     resistance: 'Critical Resistance',
     lifeSteal: 'Life Steal',
-    skillXp: 'Skilling XP'
+    skillXp: 'Skilling XP',
+    skillSpeed: 'Skilling Action Speed'
   };
   D.classes = ['Warrior', 'Archer', 'Mage'];
   D.primary = ['Attack', 'Ranged', 'Magic'];

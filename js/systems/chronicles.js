@@ -103,6 +103,7 @@
       G.assert(info?.healing&&Number.isSafeInteger(quantity)&&quantity>0&&quantity<=1000000,'Choose cooked food and a valid quantity.');
       G.assert(S.inventory.available(key)>=quantity,'Missing unlocked food.');
       G.assert(p.hunger<100||p.health<100,'Your companion is already healthy and full.');
+      if(this.rates(this.definition(p)).skillXp)S.skilling.settle(c);
       this.sync(c);
       S.inventory.take(key,quantity,c);
       const nutrition=this.nutrition(key,p)*quantity;
@@ -115,6 +116,7 @@
       G.assert(p&&!p.alive,'This companion does not need revival.');
       const price=p.level*D.companionRules.revivePerLevel;
       G.assert(c.coins>=price,'Insufficient coins.');
+      if(this.rates(this.definition(p)).skillXp)S.skilling.settle(c);
       c.coins-=price;c.companion.health=50;c.companion.hunger=50;c.companion.updatedAt=Date.now();G.commit();
     },
     release() {

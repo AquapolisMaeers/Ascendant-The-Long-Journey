@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-21',title:'Shared venom stacks and a skilling companion',changes:[
+    'Quillroot Sprite joins AC Companion Mystery Boxes. Each level grants 0.2% Skilling XP and 0.2% Skilling Action Speed in all eight disciplines. XP also applies to offline training. Only the equipped, healthy, fed companion grants these bonuses. The eight special companions have equal 12.5% odds; box price and duplicate refunds stay the same.',
+    'AC companion life steal rises to 0.2% per level: Starwhisker Koi now grants 0.5% Attack Speed and 0.2% Life Steal per level. Regular companion rates stay the same.',
+    'Predator Rhythm now grants 0.1% Attack Speed per rank per venom stack. Hunter\'s Vitality becomes Crippling Venom, reducing opponent Attack Speed by 0.1% per rank per stack. Successful hits build the shared stacks; misses do not. Both effects change real combat timing, including attacks already being prepared.',
+    'Deathblossom raises the shared stack limit from five to ten for Venom Coating, Predator Rhythm and Crippling Venom. At ten ranks and ten stacks, the speed effects reach +10% for you and -10% for the opponent. Venom Coating retains 0.6% damage per rank per previous stack, and Siphoning Venom retains 0.5% Life Steal per rank. Existing allocated ranks remain in place.'
+  ]},
   {date:'2026-10-21',title:'Skilling regalia, companion bonuses and ranged talents',changes:[
     'Farming now awards one fibre per harvest before Yield bonuses, matching other gathering skills. Yield still doubles the harvest and Fortune can still find a next-tier resource.',
     'Outfit, Aura and Mount Mystery Boxes each add a focused skilling reward: Wayfarer Vestments, Wayfarer Aura and Wayfarer Packhorse. Each grants 5% XP in all eight skills, including offline training; equip all three for 15%. Each box now contains 20 rewards. Focused, build and Sovereign pools remain 90%, 9.5% and 0.5%.',

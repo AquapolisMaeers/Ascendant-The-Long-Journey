@@ -17,6 +17,21 @@
     return Math.min(D.caps.mitigation, def / (def + C.defenceFactor * a.level));
   };
   const reduction = b => Math.min(D.caps.reduction, b.reduction + (b.lastStand && b.hp / b.health < D.perkConditional.lastStand.threshold ? D.perkConditional.lastStand.reduction : 0));
+  const venomStacks = actor => Math.min(actor.deathblossom?10:5,actor.hits);
+
+  function refreshVenomSpeed(f) {
+    for(const [actor,opponent,timer] of [[f.player,f.enemy,'nextPlayer'],[f.enemy,f.player,'nextEnemy']]) {
+      if(!actor.venomSpeed&&!opponent.venomSlow)continue;
+      actor.venomBaseSpeed ??= actor.raw?.speed ?? actor.speed ?? 0;
+      actor.venomBaseInterval ??= actor.interval;
+      const baseSpeed=G.clamp(actor.venomBaseSpeed,-.5,D.caps.speed);
+      const speed=G.clamp(actor.venomBaseSpeed+(actor.venomSpeed||0)*venomStacks(actor)-(opponent.venomSlow||0)*venomStacks(opponent),-.5,D.caps.speed);
+      const interval=actor.venomBaseInterval*(1+baseSpeed)/(1+speed);
+      // Preserve progress through an attack already being prepared when its speed changes.
+      f[timer]=f.time+Math.max(0,f[timer]-f.time)*interval/actor.interval;
+      actor.speed=speed;actor.interval=interval;
+    }
+  }
 
   function strike(f, a, b, side, events, extra = false) {
     const rng = () => G.random(f);
@@ -32,7 +47,7 @@
     let damage = a.damage * (a.levelDamage ?? 1) * (critical ? 1 + a.critDamage : 1);
     if(a.fury) damage *= 1+a.fury*(1-a.hp/a.health)*(a.unchained && a.hp/a.health<.4?2:1);
     if(a.ignite) damage *= 1+a.ignite*Math.min(5,a.hits);
-    if(a.venom) damage *= 1+a.venom*Math.min(a.deathblossom?10:5,a.hits);
+    if(a.venom) damage *= 1+a.venom*venomStacks(a);
     if(a.arcaneBurst && hitNumber % (a.torrent?3:4)===0) damage *= 1+a.arcaneBurst;
     if(a.aimedShot && hitNumber % 3===0) damage *= 1+a.aimedShot;
     if(a.firestorm && hitNumber % 5===0) damage *= 1.5;
@@ -49,6 +64,7 @@
     const actual = Math.min(b.hp, damage);
     b.hp = Math.max(0, b.hp - actual);
     a.hits++;
+    if(a.venomSpeed||a.venomSlow)refreshVenomSpeed(f);
     const rawSteal = actual * Math.min(D.caps.lifeSteal,a.lifeSteal+(a.hp/a.health<.6?(a.siphon||0):0)), tenths = rawSteal * 10;
     // Round positive gains up to a tenth, correcting only floating-point noise at exact tenths.
     const roundedSteal = rawSteal > 0 ? Math.max(1, Math.ceil(tenths - Number.EPSILON * Math.max(1, tenths) * 4)) / 10 : 0;
@@ -109,6 +125,7 @@
     crit,
     mitigation,
     reduction,
+    venomStacks,
     eat,
     average(a, b) {
       return hit(a, b) * Math.max(C.minimumHit, a.damage * (a.levelDamage ?? levelFactor(a,b)) * (1 + crit(a, b) * a.critDamage) * (1 - mitigation(a, b)) * (1 - reduction(b))) * (1 + hit(a, b) * a.double);
