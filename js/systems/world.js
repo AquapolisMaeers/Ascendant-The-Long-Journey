@@ -172,7 +172,7 @@
         kind = D.gatherResources[a.skill],
         rewards = [{
           key: kind + ':' + a.tier,
-          quantity: (a.skill==='Farming'?2:1) * (1 + (G.rng() < S.items.toolBonus(c, a.skill, 'Yield') ? 1 : 0))
+          quantity: 1 + (G.rng() < S.items.toolBonus(c, a.skill, 'Yield') ? 1 : 0)
         }];
       if (a.tier < D.tiers.length - 1 && G.rng() < S.items.toolBonus(c, a.skill, 'Fortune')) rewards.push({
         key: kind + ':' + Math.min(a.tier + 1,this.materialTiers(c.location).at(-1)),

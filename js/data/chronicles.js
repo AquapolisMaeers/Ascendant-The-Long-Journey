@@ -5,7 +5,7 @@
   D.companions = [
     {id:'wolf', name:'Lantern Wolf', portrait:4, price:500, stat:'damagePct', perLevel:.005, description:'A loyal hunter. +0.5% Primary Damage per level.'},
     {id:'boar', name:'Briar Boar', portrait:5, price:500, stat:'healthPct', perLevel:.005, description:'A sturdy trail companion. +0.5% Max Health per level.'},
-    {id:'golem', name:'Pebble Golem', portrait:11, price:500, stat:'defence', perLevel:.5, description:'A patient stone guardian. +0.5 Defence per level.'},
+    {id:'golem', name:'Pebble Golem', portrait:11, price:500, stat:'defencePct', perLevel:.005, description:'A patient stone guardian. +0.5% Defence per level.'},
     {id:'lynx', name:'Ember Lynx', art:0, portrait:3, price:500, stat:'crit', perLevel:.0025, description:'A watchful ambusher. +0.25% Critical Chance per level.'},
     {id:'bear', name:'Thunder Bear', art:1, portrait:6, price:500, stat:'critDamage', perLevel:.01, description:'A mighty forest guardian. +1% Critical Damage per level.'},
     {id:'spider', name:'Silkstride Spider', art:2, portrait:7, price:500, stat:'speed', perLevel:.0025, description:'A nimble weaver. +0.25% Attack Speed per level.'},

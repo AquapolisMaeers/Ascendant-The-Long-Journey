@@ -29,9 +29,10 @@
     equip(id) {
       idle();const c=G.character(),entry=D.regalia.find(r=>r.id===id);this.normalize(c);
       G.assert(entry&&this.owned(entry,c),'Collect this item before equipping it.');
+      if(entry.stats.skillXp||D.regalia.find(r=>r.id===c.regalia[entry.kind])?.stats.skillXp)S.skilling.settle(c);
       c.regalia[entry.kind]=id;this.changed(c);
     },
-    unequip(kind) { idle();G.assert(D.regaliaKinds.includes(kind),'Unknown collection slot.');const c=G.character();this.normalize(c);c.regalia[kind]=null;this.changed(c); },
+    unequip(kind) { idle();G.assert(D.regaliaKinds.includes(kind),'Unknown collection slot.');const c=G.character();this.normalize(c);if(D.regalia.find(r=>r.id===c.regalia[kind])?.stats.skillXp)S.skilling.settle(c);c.regalia[kind]=null;this.changed(c); },
     changed(c) { if(c.appearance.outfit&&c.appearance.outfit!==c.regalia.outfit)delete c.appearance.outfit;c.hp=Math.min(c.hp,S.character.stats(c).health);G.runtime.estimate=null;G.commit(); },
     equipPet(type) {
       idle();const c=G.character();this.normalize(c);

@@ -36,15 +36,15 @@
     Archer: [
       {id:'marksman', name:'Marksman', role:'Land deliberate, devastating critical shots.', nodes:[
         node('Steady aim',{crit:.008}), node('Aimed shot',{aimedShot:.035},'Every third successful attack deals 3.5% extra damage per rank.'),
-        node('Keen eye',{critDamage:.018}), node('Armour piercing',{penetration:.008}), node('Patient hunter',{damagePct:.01}),
+        node('Keen eye',{critDamage:.018}), node('Armour piercing',{penetration:.008}), node('Patient hunter',{damagePct:.015}),
         node('Perfect shot',{perfectShot:true},'Every third successful attack is a guaranteed critical strike.') ]},
       {id:'skirmisher', name:'Skirmisher', role:'Win through rapid attacks, evasion and follow-up volleys.', nodes:[
         node('Quick footing',{speed:.012}), node('Volley training',{double:.012}),
-        node('Evasive steps',{dodge:.008}), node('Running shots',{damagePct:.01}), node('Fleet hunter',{speed:.008}),
+        node('Evasive steps',{dodge:.008}), node('Running shots',{damagePct:.012}), node('Barbed follow-through',{critDamage:.015}),
         node('Endless volley',{endlessVolley:true},'Follow-up double attacks deal 40% extra damage.') ]},
       {id:'venom', name:'Venom Hunter', role:'Stack venom with repeated hits to overwhelm durable enemies.', nodes:[
-        node('Toxic arrows',{damagePct:.01}), node('Venom coating',{venom:.008},'Each previous hit adds 0.8% damage per rank, up to five venom stacks.'),
-        node('Patient stalker',{dodge:.008}), node('Corrosive venom',{penetration:.008}), node('Predator rhythm',{speed:.008}),
+        node('Toxic arrows',{damagePct:.01}), node('Venom coating',{venom:.006},'Each previous hit adds 0.6% damage per rank, up to five venom stacks.'),
+        node('Hunter\'s vitality',{healthPct:.015}), node('Siphoning venom',{lifeSteal:.005}), node('Predator rhythm',{speed:.008}),
         node('Deathblossom',{deathblossom:true},'Venom can stack ten times instead of five.') ]}
     ]
   };

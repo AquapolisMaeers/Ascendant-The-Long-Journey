@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-21',title:'Skilling regalia, companion bonuses and ranged talents',changes:[
+    'Farming now awards one fibre per harvest before Yield bonuses, matching other gathering skills. Yield still doubles the harvest and Fortune can still find a next-tier resource.',
+    'Outfit, Aura and Mount Mystery Boxes each add a focused skilling reward: Wayfarer Vestments, Wayfarer Aura and Wayfarer Packhorse. Each grants 5% XP in all eight skills, including offline training; equip all three for 15%. Each box now contains 20 rewards. Focused, build and Sovereign pools remain 90%, 9.5% and 0.5%.',
+    'Per companion level: Pebble Golem grants 0.5% Defence; Cindercoil Wyrmling grants 1% Defence and 0.2% Max Health; Mossbell Terrapin grants 1% Max Health and 0.05% Damage Reduction; Prismveil Moth grants 0.5% Critical Chance and 1% Critical Damage; Gilded Jackalope grants 1% Primary Damage and 2% Critical Damage; Starwhisker Koi grants 0.5% Attack Speed and 0.1% Life Steal; Velvet Oracle grants 0.1% Dodge and 0.1% Critical Resistance. Existing pet levels and ownership carry over.',
+    'Ranged talents: Patient Hunter grants 1.5% Primary Damage per rank, Running Shots grants 1.2%, and Venom Coating adds 0.6% per venom stack per rank. Fleet Hunter becomes Barbed Follow-through (1.5% Critical Damage per rank), Patient Stalker becomes Hunter\'s Vitality (1.5% Max Health), and Corrosive Venom becomes Siphoning Venom (0.5% Life Steal). Allocated ranks stay in the same positions.'
+  ]},
   {date:'2026-10-20',title:'Stronger Fieldwork, Blood Appetite and clearer training',changes:[
     'Fieldwork now grants 2.5% skill XP per rank for its first four points, reaching 10%. The bonus applies to active and offline training, including already learned ranks.',
     'The gathering tutorial now includes working primary and secondary selectors inside its lesson. Skills lessons point to Disciplines, offline training can be chosen inside its lesson, and the guide explains the Skilling Tree and its separate points.',

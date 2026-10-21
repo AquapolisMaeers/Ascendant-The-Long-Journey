@@ -8,17 +8,20 @@
     ['reduction','Bulwark',.005,'#b9c6ad'], ['resistance','Resolve',.01,'#dac4a3'], ['lifeSteal','Bloodmoon',.0025,'#ee8f9e']
   ];
   D.regaliaKinds = ['outfit','aura','mount'];
-  const mountNames = ['Duelist Courser','Ironward Charger','Heartkeeper Stag','Warbringer Destrier','Bastion Warhorse','Lifebloom Hart','Deadeye Strider','Executioner Nightsteed','Gale Runner','Riftwalker Kirin','Echo Courser','Shade Nightmare','Bulwark Charger','Resolve Palfrey','Bloodmoon Steed','Crimson Requiem Destrier','Citadel Oath Warhorse','Phantom Masquerade Kirin','Eclipse Sovereign'];
+  const mountNames = ['Duelist Courser','Ironward Charger','Heartkeeper Stag','Warbringer Destrier','Bastion Warhorse','Lifebloom Hart','Deadeye Strider','Executioner Nightsteed','Gale Runner','Riftwalker Kirin','Echo Courser','Shade Nightmare','Bulwark Charger','Resolve Palfrey','Bloodmoon Steed','Crimson Requiem Destrier','Citadel Oath Warhorse','Phantom Masquerade Kirin','Eclipse Sovereign','Wayfarer Packhorse'];
+  // Sixteen focused rewards share the existing 90% pool. Keep old entries in order for their artwork.
+  const focusedWeight=5400/(focus.length+1);
   D.regalia = D.regaliaKinds.flatMap(kind => {
     let index=0;
     const make = (id,name,stats,color,price,tier,weight) => ({id:kind+':'+id,kind,name:kind==='mount'?mountNames[index++]:name+(kind==='outfit'?' Vestments':' Aura'),stats,color,price,tier,weight,
-      ...(kind==='outfit'?{avatar:'assets/art/outfits/outfit-'+id+'.webp'}:{})});
+      ...(kind==='outfit'?{avatar:'assets/art/outfits/outfit-'+(id==='skillXp'?'utility':id)+'.webp'}:{})});
     return [
-      ...focus.map(([stat,name,value,color])=>make(stat,name,{[stat]:value},color,125,'Focused',360)),
+      ...focus.map(([stat,name,value,color])=>make(stat,name,{[stat]:value},color,125,'Focused',focusedWeight)),
       make('aggressive','Crimson Requiem',{damagePct:.03,crit:.0075,critDamage:.025,speed:.01},'#f38d9d',350,'Build',190),
       make('tanky','Citadel Oath',{healthPct:.04,defencePct:.04,reduction:.005,resistance:.01},'#a7c6cf',350,'Build',190),
       make('utility','Phantom Masquerade',{speed:.025,dodge:.01,lifeSteal:.0025,double:.005,penetration:.005},'#c3aceb',350,'Build',190),
-      make('sovereign','Eclipse Sovereign',Object.fromEntries(focus.map(([stat,,value])=>[stat,value])),'#f3d18e',1500,'Sovereign',30)
+      make('sovereign','Eclipse Sovereign',Object.fromEntries(focus.map(([stat,,value])=>[stat,value])),'#f3d18e',1500,'Sovereign',30),
+      make('skillXp','Wayfarer',{skillXp:.05},'#9ecba0',125,'Focused',focusedWeight)
     ];
   });
   const names = ['Vesperglass Kirin','Mossbell Terrapin','Cindercoil Wyrmling','Prismveil Moth','Gilded Jackalope','Starwhisker Koi','Velvet Oracle'];
@@ -29,12 +32,17 @@
     'A silent moth with stained-glass wings. Its shifting patterns reveal the briefest opening in an enemy guard.',
     'A fleet-footed jackalope crowned in gold. It waits for the perfect moment before striking with impossible force.',
     'A celestial koi that swims through the air. Its comet-tail traces the rhythm of your next attack.',
-    'A masked night owl with a velvet mantle. It gathers stolen vitality beneath its watchful, violet eyes.'
+    'A masked night owl with a velvet mantle. Its watchful, violet eyes guide you clear of lethal blows.'
   ];
-  const secondBonuses=[['penetration',.0005],['reduction',.00025],['healthPct',.002],['critDamage',.002],['damagePct',.001],['dodge',.0005],['resistance',.0005]];
-  D.specialCompanions = D.companions.map((pet,i)=>({...pet,id:'special-'+pet.id,base:pet.id,name:names[i],price:300,perLevel:pet.perLevel*2,special:true,
-    bonusesPerLevel:{[pet.stat]:pet.perLevel*2,[secondBonuses[i][0]]:secondBonuses[i][1]},
-    illustration:'assets/art/companions/special-'+pet.id+'-painted.webp',description:stories[i]}));
+  const specialBonuses=[
+    {damagePct:.01,penetration:.0005}, {healthPct:.01,reduction:.0005}, {defencePct:.01,healthPct:.002},
+    {crit:.005,critDamage:.01}, {damagePct:.01,critDamage:.02}, {speed:.005,lifeSteal:.001}, {dodge:.001,resistance:.001}
+  ];
+  D.specialCompanions = D.companions.map((pet,i)=>{
+    const bonusesPerLevel=specialBonuses[i],[stat,perLevel]=Object.entries(bonusesPerLevel)[0];
+    return {...pet,id:'special-'+pet.id,base:pet.id,name:names[i],price:300,stat,perLevel,special:true,bonusesPerLevel,
+      illustration:'assets/art/companions/special-'+pet.id+'-painted.webp',description:stories[i]};
+  });
   D.allCompanions = [...D.companions,...D.specialCompanions];
   D.emporiumBoxes = [
     {id:'outfit-box',name:'Outfit Mystery Box',kind:'outfit',price:75,duplicate:15},
@@ -94,9 +102,9 @@
   ];
   D.gemBoxRanks=[600,250,100,45,5];
   D.emporiumCategories = [
-    {name:'Outfit Mystery Boxes',box:'outfit-box',description:'All 19 outfits. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
-    {name:'Aura Mystery Boxes',box:'aura-box',description:'All 19 auras. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
-    {name:'Mount Mystery Boxes',box:'mount-box',description:'All 19 mounts. Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%. Equip one mount for its combat bonuses.'},
+    {name:'Outfit Mystery Boxes',box:'outfit-box',description:'All 20 outfits, including Wayfarer Vestments (+5% Skilling XP). Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
+    {name:'Aura Mystery Boxes',box:'aura-box',description:'All 20 auras, including Wayfarer Aura (+5% Skilling XP). Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%.'},
+    {name:'Mount Mystery Boxes',box:'mount-box',description:'All 20 mounts, including Wayfarer Packhorse (+5% Skilling XP). Focused pool: 90%; build pool: 9.5%; Eclipse Sovereign: 0.5%. Equip one mount for its bonuses.'},
     {name:'Companion Mystery Boxes',box:'pet-box',description:'Seven special companions at equal odds. Every companion starts Common and grows with you.'},
     {name:'Gem Mystery Boxes',box:'gem-box',description:'All 17 gem types, ranks I\u2013V. Regular types: 90%; exclusive stat types: 10%. Rank V: 0.5% overall.'},
     {name:'Ascendant Stone Boxes',box:'stone-box',description:'1%: one Ascendant Stone. Otherwise: normal coins. Every outcome is shown before opening.'}
@@ -105,7 +113,7 @@
   [40,50,60,70,80,90,100].forEach(n=>add('companion-level-'+n,'Companion level '+n,'Companions',n,c=>Math.max(c.companion?.level||0,...Object.values(c.petStable||{}).map(p=>p.level))));
   [1,3,5,7].forEach(n=>add('companion-bond-'+n,'Companion ascensions \u00b7 '+n,'Companions',n,c=>Math.max(c.companion?.ascensions||0,...Object.values(c.petStable||{}).map(p=>p.ascensions||0)),n===7?'Soulbound':null));
   [60,100,160].forEach(n=>add('storage-'+n,'Inventory capacity '+n,'Journey',n,c=>c.capacity));
-  for(const kind of D.regaliaKinds) [1,5,19].forEach(n=>add('collection-'+kind+'-'+n,'Collect '+n+' '+kind+'s','Collections',n,c=>(c.regalia?.owned||[]).filter(id=>D.regalia.some(r=>r.id===id&&r.kind===kind)).length,n===19?({outfit:'The Wardrobe',aura:'Radiant Soul',mount:'Keeper of the Reins'}[kind]):null));
+  for(const kind of D.regaliaKinds) [1,5,19,20].forEach(n=>add('collection-'+kind+'-'+n,'Collect '+n+' '+kind+'s','Collections',n,c=>(c.regalia?.owned||[]).filter(id=>D.regalia.some(r=>r.id===id&&r.kind===kind)).length,n===19?({outfit:'The Wardrobe',aura:'Radiant Soul',mount:'Keeper of the Reins'}[kind]):null));
   add('regalia-pair','Dress for your legend','Collections',2,c=>+!!c.regalia?.outfit + +!!c.regalia?.aura);
   [1,7].forEach(n=>add('special-pets-'+n,'Befriend '+n+' special companion'+(n===1?'':'s'),'Companions',n,c=>(c.specialPets||[]).length));
   add('sovereign-pair','An eclipse, complete','Collections',2,c=>['outfit:sovereign','aura:sovereign'].filter(id=>c.regalia?.owned.includes(id)).length,'Eclipse Sovereign');

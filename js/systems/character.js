@@ -36,7 +36,8 @@
         lifeSteal: 0,
         damagePct: 0,
         healthPct: 0,
-        defencePct: 0
+        defencePct: 0,
+        skillXp: 0
       };
       const add = (key, val) => s[key] = typeof val === 'boolean' ? val : (s[key] || 0) + val;
       for (const item of Object.values(c.equipment).filter(Boolean)) {

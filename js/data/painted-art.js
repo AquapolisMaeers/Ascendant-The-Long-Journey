@@ -16,6 +16,6 @@
     const row=type-D.regularGemCount;
     D.itemIllustrations['gem:'+type+':'+rank].crop=[(rank-1+.01)/5,(gemRows[row]+1)/1774,.98/5,(gemRows[row+1]-gemRows[row]-2)/1774];
   }
-  for(const kind of ['aura','mount'])D.regalia.filter(entry=>entry.kind===kind).forEach((entry,index)=>register('regalia:'+entry.id,kind==='mount'?'mounts':'auras',index,4,5,entry.name));
+  for(const kind of ['aura','mount'])D.regalia.filter(entry=>entry.kind===kind).forEach((entry,index)=>register('regalia:'+entry.id,kind==='mount'?'mounts':'auras',entry.id===kind+':skillXp'?17:index,4,5,entry.name));
   for(const entry of D.regalia.filter(entry=>entry.kind==='outfit'))D.itemIllustrations['regalia:'+entry.id]={file:entry.avatar,index:0,columns:1,rows:1,version,name:entry.name};
 })(RPG.data);
