@@ -12,9 +12,11 @@
   };
   const hit = (a, b) => G.clamp(1 + C.hitLevel * (a.level - b.level) - b.dodge, C.minHitChance, 1);
   const crit = (a, b) => G.clamp(a.crit - b.resistance, 0, D.caps.crit);
+  // Legacy committed actors lack defenceScale and retain their saved combat rules.
+  const defenceScale = a => a.defenceScale ?? C.defenceFactor * (Object.hasOwn(a,'hits') ? a.level : D.gearPower[D.tierFor(a.level)]);
   const mitigation = (a, b) => {
     const def = b.defence * (1 - a.penetration);
-    return Math.min(D.caps.mitigation, def / (def + C.defenceFactor * a.level));
+    return Math.min(D.caps.mitigation, def / (def + defenceScale(a)));
   };
   const reduction = b => Math.min(D.caps.reduction, b.reduction + (b.lastStand && b.hp / b.health < D.perkConditional.lastStand.threshold ? D.perkConditional.lastStand.reduction : 0));
   const venomStacks = actor => Math.min(actor.deathblossom?10:5,actor.hits);
@@ -128,6 +130,7 @@
   }
   S.kernel = {
     levelFactor,
+    defenceScale,
     hit,
     crit,
     mitigation,
@@ -156,6 +159,8 @@
       // at their previously committed damage, while new fights use this rule.
       player.levelDamage=levelFactor(player,foe);
       foe.levelDamage=levelFactor(foe,player);
+      player.defenceScale=C.defenceFactor*D.gearPower[D.tierFor(player.level)];
+      foe.defenceScale=C.defenceFactor*D.gearPower[D.tierFor(foe.level)];
       if(player.chill) foe.interval *= 1+player.chill*(player.deepFreeze?2:1);
       return {
         player,

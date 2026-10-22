@@ -1,6 +1,9 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'Creature balance',changes:[
+    'Creature scaling differs.'
+  ]},
   {date:'2026-10-22',title:'Doubling gear tiers and clearer equipment bonuses',changes:[
     'Each material tier now doubles the previous tier\'s base Damage, Health and Defence. Equipment levels, rarity and Enhancement requirements stay the same. Percentage bonuses retain their own scaling and effective caps.',
     'Flat enhancement prefixes and socketed gems grow with their equipment tier, and food healing follows the larger health pools. Item details show the effective prefix and inserted-gem bonuses. Existing items retain their IDs, rarity, Enhancement, prefixes and gems.',

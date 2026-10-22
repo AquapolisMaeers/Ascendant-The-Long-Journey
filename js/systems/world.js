@@ -1,25 +1,24 @@
 'use strict';
 (function(G, D, S) {
-  const creatureReferences=new Map();
+  const combatStats=['health','damage','defence','crit','critDamage','speed','penetration','double','dodge','reduction','resistance','lifeSteal','thorns'];
   S.world = {
-    // Fixed loadouts use a private RNG stream and never read or change the active character.
-    creatureReference(level,type='regular') {
-      const cacheKey=type+':'+level,profile=D.creatureProfiles[type];
-      if(creatureReferences.has(cacheKey))return creatureReferences.get(cacheKey);
-      const totals={},tier=D.tierFor(level),stats=['health','damage','defence','crit','critDamage','speed','penetration','double','dodge','reduction','resistance','lifeSteal','thorns'];
-      for(const className of D.classes){
-        const classIndex=D.classes.indexOf(className),stream={seed:7192},c={level,class:className,equipment:{},perks:{},talents:{},regalia:{owned:[...profile.regalia],outfit:null,aura:null,mount:null}};
-        for(const id of profile.regalia)c.regalia[id.split(':')[0]]=id;
-        for(const piece of [classIndex,3,4,5,6,7,8,9,10+classIndex]){
-          const slot=D.pieceSlot(piece),gemType=D.gemAllowed[slot].includes(classIndex)?classIndex:4;
-          const item={kind:'gear',tier,piece,slot,style:piece<3?piece:null,boss:null,rarity:0,enhance:profile.enhance,prefixes:{},gems:Array(profile.gems).fill('gem:'+gemType+':1'),...(D.armorSlots.includes(slot)?{armorClass:className}:{})};
-          for(let n=0;n<profile.enhance;n++)S.items.prefix(item,false,()=>G.random(stream),null);
-          c.equipment[slot]=item;
-        }
-        const reference=S.character.stats(c);
-        for(const key of stats)totals[key]=(totals[key]||0)+reference[key]/D.classes.length;
+    // Enemy equipment uses a private stream and never reads the active player.
+    creatureLoadout(level,type='regular',archetype='Balanced',loadoutSeed=7192,bossId=null) {
+      const profile=D.creatureProfiles[type],tier=D.tierFor(level),stream={seed:loadoutSeed};
+      const className=/Magic/.test(archetype)?'Mage':/Ranged|Fast/.test(archetype)?'Archer':'Warrior';
+      const classIndex=D.classes.indexOf(className),c={level,class:className,equipment:{},perks:{},talents:{}};
+      const boss=type==='boss'?(bossId??Math.max(0,D.dungeons.findLastIndex(d=>d.level<=level))):null;
+      for(const piece of [classIndex,3,4,5,6,7,8,9,10+classIndex]){
+        const slot=D.pieceSlot(piece),gemType=D.gemAllowed[slot].includes(classIndex)?classIndex:4;
+        const item={kind:'gear',tier,piece,slot,style:piece<3?piece:null,boss,rarity:0,enhance:profile.enhance,prefixes:{},gems:Array(profile.gems).fill('gem:'+gemType+':1'),...(D.armorSlots.includes(slot)?{armorClass:className}:{})};
+        for(let n=0;n<D.creaturePrefixRolls(tier)+profile.enhance;n++)S.items.prefix(item,n<3,()=>G.random(stream),null);
+        c.equipment[slot]=item;
       }
-      const reference=Object.freeze(totals);creatureReferences.set(cacheKey,reference);return reference;
+      return c;
+    },
+    creatureReference(level,type='regular',archetype='Balanced',loadoutSeed=7192,bossId=null) {
+      const stats=S.character.stats(this.creatureLoadout(level,type,archetype,loadoutSeed,bossId));
+      return Object.freeze(Object.fromEntries(combatStats.map(key=>[key,stats[key]])));
     },
     preferences(c = G.character()) {
       return c.skillPreferences || {primary: 'Fishing', secondary: 'Mining'};
@@ -63,36 +62,30 @@
         level = forcedLevel || (boss ? G.int(G.rng, ...D.dungeonLevels.boss.map(n => D.dungeons[loc.dungeon].level + n)) : G.int(G.rng, loc.level, loc.max));
       const row = boss ? {
         name: D.dungeons[loc.dungeon].boss,
-        archetype: 'Dungeon Boss'
+        archetype: D.bossArchetypes[loc.dungeon]
       } : G.pick(G.rng, loc[type]);
-      return this.enemyStats(type,location,level,row);
+      return this.enemyStats(type,location,level,row,G.int(G.rng,1,4294967295));
     },
-    enemyStats(type,location,level,row) {
-      const loc=D.locations[location],boss=type==='boss',reference=this.creatureReference(level,type);
+    enemyStats(type,location,level,row,loadoutSeed=7192) {
+      const loc=D.locations[location],boss=type==='boss';
+      const archetype=boss&&row.archetype==='Dungeon Boss'?(D.bossArchetypes[loc.dungeon]||'Balanced'):row.archetype;
+      const reference=this.creatureReference(level,type,archetype,loadoutSeed,boss?loc.dungeon:null);
       const e = {
         ...reference,
         name: row.name,
-        archetype: row.archetype,
+        archetype,
         type,
         level,
-        health: D.enemyBase.health + D.enemyBase.healthPerLevel * level,
-        damage: D.enemyBase.damage + D.enemyBase.damagePerLevel * level,
-        defence: D.enemyBase.defencePerLevel * level,
+        loadoutSeed
       };
-      const scaling = D.enemyScaling(location, level,type);
-      for (const key of ['health', 'damage', 'defence']) e[key] *= scaling[key];
-      e.penetration = scaling.penetration;
-      e.resistance = scaling.resistance;
-      if (boss) {
-        e.boss = loc.dungeon;
-      } else {
-        for (const label of row.archetype.split('/')) {
-          const mod = D.archetypes[label] || {};
-          for (const [key, value] of Object.entries(mod))
-            if (['health', 'damage', 'defence'].includes(key)) e[key] *= value;
-            else e[key] += value;
-        }
+      if(boss)e.boss=loc.dungeon;
+      for (const label of archetype.split('/')) {
+        const mod = D.archetypes[label] || {};
+        for (const [key, value] of Object.entries(mod))
+          if (['health', 'damage', 'defence'].includes(key)) e[key] *= value;
+          else e[key] += value;
       }
+      for(const key of combatStats)if(D.caps[key]!==undefined)e[key]=G.clamp(e[key],0,D.caps[key]);
       e.interval = D.config.attackSeconds / (1 + G.clamp(e.speed, -.5, 1));
       return e;
     },
@@ -237,7 +230,7 @@
         e = c.encounter;
       G.assert(e?.type === 'treasure', 'No treasure chest to open.');
       if (e.mimic) {
-        const enemy = this.enemyStats('regular',c.location,e.level,{name:'Mimic',archetype:'Mimic · Balanced'});
+        const enemy = this.enemyStats('regular',c.location,e.level,{name:'Mimic',archetype:'Mimic · Balanced'},G.int(G.rng,1,4294967295));
         c.encounter = {
           type: 'regular',
           enemy

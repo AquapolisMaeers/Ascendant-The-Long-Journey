@@ -132,6 +132,7 @@
         if (['regular', 'elite', 'boss'].includes(e.type)) {
           if (e.enemy?.thorns !== undefined && !finite(e.enemy.thorns, 0, D.caps.thorns)) fail('enemy Thorn Damage');
           if (!e.enemy || typeof e.enemy.name !== 'string' || typeof e.enemy.archetype !== 'string' || !Number.isInteger(e.enemy.level) || !finite(e.enemy.level, 1, 109)) fail('enemy');
+          if(e.enemy.loadoutSeed!==undefined&&(!Number.isInteger(e.enemy.loadoutSeed)||!finite(e.enemy.loadoutSeed,1,4294967295)))fail('enemy loadout');
           for (const key of ['damage', 'health', 'defence', 'crit', 'critDamage', 'penetration', 'double', 'dodge', 'reduction', 'resistance', 'lifeSteal', 'interval'])
             if (!finite(e.enemy[key]) || key === 'interval' && e.enemy[key] < .5) fail('enemy stats');
         } else if (D.gatheringSkills.includes(e.type)) {
@@ -164,6 +165,7 @@
         const f = c.combat;
         for(const actor of [f.player,f.enemy])if(actor?.thorns!==undefined&&!finite(actor.thorns,0,D.caps.thorns))fail('combat Thorn Damage');
         for(const actor of [f.player,f.enemy])if(actor?.levelDamage!==undefined&&!finite(actor.levelDamage,1/3.5,3.5))fail('combat level modifier');
+        for(const actor of [f.player,f.enemy])if(actor?.defenceScale!==undefined&&!finite(actor.defenceScale,1))fail('combat defence scale');
         if (!f.player || !f.enemy || !finite(f.time) || !finite(f.player.hp) || !finite(f.enemy.hp) || !finite(f.nextPlayer) || !finite(f.nextEnemy) || !finite(f.seed)) fail('combat state');
         for (const actor of [f.player, f.enemy])
           for (const key of ['level', 'damage', 'health', 'defence', 'crit', 'critDamage', 'penetration', 'double', 'dodge', 'reduction', 'resistance', 'lifeSteal', 'interval', 'hits'])
@@ -273,12 +275,12 @@
           }
           c.creatureBalanceVersion=2;
         }
-        if(c.creatureBalanceVersion<4) {
+        if(c.creatureBalanceVersion<5) {
           const enemy=c.encounter?.enemy,loc=c.location;
           if(enemy&&!c.combat&&!c.encounter.tutorial&&D.locations[loc]&&['regular','elite','boss'].includes(enemy.type)) {
-            Object.assign(enemy,G.systems.world.enemyStats(enemy.type,loc,enemy.level,{name:enemy.name,archetype:enemy.archetype}));
+            Object.assign(enemy,G.systems.world.enemyStats(enemy.type,loc,enemy.level,{name:enemy.name,archetype:enemy.archetype},enemy.loadoutSeed||7192));
           }
-          c.creatureBalanceVersion=4;
+          c.creatureBalanceVersion=5;
         }
         // Old 25% was free. Keep paid higher tiers and remove only that free tier.
         if(c.provisionsVersion===undefined && Array.isArray(c.eatUnlocks)) {

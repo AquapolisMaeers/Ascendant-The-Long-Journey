@@ -86,20 +86,12 @@
     return scaling;
   };
   D.creatureProfiles = {
-    regular:{enhance:0,gems:0,regalia:[],health:.85,damage:.7,defence:.85},
-    elite:{enhance:5,gems:1,regalia:['aura:tanky','mount:aggressive'],health:.85,damage:.75,defence:.85},
-    boss:{enhance:15,gems:2,regalia:['outfit:aggressive','aura:tanky','mount:aggressive'],health:.9,damage:.9,defence:1}
+    regular:{enhance:0,gems:0,regalia:[]},
+    elite:{enhance:5,gems:1,regalia:[]},
+    boss:{enhance:10,gems:2,regalia:[]}
   };
-  D.enemyScaling = (location, level = D.locations[location].level, type='regular') => {
-    const reference=RPG.systems.world.creatureReference(level,type);
-    return {
-      health:reference.health*D.creatureProfiles[type].health/(D.enemyBase.health+D.enemyBase.healthPerLevel*level),
-      damage:reference.damage*D.creatureProfiles[type].damage/(D.enemyBase.damage+D.enemyBase.damagePerLevel*level),
-      defence:reference.defence*D.creatureProfiles[type].defence/(D.enemyBase.defencePerLevel*level),
-      penetration:reference.penetration+location*.012,
-      resistance:reference.resistance+location*.01
-    };
-  };
+  D.creaturePrefixRolls=tier=>Math.max(3,tier);
+  D.bossArchetypes=['Heavy Melee','Heavy Defence','Heavy Tank/Magic','Magic/Crit','Balanced/High Damage'];
   D.dungeonLevels = {regular: [0, 4], elite: [5, 9], boss: [7, 9]};
   D.boss = {
     health: 7,
