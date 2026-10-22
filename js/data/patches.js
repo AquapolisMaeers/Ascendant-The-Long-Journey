@@ -1,6 +1,11 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'A gentler start and fixed skill XP',changes:[
+    'Creature scaling differs. Early encounters are more forgiving, with normal progression resuming from level 5.',
+    'Active Faceting XP now depends on the recipe unlock level, rather than your current Faceting level. Base XP per action: Gem I cutting 297; Gem II fusion 7,425; Gem III 14,850; Gem IV 22,275; Gem V 29,700. Failed fusion attempts award the same recipe XP.',
+    'All eight skills use fixed base XP for each active action, based on the resource or recipe requirement. Smithing also accounts for recipe material costs. Existing XP bonuses still apply. Offline training rates and earned progress remain unchanged.'
+  ]},
   {date:'2026-10-22',title:'A cleaner training panel',changes:[
     'Skill experience now appears inside the activity panel, below task progress. See the active recipe or resource, timing, Stop control, current skill level, latest XP gain and progress toward the next level in one place.',
     'The combined panel sits at the bottom right on desktop and above navigation on phones. Skill progress stays visible throughout gathering and crafting, then briefly shows the final result when training finishes. Loot and level-up notices keep their own space.'

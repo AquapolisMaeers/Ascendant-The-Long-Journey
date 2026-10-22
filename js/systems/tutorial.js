@@ -71,7 +71,7 @@
           archetype: 'Balanced Melee',
           health: 28,
           damage: 6.4,
-          defence: 1,
+          defence: .5,
           crit: D.config.baseCrit,
           critDamage: D.config.baseCritDamage,
           speed: 0,

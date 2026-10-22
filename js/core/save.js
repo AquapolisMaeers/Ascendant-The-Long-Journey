@@ -290,6 +290,14 @@
           }
           c.creatureBalanceVersion=5;
         }
+        if(c.creatureBalanceVersion<6) {
+          // Only starter previews change. Preserve every other stat and live fight.
+          const enemy=c.encounter?.enemy,loc=c.location;
+          if(enemy&&!c.combat&&enemy.level>=1&&enemy.level<5&&D.locations[loc]&&['regular','elite','boss'].includes(enemy.type)) {
+            enemy.defence=c.encounter.tutorial ? .5 : G.systems.world.enemyStats(enemy.type,loc,enemy.level,{name:enemy.name,archetype:enemy.archetype},enemy.loadoutSeed||7192).defence;
+          }
+          c.creatureBalanceVersion=6;
+        }
         // Old 25% was free. Keep paid higher tiers and remove only that free tier.
         if(c.provisionsVersion===undefined && Array.isArray(c.eatUnlocks)) {
           c.eatUnlocks=c.eatUnlocks.filter(n=>n!==.25);

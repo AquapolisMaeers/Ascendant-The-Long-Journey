@@ -102,6 +102,7 @@
           if (['health', 'damage', 'defence'].includes(key)) e[key] *= value;
           else e[key] += value;
       }
+      if(level>=1&&level<5)e.defence*=.5;
       for(const key of combatStats)if(D.caps[key]!==undefined)e[key]=G.clamp(e[key],0,D.caps[key]);
       e.interval = D.config.attackSeconds / (1 + G.clamp(e.speed, -.5, 1));
       return e;

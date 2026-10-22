@@ -1,8 +1,8 @@
 'use strict';
 (function(G, D, S) {
   S.crafting = {
-    xp(recipe, c = G.character()) {
-      return recipe.skill === 'Faceting' ? D.config.skillXp * D.config.facetingXp * Math.max(recipe.level, c.skills.Faceting.level) : recipe.xp;
+    xp(recipe) {
+      return recipe.xp;
     },
     chance(recipe, c = G.character()) {
       if (recipe.skill !== 'Faceting' || recipe.rank === 0) return 1;
