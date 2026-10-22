@@ -21,6 +21,43 @@
       return D.achievements.filter(a => a.title && c.achievements[a.id]).map(a => a.title);
     }
   };
+  S.playtime = {
+    active: null,
+    normalize(c,now=Date.now()) {
+      c.playTime ??= {onlineMs:0,offlineMs:0,updatedAt:now,startedAt:now};
+      return c.playTime;
+    },
+    settle(c,now=Date.now()) {
+      if(!c)return;
+      const time=this.normalize(c,now),elapsed=Math.max(0,now-time.updatedAt);
+      const key=this.active===c?'onlineMs':'offlineMs';
+      time[key]=Math.min(1e15,time[key]+elapsed);
+      time.updatedAt=Math.max(time.updatedAt,now);
+    },
+    activate(c,now=Date.now()) {
+      if(this.active!==c){this.pause(now);this.settle(c,now);this.active=c;}
+      else this.settle(c,now);
+    },
+    pause(now=Date.now()) {
+      if(this.active)this.settle(this.active,now);
+      this.active=null;
+    },
+    tick(now=Date.now()) {
+      const c=G.character();
+      if(!c||document.hidden||G.runtime.selecting||G.runtime.loadFailure||!G.account.playable()){this.pause(now);return;}
+      this.activate(c,now);
+    },
+    flush(now=Date.now()) {
+      if(this.active===G.character()&&!document.hidden&&!G.runtime.selecting&&!G.runtime.loadFailure)this.settle(this.active,now);
+      else this.pause(now);
+    },
+    totals(c,now=Date.now()) {
+      const time=c.playTime;
+      if(!time)return {onlineMs:0,offlineMs:0,startedAt:now};
+      const elapsed=Math.max(0,now-time.updatedAt),online=this.active===c;
+      return {onlineMs:Math.min(1e15,time.onlineMs+(online?elapsed:0)),offlineMs:Math.min(1e15,time.offlineMs+(online?0:elapsed)),startedAt:time.startedAt};
+    }
+  };
   S.offline = {
     rate(c, skill) {
       const tier = D.tierFor(c.skills[skill].level);
@@ -40,6 +77,7 @@
       G.commit();
     },
     apply(c, now = Date.now()) {
+      S.playtime.settle(c,now);
       const seconds = G.clamp((now - c.lastSeen) / 1000, 0, D.config.offlineHours * 3600);
       let earned = 0;
       const previous = c.offline ? c.skills[c.offline].level : null;
@@ -89,6 +127,7 @@
       if (c.activity?.type === 'advance') c.activity = null;
       const result = this.apply(c);
       this.record(result);
+      if(c===G.character()&&!document.hidden&&!G.runtime.selecting)S.playtime.activate(c);
       return result;
     }
   };

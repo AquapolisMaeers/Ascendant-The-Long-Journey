@@ -24,6 +24,7 @@
   G.newCharacter = (name, className, mode, appearance) => {
     G.assert(name.trim().length >= 2 && name.trim().length <= 24, 'Name must contain 2–24 characters.');
     G.assert(D.classes.includes(className) && D.modes.includes(mode), 'Invalid class or mode.');
+    const createdAt=Date.now();
     const c = {
       id: G.uid(),
       name: name.trim(),
@@ -92,7 +93,8 @@
       facetFails: {},
       offline: null,
       skillPreferences: {mode:'preferred',primary: 'Fishing', secondary: 'Mining'},
-      lastSeen: Date.now(),
+      lastSeen: createdAt,
+      playTime: {onlineMs:0,offlineMs:0,updatedAt:createdAt,startedAt:createdAt},
       listings: [],
       encounter: null,
       activity: null,

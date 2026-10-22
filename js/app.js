@@ -71,6 +71,7 @@
       const slot = Number(el.dataset.slot);
       G.assert(G.state.slots[slot], 'Choose an occupied character slot.');
       G.assert(G.runtime.selecting && slot === G.state.active || !current?.combat && !current?.dungeon && !current?.activity, 'Finish the current activity or dungeon first.');
+      S.playtime.pause();
       if (current && !G.runtime.selecting) current.lastSeen = Date.now();
       G.state.active = slot;
       G.runtime.selecting = false;
@@ -155,6 +156,7 @@
       G.runtime.needsResume = false;
       G.state.slots[f.slot] = G.newCharacter(f.name, f.class, f.mode, f.appearance);
       G.state.active = f.slot;
+      S.playtime.activate(G.character());
       clearCharacterNotices();
       G.runtime.page = 'World';
       G.runtime.loadFailure = false;
@@ -835,6 +837,7 @@
     const now = performance.now(),
       ms = Math.min(1000, now - last);
     last = now;
+    S.playtime.tick();
     if (document.hidden || G.runtime.selecting || G.runtime.loadFailure || !G.account.playable()) return;
     try {
       const c = G.character();
@@ -881,12 +884,14 @@
   document.addEventListener('visibilitychange', () => {
     if (G.runtime.selecting || G.runtime.loadFailure || !G.account.playable()) return;
     if (document.hidden) {
+      S.playtime.pause();
       if (G.character() && !G.runtime.selecting) G.character().lastSeen = Date.now();
       G.save.write();
     } else {
       last = performance.now();
       if (G.character()) {
         const result = S.offline.apply(G.character());
+        S.playtime.activate(G.character());
         if (result.levelsGained) S.offline.record(result);
         else if (result.xp > 0) G.notify('Offline ' + result.skill + ': +' + G.number(result.xp) + ' XP.');
         G.commit();
@@ -896,6 +901,7 @@
   });
   window.addEventListener('pagehide', () => {
     if (!G.runtime.loadFailure) {
+      S.playtime.pause();
       if (G.character() && !G.runtime.selecting) G.character().lastSeen = Date.now();
       G.save.write();
       if (G.account.enabled) G.account.flush(true);

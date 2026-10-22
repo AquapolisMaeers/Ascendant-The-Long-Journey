@@ -102,6 +102,7 @@
       for (const key of ['advance', 'regular', 'elite', 'boss', 'dungeons', 'bars', 'cooked', 'facets', 'enhancements', 'maxEnhance', 'socketed', 'listing', 'sale', 'purchase', 'damage', 'deaths'])
         if (!finite(c.stats[key])) fail('statistics');
       for(const key of ['harvested','textiles','secondaries','boxesOpened'])if(c.stats[key]!==undefined && (!Number.isSafeInteger(c.stats[key])||c.stats[key]<0))fail('craft and harvest statistics');
+      if(c.playTime!==undefined&&(!record(c.playTime)||['onlineMs','offlineMs','updatedAt','startedAt'].some(key=>!finite(c.playTime[key]))||c.playTime.startedAt>c.playTime.updatedAt))fail('play time');
       if(c.stats.guildDonated!==undefined&&(!Number.isSafeInteger(c.stats.guildDonated)||!finite(c.stats.guildDonated)))fail('guild donation statistics');
       for (const key of ['ascensions', 'gemCreated'])
         if (!Array.isArray(c.stats[key])) fail('achievement records');
@@ -229,6 +230,7 @@
       let guard = 0;
       while (p?.saveVersion !== D.config.version && this.migrations[p?.saveVersion] && guard++ < 10) p = this.migrations[p.saveVersion](p);
       if(Array.isArray(p?.slots)) for(const c of p.slots.filter(Boolean)) {
+        if(c.playTime===undefined&&c.stats)G.systems.playtime.normalize(c);
         G.systems.guilds.migrate(c.guild,c);
         // Preserve chosen skills while moving every profile to primary/secondary odds.
         if(c.skillPreferences&&['balanced','preferred',undefined].includes(c.skillPreferences.mode))c.skillPreferences.mode='preferred';
@@ -310,6 +312,7 @@
     write() {
       if (G.runtime.loadFailure || G.account?.enabled && !G.account.ready) return false;
       try {
+        G.systems.playtime.flush();
         const candidate = G.clone(G.state);
         candidate.savedAt = Date.now();
         if (candidate.slots[candidate.active] && !document.hidden && !G.runtime.selecting) candidate.slots[candidate.active].lastSeen = candidate.savedAt;
@@ -388,6 +391,7 @@
     },
     export (scope = 'profile') {
       G.assert(!G.character()?.combat && !G.character()?.dungeon, 'Export is unavailable during an active fight or dungeon.');
+      G.systems.playtime.flush();
       if(scope==='character') {
         G.assert(G.character(),'Choose a character to export.');
         const profile=G.clone(G.state);
@@ -420,6 +424,7 @@
       validate(candidate);
       G.systems.afk?.stop('Save imported', false);
       // Preserve every other slot, local settings and the existing recovery copy.
+      G.systems.playtime.pause();
       G.state = candidate;
       G.runtime.loadFailure = false;
       G.runtime.needsResume = false;
@@ -428,6 +433,7 @@
       G.runtime.tab = '';
       G.runtime.estimate = null;
       const progress=G.systems.offline.apply(imported);
+      G.systems.playtime.tick();
       if(progress.levelsGained)G.systems.offline.record(progress);
       G.systems.tutorial?.ensure();
       this.write();
@@ -436,6 +442,7 @@
     reset() {
       const fates = G.account?.enabled ? this.fates : {};
       G.systems.afk?.stop('Profile reset', false);
+      G.systems.playtime.pause();
       G.state = G.newProfile();
       G.runtime.loadFailure = false;
       localStorage.removeItem(KEY);

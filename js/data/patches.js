@@ -1,6 +1,11 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'Online and offline journey time',changes:[
+    'Achievements > The journey so far now shows Online time and Offline time for each character, in days, hours, minutes and seconds. Online time updates live while the selected character is open in a visible game tab, including AFK advancing.',
+    'Offline time includes hidden tabs, a closed game, character selection and time spent on other character slots. The full inactive interval counts even when no offline skill is selected or the eight-hour XP limit has been reached. Existing offline XP rules stay the same.',
+    'Timers persist with saves, exports and imports. Existing characters start tracking with this update; previously unrecorded play time cannot be reconstructed. The journey panel shows the tracking start date.'
+  ]},
   {date:'2026-10-22',title:'Creature balance and clearer quest objectives',changes:[
     'Creature scaling differs.',
     'The Fountain of Youth now adds 50% of maximum health, capped at full health. Arrive at 10% HP and leave at 60%; arrive at 80% and leave at 100%. Manual and AFK interactions share this rule.',

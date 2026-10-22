@@ -1,7 +1,11 @@
 'use strict';
 (function(G, D, S, U) {
+  U.playtimeDuration = ms => {
+    const seconds=Math.floor(Math.max(0,ms)/1000),days=Math.floor(seconds/86400),hours=Math.floor(seconds%86400/3600),minutes=Math.floor(seconds%3600/60);
+    return (days?days+'d ':'')+hours+'h '+String(minutes).padStart(2,'0')+'m '+String(seconds%60).padStart(2,'0')+'s';
+  };
   U.journeyPanel = () => {
-    const c = G.character();
+    const c = G.character(),time=S.playtime.totals(c);
     return '<section class="panel journey-panel"><div class="panel-head"><h3>The journey so far</h3>' + U.icon('Achievements') + '</div><div class="journey-stats">' + [
       ['Advances', G.number(c.stats.advance)],
       ['Creatures defeated', G.number(c.stats.regular + c.stats.elite + c.stats.boss)],
@@ -9,9 +13,11 @@
       ['Quests completed', G.number(c.questCompletions ?? 0)],
       ['Dungeons conquered', G.number(c.stats.dungeons)],
       ['Deaths', G.number(c.stats.deaths)],
+      ['Online time', U.playtimeDuration(time.onlineMs), 'journey-online-time'],
+      ['Offline time', U.playtimeDuration(time.offlineMs), 'journey-offline-time'],
       ['Inventory', c.inventory.length + ' / ' + c.capacity],
       ['Selected title', c.title || 'No title']
-    ].map(([k, v]) => '<div class="meta-row"><span>' + k + '</span><strong>' + U.e(v) + '</strong></div>').join('') + '</div><details class="recent-discoveries"><summary>Recent discoveries</summary><div class="notes spacer">' + (G.runtime.recent.length ? G.runtime.recent.map(r => '<p>' + U.rewardText(r) + '</p>').join('') : 'Your story is still unwritten.') + '</div></details></section>';
+    ].map(([k, v, id]) => '<div class="meta-row"><span>' + k + '</span><strong'+(id?' id="'+id+'"':'')+'>' + U.e(v) + '</strong></div>').join('') + '</div><p class="notes spacer journey-time-help">Online: this character in a visible game tab, including AFK. Offline: hidden or closed game, character selection, or other character slots. Total time tracked since '+U.e(new Date(time.startedAt).toLocaleDateString())+'; offline time has no XP cap.</p><details class="recent-discoveries"><summary>Recent discoveries</summary><div class="notes spacer">' + (G.runtime.recent.length ? G.runtime.recent.map(r => '<p>' + U.rewardText(r) + '</p>').join('') : 'Your story is still unwritten.') + '</div></details></section>';
   };
   U.screens.World = () => {
     const c = G.character(), loc = D.locations[c.location], penalty = S.combat.deathPenalty(c);
@@ -88,6 +94,13 @@
         const el = document.getElementById(id);
         if (el) { el.style.width = G.clamp(n * 100, 0, 100) + '%'; if (el.parentElement.classList.contains('hp')) el.style.background = U.healthColor(n); }
       };
+    if(document.getElementById('journey-online-time')){
+      const time=S.playtime.totals(c);
+      for(const [id,value] of [['journey-online-time',time.onlineMs],['journey-offline-time',time.offlineMs]]){
+        const el=document.getElementById(id),text=U.playtimeDuration(value);
+        if(el&&el.textContent!==text)el.textContent=text;
+      }
+    }
     if (c.activity) {
       width('activity-bar', c.activity.elapsed / c.activity.duration);
       set('activity-time', ((c.activity.duration - c.activity.elapsed) / 1000).toFixed(1) + ' seconds');
