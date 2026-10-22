@@ -1,15 +1,14 @@
 'use strict';
 (function(G, D, S) {
   const C = D.config;
-  // Three levels of grace, then a meaningful level disadvantage. The same
-  // rule applies to both actors. Dungeon levels above the player cap retain
-  // their higher base stats without an unavoidable extra level-gap penalty.
-  const levelFactor=(a,b)=>{
-    if(Math.max(a.level,b.level)<10)return 1;
-    const difference=Math.min(C.levelCap,a.level)-Math.min(C.levelCap,b.level),gap=Math.max(0,Math.abs(difference)-3);
-    const factor=Math.min(3.5,1+.3*gap+.15*gap*gap);
-    return difference>=0?factor:1/factor;
+  // Only creatures beyond the player's three-level grace period add a penalty.
+  // Effective levels cap at 100 so endgame dungeon offsets remain fair.
+  const levelPenalty=(player,enemy)=>{
+    if(enemy.type==='pvp'||Math.max(player.level,enemy.level)<10)return 1;
+    const gap=Math.max(0,Math.min(C.levelCap,enemy.level)-Math.min(C.levelCap,player.level)-3);
+    return Math.min(3.5,1+.3*gap+.15*gap*gap);
   };
+  const damageForLevel=(a,b)=>a.levelDamage??(a.type?levelPenalty(b,a):1/levelPenalty(a,b));
   const hit = (a, b) => G.clamp(1 + C.hitLevel * (a.level - b.level) - b.dodge, C.minHitChance, 1);
   const crit = (a, b) => G.clamp(a.crit - b.resistance, 0, D.caps.crit);
   // Legacy committed actors lack defenceScale and retain their saved combat rules.
@@ -129,7 +128,7 @@
     if (f.food.threshold > 0 && f.player.hp / f.player.health <= f.food.threshold) eat(f, events);
   }
   S.kernel = {
-    levelFactor,
+    levelPenalty,
     defenceScale,
     hit,
     crit,
@@ -138,7 +137,7 @@
     venomStacks,
     eat,
     average(a, b) {
-      return hit(a, b) * Math.max(C.minimumHit, a.damage * (a.levelDamage ?? levelFactor(a,b)) * (1 + crit(a, b) * a.critDamage) * (1 - mitigation(a, b)) * (1 - reduction(b))) * (1 + hit(a, b) * a.double);
+      return hit(a, b) * Math.max(C.minimumHit, a.damage * damageForLevel(a,b) * (1 + crit(a, b) * a.critDamage) * (1 - mitigation(a, b)) * (1 - reduction(b))) * (1 + hit(a, b) * a.double);
     },
     create(c, enemy, seed) {
       const stats=S.character.stats(c);
@@ -155,10 +154,11 @@
         wind: false
       };
       const food = D.catalog[c.food];
-      // Snapshot the level factors. Legacy saved fights omit them and continue
-      // at their previously committed damage, while new fights use this rule.
-      player.levelDamage=levelFactor(player,foe);
-      foe.levelDamage=levelFactor(foe,player);
+      // Snapshot only the higher-creature penalty for new fights. Existing fights
+      // retain their committed actors and damage rules until they finish.
+      const penalty=levelPenalty(player,foe);
+      player.levelDamage=1/penalty;
+      foe.levelDamage=penalty;
       player.defenceScale=C.defenceFactor*D.gearPower[D.tierFor(player.level)];
       foe.defenceScale=C.defenceFactor*D.gearPower[D.tierFor(foe.level)];
       if(player.chill) foe.interval *= 1+player.chill*(player.deepFreeze?2:1);

@@ -98,7 +98,8 @@
       if (typeof c.id !== 'string' || typeof c.name !== 'string' || c.name.length < 2 || c.name.length > 24 || !D.classes.includes(c.class) || !D.modes.includes(c.mode)) fail('character identity');
       if (!Number.isInteger(c.level) || !finite(c.level, 1, 100) || !finite(c.xp) || !finite(c.hp) || !Number.isSafeInteger(c.coins) || !finite(c.coins) || !Number.isInteger(c.capacity) || c.capacity < 50 || c.capacity > 160 || c.capacity % 10 || !Number.isInteger(c.location) || !D.locations[c.location] || D.locations[c.location].level > c.level) fail('character progression');
       if (!Array.isArray(c.inventory) || c.inventory.length > c.capacity || !Array.isArray(c.pending) || !c.equipment || !c.skills || !c.tools || !c.stats || !c.perks || !c.achievements || !Array.isArray(c.listings) || c.listings.length > 20) fail('character structure');
-      if (c.xp >= D.xpNext(c.level) || c.level === 100 && c.xp !== 0) fail('unresolved character XP');
+      if(c.combatXpVersion!==undefined&&c.combatXpVersion!==1)fail('combat XP version');
+      if (c.xp >= D.combatXpNext(c.level) || c.level === 100 && c.xp !== 0) fail('unresolved character XP');
       for (const key of ['advance', 'regular', 'elite', 'boss', 'dungeons', 'bars', 'cooked', 'facets', 'enhancements', 'maxEnhance', 'socketed', 'listing', 'sale', 'purchase', 'damage', 'deaths'])
         if (!finite(c.stats[key])) fail('statistics');
       for(const key of ['harvested','textiles','secondaries','boxesOpened'])if(c.stats[key]!==undefined && (!Number.isSafeInteger(c.stats[key])||c.stats[key]<0))fail('craft and harvest statistics');
@@ -254,6 +255,13 @@
           }
         }
         c.talents ??= {};
+        if(c.combatXpVersion===undefined) {
+          if(Number.isInteger(c.level)&&c.level>=1&&c.level<=D.config.levelCap&&finite(c.xp)) {
+            if(c.xp>=D.xpNext(c.level))fail('unresolved character XP');
+            c.xp=Math.floor(c.xp*D.combatXpNext(c.level)/D.xpNext(c.level));
+          }
+          c.combatXpVersion=1;
+        }
         if(c.skilling===undefined)c.skilling={};
         if(c.equipment && !Object.hasOwn(c.equipment,'Secondary')) c.equipment.Secondary=null;
         if(c.creatureBalanceVersion===undefined) {

@@ -110,7 +110,7 @@
     if (combatView && !wasCombatView) window.scrollTo({top:0, behavior:'instant'});
     wasCombatView = combatView;
     const c = G.character(), xp = document.querySelector('.top-progress:not(.hp-top)');
-    if (c && xp) xp.setAttribute('aria-label', 'Level ' + c.level + '. ' + G.number(c.xp) + ' of ' + (c.level === 100 ? 'maximum' : G.number(D.xpNext(c.level))) + ' XP.');
+    if (c && xp) xp.setAttribute('aria-label', 'Level ' + c.level + '. ' + G.number(c.xp) + ' of ' + (c.level === 100 ? 'maximum' : G.number(D.combatXpNext(c.level))) + ' XP.');
     const view = G.runtime.page + '|' + G.runtime.tab;
     if (view !== lastView) {
       const tabs = document.querySelector('#content > .tabs'), active = tabs?.querySelector('[aria-selected="true"]');

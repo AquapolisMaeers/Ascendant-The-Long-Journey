@@ -22,9 +22,13 @@
     offlineHours: 8,
     offlineRate: .25,
     xpFactor: 500,
+    combatXpMaxMultiplier: 3,
+    combatXpRampLevels: 30,
     skillXp: 22,
+    activeGatheringXpMultiplier: 2,
     cookingXp: 3,
-    facetingXp: 27,
+    facetingXp: 13.5,
+    offlineFacetingXp: 27, // Offline training keeps its previous XP despite active tuning.
     fountainHeal: .5,
     enhancementCap: 25,
     prefixSlots: 3,
@@ -200,5 +204,6 @@
     description: 'Permanent 75% HP threshold.'
   }];
   D.xpNext = level => D.config.xpFactor * level * level;
+  D.combatXpNext = level => Math.round(D.xpNext(level)*(1+Math.min(D.config.combatXpMaxMultiplier-1,Math.max(0,level-10)/D.config.combatXpRampLevels)));
   D.tierFor = level => Math.max(0, D.tiers.findLastIndex(v => v <= level));
 })(RPG.data);

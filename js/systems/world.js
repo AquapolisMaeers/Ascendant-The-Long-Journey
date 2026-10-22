@@ -56,6 +56,10 @@
       const max=tiers.at(-1);
       return tiers[G.weighted(G.rng,tiers.map(tier=>Math.pow(divisor,tier-max)))];
     },
+    gatheringXp(skill,tier,c=G.character()) {
+      G.assert(D.gatheringSkills.includes(skill),'Choose a gathering skill.');
+      return D.config.skillXp*D.tiers[tier]*D.config.activeGatheringXpMultiplier*(1+S.items.toolBonus(c,skill,'Knowledge'));
+    },
     enemy(type, location, forcedLevel) {
       const loc = D.locations[location],
         boss = type === 'boss',
@@ -190,7 +194,7 @@
       a.rewards = S.loot.merge(a.rewards || [], rewards);
       S.tutorial?.gathered(a.skill, rewards);
       S.companions.gain(c, D.companionRules.actionXp);
-      S.xp.add(c.skills[a.skill], D.config.skillXp * D.tiers[a.tier] * (1 + S.items.toolBonus(c, a.skill, 'Knowledge')));
+      S.xp.add(c.skills[a.skill], this.gatheringXp(a.skill,a.tier,c));
       if (G.rng() >= S.items.toolBonus(c, a.skill, 'Conservation')) e.charges--;
       G.runtime.recent = rewards;
       if (e.charges <= 0) {
@@ -338,7 +342,7 @@
       const table = D.loot[type],
         loc = D.locations[location],
         rewards = [{
-          coins: G.int(G.rng, ...loc.coins) * table.coins
+          coins: Math.round(G.int(G.rng, ...loc.coins) * table.coins * D.creatureCoinMultiplier(location))
         }];
       for (const kind of D.resourceKinds)
         if (G.rng() < table.material) rewards.push({

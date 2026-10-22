@@ -69,11 +69,10 @@
     const sim = G.runtime.estimate,
       odds = sim.chance < .01 ? '&lt;1%' : sim.chance > .99 ? '&gt;99%' : G.percent(sim.chance, 0);
     const row = (name, a, b, hint = '') => '<tr><td title="' + U.e(hint) + '">' + name + '</td><td>' + a + '</td><td>' + b + '</td></tr>';
-    const levelNotice=S.kernel.levelFactor(p,enemy)<1?'<p class="notes warning">Level disadvantage: this enemy takes less damage from you and hits harder. Opponents within three levels avoid this penalty.</p>':'';
+    const levelNotice=S.kernel.levelPenalty(p,enemy)>1?'<p class="notes warning">Level disadvantage: this creature is more than three levels above you, takes less damage from you and hits harder. Opponents within three levels avoid this penalty.</p>':'';
     return '<details class="panel preview" open><summary><h3>Before you draw your weapon</h3></summary><div class="odds"><strong>' + odds + '</strong><div>Estimated Victory Chance<small>Estimated — RNG can change the outcome.</small><small>' + sim.count.toLocaleString() + ' simulated fights · current HP, perks, food and cooldown included</small></div></div>'+levelNotice+'<details><summary>Detailed Combat Breakdown</summary><table class="data-table"><thead><tr><th>Combat stat</th><th>You</th><th>' + U.e(enemy.name) + '</th></tr></thead><tbody>' + row('Health', G.number(c.hp, 1) + ' / ' + G.number(p.health, 1), G.number(enemy.health, 1)) + ['damage', 'defence'].map(k => row(D.labels[k], U.statValue(k, p[k]), U.statValue(k, enemy[k]))).join('') +
       row('Defence mitigation', G.percent(S.kernel.mitigation(enemy, p)), G.percent(S.kernel.mitigation(p, enemy)), 'Defence after penetration / (effective defence + attacker tier pressure); 70% cap') +
       row('Hit chance', G.percent(S.kernel.hit(p, enemy)), G.percent(S.kernel.hit(enemy, p)), '100% + 0.5 percentage points × level difference − dodge; clamped 50–100%') +
-      row('Level damage multiplier', '×'+G.number(S.kernel.levelFactor(p,enemy),2), '×'+G.number(S.kernel.levelFactor(enemy,p),2), 'Three levels of grace; larger level differences reduce the weaker actor’s damage and boost the stronger actor. Effective levels cap at 100.') +
       row('Miss chance', G.percent(1 - S.kernel.hit(p, enemy)), G.percent(1 - S.kernel.hit(enemy, p))) +
       row('Effective Crit', G.percent(S.kernel.crit(p, enemy)), G.percent(S.kernel.crit(enemy, p)), 'Crit chance − defender Critical Resistance; cap 75%') +
       row('Attack interval', G.number(p.interval, 2) + 's', G.number(enemy.interval, 2) + 's', '2 / (1 + Attack Speed Bonus)') +

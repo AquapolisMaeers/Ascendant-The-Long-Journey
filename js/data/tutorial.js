@@ -52,7 +52,7 @@
       text: 'Choose a primary and secondary gathering skill. Primary gets 25% per Advance, secondary gets 12.5%, and the other three share the remaining 12.5% equally. This changes which nodes you find, not their rewards. Tutorial nodes are guaranteed for the starter lessons.'
     }, {
       id: 'offline', title: 'AFK skilling: progress while away',
-      text: 'Choose an AFK skilling discipline under Skills → Offline training. When you return, it earns up to eight hours of XP only: gathering 25%, Smithing/Cooking 12.5%, Faceting 1.875% of base active XP. Knowledge applies. No ingredients are spent and no items or coins are produced. Choose a skill now or leave it at None.'
+      text: 'Choose an AFK skilling discipline under Skills → Offline training. When you return, it earns up to eight hours of XP only: rates are unchanged by active XP boosts. Knowledge applies. No ingredients are spent and no items or coins are produced. Choose a skill now or leave it at None.'
     }, {
       id: 'afk', title: 'AFK training: travel with a plan',
       text: 'AFK advancing is active training: keep the game visible while it travels, gathers and optionally fights. Set encounter filters, a victory estimate and a low-health stopping point before starting. Gathering only: enable gathering and turn every other filter off. Combat remains risky; an estimate is not a promise. The first 15 active minutes are free, then each started minute costs the regional rate shown in the AFK panel. Later regions cost more. Travel fees also scale with destination and distance; review the fare before confirming. Full inventory stops the run. Offline combat never runs.'

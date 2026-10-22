@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'Experience Changes, and Scaling',changes:[
+    'Active Mining, Woodcutting, Fishing, Hunting and Farming now award twice as much XP. Knowledge and other existing XP bonuses apply to the doubled amount. Smithing and Cooking XP remain unchanged.',
+    'Active Faceting XP is reduced by 50%, including cutting, successful fusion and failed attempts. Level-1 cutting now grants 297 base XP. Offline XP for every skill stays exactly as before, including Faceting, with the same bonuses and eight-hour limit.',
+    'Combat has a separate XP requirement curve: unchanged through level 10, then gradually increasing to twice the old requirement at level 40 and three times at level 70 onward. Skill level requirements and combat XP rewards are unchanged. Existing characters retain their level and percentage toward the next combat level.',
+    'Creature coin rewards increase with each region: unchanged in the first land, twice as much in Steelmarch, three times in Bastion Reach and up to six times in the Ancient Dominion. Elite and boss premiums apply. Loot chests using creature rewards receive the increase too. Existing balances and prices are preserved.',
+    'The general Level Damage Multiplier is removed. Higher-level characters no longer receive bonus damage or suppress weaker creatures\' damage. The penalty for creatures more than three levels above you remains. Fights already underway finish with their saved rules.',
+    'Creature scaling differs.'
+  ]},
   {date:'2026-10-22',title:'Creature balance',changes:[
     'Creature scaling differs.'
   ]},

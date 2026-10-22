@@ -4,6 +4,7 @@
   D.afkMinuteRates = [10,20,40,75,125,200,350,500,750,1000,1500];
   D.travelStepPrices = [20,40,75,125,200,350,500,750,1000,1500,2500];
   D.locationWeather = ['clear','rain','wind','wind','rain','rain','clear','wind','wind','rain','wind'];
+  D.creatureCoinMultiplier=location=>1+.5*location;
   const locationScenes = ['crossroads','ironwood','steelmarch','stonebreak','bastion-reach','runefall','obsidian','wyrmbone','starfall','elderwild','ancient-dominion'];
   const rows = [
     ['Weathered Crossroads', 1, 9, 'Old roads meet beneath a pale moon. Beyond the lantern light, something watches.', 'Wolf|Highwayman|Wild Boar', 'Aggressive|Balanced Melee|Tanky', 'Dire Wolf|Brigand Captain', 'Aggressive/Crit|Balanced', 15, 25],

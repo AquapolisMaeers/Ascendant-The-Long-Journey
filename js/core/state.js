@@ -59,6 +59,7 @@
       talents: {},
       skilling: {},
       creatureBalanceVersion: 5,
+      combatXpVersion: 1,
       provisionsVersion: 1,
       achievements: {},
       title: '',
@@ -117,12 +118,15 @@
     return c;
   };
   G.systems.xp = {
+    next(track) {
+      return D.classes.includes(track.class)?D.combatXpNext(track.level):D.xpNext(track.level);
+    },
     add(track, amount, {silent = false} = {}) {
       const previous = track.level;
       track.xp += Math.max(0, amount);
       let count = 0;
-      while (track.level < D.config.levelCap && track.xp >= D.xpNext(track.level)) {
-        track.xp -= D.xpNext(track.level);
+      while (track.level < D.config.levelCap && track.xp >= this.next(track)) {
+        track.xp -= this.next(track);
         track.level++;
         count++;
       }
