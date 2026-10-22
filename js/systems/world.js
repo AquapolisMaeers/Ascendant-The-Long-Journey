@@ -248,7 +248,7 @@
         G.runtime.estimate = null;
         G.notify('The chest is a Mimic! Inspect it, then choose Fight or Move On.', 'warning');
       } else {
-        const rewards = S.loot.roll('regular', e.level, c.location);
+        const rewards = S.loot.roll('elite', e.level, c.location);
         S.inventory.reward(rewards);
         c.encounter = null;
         S.loot.present(rewards, 'Treasure Chest');
@@ -309,7 +309,7 @@
         c.hp = Math.min(health, c.hp + health * D.config.fountainHeal);
         G.notify('The Fountain of Youth restores '+G.number(c.hp-before, 1)+' HP (50% of maximum health, up to full).', 'success');
       } else {
-        const rewards = S.loot.roll('regular', D.locations[c.location].level, c.location);
+        const rewards = S.loot.roll('elite', D.locations[c.location].level, c.location);
         S.inventory.reward(rewards);
         S.loot.present(rewards, 'The Spoils Chamber');
       }
@@ -343,6 +343,12 @@
       const rank = G.weighted(G.rng, D.gemDrops.findLast(([min]) => level >= min)[1]) + 1;
       const gem = G.int(G.rng, 0, D.regularGemCount - 1);
       return {key: rank === 1 ? 'uncut:' + gem : 'gem:' + gem + ':' + rank, quantity: 1};
+    },
+    mimic(level,location) {
+      // Two complete elite rewards, with one shared guarantee after both rolls.
+      const rewards=this.merge(this.roll('elite',level,location),this.roll('elite',level,location));
+      if(!rewards.some(reward=>D.catalog[reward.key]?.category==='Gems'))rewards.push(this.gem(level));
+      return rewards;
     },
     roll(type, level, location, guaranteedGem = false) {
       const table = D.loot[type],

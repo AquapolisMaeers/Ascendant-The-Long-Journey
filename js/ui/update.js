@@ -81,7 +81,7 @@
     const c = G.character(),
       e = c.encounter;
     if (e?.type === 'treasure' && !c.activity && !c.combat)
-      return '<section class="panel encounter"><div class="encounter-content"><div class="encounter-emblem">' + U.icon('Inventory') + '</div><div><span class="badge">TREASURE CHEST</span><h2 class="encounter-title">A chest beside the road</h2><p class="notes">Loot from this location’s regular pool at your level. A 1% chance of a Level ' + e.level + ' Mimic awaits inside.</p><div class="encounter-actions">' + U.btn('Open chest', 'openChest', c.pending.length ? 'disabled' : '', 'gold-btn') + U.btn('Move on', 'moveOn', '', 'quiet') + '</div></div></div></section>';
+      return '<section class="panel encounter"><div class="encounter-content"><div class="encounter-emblem">' + U.icon('Inventory') + '</div><div><span class="badge">TREASURE CHEST</span><h2 class="encounter-title">A chest beside the road</h2><p class="notes">Loot from this location’s elite pool at your level. Mimics reward two elite loot rolls and a guaranteed gem. A 1% chance of a Level ' + e.level + ' Mimic awaits inside.</p><div class="encounter-actions">' + U.btn('Open chest', 'openChest', c.pending.length ? 'disabled' : '', 'gold-btn') + U.btn('Move on', 'moveOn', '', 'quiet') + '</div></div></div></section>';
     return encounter();
   };
   const lootText = U.rewardText;

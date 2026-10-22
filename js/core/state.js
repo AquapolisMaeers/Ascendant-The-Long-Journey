@@ -131,12 +131,16 @@
         count++;
       }
       if (track.level === D.config.levelCap) track.xp = 0;
-      if (count && !silent) {
+      if (!silent) {
         const c = G.state.slots.find(c => c && (c === track || Object.values(c.skills).includes(track)));
-        if (c) G.emit('levelup', {
+        if (c && count) G.emit('levelup', {
           characterId:c.id, characterName:c.name, kind:c === track ? 'character' : 'skill',
           skill:c === track ? null : D.skills.find(skill => c.skills[skill] === track),
           from:previous, to:track.level
+        });
+        const skill=c&&c!==track?D.skills.find(skill=>c.skills[skill]===track):null;
+        if(skill&&amount>0)G.emit('skill-xp',{
+          characterId:c.id,skill,amount,level:track.level,xp:track.xp,levelsGained:count
         });
       }
       return count;

@@ -1,6 +1,11 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'Skill progress popups and richer treasure',changes:[
+    'Active gathering and crafting now show a skill XP popup beside collected loot: current level, XP gained, progress toward the next level and XP remaining. It updates after every action, handles level-ups and mastery, and can be dismissed. Offline awards keep their existing report.',
+    'Roadside treasure chests and dungeon treasure rooms now use the full elite creature loot table, including coins, materials, gems, equipment, tools, rarity and tier weighting. Opening treasure awards no combat XP.',
+    'Defeated Mimics now reward two independent elite loot rolls, with coins and stackable rewards combined. The existing guaranteed gem remains: a naturally rolled gem satisfies it. Mimic odds, combat strength and combat XP retain their rules.'
+  ]},
   {date:'2026-10-22',title:'Gathering XP, Thorn prefixes and regional resources',changes:[
     'Active Mining, Woodcutting, Fishing, Hunting and Farming XP doubles again: now four times the original base rate, before Knowledge and other bonuses. All offline XP rates and Smithing, Cooking and Faceting XP stay the same.',
     'Thorn Damage replaces the Dodge prefix on Warrior Greaves and Boots, and on shields, daggers and grimoires. Each roll adds 0.1–0.4 percentage points. Existing affected Dodge prefixes convert at the same value; other armour keeps its existing prefixes. Secondary prefixes retain 45% strength and total Thorn Damage remains capped at 50%. Dodge gems keep their existing eligibility.',

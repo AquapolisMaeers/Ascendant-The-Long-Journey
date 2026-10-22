@@ -1,0 +1,39 @@
+/* Experience and loot share an anchor so neither popup covers the other. */
+.reward-popups { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); z-index:80; width:min(440px,90vw); max-height:calc(100dvh - 120px); display:flex; flex-direction:column; gap:10px; pointer-events:none; }
+.reward-popups > .loot-popup { position:static; inset:auto; transform:none; width:100%; max-width:100%; margin:0; min-height:0; flex-shrink:1; overflow-y:auto; pointer-events:auto; }
+.skill-xp-popup { padding:13px 16px; background:#192a2cf5; color:var(--text); border:1px solid #627e73; border-top:2px solid #b4ce9a; border-radius:4px; box-shadow:0 10px 35px #0008; flex-shrink:0; pointer-events:auto; }
+.skill-xp-popup[hidden] { display:none; }
+.skill-xp-head { display:flex; align-items:center; gap:9px; }
+.skill-xp-icon { display:grid; place-items:center; width:30px; height:30px; color:#b4ce9a; flex-shrink:0; }
+.skill-xp-icon .icon { width:26px; height:26px; }
+.skill-xp-head > div { min-width:0; flex:1; }
+.skill-xp-head strong { display:block; font-size:15px; overflow-wrap:anywhere; }.skill-xp-head small { display:block; color:#acbcb6; font-size:11px; }
+.skill-xp-gain { font-size:12px; color:#e7cd92; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.skill-xp-dismiss { display:grid; place-items:center; width:28px; height:28px; min-width:28px; padding:0; border:1px solid #64766d; background:#223a38; color:#e4e9db; font-size:20px; }
+.skill-xp-label { display:flex; justify-content:space-between; gap:6px; flex-wrap:wrap; margin-top:10px; color:#c2d1c5; font-size:11px; font-variant-numeric:tabular-nums; }
+.skill-xp-track { height:8px; margin-top:6px; background:#0d191d; border:1px solid #516559; border-radius:4px; overflow:hidden; }
+.skill-xp-track i { display:block; height:100%; background:linear-gradient(90deg,#628e7d,#bad398); transition:width .25s ease-out; }
+.skill-xp-remaining { display:block; margin-top:5px; color:#acbcb6; font-size:10px; font-variant-numeric:tabular-nums; }
+body:has(.modal) .skill-xp-popup { visibility:hidden; }
+.reduce-motion .skill-xp-track i { transition:none; }
+@media(prefers-reduced-motion:reduce) { .skill-xp-track i { transition:none; } }
+@media(min-width:701px) {
+  body:not(.mobile-app):has(.activity-dock:not([hidden])) .reward-popups { bottom:var(--activity-space,140px); max-height:calc(100dvh - var(--activity-space,140px) - 120px); }
+}
+@media(min-width:701px) and (max-width:1280px) {
+  body:not(.mobile-app):has(.levelup-popup:not([hidden])) .reward-popups { left:22px; transform:none; width:min(440px,calc(100vw - 450px)); }
+}
+@media(max-width:700px), (max-width:1000px) and (max-height:500px) and (pointer:coarse) {
+  .reward-popups { top:calc(var(--phone-header-height,110px) + 10px); bottom:auto; left:auto; right:10px; transform:none; width:calc(100vw - 20px); max-height:calc(100dvh - var(--phone-header-height,110px) - var(--mobile-bottom-height,76px) - 30px); flex-direction:column-reverse; z-index:95; }
+  .reward-popups > .loot-popup { min-height:0; flex-shrink:1; overflow-y:auto; }
+  .skill-xp-popup { padding:11px 13px; }
+  .skill-xp-dismiss { width:44px; height:44px; min-width:44px; }
+  .mobile-app.has-skill-xp #toasts { top:calc(var(--phone-header-height,110px) + var(--skill-xp-height,140px) + 20px); }
+  .mobile-app.has-skill-xp.has-phone-loot #toasts { top:calc(var(--phone-header-height,110px) + var(--phone-loot-height,180px) + var(--skill-xp-height,140px) + 30px); }
+}
+@media(min-width:701px) and (max-width:1000px) and (max-height:500px) and (pointer:coarse) {
+  .mobile-app:has(.levelup-popup:not([hidden])) .reward-popups { left:10px; right:auto; width:calc(100vw - 430px); }
+}
+@media(max-width:700px) {
+  .mobile-app.has-skill-xp:has(.levelup-popup:not([hidden])) .reward-popups { max-height:calc(100dvh - var(--phone-header-height,110px) - var(--mobile-bottom-height,76px) - var(--levelup-space,180px) - 40px); }
+}
