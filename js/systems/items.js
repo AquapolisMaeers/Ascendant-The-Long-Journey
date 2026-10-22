@@ -96,7 +96,7 @@
     },
     prefix(item, fillSlot = false, rng = G.rng, forced = S.tutorial?.prefix(item)) {
       const keys = Object.keys(item.prefixes),
-        pool = item.kind === 'tool' ? Object.keys(D.toolPrefixes) : D.prefixPools[item.slot];
+        pool = item.kind === 'tool' ? Object.keys(D.toolPrefixes) : D.prefixPool(item);
       const choices = fillSlot && keys.length < this.prefixSlots(item) ? pool.filter(key=>!keys.includes(key)) : keys.length >= this.prefixSlots(item) ? keys : pool;
       const key = forced?.key || G.pick(rng, choices);
       const range = D.prefixRanges[key],

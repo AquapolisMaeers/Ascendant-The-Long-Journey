@@ -25,7 +25,7 @@
     combatXpMaxMultiplier: 3,
     combatXpRampLevels: 30,
     skillXp: 22,
-    activeGatheringXpMultiplier: 2,
+    activeGatheringXpMultiplier: 4,
     cookingXp: 3,
     facetingXp: 13.5,
     offlineFacetingXp: 27, // Offline training keeps its previous XP despite active tuning.

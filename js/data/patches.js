@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'Gathering XP, Thorn prefixes and regional resources',changes:[
+    'Active Mining, Woodcutting, Fishing, Hunting and Farming XP doubles again: now four times the original base rate, before Knowledge and other bonuses. All offline XP rates and Smithing, Cooking and Faceting XP stay the same.',
+    'Thorn Damage replaces the Dodge prefix on Warrior Greaves and Boots, and on shields, daggers and grimoires. Each roll adds 0.1–0.4 percentage points. Existing affected Dodge prefixes convert at the same value; other armour keeps its existing prefixes. Secondary prefixes retain 45% strength and total Thorn Damage remains capped at 50%. Dodge gems keep their existing eligibility.',
+    'Gathering nodes now choose the current location\'s resource tier 50% of the time, the previous location 30%, and two locations back 20%. The first land retains its 70% level-1 / 30% level-5 resource mix; missing earlier locations fold into the oldest available land. Creature material drops and Fortune bonuses keep their previous rules.',
+    'Existing encounters and fights retain their saved stats; new equipment rolls use the new prefix pools.'
+  ]},
   {date:'2026-10-22',title:'Experience Changes, and Scaling',changes:[
     'Active Mining, Woodcutting, Fishing, Hunting and Farming now award twice as much XP. Knowledge and other existing XP bonuses apply to the doubled amount. Smithing and Cooking XP remain unchanged.',
     'Active Faceting XP is reduced by 50%, including cutting, successful fusion and failed attempts. Level-1 cutting now grants 297 base XP. Offline XP for every skill stays exactly as before, including Faceting, with the same bonuses and eight-hour limit.',

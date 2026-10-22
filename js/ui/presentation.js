@@ -102,8 +102,8 @@
     const owned = Object.keys(item.prefixes), tool = item.kind === 'tool';
     const limit = S.items.prefixSlots(item, tool ? Math.min(7,item.rarity+1) : item.rarity);
     const forced = tool ? null : S.tutorial?.prefix(item);
-    const pool = forced ? [forced.key] : !tool&&item.enhance===25&&owned.length<limit ? D.prefixPools[item.slot].filter(key=>!owned.includes(key)) : owned.length >= limit ? owned :
-      tool ? Object.keys(D.toolPrefixes) : D.prefixPools[item.slot];
+    const pool = forced ? [forced.key] : !tool&&item.enhance===25&&owned.length<limit ? D.prefixPool(item).filter(key=>!owned.includes(key)) : owned.length >= limit ? owned :
+      tool ? Object.keys(D.toolPrefixes) : D.prefixPool(item);
     return '<details class="possible-prefixes"><summary>Possible prefixes · ' + pool.length + '</summary><p>' +
       (forced ? 'This tutorial roll guarantees a Primary Damage prefix.' : !tool&&item.enhance===25&&owned.length<limit ? 'A successful refinement fills one empty prefix slot from this list; Enhancement stays +25.' : owned.length >= limit ?
         'All '+limit+' prefix slots are occupied. Successful rolls now strengthen an existing prefix.' :

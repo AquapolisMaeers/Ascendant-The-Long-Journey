@@ -34,7 +34,7 @@
     if (i.kind !== 'gear' || !Number.isInteger(i.tier) || !D.tiers[i.tier] || !Number.isInteger(i.piece) || !D.pieces[i.piece] || !Number.isInteger(i.rarity) || !D.rarity[i.rarity] || !Number.isInteger(i.enhance) || !finite(i.enhance, 0, 25)) fail('equipment');
     if (i.slot !== D.pieceSlot(i.piece) || i.style !== (i.piece < 3 ? i.piece : null) || !(i.boss === null || Number.isInteger(i.boss) && D.dungeons[i.boss])) fail('equipment identity');
     if (i.armorClass !== undefined && (!D.classes.includes(i.armorClass) || !D.armorSlots.includes(i.slot))) fail('armour class');
-    if (!i.prefixes || Object.keys(i.prefixes).length > G.systems.items.prefixSlots(i) || Object.entries(i.prefixes).some(([k, v]) => !D.prefixPools[i.slot].includes(k) || !finite(v))) fail('prefixes');
+    if (!i.prefixes || Object.keys(i.prefixes).length > G.systems.items.prefixSlots(i) || Object.entries(i.prefixes).some(([k, v]) => !D.prefixPool(i).includes(k) || !finite(v))) fail('prefixes');
     if (!Array.isArray(i.gems) || i.gems.length > G.systems.items.sockets(i) || i.gems.some(k => k !== null && (!D.catalog[k] || D.catalog[k].category !== 'Gems' || !D.catalog[k].rank || !D.gemAllowed[i.slot].includes(D.catalog[k].type)))) fail('sockets');
     if (!finite(i.enhanceFail, 0, 1) || !finite(i.ascendFail, 0, 1)) fail('fail protection');
   }
@@ -298,8 +298,14 @@
           c.provisionsVersion=1;
         }
         // Existing armour becomes its owner's class with all investments intact.
-        for(const item of [...Object.values(c.equipment||{}),...(c.inventory||[]),...(c.pending||[]),...(c.listings||[]).map(l=>l?.item),...(c.activity?.rewards||[])])
-          if(item?.kind==='gear' && D.armorSlots.includes(item.slot) && item.armorClass===undefined)item.armorClass=c.class;
+        for(const item of [...Object.values(c.equipment||{}),...(c.inventory||[]),...(c.pending||[]),...(c.listings||[]).map(l=>l?.item),...(c.activity?.rewards||[])]) {
+          if(item?.kind!=='gear')continue;
+          if(D.armorSlots.includes(item.slot)&&item.armorClass===undefined)item.armorClass=c.class;
+          if((item.slot==='Secondary'||item.armorClass==='Warrior'&&D.armorSlots.includes(item.slot))&&item.prefixes&&Object.hasOwn(item.prefixes,'dodge')&&finite(item.prefixes.dodge)&&(item.prefixes.thorns===undefined||finite(item.prefixes.thorns))) {
+            item.prefixes.thorns=(item.prefixes.thorns||0)+item.prefixes.dodge;
+            delete item.prefixes.dodge;
+          }
+        }
         if(c.afk&&[8000,12000,16000].includes(c.afk.interval))c.afk.interval=D.config.afkAdvanceMs;
         if(c.gemSocketRules !== undefined || !Array.isArray(c.inventory) || !Array.isArray(c.pending) || !c.equipment || !Array.isArray(c.listings)) continue;
         for(const item of [...Object.values(c.equipment),...c.inventory,...c.pending,...c.listings.map(l=>l?.item)]) {

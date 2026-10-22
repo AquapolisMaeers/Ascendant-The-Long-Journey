@@ -56,6 +56,12 @@
       const max=tiers.at(-1);
       return tiers[G.weighted(G.rng,tiers.map(tier=>Math.pow(divisor,tier-max)))];
     },
+    gatheringTier(location) {
+      // Keep both starter resources, and fold missing earlier regions into the oldest.
+      if(location===0)return this.materialTier(0);
+      const source=Math.max(0,location-G.weighted(G.rng,[50,30,20]));
+      return source===0?this.materialTier(0):D.tierFor(D.locations[source].level);
+    },
     gatheringXp(skill,tier,c=G.character()) {
       G.assert(D.gatheringSkills.includes(skill),'Choose a gathering skill.');
       return D.config.skillXp*D.tiers[tier]*D.config.activeGatheringXpMultiplier*(1+S.items.toolBonus(c,skill,'Knowledge'));
@@ -103,7 +109,7 @@
       };
       if (['regular', 'elite', 'boss'].includes(type)) e.enemy = this.enemy(type, c.location);
       else if (D.gatheringSkills.includes(type)) {
-        e.tier = this.materialTier(c.location);
+        e.tier = this.gatheringTier(c.location);
         e.charges = D.config.nodeCharges;
       } else if (type === 'treasure') {
         e.level = c.level;

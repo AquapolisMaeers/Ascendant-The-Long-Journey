@@ -93,6 +93,7 @@
     resistance: [.001, .005],
     reduction: [.001, .005],
     dodge: [.001, .004],
+    thorns: [.001, .004],
     lifeSteal: [.0005, .002]
   };
   D.prefixPools = {
@@ -106,6 +107,9 @@
     Necklace: ['damagePct', 'healthPct', 'defencePct', 'crit', 'critDamage', 'penetration', 'lifeSteal'],
     Ring: ['damagePct', 'healthPct', 'defencePct', 'crit', 'critDamage', 'penetration', 'lifeSteal']
   };
+  // Base slot pools also define existing gem eligibility. Gear rolls are class-aware.
+  D.prefixPool = item => D.prefixPools[item.slot].map(key=>key==='dodge'&&
+    (item.slot==='Secondary'||item.armorClass==='Warrior'&&D.armorSlots.includes(item.slot))?'thorns':key);
   D.gems = [{
     name: 'Attack',
     stat: 'damage',
