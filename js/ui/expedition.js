@@ -88,16 +88,21 @@
   U.shell = () => {
     const html = shell(), c = G.character();
     if (!c || G.runtime.selecting) return html;
-    const a = c.activity, run = S.afk.run, visible = (a || c.combat || run) && !(G.runtime.page === 'World' && (a?.type === 'advance' || U.isPhone?.() && c.combat)),
-      stop = run ? U.btn('Stop AFK', 'afkStop', '', 'quiet small') : a && a.type !== 'advance' ? U.btn('Stop', 'stopActivity', '', 'quiet small') : '';
-    return html + '<aside class="activity-dock" id="activity-dock" aria-label="Current activity" ' + (visible ? '' : 'hidden') + '><button data-action="activityView" title="Return to the active task"><span class="activity-dock-icon">' + U.icon(a?.skill || (a?.type === 'craft' ? D.recipes.find(r => r.id === a.recipe)?.skill : c.combat ? 'Weapon' : 'clock')) +
-      '</span><span><small id="dock-kind">WORK IN PROGRESS</small><strong id="dock-title"></strong><span id="dock-count"></span></span><span id="dock-percent"></span></button><div class="dock-footer"><span id="dock-time"></span>' + stop + '</div><div class="dock-track" role="progressbar" aria-label="Activity progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="dock-bar"></i></div></aside>';
+    const a = c.activity, run = S.afk.run, progress = U.skillProgress?.current(c),
+      visible = (a || c.combat || run || progress) && !(G.runtime.page === 'World' && (a?.type === 'advance' || U.isPhone?.() && c.combat)),
+      stop = run ? U.btn('Stop AFK', 'afkStop', '', 'quiet small') : a && a.type !== 'advance' ? U.btn('Stop', 'stopActivity', '', 'quiet small') : progress ? '<button type="button" class="btn quiet small skill-xp-dismiss" aria-label="Dismiss completed skill progress">Dismiss</button>' : '';
+    return html + '<aside class="activity-dock" id="activity-dock" aria-label="Current activity" ' + (visible ? '' : 'hidden') + '><button data-action="activityView" title="Return to the active task"><span class="activity-dock-icon">' + U.icon(a?.skill || (a?.type === 'craft' ? D.recipes.find(r => r.id === a.recipe)?.skill : c.combat ? 'Weapon' : progress?.skill || 'clock')) +
+      '</span><span><small id="dock-kind">WORK IN PROGRESS</small><strong id="dock-title"></strong><span id="dock-count"></span></span><span id="dock-percent"></span></button><div class="dock-footer"><span id="dock-time"></span>' + stop + '</div><div class="dock-track" role="progressbar" aria-label="Activity progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="dock-bar"></i></div><section id="skill-xp-popup" class="skill-xp-popup" aria-label="Skill experience progress" role="status" aria-live="polite" '+(progress?'':'hidden')+'>'+(U.skillProgress?.content(c)||'')+'</section></aside>';
   };
   const live = U.live;
   U.live = () => {
     live();
     const c = G.character(), a = c?.activity, dock = document.getElementById('activity-dock'), run = S.afk.run;
-    if (!c || !dock || dock.hidden) return;
+    if (!c || !dock) return;
+    const skillProgress=U.skillProgress?.current(c);
+    dock.hidden=G.runtime.selecting||!(a||c.combat||run||skillProgress)||G.runtime.page==='World'&&(a?.type==='advance'||U.isPhone?.()&&c.combat);
+    U.skillProgress?.update();
+    if (dock.hidden) return;
     const set = (id, text) => { const el = document.getElementById(id); if (el && el.textContent !== text) el.textContent = text; };
     const seconds = ms => (Math.max(0, ms) / 1000).toFixed(1) + 's';
     const duration = ms => { const s = Math.ceil(Math.max(0, ms) / 1000); return s >= 60 ? Math.floor(s / 60) + 'm ' + s % 60 + 's' : s + 's'; };
@@ -118,12 +123,16 @@
       set('dock-title', c.combat.enemy.name);
       set('dock-count', G.number(Math.max(0, c.combat.enemy.hp), 1) + ' enemy HP \u00b7 damage dealt');
       set('dock-time', c.combat.time.toFixed(1) + 's elapsed');
+    } else if (skillProgress && !run) {
+      ratio=1;
+      set('dock-kind', 'TRAINING COMPLETE');set('dock-title', skillProgress.title);
+      set('dock-count', 'Latest skill progress');set('dock-time', '');
     } else {
       set('dock-kind', 'AFK ADVANCING'); set('dock-title', 'Following your filters');
       set('dock-count', S.afk.status); set('dock-time', duration(run?.elapsed || 0) + ' session');
     }
     const percent = Math.floor(ratio * 100), progress = dock.querySelector('[role="progressbar"]');
-    set('dock-percent', !a && !c.combat ? '\u2014' : percent + '%');
+    set('dock-percent', !a && !c.combat && run ? '\u2014' : percent + '%');
     document.getElementById('dock-bar').style.width = ratio * 100 + '%';
     progress.setAttribute('aria-valuenow', percent);
     progress.setAttribute('aria-valuetext', document.getElementById('dock-count').textContent + '. ' + document.getElementById('dock-time').textContent);

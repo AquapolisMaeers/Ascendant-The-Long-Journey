@@ -66,10 +66,17 @@
       G.assert(D.gatheringSkills.includes(skill),'Choose a gathering skill.');
       return D.config.skillXp*D.tiers[tier]*D.config.activeGatheringXpMultiplier*(1+S.items.toolBonus(c,skill,'Knowledge'));
     },
+    encounterLevel(location, playerLevel = G.character().level) {
+      const loc = D.locations[location], target = G.clamp(playerLevel, loc.level, loc.max);
+      // Each step away is half as likely; every regional level remains possible.
+      const weights = Array.from({length: loc.max - loc.level + 1}, (_, i) =>
+        Math.pow(.5, Math.abs(loc.level + i - target)));
+      return loc.level + G.weighted(G.rng, weights);
+    },
     enemy(type, location, forcedLevel) {
       const loc = D.locations[location],
         boss = type === 'boss',
-        level = forcedLevel || (boss ? G.int(G.rng, ...D.dungeonLevels.boss.map(n => D.dungeons[loc.dungeon].level + n)) : G.int(G.rng, loc.level, loc.max));
+        level = forcedLevel ?? (boss ? G.int(G.rng, ...D.dungeonLevels.boss.map(n => D.dungeons[loc.dungeon].level + n)) : this.encounterLevel(location));
       const row = boss ? {
         name: D.dungeons[loc.dungeon].boss,
         archetype: D.bossArchetypes[loc.dungeon]

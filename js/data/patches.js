@@ -1,6 +1,14 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'A cleaner training panel',changes:[
+    'Skill experience now appears inside the activity panel, below task progress. See the active recipe or resource, timing, Stop control, current skill level, latest XP gain and progress toward the next level in one place.',
+    'The combined panel sits at the bottom right on desktop and above navigation on phones. Skill progress stays visible throughout gathering and crafting, then briefly shows the final result when training finishes. Loot and level-up notices keep their own space.'
+  ]},
+  {date:'2026-10-22',title:'Encounters closer to your level',changes:[
+    'Regular and elite creatures encountered while exploring now favour levels close to your combat level, within the current location\'s level range. Lower- and higher-level creatures can still appear.',
+    'When your level is outside a location\'s range, encounters favour its nearest available level. Dungeon rooms retain their existing level ranges.'
+  ]},
   {date:'2026-10-22',title:'Skill progress popups and richer treasure',changes:[
     'Active gathering and crafting now show a skill XP popup beside collected loot: current level, XP gained, progress toward the next level and XP remaining. It updates after every action, handles level-ups and mastery, and can be dismissed. Offline awards keep their existing report.',
     'Roadside treasure chests and dungeon treasure rooms now use the full elite creature loot table, including coins, materials, gems, equipment, tools, rarity and tier weighting. Opening treasure awards no combat XP.',

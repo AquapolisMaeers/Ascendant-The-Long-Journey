@@ -57,14 +57,7 @@
     nav.innerHTML=primary.map(([page,label])=>'<button type="button" data-action="navigate" data-value="'+page+'" '+(G.runtime.page===page?'class="active" aria-current="page"':'')+'>'+U.icon(page)+'<span>'+label+'</span></button>').join('')+'<button type="button" data-action="mobileMenu" aria-haspopup="dialog" aria-expanded="'+!!document.querySelector('.phone-menu')+'" aria-label="More pages" '+(!primary.some(([page])=>page===G.runtime.page)?'class="active"':'')+'>'+U.icon('Menu')+'<span>More</span></button>';
     const footer=document.createElement('footer');footer.className='mobile-bottom';footer.id='mobile-bottom';footer.setAttribute('aria-label','Mobile controls');
     if(food)footer.append(food);
-    if(dock){
-      const c=G.character(),host=template.content.querySelector('#mobile-world-explore');
-      if(G.runtime.page==='World'&&host){
-        dock.hidden=!(c.activity&&c.activity.type!=='advance'||S.afk.run&&!c.activity);
-        dock.classList.add('mobile-inline-activity');
-        const quick=host.querySelector('.mobile-prepare-row');if(quick)quick.after(dock);else host.prepend(dock);
-      }else footer.append(dock);
-    }
+    if(dock)footer.append(dock);
     footer.append(nav);template.content.append(footer);
     return template.innerHTML;
   };
@@ -74,22 +67,39 @@
     const c=G.character(),button=document.querySelector('.mobile-campfire #rest-button');
     if(button&&c)button.textContent=c.hp>=S.character.stats(c).health?'Full health':Date.now()<(c.restReadyAt||0)?'Cooling down':!S.recovery.canRest(c)?'Unavailable':'Rest';
   };
+  const measureNotices=()=>{
+    if(!U.isPhone())return;
+    const reward=document.getElementById('loot-popup'),level=document.getElementById('levelup-popup'),footer=document.getElementById('mobile-bottom');
+    const top=reward&&!reward.hidden?reward.getBoundingClientRect().bottom+10:(document.querySelector('.topbar')?.getBoundingClientRect().bottom||0)+8;
+    const bottom=Math.min(footer?.getBoundingClientRect().top??innerHeight,level&&!level.hidden?level.getBoundingClientRect().top:innerHeight)-10;
+    const space=Math.max(0,Math.min(104,bottom-top));
+    document.body.style.setProperty('--phone-notice-top',top+'px');
+    document.body.style.setProperty('--phone-notice-height',space+'px');
+    document.body.classList.toggle('phone-notices-crowded',space<48);
+  };
   const observer=new ResizeObserver(entries=>{
     for(const {target} of entries)if(target.id==='mobile-bottom')document.body.style.setProperty('--mobile-bottom-height',Math.ceil(target.getBoundingClientRect().height)+'px');
+    measureNotices();
   });
   let watched;
   const loot=document.getElementById('loot-popup');
   const measureLoot=()=>{
     document.body.classList.toggle('has-phone-loot',!loot.hidden);
     document.body.style.setProperty('--phone-loot-height',Math.ceil(loot.getBoundingClientRect().height)+'px');
+    measureNotices();
   };
   new ResizeObserver(measureLoot).observe(loot);
   new MutationObserver(measureLoot).observe(loot,{attributes:true,attributeFilter:['hidden']});
+  const levelNotices=document.getElementById('levelup-popup');
+  new ResizeObserver(measureNotices).observe(levelNotices);
+  new MutationObserver(measureNotices).observe(levelNotices,{attributes:true,attributeFilter:['hidden']});
+  window.addEventListener('resize',measureNotices);
   window.addEventListener('rpg:rendered',()=>{
     const footer=document.getElementById('mobile-bottom');
     if(footer!==watched){observer.disconnect();if(footer)observer.observe(footer);watched=footer;}
     if(footer)document.body.style.setProperty('--mobile-bottom-height',Math.ceil(footer.getBoundingClientRect().height)+'px');
     else document.body.style.removeProperty('--mobile-bottom-height');
     document.body.classList.toggle('mobile-app',U.isPhone()&&!G.runtime.selecting&&!!G.character());
+    measureNotices();
   });
 })(RPG,RPG.data,RPG.systems,RPG.ui);

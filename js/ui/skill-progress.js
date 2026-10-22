@@ -1,50 +1,64 @@
 'use strict';
-(function(G,D,U){
-  const loot=document.getElementById('loot-popup'),stack=document.createElement('div'),popup=document.createElement('aside');
-  stack.id='reward-popups';stack.className='reward-popups';
-  popup.id='skill-xp-popup';popup.className='skill-xp-popup';popup.hidden=true;
-  popup.setAttribute('aria-label','Skill experience progress');popup.setAttribute('role','status');popup.setAttribute('aria-live','polite');
-  loot.before(stack);stack.append(popup,loot);
-  let owner=null,snapshot=null,timer=0,expires=0,remaining=6000,hovered=false;
-  const measure=()=>{
-    document.body.classList.toggle('has-skill-xp',!popup.hidden);
-    document.body.style.setProperty('--skill-xp-height',Math.ceil(popup.getBoundingClientRect().height)+'px');
-  };
+(function(G,D,S,U){
+  const loot=document.getElementById('loot-popup'),stack=document.createElement('div');
+  stack.id='reward-popups';stack.className='reward-popups';loot.before(stack);stack.append(loot);
+  let snapshot=null,timer=0,expires=0,remaining=6000;
+  const rendered=new WeakMap();
+  const activeSkill=c=>c?.activity?.type==='gather'?c.activity.skill:
+    c?.activity?.type==='craft'?D.recipes.find(r=>r.id===c.activity.recipe)?.skill:null;
+  const matches=c=>snapshot?.characterId===c?.id&&c?.skills[snapshot.skill]?.level===snapshot.level&&c.skills[snapshot.skill].xp===snapshot.xp;
+  const dock=()=>document.getElementById('activity-dock');
   const pause=()=>{
     if(timer){clearTimeout(timer);timer=0;remaining=Math.max(0,expires-performance.now());}
   };
   const schedule=()=>{
     pause();
-    if(popup.hidden||document.hidden||G.runtime.selecting||document.querySelector('.modal')||hovered||popup.contains(document.activeElement))return;
+    const panel=dock();
+    if(!snapshot||activeSkill(G.character())||document.hidden||G.runtime.selecting||document.querySelector('.modal')||panel?.matches(':hover')||panel?.contains(document.activeElement))return;
     expires=performance.now()+remaining;timer=setTimeout(()=>U.skillProgress.clear(),remaining);
   };
   U.skillProgress={
-    clear(){pause();owner=null;snapshot=null;popup.hidden=true;hovered=false;measure();},
+    current(c=G.character()){
+      if(!c||G.runtime.selecting)return null;
+      const skill=activeSkill(c)||(!c.activity&&!c.combat&&matches(c)?snapshot.skill:null);
+      return skill?{skill,track:c.skills[skill],gain:matches(c)&&snapshot.skill===skill?snapshot.amount:0,title:snapshot?.title}:null;
+    },
+    content(c=G.character()){
+      const progress=this.current(c);if(!progress)return '';
+      const {skill,track,gain}=progress,mastered=track.level===D.config.levelCap,next=D.xpNext(track.level),ratio=mastered?1:G.clamp(track.xp/next,0,1);
+      const target=mastered?'Mastered':G.percent(ratio,1)+' to level '+(track.level+1);
+      return '<div class="skill-xp-label"><span>'+U.e(skill)+' <span class="skill-xp-level">\u00b7 Level '+track.level+'</span></span>'+
+        '<span class="skill-xp-summary">'+(gain?'<span class="skill-xp-gain">+'+G.number(gain)+' XP</span>':'')+'<span>'+target+'</span></span></div>'+
+        '<div class="skill-xp-track" role="progressbar" aria-label="'+U.e(skill)+' experience" aria-valuemin="0" aria-valuemax="'+(mastered?1:next)+'" aria-valuenow="'+(mastered?1:track.xp)+'" aria-valuetext="'+U.e(target)+'"><i style="width:'+ratio*100+'%"></i></div>'+
+        '<div class="skill-xp-detail"><span>'+(mastered?'LEVEL CAP':G.number(track.xp)+' / '+G.number(next)+' XP')+'</span><span>'+(mastered?'Skill mastered':G.number(Math.max(0,next-track.xp))+' XP to next level')+'</span></div>';
+    },
+    update(){
+      const popup=document.getElementById('skill-xp-popup');if(!popup)return;
+      const html=this.content();popup.hidden=!html;
+      if(rendered.get(popup)!==html){U.patch(popup,html);rendered.set(popup,html);}
+    },
+    clear(){pause();snapshot=null;U.live();},
     show(detail){
       const c=G.character();
       if(!c||detail.characterId!==c.id||G.runtime.selecting||document.hidden||!D.skills.includes(detail.skill))return;
-      owner=c.id;
-      const track=c.skills[detail.skill],mastered=track.level===D.config.levelCap,next=D.xpNext(track.level),ratio=mastered?1:G.clamp(track.xp/next,0,1);
-      snapshot={skill:detail.skill,level:track.level,xp:track.xp};
-      const target=mastered?'Mastered':G.percent(ratio,1)+' toward level '+(track.level+1);
-      U.patch(popup,'<div class="skill-xp-head"><span class="skill-xp-icon">'+U.icon(detail.skill)+'</span><div><strong>'+U.e(detail.skill)+'</strong><small>Level '+track.level+'</small></div><span class="skill-xp-gain">+'+G.number(detail.amount)+' XP</span><button type="button" class="skill-xp-dismiss" aria-label="Dismiss skill progress">\u00d7</button></div>'+
-        '<div class="skill-xp-label"><span>'+target+'</span><span>'+(mastered?'LEVEL CAP':G.number(track.xp)+' / '+G.number(next)+' XP')+'</span></div>'+
-        '<div class="skill-xp-track" role="progressbar" aria-label="'+U.e(detail.skill)+' experience" aria-valuemin="0" aria-valuemax="'+(mastered?1:next)+'" aria-valuenow="'+(mastered?1:track.xp)+'" aria-valuetext="'+U.e(target)+'"><i style="width:'+ratio*100+'%"></i></div>'+
-        '<small class="skill-xp-remaining">'+(mastered?'Skill mastered':G.number(Math.max(0,next-track.xp))+' XP to next level')+'</small>');
-      pause();remaining=6000;popup.hidden=false;measure();schedule();
+      const track=c.skills[detail.skill],a=c.activity,recipe=a?.type==='craft'?D.recipes.find(r=>r.id===a.recipe):null;
+      snapshot={characterId:c.id,skill:detail.skill,level:track.level,xp:track.xp,amount:detail.amount,title:recipe?.name||detail.skill+' training'};
+      pause();remaining=6000;U.live();schedule();
     }
   };
-  popup.addEventListener('click',event=>{if(event.target.closest('.skill-xp-dismiss'))U.skillProgress.clear();});
-  popup.addEventListener('pointerenter',()=>{hovered=true;pause();});
-  popup.addEventListener('pointerleave',()=>{hovered=false;schedule();});
-  popup.addEventListener('focusin',pause);popup.addEventListener('focusout',()=>setTimeout(schedule,0));
+  document.addEventListener('click',event=>{
+    if(event.target.closest('.skill-xp-dismiss')){U.skillProgress.clear();U.render();}
+  });
+  document.addEventListener('pointerenter',event=>{if(event.target.id==='activity-dock')pause();},true);
+  document.addEventListener('pointerleave',event=>{if(event.target.id==='activity-dock')schedule();},true);
+  document.addEventListener('focusin',event=>{if(dock()?.contains(event.target))pause();});
+  document.addEventListener('focusout',()=>setTimeout(schedule,0));
   window.addEventListener('rpg:skill-xp',({detail})=>U.skillProgress.show(detail));
   window.addEventListener('rpg:dialog-opened',pause);
   window.addEventListener('rpg:dialog-closed',()=>setTimeout(schedule,0));
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)U.skillProgress.clear();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)U.skillProgress.clear();else schedule();});
   window.addEventListener('rpg:rendered',()=>{
-    const c=G.character(),track=snapshot&&c?.skills[snapshot.skill];
-    if(owner&&(owner!==c?.id||G.runtime.selecting||track?.level!==snapshot.level||track?.xp!==snapshot.xp))U.skillProgress.clear();
+    if(snapshot&&(!matches(G.character())||G.runtime.selecting))U.skillProgress.clear();
+    U.skillProgress.update();schedule();
   });
-  new ResizeObserver(measure).observe(popup);
-})(RPG,RPG.data,RPG.ui);
+})(RPG,RPG.data,RPG.systems,RPG.ui);
