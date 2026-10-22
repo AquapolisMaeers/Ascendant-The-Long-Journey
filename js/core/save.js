@@ -266,10 +266,17 @@
         if(c.creatureBalanceVersion<2) {
           const enemy=c.encounter?.enemy,loc=c.location;
           if(enemy&&!c.combat&&D.locations[loc]&&['regular','elite','boss'].includes(enemy.type)) {
-            const scale=D.enemyScaling(loc,enemy.level),old=D.legacyEnemyScaling(loc,enemy.level);
+            const scale=D.regionalEnemyScaling(loc,enemy.level),old=D.legacyEnemyScaling(loc,enemy.level);
             for(const key of ['health','damage','defence'])enemy[key]*=scale[key]/old[key];
           }
           c.creatureBalanceVersion=2;
+        }
+        if(c.creatureBalanceVersion<3) {
+          const enemy=c.encounter?.enemy,loc=c.location;
+          if(enemy&&!c.combat&&!c.encounter.tutorial&&D.locations[loc]&&['regular','elite','boss'].includes(enemy.type)) {
+            Object.assign(enemy,G.systems.world.enemyStats(enemy.type,loc,enemy.level,{name:enemy.name,archetype:enemy.archetype}));
+          }
+          c.creatureBalanceVersion=3;
         }
         // Old 25% was free. Keep paid higher tiers and remove only that free tier.
         if(c.provisionsVersion===undefined && Array.isArray(c.eatUnlocks)) {

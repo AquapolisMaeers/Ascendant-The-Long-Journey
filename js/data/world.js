@@ -69,21 +69,31 @@
     penetration: location * .012,
     resistance: location * .01
   }; };
-  // Fixed regional tuning, calibrated across all three classes and each normal archetype.
+  // Previous regional tuning, retained only for save migration.
   // Reference builds: entry minus five levels, previous material tier, Common +5,
   // five deterministic enhancement prefixes and one compatible Rank I gem in every slot.
   // Base-strength calibration excludes the level-gap multiplier; combat still applies it afterward.
-  D.creatureBenchmarks = [1,1.63640,1.04773,.82136,.77589,.71305,.65569,.61665,.54881,.49977,.47121].map((multiplier,location)=>({
+  D.legacyCreatureBenchmarks = [1,1.63640,1.04773,.82136,.77589,.71305,.65569,.61665,.54881,.49977,.47121].map((multiplier,location)=>({
     multiplier,
     level:Math.max(1,D.locations[location].level-5),
     gearLevel:location?D.tiers[D.tierFor(D.locations[location].level)-1]:1,
     enhance:5,
     gemRank:1
   }));
-  D.enemyScaling = (location, level = D.locations[location].level) => {
-    const scaling = D.legacyEnemyScaling(location,level),multiplier = D.creatureBenchmarks[location].multiplier;
+  D.regionalEnemyScaling = (location, level = D.locations[location].level) => {
+    const scaling = D.legacyEnemyScaling(location,level),multiplier = D.legacyCreatureBenchmarks[location].multiplier;
     for(const key of ['health','damage','defence'])scaling[key]*=multiplier;
     return scaling;
+  };
+  D.enemyScaling = (location, level = D.locations[location].level) => {
+    const reference=RPG.systems.world.creatureReference(level);
+    return {
+      health:reference.health/(D.enemyBase.health+D.enemyBase.healthPerLevel*level),
+      damage:reference.damage/(D.enemyBase.damage+D.enemyBase.damagePerLevel*level),
+      defence:reference.defence/(D.enemyBase.defencePerLevel*level),
+      penetration:reference.penetration+location*.012,
+      resistance:reference.resistance+location*.01
+    };
   };
   D.dungeonLevels = {regular: [0, 4], elite: [5, 9], boss: [7, 9]};
   D.boss = {

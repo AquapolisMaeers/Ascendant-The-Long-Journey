@@ -75,6 +75,13 @@
           crit: D.config.baseCrit,
           critDamage: D.config.baseCritDamage,
           speed: 0,
+          penetration: 0,
+          double: 0,
+          dodge: 0,
+          reduction: 0,
+          resistance: 0,
+          lifeSteal: 0,
+          thorns: 0,
           interval: D.config.attackSeconds
         });
         c.encounter = {

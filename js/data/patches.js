@@ -1,9 +1,8 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
-  {date:'2026-10-22',title:'Regional creature benchmarks and clearer quest objectives',changes:[
-    'Each new location uses a fixed creature base-strength benchmark: a character five levels below entry, in the previous material tier at Common +5, with a compatible Rank I gem in every equipment slot. Level 30–39 uses a level-25 Steel build; level 90–99 uses a level-85 Starsteel build. Normal creatures are calibrated across all three classes at regional entry, then strengthen through the region. Elites and bosses keep their extra multipliers. The Crossroads keeps its starter balance.',
-    'The three-level grace period and existing level-gap penalty still apply after base-strength tuning. Creature levels and travel requirements stay the same. Older idle previews refresh once; fights already in progress retain their saved stats and random state.',
+  {date:'2026-10-22',title:'Creature balance and clearer quest objectives',changes:[
+    'Creature scaling differs.',
     'The Fountain of Youth now adds 50% of maximum health, capped at full health. Arrive at 10% HP and leave at 60%; arrive at 80% and leave at 100%. Manual and AFK interactions share this rule.',
     'Faceting XP falls another 10%, including standard and exclusive gem recipes, failed fusion attempts and offline training. Level-1 cutting now grants 594 base XP instead of 660. Existing progress and XP bonuses are preserved.',
     'Quest cards now explain where to go, how to perform the task, the required material or recipe tier, what adds progress and how much remains. Rewards still arrive automatically, and completed slots retain their replacement timer.'

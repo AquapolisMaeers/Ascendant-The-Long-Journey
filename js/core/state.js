@@ -57,7 +57,7 @@
       perks: {},
       talents: {},
       skilling: {},
-      creatureBalanceVersion: 2,
+      creatureBalanceVersion: 3,
       provisionsVersion: 1,
       achievements: {},
       title: '',
