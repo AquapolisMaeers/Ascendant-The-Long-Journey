@@ -302,8 +302,9 @@
         type = c.encounter?.type;
       G.assert(['fountain', 'spoils'].includes(type), 'No room event.');
       if (type === 'fountain') {
-        c.hp = S.character.stats(c).health;
-        G.notify('The Fountain of Youth restores all HP.', 'success');
+        const health = S.character.stats(c).health, before = c.hp;
+        c.hp = Math.min(health, c.hp + health * D.config.fountainHeal);
+        G.notify('The Fountain of Youth restores '+G.number(c.hp-before, 1)+' HP (50% of maximum health, up to full).', 'success');
       } else {
         const rewards = S.loot.roll('regular', D.locations[c.location].level, c.location);
         S.inventory.reward(rewards);

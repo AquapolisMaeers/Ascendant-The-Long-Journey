@@ -257,11 +257,19 @@
           // its actors and random state so its committed outcome cannot change.
           const enemy=c.encounter?.enemy,loc=c.location;
           if(enemy&&!c.combat&&D.locations[loc]&&['regular','elite','boss'].includes(enemy.type)) {
-            const scale=D.enemyScaling(loc,enemy.level,enemy.type);
+            const scale=D.legacyEnemyScaling(loc,enemy.level);
             const old={health:1+.12*loc+.008*loc*loc,damage:1+.06*loc+.003*loc*loc,defence:1+.08*loc+.004*loc*loc};
             for(const key of ['health','damage','defence'])enemy[key]*=scale[key]/old[key];
           }
           c.creatureBalanceVersion=1;
+        }
+        if(c.creatureBalanceVersion<2) {
+          const enemy=c.encounter?.enemy,loc=c.location;
+          if(enemy&&!c.combat&&D.locations[loc]&&['regular','elite','boss'].includes(enemy.type)) {
+            const scale=D.enemyScaling(loc,enemy.level),old=D.legacyEnemyScaling(loc,enemy.level);
+            for(const key of ['health','damage','defence'])enemy[key]*=scale[key]/old[key];
+          }
+          c.creatureBalanceVersion=2;
         }
         // Old 25% was free. Keep paid higher tiers and remove only that free tier.
         if(c.provisionsVersion===undefined && Array.isArray(c.eatUnlocks)) {

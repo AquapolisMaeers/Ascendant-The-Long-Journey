@@ -59,9 +59,8 @@
     damagePerLevel: 1.4,
     defencePerLevel: 1
   };
-  // Fixed creature levels drive difficulty, independent of the player's loadout.
-  // Preserve levels 1-9; add two progression ramps, then taper the late ramp.
-  D.enemyScaling = (location, level = D.locations[location].level) => {
+  // Keep the old curve for one-time migration of uncommitted saved encounters.
+  D.legacyEnemyScaling = (location, level = D.locations[location].level) => {
     const early=Math.max(0,Math.min(level,19)-9),mid=Math.max(0,Math.min(level,30)-19),late=Math.max(0,level-30);
     return {
     health: (1 + .12 * location + .008 * location * location) * (1+.035*early+.035*mid+.002*late),
@@ -70,6 +69,22 @@
     penetration: location * .012,
     resistance: location * .01
   }; };
+  // Fixed regional tuning, calibrated across all three classes and each normal archetype.
+  // Reference builds: entry minus five levels, previous material tier, Common +5,
+  // five deterministic enhancement prefixes and one compatible Rank I gem in every slot.
+  // Base-strength calibration excludes the level-gap multiplier; combat still applies it afterward.
+  D.creatureBenchmarks = [1,1.63640,1.04773,.82136,.77589,.71305,.65569,.61665,.54881,.49977,.47121].map((multiplier,location)=>({
+    multiplier,
+    level:Math.max(1,D.locations[location].level-5),
+    gearLevel:location?D.tiers[D.tierFor(D.locations[location].level)-1]:1,
+    enhance:5,
+    gemRank:1
+  }));
+  D.enemyScaling = (location, level = D.locations[location].level) => {
+    const scaling = D.legacyEnemyScaling(location,level),multiplier = D.creatureBenchmarks[location].multiplier;
+    for(const key of ['health','damage','defence'])scaling[key]*=multiplier;
+    return scaling;
+  };
   D.dungeonLevels = {regular: [0, 4], elite: [5, 9], boss: [7, 9]};
   D.boss = {
     health: 7,
