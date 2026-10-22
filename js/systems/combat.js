@@ -138,9 +138,10 @@
       return hit(a, b) * Math.max(C.minimumHit, a.damage * (a.levelDamage ?? levelFactor(a,b)) * (1 + crit(a, b) * a.critDamage) * (1 - mitigation(a, b)) * (1 - reduction(b))) * (1 + hit(a, b) * a.double);
     },
     create(c, enemy, seed) {
+      const stats=S.character.stats(c);
       const player = {
-        ...S.character.stats(c),
-        hp: c.hp,
+        ...stats,
+        hp: Math.min(c.hp,stats.health),
         hits: 0,
         wind: false
       };

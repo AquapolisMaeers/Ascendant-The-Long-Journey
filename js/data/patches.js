@@ -1,6 +1,11 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'Doubling gear tiers and clearer equipment bonuses',changes:[
+    'Each material tier now doubles the previous tier\'s base Damage, Health and Defence. Equipment levels, rarity and Enhancement requirements stay the same. Percentage bonuses retain their own scaling and effective caps.',
+    'Flat enhancement prefixes and socketed gems grow with their equipment tier, and food healing follows the larger health pools. Item details show the effective prefix and inserted-gem bonuses. Existing items retain their IDs, rarity, Enhancement, prefixes and gems.',
+    'Creature scaling differs.'
+  ]},
   {date:'2026-10-22',title:'Online and offline journey time',changes:[
     'Achievements > The journey so far now shows Online time and Offline time for each character, in days, hours, minutes and seconds. Online time updates live while the selected character is open in a visible game tab, including AFK advancing.',
     'Offline time includes hidden tabs, a closed game, character selection and time spent on other character slots. The full inactive interval counts even when no offline skill is selected or the eight-hour XP limit has been reached. Existing offline XP rules stay the same.',

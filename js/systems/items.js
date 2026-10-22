@@ -36,8 +36,10 @@
       };
     },
     announcePrefix(item, event) {
+      const shown={...event};
+      if(item.kind==='gear')for(const key of ['before','increment','total'])shown[key]=this.scaledBonus(item,event.key,event[key]);
       G.emit('prefix', {
-        ...event,
+        ...shown,
         itemName: this.name(item),
         tool: item.kind === 'tool'
       });
@@ -50,8 +52,9 @@
       return d ? (item.style !== null ? d.weapons[item.style] : d.prefix + ' ' + (item.slot === 'Helmet' ? 'Helm' : item.slot)) : (item.style !== null ? D.weapons[item.style][item.tier] : D.metalTierName(item.tier) + ' ' + item.slot);
     },
     stats(item) {
-      const mult = D.tiers[item.tier] * (item.boss !== null ? D.config.bossGear : 1) * D.rarityMult[item.rarity] * (1 + D.config.enhanceStat * item.enhance);
-      const growth = Math.sqrt(mult / 100);
+      const modifiers = (item.boss !== null ? D.config.bossGear : 1) * D.rarityMult[item.rarity] * (1 + D.config.enhanceStat * item.enhance);
+      const mult = D.gearPower[item.tier] * modifiers;
+      const growth = Math.sqrt(D.tiers[item.tier] * modifiers / 100);
       if(item.slot === 'Secondary') {
         const base = [{defence:.3,health:.5,damage:.06},{damage:.16},{damage:.18}][item.piece-10];
         const stats = Object.fromEntries(Object.entries(base).map(([key,value])=>[key,value*mult]));
@@ -68,6 +71,9 @@
         if(item.armorClass==='Mage') { stats.crit=.045*growth; stats.critDamage=.14*growth; stats.resistance=.06*growth; }
       }
       return stats;
+    },
+    scaledBonus(item,key,value) {
+      return value*(['damage','health','defence'].includes(key)?D.gearBonusScale[item.tier]:1);
     },
     sockets(item) {
       return D.sockets[item.boss !== null ? 'boss' : 'regular'].filter(n => n <= item.enhance).length;

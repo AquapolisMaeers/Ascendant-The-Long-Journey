@@ -110,7 +110,7 @@
     }
     if (gear || tool) {
       if (tool) body += U.toolPrefixHelp();
-      body += '<hr><div class="item-details-grid"><section class="item-prefixes"><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / ' + S.items.prefixSlots(item) + '</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) + ' — ' + D.toolPrefixDescriptions[key] : D.labels[key] + ' +' + U.statValue(key, value)).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
+      body += '<hr><div class="item-details-grid"><section class="item-prefixes"><h3>Prefixes · ' + Object.keys(item.prefixes).length + ' / ' + S.items.prefixSlots(item) + '</h3><div class="notes spacer">' + (Object.entries(item.prefixes).map(([key, value]) => tool ? key + ' ' + D.roman[value] + ' · ' + G.percent(value * D.toolPrefixes[key]) + ' — ' + D.toolPrefixDescriptions[key] : D.labels[key] + ' +' + U.statValue(key, S.items.scaledBonus(item,key,value))).join('<br>') || 'No prefixes yet.') + '</div><div class="grid-2 spacer">';
       if (gear && (item.enhance < 25 || Object.keys(item.prefixes).length < S.items.prefixSlots(item))) {
         const q = S.upgrades.quote(item);
         body += '<section class="upgrade-box upgrade-compact"><h3>' + (item.enhance===25?'Fill a missing prefix':'Enhance to +'+(item.enhance+1)) + '</h3>' + U.upgradeSummary(q,true) + U.btn(item.enhance===25?'Refine prefixes':'Enhance', 'enhance', 'data-id="' + id + '"', 'primary wide') + '</section>';
@@ -125,7 +125,9 @@
         for (let index = 0; index < S.items.sockets(item); index++) {
           const key = item.gems[index],
             gems = c.inventory.filter(i => i.kind === 'stack' && D.catalog[i.key].rank > 0 && D.gemAllowed[item.slot].includes(D.catalog[i.key].type));
-          body += '<div class="socket-row">' + U.icon('gem') + (key ? '<span>' + U.e(D.catalog[key].name) + '</span>' + U.btn('Extract', 'extract', 'data-id="' + id + '" data-index="' + index + '"', 'small') + U.btn('Destroy gem', 'destroyGem', 'data-id="' + id + '" data-index="' + index + '"', 'small danger') : '<select id="socket-' + index + '"><option value="">Select a gem</option>' + gems.map(i => '<option value="' + i.key + '">' + U.e(D.catalog[i.key].name) + ' ×' + i.quantity + '</option>').join('') + '</select>' + U.btn('Socket', 'socket', 'data-id="' + id + '" data-index="' + index + '"', 'small')) + '</div>';
+          const socketGem=key?D.gems[D.catalog[key].type]:null;
+          const socketEffect=socketGem?'+'+U.statValue(socketGem.stat,S.items.scaledBonus(item,socketGem.stat,socketGem.value*D.catalog[key].rank)*(item.slot==='Secondary'?D.secondaryPower:1))+' '+D.labels[socketGem.stat]:'';
+          body += '<div class="socket-row">' + U.icon('gem') + (key ? '<span>' + U.e(D.catalog[key].name) + '<small>'+U.e(socketEffect)+'</small></span>' + U.btn('Extract', 'extract', 'data-id="' + id + '" data-index="' + index + '"', 'small') + U.btn('Destroy gem', 'destroyGem', 'data-id="' + id + '" data-index="' + index + '"', 'small danger') : '<select id="socket-' + index + '"><option value="">Select a gem</option>' + gems.map(i => '<option value="' + i.key + '">' + U.e(D.catalog[i.key].name) + ' ×' + i.quantity + '</option>').join('') + '</select>' + U.btn('Socket', 'socket', 'data-id="' + id + '" data-index="' + index + '"', 'small')) + '</div>';
         }
         body += '</section></div><hr><div class="row">' + (c.inventory.includes(item) ? U.btn('Equip', 'equip', 'data-id="' + id + '"', 'primary') : U.btn('Unequip', 'unequip', 'data-slot="' + item.slot + '"')) + U.btn(item.locked ? 'Unlock' : 'Lock / favourite', 'lock', 'data-id="' + id + '"') + U.btn('Remove enchantments', 'removeEnchant', 'data-id="' + id + '"', 'danger') + (c.inventory.includes(item) ? U.btn('Discard', 'discard', 'data-id="' + id + '"', 'danger') : '') + '</div>';
       }

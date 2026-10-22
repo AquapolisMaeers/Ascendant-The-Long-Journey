@@ -38,7 +38,7 @@
     }, {
       id: 'enhance',
       title: 'Your first prefix',
-      text: 'Enhance your starting weapon once: one Copper Bar, three Pine Logs and 20 Bronze. This lesson adds +2 Primary Damage.'
+      text: 'Enhance your starting weapon once: one Copper Bar, three Pine Logs and 20 Bronze. This lesson guarantees a Primary Damage prefix.'
     }, {
       id: 'fight',
       title: 'Your first battle',

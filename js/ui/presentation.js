@@ -37,7 +37,7 @@
     if (info.rank > 0) {
       const gem = D.gems[info.type];
       const name = gem.style === undefined ? D.labels[gem.stat] : D.primary[gem.style] + ' Damage';
-      return '+' + U.statValue(gem.stat, gem.value * info.rank) + ' ' + name;
+      return '+' + U.statValue(gem.stat, gem.value * info.rank) + ' ' + name + (['damage','defence','health'].includes(gem.stat)?' base; scales with equipment tier':'');
     }
     if (info.category === 'Gems') return 'Facet into a typed Gem I';
     if (info.kind === 'fish') return 'Cook into ' + D.catalog['food:' + info.tier].name;
@@ -105,14 +105,14 @@
     const pool = forced ? [forced.key] : !tool&&item.enhance===25&&owned.length<limit ? D.prefixPools[item.slot].filter(key=>!owned.includes(key)) : owned.length >= limit ? owned :
       tool ? Object.keys(D.toolPrefixes) : D.prefixPools[item.slot];
     return '<details class="possible-prefixes"><summary>Possible prefixes · ' + pool.length + '</summary><p>' +
-      (forced ? 'This tutorial roll guarantees +2 Primary Damage.' : !tool&&item.enhance===25&&owned.length<limit ? 'A successful refinement fills one empty prefix slot from this list; Enhancement stays +25.' : owned.length >= limit ?
+      (forced ? 'This tutorial roll guarantees a Primary Damage prefix.' : !tool&&item.enhance===25&&owned.length<limit ? 'A successful refinement fills one empty prefix slot from this list; Enhancement stays +25.' : owned.length >= limit ?
         'All '+limit+' prefix slots are occupied. Successful rolls now strengthen an existing prefix.' :
         'A successful roll adds or strengthens one of these prefixes. '+(tool?'The target rarity':'This item')+' holds up to '+limit+' different prefixes.') +
       '</p><div class="prefix-options">' + pool.map(key => {
         const range = D.prefixRanges[key];
-        const amount = forced ? '+' + U.statValue(key, forced.increment) :
+        const amount = forced ? '+' + U.statValue(key, S.items.scaledBonus(item,key,forced.increment)) :
           tool ? '+' + G.percent(D.toolPrefixes[key], 2) + ' per rank' :
-          '+' + U.statValue(key, range[0]) + ' to +' + U.statValue(key, range[1]);
+          '+' + U.statValue(key, S.items.scaledBonus(item,key,range[0])) + ' to +' + U.statValue(key, S.items.scaledBonus(item,key,range[1]));
         return '<div><span>' + (tool ? key : D.labels[key]) +
           (owned.includes(key) ? ' <small>Existing</small>' : '') + '</span><strong>' + amount + '</strong></div>';
       }).join('') + '</div></details>';

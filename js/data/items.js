@@ -186,7 +186,10 @@
     bar: ['Copper Bar', 'Tin Bar', 'Iron Bar', 'Steel Bar', 'Silver Bar', 'Gold Bar', 'Runite Bar', 'Obsidian Bar', 'Draconite Bar', 'Starsteel Bar', 'Elder Bar', 'Ancient Bar']
   };
   D.resourceKinds = ['ore', 'logs', 'fish', 'hide'];
-  D.healing = [5, 10, 15, 25, 40, 50, 65, 75, 90, 100, 115, 125];
+  D.healing = [5, 10, 15, 25, 40, 50, 65, 75, 90, 100, 115, 125].map((healing,tier)=>{
+    const body=D.config.playerHealth+D.config.playerHealthPerLevel*(D.tiers[tier]-1);
+    return Math.round(healing*(body+4*D.gearPower[tier])/(body+4*D.tiers[tier]));
+  });
   D.coal = [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1];
   D.catalog = {
     stone: {

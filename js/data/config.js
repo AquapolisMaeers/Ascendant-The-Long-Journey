@@ -85,6 +85,8 @@
   D.rarity = ['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Mythical', 'Divine', 'Ascendant'];
   D.rarityMult = [1, 1.05, 1.1, 1.2, 1.3, 1.45, 1.6, 1.8];
   D.tiers = [1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+  D.gearPower = D.tiers.map((_,tier)=>10*2**tier);
+  D.gearBonusScale = D.gearPower.map(power=>power/100);
   D.tierNames = ['Worn', 'Leather', 'Iron', 'Steel', 'Hardened', 'Reinforced', 'Runed', 'Obsidian', 'Dragonbone', 'Starsteel', 'Elder', 'Ancient'];
   D.coinUnits = [20, 20, 40, 80, 150, 300, 650, 1250, 2500, 4250, 7500, 12500];
   D.storage = [1000, 2500, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000, 2500000];

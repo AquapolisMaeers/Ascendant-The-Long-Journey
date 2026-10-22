@@ -273,12 +273,12 @@
           }
           c.creatureBalanceVersion=2;
         }
-        if(c.creatureBalanceVersion<3) {
+        if(c.creatureBalanceVersion<4) {
           const enemy=c.encounter?.enemy,loc=c.location;
           if(enemy&&!c.combat&&!c.encounter.tutorial&&D.locations[loc]&&['regular','elite','boss'].includes(enemy.type)) {
             Object.assign(enemy,G.systems.world.enemyStats(enemy.type,loc,enemy.level,{name:enemy.name,archetype:enemy.archetype}));
           }
-          c.creatureBalanceVersion=3;
+          c.creatureBalanceVersion=4;
         }
         // Old 25% was free. Keep paid higher tiers and remove only that free tier.
         if(c.provisionsVersion===undefined && Array.isArray(c.eatUnlocks)) {
@@ -306,7 +306,10 @@
         c.gemSocketRules=1;
       }
       validate(p);
-      p.slots.filter(Boolean).forEach(c => G.systems.chronicles.normalize(c));
+      p.slots.filter(Boolean).forEach(c => {
+        G.systems.chronicles.normalize(c);
+        if(!c.combat)c.hp=Math.min(c.hp,G.systems.character.stats(c).health);
+      });
       return this.applyFates(p);
     },
     write() {

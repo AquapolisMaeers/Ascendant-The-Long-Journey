@@ -85,12 +85,17 @@
     for(const key of ['health','damage','defence'])scaling[key]*=multiplier;
     return scaling;
   };
-  D.enemyScaling = (location, level = D.locations[location].level) => {
-    const reference=RPG.systems.world.creatureReference(level);
+  D.creatureProfiles = {
+    regular:{enhance:0,gems:0,regalia:[],health:.85,damage:.7,defence:.85},
+    elite:{enhance:5,gems:1,regalia:['aura:tanky','mount:aggressive'],health:.85,damage:.75,defence:.85},
+    boss:{enhance:15,gems:2,regalia:['outfit:aggressive','aura:tanky','mount:aggressive'],health:.9,damage:.9,defence:1}
+  };
+  D.enemyScaling = (location, level = D.locations[location].level, type='regular') => {
+    const reference=RPG.systems.world.creatureReference(level,type);
     return {
-      health:reference.health/(D.enemyBase.health+D.enemyBase.healthPerLevel*level),
-      damage:reference.damage/(D.enemyBase.damage+D.enemyBase.damagePerLevel*level),
-      defence:reference.defence/(D.enemyBase.defencePerLevel*level),
+      health:reference.health*D.creatureProfiles[type].health/(D.enemyBase.health+D.enemyBase.healthPerLevel*level),
+      damage:reference.damage*D.creatureProfiles[type].damage/(D.enemyBase.damage+D.enemyBase.damagePerLevel*level),
+      defence:reference.defence*D.creatureProfiles[type].defence/(D.enemyBase.defencePerLevel*level),
       penetration:reference.penetration+location*.012,
       resistance:reference.resistance+location*.01
     };
