@@ -1,6 +1,10 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'Task, reward and experience positions',changes:[
+    'Gathering and crafting progress return to the bottom left, rewards appear at the bottom centre, and skill experience has its own panel at the bottom right.',
+    'Panels resize to fit the available desktop space. On phones, task and XP panels sit above navigation, with rewards above them. Long reward lists scroll, and level-up notices stay clear of the panels.'
+  ]},
   {date:'2026-10-22',title:'A gentler start and fixed skill XP',changes:[
     'Creature scaling differs. Early encounters are more forgiving, with normal progression resuming from level 5.',
     'Active Faceting XP now depends on the recipe unlock level, rather than your current Faceting level. Base XP per action: Gem I cutting 297; Gem II fusion 7,425; Gem III 14,850; Gem IV 22,275; Gem V 29,700. Failed fusion attempts award the same recipe XP.',

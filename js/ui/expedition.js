@@ -90,9 +90,9 @@
     if (!c || G.runtime.selecting) return html;
     const a = c.activity, run = S.afk.run, progress = U.skillProgress?.current(c),
       visible = (a || c.combat || run || progress) && !(G.runtime.page === 'World' && (a?.type === 'advance' || U.isPhone?.() && c.combat)),
-      stop = run ? U.btn('Stop AFK', 'afkStop', '', 'quiet small') : a && a.type !== 'advance' ? U.btn('Stop', 'stopActivity', '', 'quiet small') : progress ? '<button type="button" class="btn quiet small skill-xp-dismiss" aria-label="Dismiss completed skill progress">Dismiss</button>' : '';
+      stop = run ? U.btn('Stop AFK', 'afkStop', '', 'quiet small') : a && a.type !== 'advance' ? U.btn('Stop', 'stopActivity', '', 'quiet small') : '';
     return html + '<aside class="activity-dock" id="activity-dock" aria-label="Current activity" ' + (visible ? '' : 'hidden') + '><button data-action="activityView" title="Return to the active task"><span class="activity-dock-icon">' + U.icon(a?.skill || (a?.type === 'craft' ? D.recipes.find(r => r.id === a.recipe)?.skill : c.combat ? 'Weapon' : progress?.skill || 'clock')) +
-      '</span><span><small id="dock-kind">WORK IN PROGRESS</small><strong id="dock-title"></strong><span id="dock-count"></span></span><span id="dock-percent"></span></button><div class="dock-footer"><span id="dock-time"></span>' + stop + '</div><div class="dock-track" role="progressbar" aria-label="Activity progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="dock-bar"></i></div><section id="skill-xp-popup" class="skill-xp-popup" aria-label="Skill experience progress" role="status" aria-live="polite" '+(progress?'':'hidden')+'>'+(U.skillProgress?.content(c)||'')+'</section></aside>';
+      '</span><span><small id="dock-kind">WORK IN PROGRESS</small><strong id="dock-title"></strong><span id="dock-count"></span></span><span id="dock-percent"></span></button><div class="dock-footer"><span id="dock-time"></span>' + stop + '</div><div class="dock-track" role="progressbar" aria-label="Activity progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="dock-bar"></i></div></aside><aside id="skill-xp-popup" class="skill-xp-popup" aria-label="Skill experience progress" role="status" aria-live="polite" '+(progress?'':'hidden')+'>'+(U.skillProgress?.content(c)||'')+'</aside>';
   };
   const live = U.live;
   U.live = () => {
@@ -138,13 +138,22 @@
     progress.setAttribute('aria-valuetext', document.getElementById('dock-count').textContent + '. ' + document.getElementById('dock-time').textContent);
     progress.setAttribute('aria-label', c.combat ? 'Enemy health depleted' : 'Activity progress');
   };
-  const dockObserver = new ResizeObserver(entries => {
-    for (const {target} of entries) document.body.style.setProperty('--activity-space', Math.ceil(target.getBoundingClientRect().height + 12) + 'px');
-  });
-  let watchedDock;
+  U.measureActivitySpace = () => {
+    const heights=['activity-dock','skill-xp-popup','loot-popup'].map(id=>{
+      const el=document.getElementById(id);return el&&!el.hidden?el.getBoundingClientRect().height:0;
+    });
+    document.body.style.setProperty('--activity-space',Math.ceil(Math.max(...heights)+22)+'px');
+  };
+  const dockObserver = new ResizeObserver(U.measureActivitySpace);
+  let watchedDock,watchedXp;
   window.addEventListener('rpg:rendered', () => {
     const dock = document.getElementById('activity-dock');
-    if (dock !== watchedDock) { dockObserver.disconnect(); if (dock) dockObserver.observe(dock); watchedDock = dock; }
+    const xp=document.getElementById('skill-xp-popup');
+    if (dock !== watchedDock || xp !== watchedXp) {
+      dockObserver.disconnect();for(const el of [dock,xp,document.getElementById('loot-popup')])if(el)dockObserver.observe(el);
+      watchedDock=dock;watchedXp=xp;
+    }
     U.live();
+    U.measureActivitySpace();
   });
 })(RPG, RPG.data, RPG.systems, RPG.ui);

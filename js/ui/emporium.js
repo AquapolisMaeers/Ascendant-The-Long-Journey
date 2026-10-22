@@ -124,7 +124,7 @@
   const measure=()=>{
     const sidebar=document.querySelector('.sidebar'),dock=document.getElementById('activity-dock');
     if(sidebar)document.body.style.setProperty('--activity-rail-left',Math.max(0,sidebar.getBoundingClientRect().right)+'px');
-    if(dock&&!dock.hidden)document.body.style.setProperty('--activity-space',Math.ceil(dock.getBoundingClientRect().height+12)+'px');
+    if(dock&&!dock.hidden)U.measureActivitySpace();
     const view=G.runtime.page+'|'+G.runtime.tab;
     if(lastView!==view){document.getElementById('content')?.scrollTo(0,0);lastView=view;}
   };

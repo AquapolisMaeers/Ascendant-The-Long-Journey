@@ -52,12 +52,13 @@
   U.shell=()=>{
     const html=shell();if(!U.isPhone()||!G.character()||G.runtime.selecting||G.runtime.loadFailure)return html;
     const template=document.createElement('template');template.innerHTML=html;
-    const nav=template.content.querySelector('.phone-nav'),food=template.content.querySelector('.phone-combat-food'),dock=template.content.querySelector('.activity-dock');
+    const nav=template.content.querySelector('.phone-nav'),food=template.content.querySelector('.phone-combat-food'),dock=template.content.querySelector('.activity-dock'),xp=template.content.querySelector('.skill-xp-popup');
     const primary=[['World','Journey'],['Character','Hero'],['Inventory','Bag'],['Crafting','Craft']];
     nav.innerHTML=primary.map(([page,label])=>'<button type="button" data-action="navigate" data-value="'+page+'" '+(G.runtime.page===page?'class="active" aria-current="page"':'')+'>'+U.icon(page)+'<span>'+label+'</span></button>').join('')+'<button type="button" data-action="mobileMenu" aria-haspopup="dialog" aria-expanded="'+!!document.querySelector('.phone-menu')+'" aria-label="More pages" '+(!primary.some(([page])=>page===G.runtime.page)?'class="active"':'')+'>'+U.icon('Menu')+'<span>More</span></button>';
     const footer=document.createElement('footer');footer.className='mobile-bottom';footer.id='mobile-bottom';footer.setAttribute('aria-label','Mobile controls');
     if(food)footer.append(food);
     if(dock)footer.append(dock);
+    if(xp)footer.append(xp);
     footer.append(nav);template.content.append(footer);
     return template.innerHTML;
   };
@@ -70,8 +71,8 @@
   const measureNotices=()=>{
     if(!U.isPhone())return;
     const reward=document.getElementById('loot-popup'),level=document.getElementById('levelup-popup'),footer=document.getElementById('mobile-bottom');
-    const top=reward&&!reward.hidden?reward.getBoundingClientRect().bottom+10:(document.querySelector('.topbar')?.getBoundingClientRect().bottom||0)+8;
-    const bottom=Math.min(footer?.getBoundingClientRect().top??innerHeight,level&&!level.hidden?level.getBoundingClientRect().top:innerHeight)-10;
+    const top=(document.querySelector('.topbar')?.getBoundingClientRect().bottom||0)+8;
+    const bottom=Math.min(footer?.getBoundingClientRect().top??innerHeight,level&&!level.hidden?level.getBoundingClientRect().top:innerHeight,reward&&!reward.hidden?reward.getBoundingClientRect().top:innerHeight)-10;
     const space=Math.max(0,Math.min(104,bottom-top));
     document.body.style.setProperty('--phone-notice-top',top+'px');
     document.body.style.setProperty('--phone-notice-height',space+'px');
