@@ -93,7 +93,7 @@
       gear = item.kind === 'gear',
       tool = item.kind === 'tool';
     const rarity = gear || tool ? item.rarity : D.catalog[item.key].rarity;
-    let body = '<div class="item-heading rarity-' + rarity + '">' + U.icon(U.itemIcon(item)) + '<div><div class="eyebrow">' + D.rarity[rarity] + (gear ? ' · LV ' + D.tiers[item.tier] + ' · +' + item.enhance : tool ? ' · ' + (item.bound ? 'BOUND STARTER TOOL' : 'NO SKILL LEVEL REQUIREMENT') : ' · ×' + item.quantity) + '</div><p>' + (gear ? item.slot + (item.boss !== null ? ' · Boss gear · +15% inherent stats' : '') : tool ? item.skill : D.catalog[item.key].category) + (item.locked ? ' · Locked ◆' : '') + '</p></div></div>';
+    let body = '<div class="item-heading rarity-' + rarity + '">' + U.icon(U.itemIcon(item)) + '<div><div class="eyebrow">' + D.rarity[rarity] + (gear ? ' · LV ' + D.tiers[item.tier] + ' · +' + item.enhance : tool ? ' · ' + (item.bound ? 'STARTER TOOL' : 'NO SKILL LEVEL REQUIREMENT') : ' · ×' + item.quantity) + '</div><p>' + (gear ? item.slot + (item.boss !== null ? ' · Boss gear · +15% inherent stats' : '') : tool ? item.skill : D.catalog[item.key].category) + (item.locked ? ' · Locked ◆' : '') + '</p></div></div>';
     if (gear) {
       const stats = S.items.stats(item),
         equipped = c.equipment[item.slot],

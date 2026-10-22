@@ -100,15 +100,47 @@
     return U.heading('YOUR POSSESSIONS', 'Inventory', 'Equipped tools do not occupy storage. Every tool rarity can be equipped at any skill level.', '<span class="badge">' + c.inventory.length + ' / ' + c.capacity + ' SLOTS</span>') + U.tabs(['Equipment', 'Materials', 'Gems', 'Food', 'Tools', 'Mystery Boxes', 'Utility'], 'Tools') + '<div class="toolbar"><input id="inventory-search" aria-label="Search inventory" placeholder="Search tools…" value="' + U.e(G.runtime.search || '') + '"><select id="inventory-sort" aria-label="Sort items">' + ['Name', 'Rarity', 'Tier'].map(s => '<option ' + (sort === s ? 'selected' : '') + '>' + s + '</option>').join('') + '</select></div><h3>Equipped tools</h3><div class="item-grid spacer">' + equipped.map(i => U.itemCard(i)).join('') + '</div><h3 class="spacer">Spare tools</h3><div class="item-grid spacer">' + (spare.map(i => U.itemCard(i)).join('') || '<p class="empty">Tool drops appear here.</p>') + '</div>';
   };
   const itemCard = U.itemCard;
-  U.itemCard = (i, slot = '') => i.kind !== 'tool' ? itemCard(i, slot) : '<button class="item-card rarity-' + i.rarity + '" data-action="item" data-id="' + i.id + '">' + U.icon(i.skill) + '<span class="quantity">' + (i.locked ? '◆' : '') + '</span><span class="name">' + U.e(i.name) + '</span><small>' + D.rarity[i.rarity] + ' · ' + i.skill + ' · No level requirement · ' + (i.bound ? 'Bound starter' : G.character().tools[i.skill]?.id === i.id ? 'Equipped' : 'Spare tool') + '</small></button>';
+  U.itemCard = (i, slot = '') => i.kind !== 'tool' ? itemCard(i, slot) : '<button class="item-card rarity-' + i.rarity + '" data-action="item" data-id="' + i.id + '">' + U.icon(i.skill) + '<span class="quantity">' + (i.locked ? '◆' : '') + '</span><span class="name">' + U.e(i.name) + '</span><small>' + D.rarity[i.rarity] + ' · ' + i.skill + ' · No level requirement · ' + (i.bound ? 'Starter tool' : G.character().tools[i.skill]?.id === i.id ? 'Equipped' : 'Spare tool') + '</small></button>';
+  U.saleSelection = () => {
+    const c=G.character();
+    if(G.runtime.saleSelection?.characterId!==c.id)G.runtime.saleSelection={characterId:c.id,ids:[]};
+    const state=G.runtime.saleSelection;
+    state.ids=state.ids.filter(id=>S.shop.canSell(c.inventory.find(i=>i.id===id),c));
+    return state;
+  };
+  U.setSaleSelected = (id,selected) => {
+    const state=U.saleSelection(),item=G.character().inventory.find(i=>i.id===id);
+    G.assert(S.shop.canSell(item),'Select an unlocked inventory item.');
+    state.ids=state.ids.filter(value=>value!==id);if(selected)state.ids.push(id);
+  };
+  U.selectShownForSale = () => {
+    const c=G.character(),state=U.saleSelection(),category=U.sellCategoryNames.includes(G.runtime.sellCategory)?G.runtime.sellCategory:'All';
+    for(const item of c.inventory)if((category==='All'||U.saleCategory(item)===category)&&S.shop.canSell(item)&&!state.ids.includes(item.id))state.ids.push(item.id);
+  };
+  U.bulkSellForm = () => {
+    G.ensureIdle();G.assert(!S.tutorial.active(),'Finish the required tutorial before selling its materials.');
+    const c=G.character(),state=U.saleSelection(),selections=state.ids.map(id=>{const item=c.inventory.find(i=>i.id===id);return{id,quantity:item.quantity||1};}),quote=S.shop.saleQuote(selections);
+    const upgraded=quote.rows.some(row=>row.item.kind==='gear'&&(row.item.enhance||row.item.gems.some(Boolean)));
+    const rows=quote.rows.map(row=>'<li><span>'+U.e(U.itemName(row.item))+' <small>×'+G.number(row.quantity)+'</small></span><strong>'+U.price(row.total)+'</strong></li>').join('');
+    U.confirm('Sell '+quote.rows.length+' selected '+(quote.rows.length===1?'item':'items')+'?',
+      '<p>Sell the full quantity of each selected stack.</p><ul class="bulk-sale-review spacer">'+rows+'</ul>'+
+      (upgraded?'<p class="warning spacer">Selling permanently removes selected equipment, its upgrades, and every inserted gem.</p>':'')+
+      '<div class="meta-row spacer"><span>Total sale</span><strong>'+U.price(quote.total)+'</strong></div>',()=>{
+        S.shop.sellMany(selections,quote);state.ids=[];
+      });
+  };
   const shop = U.screens.Shop;
   U.screens.Shop = () => {
     if (G.runtime.tab !== 'Sell') return shop();
     const c = G.character(),
-      items = c.inventory.filter(i => !i.bound);
+      items = c.inventory;
     const category = U.sellCategoryNames.includes(G.runtime.sellCategory) ? G.runtime.sellCategory : 'All';
     const shown = items.filter(i => category === 'All' || U.saleCategory(i) === category);
-    return U.heading('THE QUARTERMASTER', 'Shop', 'Sell spare items for Bronze.', '<span class="badge">' + G.money(c.coins) + '</span>') + U.tabs(D.shopTabs, 'Sell') + '<section class="panel"><h3>Prices follow materials</h3><p class="notes spacer">Raw materials sell for their required level in Bronze. Bars include their ore and fuel costs; gear includes all original recipe ingredients. Equipment rarity, Enhancement and inserted gems do not increase gear sale prices.</p><p class="notes">Ascendant Stones sell for 1 Gold each. Tools sell by rarity: 50b, 1s, 2s 50b, 5s, 10s, 25s, 50s, 1g. Locked items and bound starter tools cannot be sold.</p></section>' + U.sellCategories(items, category) + '<div class="grid-3 spacer sell-grid">' + (shown.map(i => '<section class="recipe">' + U.itemCard(i) + '<div class="row between spacer"><span class="gold">' + G.money(S.shop.value(i)) + ' each</span>' + U.btn('Sell…', 'sellForm', 'data-id="' + i.id + '" ' + (i.locked ? 'disabled' : ''), 'small gold-btn') + '</div></section>').join('') || '<p class="empty">No spare items in this category.</p>') + '</div>';
+    const selection=U.saleSelection(),selected=items.filter(i=>selection.ids.includes(i.id)),total=selected.reduce((sum,i)=>sum+S.shop.value(i)*(i.quantity||1),0),blocked=c.combat||c.activity||S.tutorial.active();
+    const bulk='<section class="panel bulk-sale-toolbar spacer" aria-label="Bulk selling"><div><h3><span id="sale-selection-count">'+selected.length+'</span> selected</h3><p class="notes">Select individual items or all shown in this category. Selected stacks sell in full; locked items are excluded.</p></div><div class="bulk-sale-controls">'+
+      U.btn('Select shown','sellSelectShown',shown.some(i=>S.shop.canSell(i))?'':'disabled','quiet small')+U.btn('Clear selection','sellClearSelection',selected.length?'':'disabled','quiet small')+
+      '<span class="bulk-sale-total">Total <strong id="sale-selection-total">'+U.price(total)+'</strong></span>'+U.btn('Sell selected ('+selected.length+')…','bulkSellForm',!selected.length||blocked?'disabled':'','gold-btn')+'</div></section>';
+    return U.heading('THE QUARTERMASTER', 'Shop', 'Sell spare items for Bronze.', '<span class="badge">' + G.money(c.coins) + '</span>') + U.tabs(D.shopTabs, 'Sell') + '<section class="panel"><h3>Prices follow materials</h3><p class="notes spacer">Raw materials sell for their required level in Bronze. Bars include their ore and fuel costs; gear includes all original recipe ingredients. Boss gear sells for 25% more, rounded up to whole Bronze. Equipment rarity, Enhancement and inserted gems do not increase gear sale prices.</p><p class="notes">Ascendant Stones sell for 1 Gold each. Tools sell by rarity: 50b, 1s, 2s 50b, 5s, 10s, 25s, 50s, 1g. Equip a replacement to move a starting tool into Inventory, then unlock it to sell. Locked and equipped items cannot be sold.</p></section>' + U.sellCategories(items, category) + bulk + '<div class="grid-3 spacer sell-grid">' + (shown.map(i => '<section class="recipe sale-item'+(selection.ids.includes(i.id)?' sale-selected':'')+'">' + U.itemCard(i) + '<label class="sale-select"><input type="checkbox" data-sell-select="'+i.id+'" '+(selection.ids.includes(i.id)?'checked ':'')+(S.shop.canSell(i)?'':'disabled ')+'><span>'+(i.locked?'Locked':'Select for bulk sale')+'<span class="sr-only">: '+U.e(U.itemName(i))+'</span></span></label><div class="row between spacer"><span class="gold">' + G.money(S.shop.value(i)) + ' each</span>' + U.btn('Sell…', 'sellForm', 'data-id="' + i.id + '" ' + (!S.shop.canSell(i)||blocked ? 'disabled' : ''), 'small gold-btn') + '</div></section>').join('') || '<p class="empty">No spare items in this category.</p>') + '</div>' + (selected.length?'<div class="panel bulk-sale-footer spacer"><span>'+selected.length+' selected · '+U.price(total)+'</span>'+U.btn('Sell selected…','bulkSellForm',blocked?'disabled':'','gold-btn')+'</div>':'');
   };
   const item = U.item;
   U.item = id => {
@@ -119,7 +151,7 @@
       const body = document.querySelector('.modal');
       const extra = document.createElement('div');
       extra.className = 'row spacer';
-      if (c.inventory.includes(i)) extra.innerHTML = U.btn('Equip tool', 'equip', 'data-id="' + id + '"', 'primary') + (!i.bound ? U.btn(i.locked ? 'Unlock' : 'Lock / favourite', 'lock', 'data-id="' + id + '"') + U.btn('Sell…', 'sellForm', 'data-id="' + id + '" ' + (i.locked ? 'disabled' : ''), 'gold-btn') + U.btn('Discard', 'discard', 'data-id="' + id + '" ' + (i.locked ? 'disabled' : ''), 'danger') : '<span class="notes">Bound starter tools stay with this character.</span>');
+      if (c.inventory.includes(i)) extra.innerHTML = U.btn('Equip tool', 'equip', 'data-id="' + id + '"', 'primary') + U.btn(i.locked ? 'Unlock' : 'Lock / favourite', 'lock', 'data-id="' + id + '"') + U.btn('Sell…', 'sellForm', 'data-id="' + id + '" ' + (i.locked ? 'disabled' : ''), 'gold-btn') + (!i.bound?U.btn('Discard', 'discard', 'data-id="' + id + '" ' + (i.locked ? 'disabled' : ''), 'danger'):'<span class="notes">Starting tool · Unlock to sell for '+U.price(S.shop.value(i))+'.</span>');
       else extra.innerHTML = '<span class="badge">EQUIPPED · ' + i.skill + ' · NO LEVEL REQUIREMENT' + '</span>';
       body.append(extra);
     } else if (i && c.inventory.includes(i)) {
@@ -145,7 +177,7 @@
   };
   U.sellForm = id => {
     const item = S.items.find(id);
-    G.assert(item && !item.locked && !item.bound, 'This item cannot be sold.');
+    G.assert(S.shop.canSell(item), 'Only unlocked, unequipped inventory items can be sold.');
     G.runtime.sellItem = id;
     U.modal('Sell ' + U.e(U.itemName(item)) + '?', '<p>' + G.money(S.shop.value(item)) + ' per item.</p>' + (item.kind === 'gear' && (item.enhance || item.gems.some(Boolean)) ? '<div class="warning">Selling permanently removes this equipment, its upgrades, and every inserted gem.</div>' : '') + '<label>Quantity<input id="sell-quantity" type="number" min="1" max="' + (item.quantity || 1) + '" value="1"></label>' + U.quantityButtons('sellQuantity', item.quantity || 1) + '<div class="meta-row"><span>Total sale</span><strong id="sell-total">' + G.money(S.shop.value(item)) + '</strong></div><div class="modal-actions">' + U.btn('Cancel', 'closeModal', '', 'quiet') + U.btn('Sell selected quantity', 'sellConfirm', '', 'gold-btn') + '</div>');
   };

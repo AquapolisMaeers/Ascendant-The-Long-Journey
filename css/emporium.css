@@ -66,3 +66,16 @@ body:has(.activity-dock:not([hidden])) .activity-dock { bottom:10px; left:calc(v
   .collection-modal { grid-template-columns:minmax(0,1fr); }.box-odds { max-height:38dvh; }.box-odds .data-table { display:table; width:100%; }
   .stable-pet > div { min-width:0; }.regalia-purchase .btn { min-height:44px; }
 }
+.fortune-reveal{text-align:center;min-width:0}
+.fortune-window{position:relative;overflow:hidden;margin:22px 0 14px;padding:20px 0 12px;border-block:1px solid #ae8749;background:radial-gradient(ellipse at center,#54372966,transparent 70%),#121316;isolation:isolate}
+.fortune-window::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#121316,transparent 14%,transparent 86%,#121316);z-index:2}
+.fortune-sigil{position:absolute;left:50%;top:-3px;transform:translateX(-50%);color:#f4cb78;text-shadow:0 0 14px #ffc75f;z-index:3}
+.fortune-sigil::after{content:"";position:absolute;top:23px;bottom:-178px;left:50%;width:1px;background:linear-gradient(#edc47888,#edc47822)}
+.fortune-reel{display:flex;gap:12px;will-change:transform}
+.fortune-card{flex:0 0 124px;min-width:0;height:182px;padding:12px 8px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;border:1px solid #776044;border-radius:14px 14px 4px 4px;background:linear-gradient(155deg,#423027,#1c1c21)}
+.fortune-card>span,.fortune-card>.icon,.fortune-card>img{flex:0 0 auto;width:90px;height:94px;max-width:90px;max-height:94px}
+.fortune-card img{object-fit:contain;max-width:100%;max-height:100%}
+.fortune-card strong{font-size:12px;line-height:1.35;color:#ede0c6;overflow-wrap:anywhere}
+.fortune-card.fortune-winner{border-color:#f4cb78;background:linear-gradient(155deg,#795334,#282126);box-shadow:inset 0 0 24px #eec77c33}
+.fortune-status{color:#f4cb78;font-weight:700;min-height:24px}
+@media(max-width:480px){.fortune-card{flex-basis:110px;height:174px}.fortune-reveal .notes{font-size:12px}}

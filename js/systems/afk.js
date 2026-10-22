@@ -8,11 +8,12 @@
     start() {
       G.ensureProgress();
       const c = G.character();
-      G.assert(!c.dungeon && !S.tutorial.active(), 'Finish the tutorial and leave the dungeon before AFK advancing.');
+      G.assert(!S.tutorial.active(), 'Finish the tutorial before AFK advancing.');
+      G.assert(!c.dungeon || c.afk.dungeons && !c.dungeon.interrupted, 'Enable Include dungeons to resume AFK in this dungeon.');
       G.assert(c.hp / S.character.stats(c).health > c.afk.minHp, 'Recover above your AFK health limit first.');
       G.assert(!this.run, 'An AFK session is already running.');
-      this.run = { id: c.id, location:c.location, elapsed: 0, inspect: 0, skipped: 0, fights: 0, paidMinutes:0, spent:0, rate:this.minuteRate(c), dungeon:false };
-      this.status = 'Following your filters.';
+      this.run = { id: c.id, location:c.location, elapsed: 0, inspect: 0, skipped: 0, fights: 0, paidMinutes:0, spent:0, rate:this.minuteRate(c), dungeon:!!c.dungeon };
+      this.status = c.dungeon ? 'Continuing dungeon room '+c.dungeon.room+' / 5.' : 'Following your filters.';
       c.afk.interval=D.config.afkAdvanceMs;
       G.commit();
     },
@@ -59,17 +60,17 @@
       if (c.combat || c.activity) { run.inspect = 0; return; }
       if (document.querySelector('.modal')) return;
       const e = c.encounter;
-      if (!e && !c.dungeon) { run.dungeon=false; S.world.advance(true); return; }
+      if (!e && !c.dungeon) { run.dungeon=false; this.status='Advancing through '+D.locations[c.location].name+'.'; S.world.advance(true); return; }
       run.inspect += ms;
       if (run.inspect < 1000) return;
       run.inspect = 0;
-      if (c.dungeon?.cleared) { S.dungeons.next(); return; }
-      if (c.dungeon && ['fountain','spoils'].includes(e?.type)) { S.dungeons.event(); return; }
+      if (c.dungeon?.cleared) { S.dungeons.next(); this.status='Exploring dungeon room '+c.dungeon.room+' / 5.'; return; }
+      if (c.dungeon && ['fountain','spoils'].includes(e?.type)) { this.status=e.type==='fountain'?'Restoring health at the dungeon fountain.':'Collecting the dungeon spoils.'; S.dungeons.event(); return; }
       if (e?.type === 'dungeon' && c.afk.dungeons) {
         this.status = 'Entering the dungeon. Every room gets a fresh odds check.';
         run.dungeon=true; S.dungeons.enter(); return;
       }
-      if (e.enemy && (c.dungeon || e.type === 'regular' && c.afk.normals !== false || e.type === 'elite' && c.afk.elites)) {
+      if (e?.enemy && (c.dungeon || e.type === 'regular' && c.afk.normals !== false || e.type === 'elite' && c.afk.elites)) {
         // Recompute using current HP, gear, perks, food stock and shared cooldown.
         const sim = S.kernel.simulate(c, e.enemy);
         if (sim.chance >= c.afk.chance) {

@@ -84,7 +84,14 @@
     if(a.feast && a.hits%4===0) { recover(a,a.health*.04,side,'Feast',events); a.feastReady=true; }
     if(a.reavingHeal && a.hits%3===0) recover(a,a.health*a.reavingHeal,side,'Leeching cuts',events);
     secondWind(b, events, side === 'player' ? 'enemy' : 'player');
-    if (b.hp > 0 && !extra && rng() < a.double) strike(f, a, b, side, events, true);
+    // Reflect actual post-mitigation damage once. Thorns cannot crit, heal or trigger another reflection.
+    const reflected = Math.min(a.hp, actual * G.clamp(b.thorns || 0, 0, D.caps.thorns));
+    if (reflected > 0) {
+      a.hp = Math.max(0, a.hp - reflected);
+      events?.push({side:side === 'player' ? 'enemy' : 'player',damage:reflected,thorns:true});
+      secondWind(a, events, side);
+    }
+    if (a.hp > 0 && b.hp > 0 && !extra && rng() < a.double) strike(f, a, b, side, events, true);
   }
 
   function eat(f, events) {
@@ -182,18 +189,18 @@
           strike(f, f.player, f.enemy, 'player', events);
           f.nextPlayer += f.player.interval;
         }
-        if (f.enemy.hp <= 0) {
+        if (f.player.hp <= 0 || f.enemy.hp <= 0) {
           f.finished = true;
-          f.won = true;
+          f.won = f.player.hp > 0;
           break;
         }
         if (f.nextEnemy <= next + 1e-8) {
           strike(f, f.enemy, f.player, 'enemy', events);
           f.nextEnemy += f.enemy.interval;
         }
-        if (f.player.hp <= 0) {
+        if (f.player.hp <= 0 || f.enemy.hp <= 0) {
           f.finished = true;
-          f.won = false;
+          f.won = f.player.hp > 0;
           break;
         }
         auto(f, events);
@@ -232,7 +239,7 @@
         G.runtime.log.unshift(e.food ? 'You eat and recover ' + G.number(e.healing, 2) + ' HP.' :
           e.recovery ? who + ' recover ' + G.number(e.healing, 2) + ' HP (' + e.source + ').' :
           e.miss ? who + ' miss.' : who + ' deal ' + G.number(e.damage, 1) + (e.critical ? ' critical' : '') +
-          ' damage' + (e.extra ? ' (double strike)' : '') + (e.guarded ? ' (guarded)' : '') + '.' +
+          ' damage' + (e.thorns ? ' (Thorn Damage)' : '') + (e.extra ? ' (double strike)' : '') + (e.guarded ? ' (guarded)' : '') + '.' +
           (e.healing > 0 ? ' ' + who + ' recover ' + G.number(e.healing, 2) + ' HP (Lifesteal).' : ''));
         G.emit('strike', e);
       }

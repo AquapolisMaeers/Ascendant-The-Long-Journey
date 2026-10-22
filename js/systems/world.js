@@ -264,6 +264,7 @@
         cleared: false,
         interrupted: false
       };
+      if (S.afk?.run?.id === c.id && c.afk.dungeons) S.afk.run.dungeon = true;
       this.room();
       G.commit();
     },

@@ -21,7 +21,7 @@
     G.assert(box&&!entry.locked,'Choose an unlocked mystery box in your inventory.');
     U.confirm('Unwrap '+box.name+'?',U.mysteryBoxArt(box)+'<p class="notes spacer">Consumes one sealed box. One permanent unlock; duplicates return '+box.duplicate+' AC. Opening binds the reward to your collection.</p><details class="spacer"><summary>Possible rewards and odds</summary>'+U.boxOdds(box)+'</details>',()=>{
       G.assert(c===G.character()&&c.inventory.includes(entry)&&!entry.locked,'The box changed. Review it again.');
-      U.emporiumResult(S.emporium.open(box.id));
+      U.openMysteryBox(box.id);
     });
   };
   const itemCard=(entry,collection=false)=>{
@@ -47,6 +47,36 @@
       (entry?.special?petStats(entry):'')+(result.duplicate?'<p class="notes">You already own this reward. Returned '+ac(result.refund)+'. Your existing item or companion is preserved.</p>':entry?'<p class="notes">Added to your permanent collection. Equip it whenever you are ready.</p>':result.key?U.effectPreview({kind:'stack',key:result.key})+'<p class="notes">Added to your inventory.</p>':'<p class="notes">Added to your '+(result.stone?'inventory':'wallet')+'.</p>')+'</div><div class="modal-actions">'+U.btn('Continue','closeModal','','quiet')+
       (entry&&!result.duplicate?U.btn('Equip now',entry.special?'equipPet':'equipRegalia','data-id="'+entry.id+'"','gold-btn'):'')+'</div>');
   };
+  U.openMysteryBox=id=>{
+    const box=D.emporiumBoxes.find(b=>b.id===id),c=G.character();
+    // Award and persist the real roll before the cosmetic reveal, including if it is dismissed.
+    const result=S.emporium.open(id);
+    if(G.state.settings.reduced||matchMedia('(prefers-reduced-motion: reduce)').matches){U.emporiumResult(result);return;}
+    const outcomes=S.emporium.outcomes(box),winner=30;
+    const name=o=>o.entry?.name||(o.key?D.catalog[o.key].name:o.stone?'1 Ascendant Stone':G.money(o.coins));
+    const rewardArt=o=>o.entry?art(o.entry):o.key?U.itemArt({kind:'stack',key:o.key}):U.paint(o.stone?'stone':'coins');
+    const cards=Array.from({length:36},(_,index)=>index===winner?result:outcomes[G.weighted(Math.random,outcomes.map(o=>o.weight))]);
+    U.modal('The Fortune Reel','<div class="fortune-reveal"><p class="notes">'+U.e(box.name)+' · Follow the golden sigil.</p><div class="fortune-window"><div class="fortune-sigil" aria-hidden="true">◆</div><div class="fortune-reel" aria-hidden="true">'+cards.map(o=>'<div class="fortune-card">'+rewardArt(o)+'<strong>'+U.e(name(o))+'</strong></div>').join('')+'</div></div><p class="fortune-status" role="status">Unveiling your reward…</p><p class="notes">Your reward is already saved. You can skip or close this reveal.</p><div class="modal-actions"><button type="button" class="btn quiet fortune-skip">Reveal now</button></div></div>');
+    const panel=document.querySelector('.fortune-reveal'),reel=panel.querySelector('.fortune-reel'),viewport=panel.querySelector('.fortune-window'),card=reel.firstElementChild;
+    // Layout widths exclude the dialog's entrance scale, so the saved reward stays under the sigil.
+    const step=card.offsetWidth+12,center=(viewport.clientWidth-card.offsetWidth)/2;
+    let done=false,animation;
+    const finish=()=>{
+      if(done)return;done=true;animation?.cancel();
+      window.removeEventListener('rpg:dialog-closed',dismiss);
+      if(panel.isConnected&&G.character()===c)U.emporiumResult(result);
+    };
+    const dismiss=()=>{done=true;animation?.cancel();window.removeEventListener('rpg:dialog-closed',dismiss);};
+    window.addEventListener('rpg:dialog-closed',dismiss);
+    panel.querySelector('.fortune-skip').addEventListener('click',finish,{once:true});
+    animation=reel.animate([{transform:'translateX('+center+'px)'},{transform:'translateX('+(center-winner*step)+'px)'}],{duration:4400,easing:'cubic-bezier(.12,.72,.12,1)',fill:'forwards'});
+    animation.finished.then(()=>{
+      if(done||!panel.isConnected)return;
+      reel.children[winner].classList.add('fortune-winner');
+      panel.querySelector('.fortune-status').textContent='Your reward: '+name(result);
+      setTimeout(finish,650);
+    }).catch(()=>{});
+  };
   U.emporiumOpen=id=>{
     const box=D.emporiumBoxes.find(b=>b.id===id),c=G.character();G.assert(box,'Choose an available box.');
     if(box.sealed){
@@ -58,7 +88,7 @@
       return;
     }
     U.confirm('Open '+box.name+'?', '<div class="box-quote">'+U.mysteryBoxArt(box)+'<div><h3>One random reward</h3>'+ac(box.price)+'</div></div><p class="notes spacer">Each opening is an independent roll. '+(box.kind==='gem'?'Regular types: 90%; exclusive types: 10%. Ranks I / II / III / IV / V: 60% / 25% / 10% / 4.5% / 0.5%. Gems stack; no duplicate refund.':box.duplicate?'Duplicates return '+box.duplicate+' AC; existing collection items and companion progress are preserved.':'A stone has exactly 1 chance in 100; normal coins fill the other 99 outcomes.')+'</p>'+U.boxOdds(box),()=>{
-      G.assert(c===G.character(),'Character changed. Review your purchase again.');U.emporiumResult(S.emporium.open(id));
+      G.assert(c===G.character(),'Character changed. Review your purchase again.');U.openMysteryBox(id);
     });
     if(c.ascendantCoins<box.price)document.querySelector('[data-action="confirm"]').disabled=true;
   };

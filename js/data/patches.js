@@ -1,6 +1,18 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-22',title:'Thorn Damage, dungeon AFK and the Fortune Reel',changes:[
+    'Warrior armour replaces inherent Life Steal with Thorn Damage, and shields gain Thorn Damage alongside their existing defensive bonuses. At level-100 Common +0, each armour piece reflects 2.5% and a shield reflects 5%, with the usual equipment scaling and a combined 50% cap. Reflects actual received damage, including lethal hits, without critical hits, healing or reflection chains. If both fighters fall, you lose. Other Life Steal sources remain.',
+    'With Include dungeons enabled, AFK stays active when you enter or advance a room manually. Start or resume AFK between rooms inside a dungeon. It completes all five rooms and returns to exploration, checking current odds before each battle even when outside normal and elite filters are off. Existing health, inventory and payment limits apply.',
+    'Boss equipment sells for 25% more than its normal material value, rounded up to Bronze. Both single sales and multi-select sale reviews include the premium.',
+    'Every Mystery Box opening now features the Fortune Reel: illustrated rewards scroll beneath a golden sigil before revealing the saved result. Reveal now skips the animation, closing preserves the reward, and Reduced Motion shows results immediately. Odds, prices and duplicate refunds remain the same.',
+    'Multi-select selling and starting-tool sales remain available in Shop > Sell. Equip a replacement, unlock the old starting tool in Inventory, then include it in a single or bulk sale.'
+  ]},
+  {date:'2026-10-21',title:'Bulk selling, sellable starting tools and defensive shields',changes:[
+    'Starting tools can now be sold at the normal price for their rarity. Equip a replacement to move the old tool into Inventory, unlock it, then sell it individually or include it in a bulk sale. Existing saved starters work immediately. Equipped tools and locked items remain protected.',
+    'Shop > Sell adds selection checkboxes, Select shown for the current category, Clear selection, a combined price and a single review for the whole sale. Selections carry between categories. Selecting a stack sells its full quantity; individual selling still supports partial quantities. The review lists every item and flags upgraded or socketed gear. Changed, locked or missing items cancel the whole sale before anything is sold.',
+    'Shields now add scaling Defence % instead of inherent Life Steal, alongside their damage reduction and critical resistance. The new bonus is 2% at level-100 Common +0 and follows the same tier, rarity, boss and Enhancement scaling as the other shield percentage stats. Existing shields retain their identity, upgrades and gems; Warrior armour keeps its separate Life Steal bonus.'
+  ]},
   {date:'2026-10-21',title:'Shared venom stacks and a skilling companion',changes:[
     'Quillroot Sprite joins AC Companion Mystery Boxes. Each level grants 0.2% Skilling XP and 0.2% Skilling Action Speed in all eight disciplines. XP also applies to offline training. Only the equipped, healthy, fed companion grants these bonuses. The eight special companions have equal 12.5% odds; box price and duplicate refunds stay the same.',
     'AC companion life steal rises to 0.2% per level: Starwhisker Koi now grants 0.5% Attack Speed and 0.2% Life Steal per level. Regular companion rates stay the same.',

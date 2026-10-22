@@ -8,7 +8,7 @@
   // Armour has three class variants; each of the 23 distinct items gets equal weight.
   D.gearWeights = [1,1,1,3,3,3,3,3,1,1,1,1,1];
   D.secondaryPower = .45; // Prefixes and socketed gems also have reduced strength.
-  D.classRoles = {Warrior:'All-round bruiser: health, defence and steady damage. Plate and shields add damage reduction, critical resistance and life steal.',Archer:'Ranger: attack speed, penetration and dodge. Small blades support rapid attacks.',Mage:'Critical chance, critical damage and resistance. Grimoires support spell bursts.'};
+  D.classRoles = {Warrior:'All-round bruiser: health, defence and steady damage. Shields add Defence %, damage reduction, critical resistance and Thorn Damage. Plate also reflects incoming damage through Thorn Damage.',Archer:'Ranger: attack speed, penetration and dodge. Small blades support rapid attacks.',Mage:'Critical chance, critical damage and resistance. Grimoires support spell bursts.'};
   D.weapons = [
     ['Worn Sword', 'Shortsword', 'Longsword', 'Battleaxe', 'Greataxe', 'Warhammer', 'Greatsword', 'Halberd', 'Maul', 'Glaive', 'Zweihander', 'Greatblade'],
     ['Worn Bow', 'Shortbow', 'Longbow', 'Recurve Bow', 'Composite Bow', 'Warbow', 'Crossbow', 'Heavy Crossbow', 'Greatbow', 'Arbalest', 'Siege Bow', 'Grandbow'],

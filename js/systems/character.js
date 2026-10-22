@@ -34,6 +34,7 @@
         reduction: 0,
         resistance: 0,
         lifeSteal: 0,
+        thorns: 0,
         damagePct: 0,
         healthPct: 0,
         defencePct: 0,

@@ -71,7 +71,7 @@
       row('Miss chance', G.percent(1 - S.kernel.hit(p, enemy)), G.percent(1 - S.kernel.hit(enemy, p))) +
       row('Effective Crit', G.percent(S.kernel.crit(p, enemy)), G.percent(S.kernel.crit(enemy, p)), 'Crit chance − defender Critical Resistance; cap 75%') +
       row('Attack interval', G.number(p.interval, 2) + 's', G.number(enemy.interval, 2) + 's', '2 / (1 + Attack Speed Bonus)') +
-      row('Attacks / second', G.number(1 / p.interval, 2), G.number(1 / enemy.interval, 2)) + ['crit', 'critDamage', 'penetration', 'dodge', 'reduction', 'resistance', 'lifeSteal', 'double', 'speed'].map(k => row(D.labels[k], G.percent(p[k]), G.percent(enemy[k]))).join('') +
+      row('Attacks / second', G.number(1 / p.interval, 2), G.number(1 / enemy.interval, 2)) + ['crit', 'critDamage', 'penetration', 'dodge', 'reduction', 'resistance', 'lifeSteal', 'thorns', 'double', 'speed'].map(k => row(D.labels[k], G.percent(p[k]||0), G.percent(enemy[k]||0))).join('') +
       row('Expected damage / turn', G.number(S.kernel.average(p, enemy), 2), G.number(S.kernel.average(enemy, p), 2)) +
       row('Estimated DPS', G.number(S.kernel.average(p, enemy) / p.interval, 2), G.number(S.kernel.average(enemy, p) / enemy.interval, 2)) +
       row('Assigned food', c.food ? U.e(D.catalog[c.food].name) : 'None', 'None') + row('Auto-Eat', c.eat ? G.percent(c.eat) + ' HP' : 'Off', 'Off') + '</tbody></table><p class="notes spacer">Enemy traits: ' + enemy.archetype + '. Average simulated duration ' + G.number(sim.seconds, 1) + 's; food used ' + G.number(sim.foods, 2) + '. Conditional perks and class talents are resolved by the simulation.</p></details></details>';

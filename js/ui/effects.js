@@ -30,7 +30,7 @@
     if (reduced()||!G.ui.combatEffectsVisible()) return;
     const attacker = document.getElementById(e.side + '-fighter'),
       defender = document.getElementById((e.side === 'player' ? 'enemy' : 'player') + '-fighter');
-    if (attacker && !e.food && !e.recovery) attacker.animate([{
+    if (attacker && !e.food && !e.recovery && !e.thorns) attacker.animate([{
       transform: 'translateX(0)'
     }, {
       transform: 'translateX(' + (e.side === 'player' ? 6 : -6) + 'px)'

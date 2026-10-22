@@ -129,6 +129,7 @@
       if (c.encounter) {
         const e = c.encounter;
         if (['regular', 'elite', 'boss'].includes(e.type)) {
+          if (e.enemy?.thorns !== undefined && !finite(e.enemy.thorns, 0, D.caps.thorns)) fail('enemy Thorn Damage');
           if (!e.enemy || typeof e.enemy.name !== 'string' || typeof e.enemy.archetype !== 'string' || !Number.isInteger(e.enemy.level) || !finite(e.enemy.level, 1, 109)) fail('enemy');
           for (const key of ['damage', 'health', 'defence', 'crit', 'critDamage', 'penetration', 'double', 'dodge', 'reduction', 'resistance', 'lifeSteal', 'interval'])
             if (!finite(e.enemy[key]) || key === 'interval' && e.enemy[key] < .5) fail('enemy stats');
@@ -160,6 +161,7 @@
       }
       if (c.combat) {
         const f = c.combat;
+        for(const actor of [f.player,f.enemy])if(actor?.thorns!==undefined&&!finite(actor.thorns,0,D.caps.thorns))fail('combat Thorn Damage');
         for(const actor of [f.player,f.enemy])if(actor?.levelDamage!==undefined&&!finite(actor.levelDamage,1/3.5,3.5))fail('combat level modifier');
         if (!f.player || !f.enemy || !finite(f.time) || !finite(f.player.hp) || !finite(f.enemy.hp) || !finite(f.nextPlayer) || !finite(f.nextEnemy) || !finite(f.seed)) fail('combat state');
         for (const actor of [f.player, f.enemy])

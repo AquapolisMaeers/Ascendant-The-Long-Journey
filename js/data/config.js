@@ -29,6 +29,7 @@
     prefixSlots: 3,
     failIncrement: .01,
     bossGear: 1.15,
+    bossSellMultiplier: 1.25,
     enhanceStat: .01,
     inventoryStart: 50,
     inventoryMax: 160,
@@ -52,6 +53,7 @@
     reduction: .5,
     dodge: .5,
     lifeSteal: .2,
+    thorns: .5,
     double: .5,
     speed: 1,
     mitigation: .7
@@ -72,6 +74,7 @@
     reduction: 'Damage Reduction',
     resistance: 'Critical Resistance',
     lifeSteal: 'Life Steal',
+    thorns: 'Thorn Damage',
     skillXp: 'Skilling XP',
     skillSpeed: 'Skilling Action Speed'
   };

@@ -223,6 +223,9 @@
       S.shop.sell(G.runtime.sellItem, Number(value('sell-quantity')));
       U.close();
     },
+    sellSelectShown() { U.selectShownForSale(); U.render(); },
+    sellClearSelection() { U.saleSelection().ids=[]; U.render(); },
+    bulkSellForm() { U.bulkSellForm(); },
     openPerks() {
       G.runtime.page = 'Character';
       G.runtime.tab = 'Perks';
@@ -588,7 +591,8 @@
     try {
       G.audio.unlock();
       const action = el.dataset.action;
-      if (!['navigate', 'tab', 'shopSection', 'appearanceOutfit', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'marketClear', 'marketPage', 'marketQuantity', 'arenaRanking', 'trainingDialog', 'activityView', 'mobileMenu', 'mobileWorldView', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
+      const dungeonControl = ['enterDungeon','nextRoom','roomEvent'].includes(action) && G.character()?.afk.dungeons && S.afk.run?.id === G.character()?.id;
+      if (!dungeonControl && !['navigate', 'tab', 'shopSection', 'appearanceOutfit', 'craftQuantity', 'exchangeMax', 'gemGuide', 'gemGuideBack', 'gearPortrait', 'portraitEquipment', 'achievementPage', 'companionPage', 'emporiumPage', 'ascendantHelp', 'regaliaCollection', 'visitEmporium', 'sellCategory', 'sellSelectShown', 'sellClearSelection', 'marketClear', 'marketPage', 'marketQuantity', 'arenaRanking', 'trainingDialog', 'activityView', 'mobileMenu', 'mobileWorldView', 'locations', 'location', 'questTravel', 'afkStart', 'afkStop', 'eat', 'rest', 'audioPreview', 'audioPreviewStop', 'closeModal', 'customize', 'appearanceForm', 'appearanceLook', 'appearanceConfirm'].includes(action)) S.afk.stop('Manual control', false);
       actions[el.dataset.action]?.(el);
     } catch (error) {
       G.notify(error.message, 'error');
@@ -599,6 +603,10 @@
     const el = event.target,
       c = G.character();
     try {
+      if(el.dataset.sellSelect){
+        U.setSaleSelected(el.dataset.sellSelect,el.checked);U.render();
+        document.querySelector('[data-sell-select="'+el.dataset.sellSelect+'"]')?.focus();
+      }
       if (el.dataset.preference) {
         S.world.setPreference(el.dataset.preference, el.value);
         if (document.querySelector('.modal .skill-preferences')) {
