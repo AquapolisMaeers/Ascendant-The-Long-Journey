@@ -156,7 +156,7 @@
   D.facet = {
     levels: [1, 25, 50, 75, 100],
     chisel: [0, 3, 4, 5, 7],
-    chance: [1, .8, .6, .4, .2],
+    chance: [1, 1, 1, 1, 1],
     extraRarity: .05,
     inputs: 3
   };

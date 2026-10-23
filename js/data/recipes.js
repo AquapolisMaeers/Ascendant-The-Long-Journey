@@ -74,7 +74,7 @@
         [rank === 0 ? 'uncut:' + type : 'gem:' + type + ':' + rank]: rank === 0 ? 1 : D.facet.inputs
       },
       output: 'gem:' + type + ':' + (rank + 1),
-      xp: D.config.skillXp * D.facet.levels[rank] * D.config.facetingXp
+      xp: rank === 0 ? 330 : D.config.skillXp * D.facet.levels[rank] * D.config.facetingXp
     });
   });
 })(RPG.data);

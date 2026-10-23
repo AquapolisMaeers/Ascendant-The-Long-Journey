@@ -11,7 +11,7 @@
       G.assert(!item.batch||!(c.batchEatUnlocks||[]).includes(item.batch),'Already unlocked.');
       G.assert(threshold === null || !c.eatUnlocks.includes(threshold), 'Already unlocked.');
       G.assert(Number.isSafeInteger(quantity) && quantity > 0 && quantity <= 1000000, 'Choose a valid purchase quantity.');
-      G.assert(item.category === 'Materials' || quantity === 1, 'Buy this upgrade one at a time.');
+      G.assert(['Materials','Utility'].includes(item.category) || quantity === 1, 'Buy this upgrade one at a time.');
       const total = item.price * quantity;
       const stack = c.inventory.find(i => i.kind === 'stack' && i.key === id);
       G.assert(!stack || Number.isSafeInteger(stack.quantity + quantity), 'This stack cannot hold more units.');

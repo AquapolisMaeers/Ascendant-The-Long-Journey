@@ -166,7 +166,7 @@
       'data-quantity="' + n + '" ' + (available < 1 ? 'disabled' : ''), 'small quiet')).join('') + '</div>';
   U.buyMaterialsForm = id => {
     const item = D.shop.find(i => i.id === id);
-    G.assert(item?.category === 'Materials', 'Choose a raw material.');
+    G.assert(['Materials','Utility'].includes(item?.category), 'Choose a material or utility item.');
     G.runtime.buyItem = id;
     const max = Math.min(1000000, Math.floor(G.character().coins / item.price));
     U.modal('Buy ' + U.e(item.name), '<p>' + item.price + ' Bronze per unit.</p>' +

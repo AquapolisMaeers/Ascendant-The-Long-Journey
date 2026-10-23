@@ -26,7 +26,7 @@
       if(!D.skills.includes(skill))return 0;
       if(!['Efficiency','Yield','Knowledge','Fortune','Conservation'].includes(key))return 0;
       const effects=this.effects(c),scope=D.gatheringSkills.includes(skill)?'gather':'craft';
-      return(effects['all'+key]||0)+(effects[scope+key]||0);
+      return(effects['all'+key]||0)+(effects[scope+key]||0)+(skill==='Faceting'&&key==='Knowledge'?(effects.facetKnowledge||0):0);
     },
     settle(c){const result=S.offline.apply(c);if(result.levelsGained)S.offline.record(result);},
     learn(id){

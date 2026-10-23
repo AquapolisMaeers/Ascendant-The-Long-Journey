@@ -59,9 +59,9 @@
       return success;
     },
     xpNext(level) { return D.companionRules.xpFactor*level*level; },
-    view(p,now=Date.now()) {
+    view(p,now=Date.now(),stabled=false) {
       if(!p) return null;
-      const hours=Math.max(0,(now-p.updatedAt)/3600000), untilEmpty=p.hunger/D.companionRules.hungerPerHour;
+      const hours=stabled?0:Math.max(0,(now-p.updatedAt)/3600000), untilEmpty=p.hunger/D.companionRules.hungerPerHour;
       const hunger=Math.max(0,p.hunger-hours*D.companionRules.hungerPerHour);
       const health=Math.max(0,p.health-Math.max(0,hours-untilEmpty)*D.companionRules.starvationPerHour);
       return {...p,hunger,health,active:hunger>0&&health>0,alive:health>0};

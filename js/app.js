@@ -340,7 +340,7 @@
     feedCompanion() { S.companions.feed(value('companion-food')); },
     reviveCompanion() { S.companions.revive(); },
     releaseCompanion() {
-      confirm('Return your companion to the stable?', '<p>Your companion keeps its level, XP and ascensions. Its bonuses stop until you equip it again. You can own several companions and equip one at a time.</p>', () => S.companions.release());
+      confirm('Return your companion to the stable?', '<p>Your companion keeps its level, XP and ascensions. Hunger and vitality pause in the stable. Its bonuses stop until you equip it again. You can own several companions and equip one at a time.</p>', () => S.companions.release());
     },
     ascend(el) {
       U.ascendConfirmation(el.dataset.id);
@@ -402,7 +402,7 @@
     },
     buy(el) {
       const item = D.shop.find(i => i.id === el.dataset.id);
-      if (item?.category === 'Materials') { U.buyMaterialsForm(item.id); return; }
+      if (['Materials','Utility'].includes(item?.category)) { U.buyMaterialsForm(item.id); return; }
       confirm('Purchase ' + item.name + '?', U.shopPreview(item) + '<p>Cost: ' + G.money(item.price) + '. ' + item.description + '</p>', () => S.shop.buy(item.id));
     },
     expand() {

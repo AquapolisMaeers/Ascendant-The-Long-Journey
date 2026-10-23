@@ -4,9 +4,8 @@
     xp(recipe) {
       return recipe.xp;
     },
-    chance(recipe, c = G.character()) {
-      if (recipe.skill !== 'Faceting' || recipe.rank === 0) return 1;
-      return Math.min(1, D.facet.chance[recipe.rank] + Math.max(0, c.tools.Faceting.rarity - D.facet.chisel[recipe.rank]) * D.facet.extraRarity + (c.facetFails[recipe.rank] || 0) + (S.skilling.effects(c).fusionChance||0));
+    chance() {
+      return 1;
     },
     max(recipe) {
       return Math.min(...Object.entries(recipe.cost).map(([k, n]) => Math.floor(S.inventory.available(k) / n)));
@@ -18,7 +17,7 @@
       if (r.skill !== 'Faceting' && r.piece === undefined && r.tier < 11 && S.items.toolBonus(c, r.skill, 'Fortune') > 0 &&
           !c.inventory.some(i => i.kind === 'stack' && i.key === r.output.split(':')[0] + ':' + (r.tier + 1))) slots++;
       const freed = S.items.toolBonus(c, r.skill, 'Conservation') > 0 ? 0 : Object.entries(r.cost).filter(([key, n]) =>
-        c.inventory.some(i => i.kind === 'stack' && !i.locked && i.key === key && i.quantity === (r.skill === 'Faceting' && r.rank > 0 ? 1 : n))).length;
+        c.inventory.some(i => i.kind === 'stack' && !i.locked && i.key === key && i.quantity === n)).length;
       return !c.pending.length && c.inventory.length - freed + slots <= c.capacity;
     },
     start(id, quantity) {

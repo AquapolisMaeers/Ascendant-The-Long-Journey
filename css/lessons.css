@@ -1,4 +1,9 @@
 .tutorial-path { font-size:11px; color:#b9d5cd; }.tutorial-route { border-left:3px solid #ccac78; padding:12px 16px; background:#171d29; }.tutorial-route h3 { color:#e5ce98; font:700 23px/1 var(--display); }.tutorial-route ol { margin:12px 0 0; padding-left:20px; }.tutorial-route li { font-size:13px; line-height:1.65; margin:7px 0; color:#d4c9d9; }
+#tutorial-spotlight { position:fixed; inset:0; width:100%; height:100%; z-index:110; pointer-events:none; overflow:hidden; }
+.tutorial-click-ring { fill:none; stroke:#e6c78d; stroke-width:2; opacity:.8; animation:tutorial-gentle-pulse 2.8s ease-in-out infinite; }
+@keyframes tutorial-gentle-pulse { 0%,100% { stroke-opacity:.65; stroke-width:2; } 50% { stroke-opacity:1; stroke-width:3.5; } }
+#tutorial-spotlight.static-highlight .tutorial-click-ring { animation:none; }
+@media(prefers-reduced-motion:reduce) { .tutorial-click-ring { animation:none; } }
 .recipe-actions { flex-direction:column; align-items:stretch; gap:8px; }.craft-quantities { display:flex; gap:5px; }.craft-quantities .btn { flex:1; }.craft-quantities [aria-pressed="true"] { color:#ffe5a4; border-color:#c4ac77; background:#544232; }.recipe-actions .craft-start { width:100%; min-height:32px; }
 .afk-fixed-interval { display:flex; flex-direction:column; justify-content:center; gap:6px; border-left:2px solid #9bc9be; padding:7px 12px; background:#191f2b; }.afk-fixed-interval small { font-size:11px; color:#c0bacd; }.afk-fixed-interval strong { font:700 24px/1 var(--display); color:#e5cea1; }
 .quantity-with-max { display:flex; align-items:stretch; gap:8px; }.quantity-with-max input { min-width:0; flex:1; }.quantity-with-max .btn { padding:7px 12px; }

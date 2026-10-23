@@ -1,6 +1,12 @@
 'use strict';
 // Newest updates first. Add player-facing changes here before rebuilding DIST.
 RPG.data.patches = [
+  {date:'2026-10-23',title:'Safe stables, guaranteed faceting and clearer first steps',changes:[
+    'Companions in the stable lose no hunger or vitality, including time offline. Equipping resumes care from their stored values; equipped companions retain normal upkeep.',
+    'All gem cutting and fusion now succeeds 100% of the time. Level 1 cutting increases from 297 to 330 base XP; higher-rank and base offline XP stay unchanged. Steady facets now grants +1% Faceting XP per rank, including offline training, preserving existing ranks.',
+    'The tutorial dims surrounding controls and gently pulses a warm outline around the next click, including navigation, recipe quantities and confirmations. Reduced Motion keeps a steady outline.',
+    'Shop > Utility adds Buy X with a typed quantity, shortcuts and a total price. Buy several Gem Extractors or reset items in one purchase.'
+  ]},
   {date:'2026-10-22',title:'Task, reward and experience positions',changes:[
     'Gathering and crafting progress return to the bottom left, rewards appear at the bottom centre, and skill experience has its own panel at the bottom right.',
     'Panels resize to fit the available desktop space. On phones, task and XP panels sit above navigation, with rewards above them. Long reward lists scroll, and level-up notices stay clear of the panels.'

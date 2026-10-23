@@ -40,7 +40,9 @@
       G.assert(c.companion?.type!==type,'This companion is already travelling with you.');
       S.skilling.settle(c);
       if(c.companion){ S.companions.sync(c); c.petStable[c.companion.type]=G.clone(c.companion); }
-      c.companion=c.petStable[type]||freshPet(type);delete c.petStable[type];S.companions.sync(c);this.changed(c);
+      c.companion=c.petStable[type]||freshPet(type);delete c.petStable[type];
+      // Stored companions do not accrue upkeep, including time in older saves.
+      c.companion.updatedAt=Date.now();this.changed(c);
     },
     outcomes(box) {
       if(D.regaliaKinds.includes(box.kind))return D.regalia.filter(r=>r.kind===box.kind).map(entry=>({entry,weight:entry.weight}));
