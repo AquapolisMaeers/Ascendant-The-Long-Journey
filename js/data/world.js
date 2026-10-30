@@ -38,6 +38,17 @@
     coins: [r[8], r[9]],
     dungeon: [2, 4, 6, 8, 10].includes(id) ? id / 2 - 1 : null
   }));
+  D.creatureArt = {};
+  let creatureIndex=0;
+  for(const location of D.locations)for(const rank of ['regular','elite'])for(const creature of location[rank]){
+    const name=creature.name.toLowerCase(),kind=[
+      [/spider|arachn/,'arachnid'],[/seraph|harpy/,'winged'],[/drake|dragon|wyrm|viper|serpent/,'reptile'],
+      [/wolf|hound|warg|mastiff|boar|bear|stag|deer/,'beast'],[/treant|plant|elder guardian/,'plant'],
+      [/golem|sentinel|construct|elemental|guardian/,'construct'],[/wraith|shade|specter|stalker/,'spirit'],
+      [/skeleton|undead|bone|revenant|wight/,'undead'],[/troll|fiend|behemoth|demon/,'brute']
+    ].find(([pattern])=>pattern.test(name))?.[1]||'humanoid';
+    D.creatureArt[creature.name]={id:'creature-'+creature.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+rank,index:++creatureIndex,kind,rank};
+  }
   D.dungeons = [
     ['The Ironblood Keep', 'Ironblood Warlord', 'Ironblood', ['Bloodcleaver', 'Ironspike Warbow', "Warlord's Bloodstaff"]],
     ['The Black Bastion', 'Black Bastion Tyrant', 'Black Bastion', ["Tyrant's Breaker", 'Blackbolt Arbalest', "Tyrant's Scepter"]],

@@ -17,8 +17,8 @@
   .dungeon-mood { gap:8px; padding:10px; margin-bottom:12px; }.dungeon-mood p { font-size:12px; line-height:1.4; }.dungeon-mood small { font-size:9px; }
   .dungeon-view .encounter-emblem > .dungeon-boss-art { width:96px; height:96px; }
   .dungeon-view .encounter-content:has(.dungeon-boss-art) { grid-template-columns:96px minmax(0,1fr); gap:12px; }.dungeon-view .encounter-emblem:has(.dungeon-boss-art) { width:96px; height:96px; }
-  .dungeon-view .fighter > :is(.character-portrait,.portrait-art) { width:64px; height:64px; }
+  .dungeon-view .fighter > :is(.character-portrait,.portrait-art,.creature-portrait) { width:64px; height:64px; }
   .reset-item-preview { padding:12px; gap:12px; }.reset-item-preview > .item-art { flex-basis:66px; width:66px; height:66px; }
 }
-@media(max-height:500px) and (max-width:1000px) and (pointer:coarse) { .dungeon-view .fighter > :is(.character-portrait,.portrait-art) { width:40px; height:40px; }.dungeon-mood { padding:6px 10px; }.dungeon-mood p { font-size:11px; } }
+@media(max-height:500px) and (max-width:1000px) and (pointer:coarse) { .dungeon-view .fighter > :is(.character-portrait,.portrait-art,.creature-portrait) { width:40px; height:40px; }.dungeon-mood { padding:6px 10px; }.dungeon-mood p { font-size:11px; } }
 @media(prefers-reduced-motion:reduce) { .dungeon-flame { animation:none; } }.reduce-motion .dungeon-flame { animation:none; }

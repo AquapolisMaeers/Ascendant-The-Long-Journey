@@ -11,7 +11,7 @@
   .combat-view .fight-row { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:start; gap:12px; }
   .combat-view .versus { display:none; }
   .combat-view .fighter { min-width:0; padding:10px 8px; background:#0d132b66; border:1px solid #86738b66; }
-  .combat-view .fighter > .character-portrait,.combat-view .fighter > .portrait-art { width:52px; height:52px; margin:0 auto 8px; }
+  .combat-view .fighter > .character-portrait,.combat-view .fighter > .portrait-art,.combat-view .fighter > .icon.creature-portrait { width:52px; height:52px; margin:0 auto 8px; }
   .combat-view .fighter h3 { font-size:18px; line-height:1.15; min-height:2.3em; margin:0 0 8px; overflow-wrap:anywhere; }
   .combat-view .fighter .bar.hp { height:11px; margin:8px 0; }
   .combat-view .fighter .fight-meta { color:#f6e9db; font-size:13px; font-variant-numeric:tabular-nums; }
@@ -46,7 +46,7 @@
   body:has(.phone-combat-food) .topbar :is(.currencies,.ascendant-wallet,.top-progress:not(.hp-top)) { display:none; }
   body:has(.phone-combat-food) .topbar .hp-top { grid-column:3 / span 2; grid-row:1; }
   .combat-view .fighter { display:grid; grid-template-columns:44px minmax(0,1fr); gap:0 10px; text-align:left; }
-  .combat-view .fighter > .character-portrait,.combat-view .fighter > .portrait-art { grid-row:1 / span 3; width:40px; height:40px; margin:0; }
+  .combat-view .fighter > .character-portrait,.combat-view .fighter > .portrait-art,.combat-view .fighter > .icon.creature-portrait { grid-row:1 / span 3; width:40px; height:40px; margin:0; }
   .combat-view .fighter h3 { min-height:0; font-size:17px; margin:0; }
   .combat-view .fighter :is(.bar,.fight-meta) { grid-column:2; }
   .phone-combat-food { padding:8px 12px; }
