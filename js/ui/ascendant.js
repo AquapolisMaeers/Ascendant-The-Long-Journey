@@ -36,16 +36,22 @@
   U.itemArt = i => U.paint(U.itemArtKey(i));
 
   U.portraitArt = index => '<span class="icon portrait-art" aria-hidden="true" style="background-position:' + (index % 4 * 100 / 3) + '% ' + (Math.floor(index / 4) * 100 / 3) + '%"></span>';
+  U.creaturePortraitIndex = (name,type) => {
+    const n=(name||'').toLowerCase(),matches=[[/mimic/,14],[/dragon|drake|wyrm|viper|serpent|harpy/,13],
+      [/wolf|hound|warg|mastiff/,4],[/boar|hog|stag|deer/,5],[/bear/,6],[/spider|arachn/,7],
+      [/goblin|imp|kobold/,8],[/skeleton|undead|bone|wight|revenant/,9],
+      [/mage|witch|warlock|sorcer|cult|wraith|shade|stalker|seraph|angel/,10],
+      [/troll|ogre|fiend|behemoth|demon/,12],[/golem|stone|sentinel|construct|elemental|treant|guardian/,11],
+      [/archer|crossbow|ranged/,1],[/mercenary|brigand|highwayman|raider|knight|commander|berserk/,0]];
+    return matches.find(([pattern])=>pattern.test(n))?.[1]??(type==='regular'?3:12);
+  };
   const icon = U.icon;
   U.icon = name => {
     if (D.classes.includes(name)) return U.portraitArt(D.classes.indexOf(name));
     if (name === 'dungeon') return U.portraitArt(15);
     if (name !== 'creature') return icon(name);
-    const e = G.character()?.encounter?.enemy, n = (e?.name || '').toLowerCase();
-    const matches = [[/mimic/,14],[/wolf|hound|warg/,4],[/boar|hog/,5],[/bear/,6],[/spider|arachn/,7],
-      [/goblin|imp|kobold/,8],[/skeleton|undead|bone|wight|revenant/,9],[/mage|witch|warlock|sorcer|cult|wraith|shade/,10],
-      [/golem|stone|sentinel|construct|elemental/,11],[/dragon|drake|wyrm/,13]];
-    return U.portraitArt(matches.find(([pattern]) => pattern.test(n))?.[1] ?? (e?.type === 'regular' ? 3 : 12));
+    const e = G.character()?.encounter?.enemy;
+    return U.portraitArt(U.creaturePortraitIndex(e?.name,e?.type));
   };
   const encounter = U.encounter;
   U.encounter = () => {

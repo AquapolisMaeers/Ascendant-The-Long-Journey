@@ -33,7 +33,7 @@
     enhancementCap: 25,
     prefixSlots: 3,
     failIncrement: .01,
-    bossGear: 1.15,
+    bossGear: 1.25,
     bossSellMultiplier: 1.25,
     enhanceStat: .01,
     inventoryStart: 50,

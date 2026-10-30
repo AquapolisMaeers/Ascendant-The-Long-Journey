@@ -7,7 +7,7 @@
     inputs: 1,
     success: 1
   };
-  D.tuning.bossGearTiers = 'weighted-location';
+  D.tuning.bossGearTiers = 'fixed-dungeon-level';
   D.gems.forEach((gem, type) => {
     D.catalog['uncut:' + type] = {
       id: 'uncut:' + type,

@@ -52,9 +52,10 @@
       return d ? (item.style !== null ? d.weapons[item.style] : d.prefix + ' ' + (item.slot === 'Helmet' ? 'Helm' : item.slot)) : (item.style !== null ? D.weapons[item.style][item.tier] : D.metalTierName(item.tier) + ' ' + item.slot);
     },
     stats(item) {
-      const modifiers = (item.boss !== null ? D.config.bossGear : 1) * D.rarityMult[item.rarity] * (1 + D.config.enhanceStat * item.enhance);
-      const mult = D.gearPower[item.tier] * modifiers;
-      const growth = Math.sqrt(D.tiers[item.tier] * modifiers / 100);
+      const bossMultiplier = item.boss !== null ? D.config.bossGear : 1;
+      const modifiers = D.rarityMult[item.rarity] * (1 + D.config.enhanceStat * item.enhance);
+      const mult = D.gearPower[item.tier] * modifiers * bossMultiplier;
+      const growth = Math.sqrt(D.tiers[item.tier] * modifiers / 100) * bossMultiplier;
       if(item.slot === 'Secondary') {
         const base = [{defence:.3,health:.5,damage:.06},{damage:.16},{damage:.18}][item.piece-10];
         const stats = Object.fromEntries(Object.entries(base).map(([key,value])=>[key,value*mult]));

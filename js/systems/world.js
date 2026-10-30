@@ -20,6 +20,10 @@
       const stats=S.character.stats(this.creatureLoadout(level,type,archetype,loadoutSeed,bossId));
       return Object.freeze(Object.fromEntries(combatStats.map(key=>[key,stats[key]])));
     },
+    dungeonGearTier(location) {
+      const dungeon=D.locations[location].dungeon;
+      return D.tierFor(D.dungeons[dungeon].level);
+    },
     preferences(c = G.character()) {
       return c.skillPreferences || {primary: 'Fishing', secondary: 'Mining'};
     },
@@ -373,7 +377,7 @@
         rewards.push(this.gem(level));
       }
       if (G.rng() < table.gear) {
-        const tier = S.world.tier(location, table.divisor),
+        const tier = type === 'boss' ? S.world.dungeonGearTier(location) : S.world.tier(location, table.divisor),
           piece = G.weighted(G.rng, D.gearWeights),
           rarity = G.weighted(G.rng, table.rarities);
         // The gear gate is unchanged; select a piece and then its armour class.
