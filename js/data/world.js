@@ -47,7 +47,7 @@
       [/golem|sentinel|construct|elemental|guardian/,'construct'],[/wraith|shade|specter|stalker/,'spirit'],
       [/skeleton|undead|bone|revenant|wight/,'undead'],[/troll|fiend|behemoth|demon/,'brute']
     ].find(([pattern])=>pattern.test(name))?.[1]||'humanoid';
-    D.creatureArt[creature.name]={id:'creature-'+creature.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+rank,index:++creatureIndex,kind,rank};
+    D.creatureArt[creature.name]={id:'creature-'+creature.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+rank,index:++creatureIndex,kind,rank,scene:location.backdrop};
   }
   D.dungeons = [
     ['The Ironblood Keep', 'Ironblood Warlord', 'Ironblood', ['Bloodcleaver', 'Ironspike Warbow', "Warlord's Bloodstaff"]],

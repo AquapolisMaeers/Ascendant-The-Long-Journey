@@ -92,6 +92,7 @@
 .creature-portrait { background-image:none; background-color:#111722; border:1px solid #718174; overflow:hidden; }
 .icon.creature-portrait { width:48px; height:48px; }
 .fighter .icon.creature-portrait,.encounter-emblem .icon.creature-portrait { width:100px; height:100px; }
+.creature-portrait circle[fill^="url(#glow-"] { display:none; }
 
 .account-identity { display: grid; gap: 6px; margin-bottom: 16px; overflow-wrap: anywhere; }
 .account-identity small { color: var(--muted); }
