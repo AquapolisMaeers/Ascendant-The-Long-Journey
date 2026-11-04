@@ -89,10 +89,9 @@
 .perk-reminder { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 14px 18px; margin-bottom: 18px; border: 1px solid #786947; border-radius: 10px; background: #292820; font-size: 13px; }
 @media(max-width:600px) { .afk-controls { grid-template-columns: 1fr; } .item-card > .item-art { width: 72px; height: 72px; } }
 .portrait-art { display:inline-block; width:48px; height:48px; flex-shrink:0; border-radius:10px; background-image:url("../assets/art/portraits-atlas.png"); background-size:400% 400%; vertical-align:middle; } .fighter .portrait-art,.encounter-emblem .portrait-art { width:100px; height:100px; } .class-option .portrait-art { width:90px; height:90px; } .portrait .portrait-art { width:38px; height:38px; }
-.creature-portrait { background-image:none; background-color:#111722; border:1px solid #718174; overflow:hidden; }
+.creature-portrait { background-image:none; background-color:#111722; border:1px solid #718174; border-radius:4px; overflow:hidden; box-shadow:0 6px 18px #05070ab5; object-fit:cover; }
 .icon.creature-portrait { width:48px; height:48px; }
 .fighter .icon.creature-portrait,.encounter-emblem .icon.creature-portrait { width:100px; height:100px; }
-.creature-portrait circle[fill^="url(#glow-"] { display:none; }
 
 .account-identity { display: grid; gap: 6px; margin-bottom: 16px; overflow-wrap: anywhere; }
 .account-identity small { color: var(--muted); }
